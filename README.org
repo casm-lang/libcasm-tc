@@ -1,7 +1,14 @@
 
 * libcasm-tc
 
-TBD
+CASM test cases for test applications, unit tests, integration tests etc.
+
+** File Structure [proposed]
+
+- =app= :: contains test applications
+- =int= :: contains integration tests
+- =utc= :: contains unit test cases
+
 
 ** Copyright and License
 
