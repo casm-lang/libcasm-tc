@@ -6,6 +6,7 @@ CASM test cases for test applications, unit tests, integration tests etc.
 ** File Structure [proposed]
 
 - =app= :: contains test applications
+- =etc= :: contains various other test examples/applications
 - =int= :: contains integration tests
 - =utc= :: contains unit test cases
 
