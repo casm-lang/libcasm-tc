@@ -3,6 +3,7 @@
 //  All rights reserved.
 //  
 //  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
 //                https://github.com/ppaulweber/libcasm-tc
 //  
 //  This file is part of libcasm-tc.
@@ -21,12 +22,5 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-CASM hello_world
-
-init main
-
-rule main =
-{
-    print undef
-    program(self) := undef
-}
+// RUN(" %casmi %s ")
+// ASSERT_NE( %?, 0 )

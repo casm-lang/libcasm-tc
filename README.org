@@ -5,10 +5,8 @@ CASM test cases for test applications, unit tests, integration tests etc.
 
 ** File Structure [proposed]
 
-- =app= :: contains test applications
 - =etc= :: contains various other test examples/applications
-- =int= :: contains integration tests
-- =utc= :: contains unit test cases
+- =uts= :: contains unit test cases, integration tests etc.
 
 
 ** Copyright and License
@@ -21,6 +19,7 @@ Copyright (c) 2014-2016 CASM Organization
 All rights reserved.
 
 Developed by: Philipp Paulweber
+              Emmanuel Pescosta
               https://github.com/ppaulweber/libcasm-tc
 
 This file is part of libcasm-tc.
