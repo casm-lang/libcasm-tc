@@ -22,5 +22,5 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-// RUN(" %casmi %s ")
-// ASSERT_NE( %?, 0 )
+//@ RUN( %casmi %s 2> %e )
+//@ ASSERT_NE( %?, 0 )

@@ -54,14 +54,16 @@ int main( int argc, const char *argv[] )
 	);
 
 	std::vector< std::string > cmd;
+	u1 no_tc_command_found = true;
 	
 	libstdhl::File::readLines
 	( file_name
-	  , [ cmd, fd, file_name ]( u32 cnt, const std::string& line )
+	, [ fd, file_name, dest_name, &no_tc_command_found ]
+	  ( u32 cnt, const std::string& line )
 	  {
 		  std::string c = "";
 		  std::regex expr
-		  ( "// ((RUN)|(ASSERT_EQ)|(ASSERT_NE))([\\S ]+)"
+		  ( "//@ ([\\S]+)([\\(]([\\S ])+[\\)])"
 		  );
 		  std::sregex_iterator start( line.begin(), line.end(), expr );
 		  std::sregex_iterator end;
@@ -69,28 +71,76 @@ int main( int argc, const char *argv[] )
 		  for( std::sregex_iterator i = start; i != end; i++ )
 		  {
 			  std::smatch match = *i;
-			  std::string run = match.str();
-			  run = std::regex_replace( run, std::regex( "%s" ),        std::string( file_name ) );
-			  run = std::regex_replace( run, std::regex( "%\\?" ),        "ret" );
-
-			  run = std::regex_replace( run, std::regex( "\\)" ),       ");" );
-			  run = std::regex_replace( run, std::regex( "// RUN\\(" ), "ret = system(" );
-			  run = std::regex_replace( run, std::regex( "// ASSERT_EQ\\(" ), "ASSERT_EQ(" );
-			  run = std::regex_replace( run, std::regex( "// ASSERT_NE\\(" ), "ASSERT_NE(" );
+			  assert( match.size() == 4 );
 			  
-			  run = std::regex_replace( run, std::regex( "%casmi" ),    "../../casmi" );
-			  run = std::regex_replace( run, std::regex( "%casmc" ),    "../../casmc" );
+			  std::string mstr   = match.str();
+			  // printf( "'%s'\n", mstr.c_str() );			  
+			  // for( int c = 0; c < match.size(); c++ )
+			  // {
+			  // 	  printf( "%i:'%s'\n", c, match[c].str().c_str() );
+			  // }
+			  
+			  std::string func = match[1].str();
+			  std::string args = match[2].str();
+
+			  args = std::regex_replace( args, std::regex( "\"" ),       "\\\"" );
+			  
+			  if( func.compare( "RUN" ) == 0 )
+			  {
+				  func = "ret = system";
+				  args = std::regex_replace( args, std::regex( "\\(" ),       "(\"" );
+				  args = std::regex_replace( args, std::regex( "\\)" ),       "\")" );
+			  }
+			  else if
+			  (   not func.compare( "ASSERT_EQ" )
+			  and not func.compare( "ASSERT_NE" )
+			  )
+			  {
+				  fprintf
+				  ( stderr
+				  , "%s:%i: error: unknown/invalid 'tc' command found: '%s'\n"
+				  , file_name
+				  , cnt
+				  , mstr.c_str()
+				  );
+				  
+				  exit(-1);
+			  }
+
+			  std::string fstdout = std::string( dest_name ) + ".stdout";
+			  std::string fstderr = std::string( dest_name ) + ".stderr";
+			  
+			  args = std::regex_replace( args, std::regex( "\\)" ),       ");" );
+			  
+			  args = std::regex_replace( args, std::regex( "%s" ),        std::string( file_name ) );
+			  args = std::regex_replace( args, std::regex( "%o" ),        fstdout );
+			  args = std::regex_replace( args, std::regex( "%e" ),        fstderr );
+			  args = std::regex_replace( args, std::regex( "%\\?" ),      "ret" );
+			  
+			  args = std::regex_replace( args, std::regex( "%casmi" ),    "../../casmi" );
+			  args = std::regex_replace( args, std::regex( "%casmc" ),    "../../casmc" );
 			  
 			  fprintf
 			  ( fd
-			  , "    %s\n"
-			  , run.c_str()
+			  , "    %s%s\n"
+			  , func.c_str()
+			  , args.c_str()
 			  );
+
+			  no_tc_command_found = false;
 			  break;
 		  }
 	  }
 	);
 	
+	if( no_tc_command_found )
+	{
+		fprintf
+	    ( fd
+		, "    static_assert( 0, \"'%s' does not use any 'tc' commands\" );\n"
+		, file_name
+		);
+	}
 	
 	fprintf
 	( fd
