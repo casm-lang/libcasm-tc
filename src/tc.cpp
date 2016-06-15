@@ -40,13 +40,23 @@ int main( int argc, const char *argv[] )
 	assert( fd );
 	
 	std::string fn( file_name );
+
+	for( i32 s = fn.size()-1; s >= 0; s-- )
+	{
+		if( fn.c_str()[s] == '/' )
+		{
+			fn.replace( s, 1, ", ");
+			break;			
+		}
+	}
+	
 	std::replace( fn.begin(), fn.end(), '/', '_');
 	std::replace( fn.begin(), fn.end(), '.', '_');
-    
+	
 	fprintf
 	( fd
 	, "#include \"gtest/gtest.h\"\n"
-	  "TEST( libcasm_tc__%s, )\n"
+	  "TEST( libcasm_tc__%s )\n"
 	  "{\n"
 	  "    int ret = 0;\n"
 	  "    ASSERT_EQ( ret, 0 );\n"
@@ -137,7 +147,7 @@ int main( int argc, const char *argv[] )
 	{
 		fprintf
 	    ( fd
-		, "    static_assert( 0, \"'%s' does not use any 'tc' commands\" );\n"
+		, "    EXPECT_FALSE( \"'%s' does not use any 'tc' commands\" );\n"
 		, file_name
 		);
 	}

@@ -22,12 +22,15 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
+//@ RUN( %casmi %s > %o )
+//@ ASSERT_EQ( %?, 0 )
+
 CASM hello_world
 
 init main
 
 rule main =
 {
-    print "Hello World!"
+    print undef
     program(self) := undef
 }
