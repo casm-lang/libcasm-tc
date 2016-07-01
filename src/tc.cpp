@@ -116,7 +116,7 @@ int main( int argc, const char *argv[] )
 				  
 				  exit(-1);
 			  }
-
+			  
 			  std::string fstdout = std::string( dest_name ) + ".stdout";
 			  std::string fstderr = std::string( dest_name ) + ".stderr";
 			  

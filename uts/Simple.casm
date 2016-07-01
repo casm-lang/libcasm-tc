@@ -22,24 +22,22 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-//@ RUN( %casmi %s 2> %e )
-//@ ASSERT_NE( %?, 0 )
+//@ RUN( %casmi %s > %o )
+//@ ASSERT_EQ( %?, 0 )
 
-// CHECK_CODE( FE001 )
-// SYNTAX_ERROR( CASM )
-// SYNTAX_ERROR( CASM, ... )
-// TYPE_ERROR( int, bool )
+CASM Trivial
 
-/*
-{
-    x := 1 // RUNTIME_ERROR( $1 )
-    x := 3 // RUNTIME_ERROR( $1 )
+init foo
 
-    y := 1 // RUNTIME_ERROR( $2 )
-    y := 3 // RUNTIME_ERROR( $2 )
-  
-    x := 5 // RUNTIME_ERROR( $1 )
+function a : -> Integer
+function b : -> Integer
+function c : -> Integer
 
-    assert( (2 + 3) = 5 )
-}
-*/
+rule foo =
+{|
+    a := 2
+    b := 3
+    c := a + b
+    assert( c = 5 )
+    program( self ) := undef
+|}
