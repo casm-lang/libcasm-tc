@@ -31,5 +31,5 @@ function s : -> String
 
 rule test =
 {
-    s := "asdf"; //@ ERROR( 0001 )
+    s := "asdf"//; // ERROR( 0001 ) // TODO: FIXME: PPA:
 }

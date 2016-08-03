@@ -84,7 +84,7 @@ int main( int argc, const char *argv[] )
 			  assert( match.size() == 4 );
 			  
 			  std::string mstr   = match.str();
-			  // printf( "'%s'\n", mstr.c_str() );			  
+			  //printf( "'%s'\n", mstr.c_str() );			  
 			  // for( int c = 0; c < match.size(); c++ )
 			  // {
 			  // 	  printf( "%i:'%s'\n", c, match[c].str().c_str() );
@@ -92,6 +92,8 @@ int main( int argc, const char *argv[] )
 			  
 			  std::string func = match[1].str();
 			  std::string args = match[2].str();
+
+			  printf( "'%s' | '%s' | '%s'\n", mstr.c_str(), func.c_str(), args.c_str() );			  
 
 			  args = std::regex_replace( args, std::regex( "\"" ),       "\\\"" );
 			  
@@ -102,9 +104,12 @@ int main( int argc, const char *argv[] )
 				  args = std::regex_replace( args, std::regex( "\\)" ),       "\")" );
 			  }
 			  else if
-			  (   not func.compare( "ASSERT_EQ" )
-			  and not func.compare( "ASSERT_NE" )
+			  (  func.compare( "ASSERT_EQ" ) == 0
+			  or func.compare( "ASSERT_NE" ) == 0
 			  )
+			  {
+			  }
+			  else
 			  {
 				  fprintf
 				  ( stderr
