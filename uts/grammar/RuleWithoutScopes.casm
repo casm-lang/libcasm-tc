@@ -22,34 +22,6 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-//@ RUN( %casmi %s > %o )
-//@ ASSERT_EQ( %?, 0 )
+// TC()
 
-CASM Trivial
-
-init foo
-
-function a : -> Integer
-function b : -> Integer
-function c : -> Integer
-
-rule foo =
-{|
-    assert( a = undef )
-    assert( b = undef )
-    a := 2
-    b := 3
-    assert( a = 2 )
-    assert( b = 3 )
-    {
-        a := 10 // RUNTIME_ERROR( $1 )
-        {|
-            a := 50 // RUNTIME_ERROR( $1 )
-        |}
-        b := 20
-    }
-    assert( a = 10 )
-    assert( b = 20 )
-    
-    program( self ) := undef
-|}
+CASM unittest init foo rule foo = program( self ) := undef

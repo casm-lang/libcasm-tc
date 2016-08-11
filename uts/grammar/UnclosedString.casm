@@ -22,14 +22,13 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-//@ RUN( %casmi %s > %o )
-//@ ASSERT_NE( %?, 0 )
+//@ TC()
 
-CASM unittest init test rule test = program( self ) := undef
+CASM unittest init foo rule foo = program( self ) := undef
 
 function s : -> String
 
-rule test =
+rule bar =
 {
-    s := "asdf" // ERROR( 0002 ) // TODO: FIXME: PPA:
+    s := "asdf  //@ ERROR( 0002 )
 }

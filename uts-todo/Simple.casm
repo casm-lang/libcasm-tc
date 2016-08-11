@@ -22,15 +22,22 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-//@ RUN( %casmi %s > %o )
-//@ ASSERT_EQ( %?, 0 )
+//@ TC()
 
-CASM hello_world
+CASM unittest
 
-init main
+init foo
 
-rule main =
-{
-    print "Hello World!"
-    program(self) := undef
-}
+function a : -> Integer
+function b : -> Integer
+function c : -> Integer
+
+rule foo =
+{|
+    a := 1
+    a := 2
+    b := 3
+    c := a + b
+    assert( c = 5 )
+    program( self ) := undef
+|}

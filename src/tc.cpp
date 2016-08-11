@@ -26,7 +26,6 @@
 #include "stdhl/cpp/File.h"
 
 
-
 int main( int argc, const char *argv[] )
 {
     assert( argc == 3 );
@@ -36,44 +35,27 @@ int main( int argc, const char *argv[] )
 	
 	assert( libstdhl::File::exists( file_name ) );
 	
-	FILE* fd = fopen( dest_name, "w+" );
-	assert( fd );
 	
-	std::string fn( file_name );
-
-	for( i32 s = fn.size()-1; s >= 0; s-- )
-	{
-		if( fn.c_str()[s] == '/' )
-		{
-			fn.replace( s, 1, ", ");
-			break;			
-		}
-	}
-	
-	std::replace( fn.begin(), fn.end(), '/', '_');
-	std::replace( fn.begin(), fn.end(), '.', '_');
-	
-	fprintf
-	( fd
-	, "#include \"gtest/gtest.h\"\n"
-	  "TEST( libcasm_tc__%s )\n"
-	  "{\n"
-	  "    int ret = 0;\n"
-	  "    ASSERT_EQ( ret, 0 );\n"
-	, fn.c_str()
-	);
-
 	std::vector< std::string > cmd;
+	u1 no_tc_found = true;
 	u1 no_tc_command_found = true;
 	
+	struct ErrorInfo
+	{ std::string line
+	; std::string code
+	;};
+	
+	std::vector< ErrorInfo > error;
+    
 	libstdhl::File::readLines
 	( file_name
-	, [ fd, file_name, dest_name, &no_tc_command_found ]
+	  , [ /*fd,*/ file_name, dest_name, &no_tc_found, &no_tc_command_found , &error ]
 	  ( u32 cnt, const std::string& line )
 	  {
 		  std::string c = "";
 		  std::regex expr
-		  ( "//@ ([\\S]+)([\\(]([\\S ])+[\\)])"
+		  ( "//@ ([\\S]+)[ ]*\\([ ]*([\\S]*)[ ]*\\)"
+			//( "//@ ([\\S]+)([\\(]([\\S])*[\\)])"
 		  );
 		  std::sregex_iterator start( line.begin(), line.end(), expr );
 		  std::sregex_iterator end;
@@ -81,33 +63,34 @@ int main( int argc, const char *argv[] )
 		  for( std::sregex_iterator i = start; i != end; i++ )
 		  {
 			  std::smatch match = *i;
-			  assert( match.size() == 4 );
-			  
 			  std::string mstr   = match.str();
-			  //printf( "'%s'\n", mstr.c_str() );			  
-			  // for( int c = 0; c < match.size(); c++ )
+			  // printf( "'%s'\n", mstr.c_str() );
+              // for( int c = 0; c < match.size(); c++ )
 			  // {
 			  // 	  printf( "%i:'%s'\n", c, match[c].str().c_str() );
 			  // }
+			  assert( match.size() == 3 );
 			  
 			  std::string func = match[1].str();
 			  std::string args = match[2].str();
-
-			  printf( "'%s' | '%s' | '%s'\n", mstr.c_str(), func.c_str(), args.c_str() );			  
-
+			  
+			  //printf( "'%s' ( '%s' )\n", func.c_str(), args.c_str() );			  
+			  
 			  args = std::regex_replace( args, std::regex( "\"" ),       "\\\"" );
 			  
-			  if( func.compare( "RUN" ) == 0 )
+			  if( func.compare( "TC" ) == 0 )
 			  {
-				  func = "ret = system";
-				  args = std::regex_replace( args, std::regex( "\\(" ),       "(\"" );
-				  args = std::regex_replace( args, std::regex( "\\)" ),       "\")" );
+				  no_tc_found = false;
 			  }
-			  else if
-			  (  func.compare( "ASSERT_EQ" ) == 0
-			  or func.compare( "ASSERT_NE" ) == 0
-			  )
+			  else if( func.compare( "ERROR" ) == 0 )
 			  {
+				  error.push_back
+                  ( ErrorInfo
+                    { std::to_string( cnt + 1 )
+                    , args
+                    }
+                  );
+            	  continue;
 			  }
 			  else
 			  {
@@ -122,46 +105,72 @@ int main( int argc, const char *argv[] )
 				  exit(-1);
 			  }
 			  
-			  std::string fstdout = std::string( dest_name ) + ".stdout";
-			  std::string fstderr = std::string( dest_name ) + ".stderr";
-			  
-			  args = std::regex_replace( args, std::regex( "\\)" ),       ");" );
-			  
-			  args = std::regex_replace( args, std::regex( "%s" ),        std::string( file_name ) );
-			  args = std::regex_replace( args, std::regex( "%o" ),        fstdout );
-			  args = std::regex_replace( args, std::regex( "%e" ),        fstderr );
-			  args = std::regex_replace( args, std::regex( "%\\?" ),      "ret" );
-			  
-			  args = std::regex_replace( args, std::regex( "%casmi" ),    "../../casmi" );
-			  args = std::regex_replace( args, std::regex( "%casmc" ),    "../../casmc" );
-			  
-			  fprintf
-			  ( fd
-			  , "    %s%s\n"
-			  , func.c_str()
-			  , args.c_str()
-			  );
-
 			  no_tc_command_found = false;
 			  break;
 		  }
 	  }
 	);
 	
-	if( no_tc_command_found )
+	if( no_tc_found or no_tc_command_found )
 	{
+		assert(0);
+	}
+    
+	FILE* fd = fopen( dest_name, "w+" );
+	assert( fd );
+	
+	std::string fn( file_name );
+	std::replace( fn.begin(), fn.end(), '/', '_');
+	std::replace( fn.begin(), fn.end(), '.', '_');
+    
+	fprintf
+	( fd
+	, "#include \"gtest/gtest.h\"\n"
+	  "#include \"stdhl/cpp/Default.h\"\n"
+	  "#include \"uts/Runner.h\"\n"
+	  "\n"
+	  "static const char* specification = \"%s\";\n"
+	  "static const char* output_path   = \"%s\";\n"
+	  "\n"
+	  "INSTANTIATE_TEST_CASE_P\n"
+	  "( libcasm_tc__%s\n"
+	  ", Runner\n"
+	  ", ::testing::Values\n"
+	  "  ( Param\n"
+	  "    { specification\n"
+	  "    , output_path\n"
+	  "    , {"
+	, file_name
+	, dest_name
+	, fn.c_str()
+	);
+	
+	u1 first_error = true;
+	for( auto& e : error )
+	{
+		//printf( "::: '%s' '%s'\n", e.line.c_str(), e.code.c_str() );
+		
 		fprintf
-	    ( fd
-		, "    EXPECT_FALSE( \"'%s' does not use any 'tc' commands\" );\n"
-		, file_name
+		( fd
+		, "%s { \"%s\", \"%s\" }\n"
+		  "      "
+		, first_error ? "" : ","
+		, e.line.c_str()
+		, e.code.c_str()
 		);
+		first_error = false;
 	}
 	
 	fprintf
 	( fd
 	, "}\n"
+	  "    }\n"
+	  "  )\n"
+	  ");"
 	);
     
+	assert( fclose( fd ) == 0 );
+	
     return 0;
 }
 

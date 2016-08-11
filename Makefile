@@ -41,7 +41,10 @@ TARGET += obj/tc
 FILES   = $(shell find src -name '*.cpp' | cut -d'.' -f1)
 OBJECTS = $(FILES:%=obj/%.o)
 
-INCLUDE = -I ../
+INCLUDE  = -I ../
+INCLUDE += -I ./
+
+.PHONY: test
 
 default: $(TARGET)
 
@@ -61,9 +64,12 @@ clean:
 	@rm -f test
 
 
-TEST_FILES    = $(shell find uts -name '*.casm' | cut -d'.' -f1)
-TEST_OBJECTS  = $(TEST_FILES:%=obj/%.cpp)
-TEST_OBJECTS += $(TEST_FILES:%=obj/%.o)
+TEST_FILES_CASM  = $(shell grep -lnr uts -e "//@ TC" | sed -e "s/.casm//g")
+TEST_FILES_CPP   = $(shell find uts -name "*.cpp" | sed -e "s/.cpp//g")
+
+TEST_OBJECTS     = $(TEST_FILES_CASM:%=obj/%.cpp)
+TEST_OBJECTS    += $(TEST_FILES_CASM:%=obj/%.o)
+TEST_OBJECTS    += $(TEST_FILES_CPP:%=obj/%.o)
 
 TEST_INCLUDE  = -I ../gtest/googletest/include
 TEST_INCLUDE += -I ../gtest/googletest
@@ -71,6 +77,11 @@ TEST_INCLUDE += -I ../gtest/googletest
 TEST_LIBRARY  = -lstdc++
 TEST_LIBRARY += -lm
 TEST_LIBRARY += -lpthread
+
+obj/uts/%.o:   uts/%.cpp
+	@mkdir -p `dirname $@`
+	@echo "CPP " $<
+	@$(CPP) $(CPPFLAG) $(TEST_INCLUDE) $(INCLUDE) -c $< -o $@
 
 obj/uts/%.o:   obj/uts/%.cpp
 	@mkdir -p `dirname $@`
@@ -82,13 +93,14 @@ obj/uts/%.cpp: $(TARGET) uts/%.casm
 	@echo "TC  " $(filter %.casm,$^)
 	@$(TARGET) $(filter %.casm,$^) $@
 
+test-cases:
+	@( for i in $(TEST_FILES_CASM); do echo $$i; done )
+
 test: $(TEST_OBJECTS)
+	@rm -f $@
 	@echo "LD  " $@
 	@$(CPP) $(CPPFLAG) $(TEST_INCLUDE) $(INCLUDE) $(TEST_LIBRARY) -o $@ $(filter %.o,$^) ../gtest/googletest/src/gtest-all.cc ../gtest/googletest/src/gtest_main.cc
 
-#	@./$@
-## TODO: FIXME: PPA: currently the execution is disabled for the direct testing of the CASM files
-##                   I'll fix this ASAP the error codes and an generic 'RUN' tag is implemented!
-##                   for now we just print a warning!
-	$(warning warning: test execution is DISABLED)
-	@rm -f test
+test-run: test
+	@echo "RUN " $<
+	@./$<

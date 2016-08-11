@@ -24,11 +24,17 @@
 
 //@ TC()
 
-CASM unittest init foo rule foo = program( self ) := undef
+CASM unittest
 
-function s : -> String
+init foo
 
-rule bar =
+function a : -> Integer
+function b : -> Integer
+function c : -> Integer
+
+rule foo =
 {
-    s := "asdf"; //@ ERROR( 0001 )
+    a := 2
+    a := 3
+    program( self ) := undef
 }
