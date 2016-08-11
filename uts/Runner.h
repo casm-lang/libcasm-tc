@@ -26,7 +26,7 @@
 #include "stdhl/cpp/Default.h"
 #include "stdhl/cpp/Type.h"
 #include "stdhl/cpp/File.h"
-#include "casm-tc/libcasm-tc.h"
+#include "libcasm-tc.h"
 
 #define TEST_NAME                                                       \
     ( std::string                                                       \
