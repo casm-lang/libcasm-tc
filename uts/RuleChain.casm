@@ -24,4 +24,25 @@
 
 //@ TC()
 
-CASM unittest init foo rule foo = program( self ) := undef
+CASM unittest
+
+init a
+
+rule a =
+{
+    program(self) := @b
+}
+
+rule b = program(self) := @c
+
+rule c =
+{|
+    program(self) := @d
+|}
+
+rule d =
+{
+    {|
+        program(self) := undef
+    |}
+}
