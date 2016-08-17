@@ -22,21 +22,8 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-// TC() // TODO: FIXME: PPA:
+//@ TC()
 
-CASM unittest init foo
+CASM unittest init foo rule foo = program( self ) := undef
 
-function a: -> List( Integer )
-
-rule foo = {
-  let x = undef in
-  let y = undef in
-    a := cons( x, y )
-
-  let x = cons( 1, undef ) in assert x = undef
-  let x = cons( undef, [ 1 ] ) in assert x = [ undef, 1 ]
-  let x: List(List(Integer)) = cons( [ 1 ], undef ) in assert x = undef
-
-  program( self ) := undef
-}
-
+function f : -> Tuple( Integer, Integer )

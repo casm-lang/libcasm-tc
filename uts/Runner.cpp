@@ -38,6 +38,7 @@ TEST_P( Runner, case )
     
     std::unordered_map< std::string, const char* > env;
     env[ "EXPORT" ] = "export";
+    env[ "ECHO" ] = "echo";
     env[ "CAT" ] = "cat";
     env[ "CASM" ];
     env[ "CASM_TC" ];
@@ -104,29 +105,57 @@ TEST_P( Runner, case )
         }
     }
     
-    // printf( "exec: '%s'\n", cmd );
     exec_result = system( cmd );
     
-    sprintf( cmd, "%s %s", env[ "CAT" ], fout.c_str() );
-    // printf( "exec: '%s'\n", cmd );
-    system( cmd );
-    sprintf( cmd, "%s %s", env[ "CAT" ], ferr.c_str() );
-    // printf( "exec: '%s'\n", cmd );
-    system( cmd );
+    sprintf
+    ( cmd
+    , "%s %s; %s %s; %s %s"
+    , env[ "ECHO" ]
+    , cmd
+    , env[ "CAT" ]
+    , fout.c_str()
+    , env[ "CAT" ]
+    , ferr.c_str()
+    );
     
     if( param.error.size() == 0 )
     {
         EXPECT_EQ( exec_result, 0 );
+        if( exec_result != 0 )
+        {
+            system( cmd );
+        }
+        
+        // libstdhl::File::readLines
+        // ( ferr.c_str()
+        // , [ &param, &checked ]
+	//   ( u32 cnt, const std::string& line )
+	//   {
+        //       std::string c = "";
+        //       std::regex expr
+	//       ( "@([\\S]+)\\{([\\S]+)\\}"
+	//       );
+        //       std::sregex_iterator start( line.begin(), line.end(), expr );
+        //       std::sregex_iterator end;
+		  
+        //       for( std::sregex_iterator i = start; i != end; i++ )
+        //       {
+        //           std::smatch match = *i;
+        //           assert( match.size() == 3 );
+        //           std::string mstr   = match.str();
+        //           // printf( "'%s'\n", mstr.c_str() );			  
+                  
     }
     else
     {
         EXPECT_NE( exec_result, 0 );
-        
+
+        u32 error_cnt = 0;
         std::vector< ParamError > checked;
         
 	libstdhl::File::readLines
         ( ferr.c_str()
-        , [ &param, &checked ]
+        , [ &param, &checked, &error_cnt ]
 	  ( u32 cnt, const std::string& line )
 	  {
               std::string c = "";
@@ -142,7 +171,7 @@ TEST_P( Runner, case )
                   assert( match.size() == 3 );
                   std::string mstr   = match.str();
                   // printf( "'%s'\n", mstr.c_str() );			  
-
+                  
                   u1 line_not_found = true;
                   u1 code_not_valid = true;
                   
@@ -163,11 +192,24 @@ TEST_P( Runner, case )
                   
                   EXPECT_FALSE( line_not_found );
                   EXPECT_FALSE( code_not_valid );
+
+                  if( line_not_found or code_not_valid )
+                  {
+                      error_cnt++;
+                  }
               }
           }
         );
-
+        
         EXPECT_EQ( param.error.size(), checked.size() );
+        
+        if( exec_result == 0
+        or  param.error.size() != checked.size()
+        or  error_cnt > 0
+        )
+        {
+            system( cmd );
+        }
     }
 }
 
