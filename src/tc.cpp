@@ -32,7 +32,7 @@ int main( int argc, const char *argv[] )
 
 	const char* file_name = argv[1];
 	const char* dest_name = argv[2];
-	
+    
 	assert( libstdhl::File::exists( file_name ) );
 	
 	
@@ -49,13 +49,12 @@ int main( int argc, const char *argv[] )
     
 	libstdhl::File::readLines
 	( file_name
-	  , [ /*fd,*/ file_name, dest_name, &no_tc_found, &no_tc_command_found , &error ]
+	  , [ file_name, dest_name, &no_tc_found, &no_tc_command_found , &error ]
 	  ( u32 cnt, const std::string& line )
 	  {
 		  std::string c = "";
 		  std::regex expr
 		  ( "//@ ([\\S]+)[ ]*\\([ ]*([\\S]*)[ ]*\\)"
-			//( "//@ ([\\S]+)([\\(]([\\S])*[\\)])"
 		  );
 		  std::sregex_iterator start( line.begin(), line.end(), expr );
 		  std::sregex_iterator end;
@@ -64,16 +63,10 @@ int main( int argc, const char *argv[] )
 		  {
 			  std::smatch match = *i;
 			  std::string mstr   = match.str();
-			  // printf( "'%s'\n", mstr.c_str() );
-              // for( int c = 0; c < match.size(); c++ )
-			  // {
-			  // 	  printf( "%i:'%s'\n", c, match[c].str().c_str() );
-			  // }
 			  assert( match.size() == 3 );
 			  
 			  std::string func = match[1].str();
 			  std::string args = match[2].str();
-			  
 			  //printf( "'%s' ( '%s' )\n", func.c_str(), args.c_str() );			  
 			  
 			  args = std::regex_replace( args, std::regex( "\"" ),       "\\\"" );
@@ -115,34 +108,38 @@ int main( int argc, const char *argv[] )
 	{
 		assert(0);
 	}
-    
-	FILE* fd = fopen( dest_name, "w+" );
-	assert( fd );
-	
+
+
 	std::string fn( file_name );
 	std::replace( fn.begin(), fn.end(), '/', '_');
 	std::replace( fn.begin(), fn.end(), '.', '_');
-    
+
+	
+	FILE* fd = 0;
+	fd = fopen( dest_name, "w+" );
+	assert( fd );
+	
 	fprintf
 	( fd
-	, "#include \"gtest/gtest.h\"\n"
+	, "\n"
+	  "#ifndef _LIB_CASMTC_UTS_RUNNER_\n"
+	  "#define _LIB_CASMTC_UTS_RUNNER_\n"
+	  "#include \"gtest/gtest.h\"\n"
 	  "#include \"stdhl/cpp/Default.h\"\n"
 	  "#include \"uts/Runner.h\"\n"
-	  "\n"
-	  "static const char* specification = \"%s\";\n"
-	  "static const char* output_path   = \"%s\";\n"
+	  "#endif //_LIB_CASMTC_UTS_RUNNER_\n"
 	  "\n"
 	  "INSTANTIATE_TEST_CASE_P\n"
 	  "( libcasm_tc__%s\n"
 	  ", Runner\n"
 	  ", ::testing::Values\n"
 	  "  ( Param\n"
-	  "    { specification\n"
-	  "    , output_path\n"
+	  "    { \"%s\"\n"
+	  "    , \"%s\"\n"
 	  "    , {"
+	, fn.c_str()
 	, file_name
 	, dest_name
-	, fn.c_str()
 	);
 	
 	u1 first_error = true;
@@ -166,7 +163,8 @@ int main( int argc, const char *argv[] )
 	, "}\n"
 	  "    }\n"
 	  "  )\n"
-	  ");"
+	  ");\n"
+	  "\n"
 	);
     
 	assert( fclose( fd ) == 0 );

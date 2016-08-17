@@ -22,6 +22,9 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
+#ifndef _LIB_CASMTC_RUNNER_H_
+#define _LIB_CASMTC_RUNNER_H_
+
 #include "gtest/gtest.h"
 #include "stdhl/cpp/Default.h"
 #include "stdhl/cpp/Type.h"
@@ -54,3 +57,5 @@ struct Param
 class Runner : public ::testing::TestWithParam< Param >
 {
 };
+
+#endif // _LIB_CASMTC_RUNNER_H_

@@ -44,7 +44,6 @@ OBJECTS = $(FILES:%=obj/%.o)
 INCLUDE  = -I ../
 INCLUDE += -I ./
 
-.PHONY: test
 
 default: $(TARGET)
 
@@ -67,8 +66,9 @@ clean:
 TEST_FILES_CASM  = $(shell grep -lnr uts -e "//@ TC" | sed -e "s/.casm//g")
 TEST_FILES_CPP   = $(shell find uts -name "*.cpp" | sed -e "s/.cpp//g")
 
-TEST_OBJECTS     = $(TEST_FILES_CASM:%=obj/%.cpp)
-TEST_OBJECTS    += $(TEST_FILES_CASM:%=obj/%.o)
+TEST_CASES       = $(TEST_FILES_CASM:%=obj/%.casm.cpp)
+
+TEST_OBJECTS    += obj/uts_Runner.o
 TEST_OBJECTS    += $(TEST_FILES_CPP:%=obj/%.o)
 
 TEST_INCLUDE  = -I ../gtest/googletest/include
@@ -83,15 +83,25 @@ obj/uts/%.o:   uts/%.cpp
 	@echo "CPP " $<
 	@$(CPP) $(CPPFLAG) $(TEST_INCLUDE) $(INCLUDE) -c $< -o $@
 
-obj/uts/%.o:   obj/uts/%.cpp
+obj/uts_Runner.cpp: $(TEST_CASES)
+	@echo "CAT " $@
+	@cat $^ > $@
+
+obj/uts_Runner.o: obj/uts_Runner.cpp
 	@mkdir -p `dirname $@`
 	@echo "CPP " $<
 	@$(CPP) $(CPPFLAG) $(TEST_INCLUDE) $(INCLUDE) -c $< -o $@
 
-obj/uts/%.cpp: $(TARGET) uts/%.casm
+obj/uts/%.casm.cpp: $(TARGET) uts/%.casm
 	@mkdir -p `dirname $@`
 	@echo "TC  " $(filter %.casm,$^)
 	@$(TARGET) $(filter %.casm,$^) $@
+
+obj/uts/%.casm: $(TARGET) uts/%.casm
+	@mkdir -p `dirname $@`
+	@echo "TC  " $(filter %.casm,$^)
+	@$(TARGET) $(filter %.casm,$^) $@
+	@touch $@
 
 test-cases:
 	@( for i in $(TEST_FILES_CASM); do echo $$i; done )
