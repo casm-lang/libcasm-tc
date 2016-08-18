@@ -24,13 +24,12 @@
 
 //@ TC()
 
-CASM unittest
+CASM unittest init foo
 
-init test
-
-rule test =
+rule foo =
 {
     program( self ) := undef
 }
 
 function (static) a : -> Integer
+

@@ -24,13 +24,13 @@
 
 //@ TC()
 
-CASM unittest
+CASM unittest init foo
 
-init test
+// cmdline "-dall" // TODO: FIXME: PPA: command line for debug channels etc.
 
-rule test =
+rule foo = 
 {
+    debug trace "hello world from debug"
     program( self ) := undef
 }
 
-function (static,static) a : -> Integer //@ ERROR( fa01 )
