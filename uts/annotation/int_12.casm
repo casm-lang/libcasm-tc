@@ -28,11 +28,10 @@ CASM unittest init foo
 
 function a: -> Integer
 
-rule main = {
+rule foo = {
   let x:Integer = undef in
   let y = undef in
   let z = x - y in skip
 
   program( self ) := undef
 }
-
