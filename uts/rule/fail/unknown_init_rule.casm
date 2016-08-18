@@ -26,7 +26,7 @@
 
 CASM unittest
 
-init foo  //@ ERROR( ? )
+init foo  //@ ERROR( a000 )
 
 rule bar =
 {

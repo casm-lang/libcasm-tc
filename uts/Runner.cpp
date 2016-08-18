@@ -109,9 +109,7 @@ TEST_P( Runner, case )
     
     sprintf
     ( cmd
-    , "%s %s; %s %s; %s %s"
-    , env[ "ECHO" ]
-    , cmd
+    , "%s %s; %s %s"
     , env[ "CAT" ]
     , fout.c_str()
     , env[ "CAT" ]
