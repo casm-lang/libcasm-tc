@@ -27,7 +27,7 @@
 CASM unittest init foo
 
 rule foo = {
-  let x = undef in
+  let x = undef in //@ ERROR( ? )
   let y = hex( x ) in assert y = "undef"
 
   program( self ) := undef

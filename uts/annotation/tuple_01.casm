@@ -28,10 +28,8 @@ CASM unittest init foo
 
 rule foo = {
   let x = undef in
-  let y = undef in
-    assert (asBit( x, 1) or asBit( y, 1 )) != asBit( 2, 1 )
-//  assert BVor( 1, x, y ) != 2
-
+    let y = x in
+        let z:Tuple( Integer, Tuple( Integer, Integer )) = y in skip
+  
   program( self ) := undef
 }
-
