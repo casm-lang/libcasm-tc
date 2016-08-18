@@ -116,11 +116,43 @@ TEST_P( Runner, case )
     , ferr.c_str()
     );
     
+    u64 warning_cnt = 0;
+    
+    libstdhl::File::readLines
+    ( ferr.c_str()
+    , [ &warning_cnt ]
+      ( u32 cnt, const std::string& line )
+      {
+          std::regex expr( "warning|Warning|WARNING" );
+          std::sregex_iterator start( line.begin(), line.end(), expr );
+          std::sregex_iterator end;
+          
+          for( std::sregex_iterator i = start; i != end; i++ )
+          {
+              std::smatch match = *i;
+              std::string mstr   = match.str();
+              //printf( "'%s'\n", mstr.c_str() );			  
+              warning_cnt++;
+          }
+      }
+    );
+    
     if( param.error.size() == 0 )
     {
         EXPECT_EQ( exec_result, 0 );
         if( exec_result != 0 )
         {
+            system( cmd );
+        }
+        else if( warning_cnt != 0 )
+        {
+            sprintf
+            ( cmd
+            , "%s %s"
+            , env[ "CAT" ]
+            , ferr.c_str()
+            );
+            
             system( cmd );
         }
         
@@ -148,7 +180,7 @@ TEST_P( Runner, case )
     {
         EXPECT_NE( exec_result, 0 );
 
-        u32 error_cnt = 0;
+        u64 error_cnt = 0;
         std::vector< ParamError > checked;
         
 	libstdhl::File::readLines

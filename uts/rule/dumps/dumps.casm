@@ -1,0 +1,49 @@
+//  
+//  Copyright (c) 2014-2016 CASM Organization
+//  All rights reserved.
+//  
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/ppaulweber/libcasm-tc
+//  
+//  This file is part of libcasm-tc.
+//  
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//  
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//  
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//  
+
+//@ TC()
+
+CASM unittest init foo
+
+// TODO: FIXME: PPA: check if the dumps is really correct!!!
+
+enum myEnum = { one, two, three }
+
+function a : -> Integer
+function b : Integer -> Integer
+function c : Integer * Integer -> Integer
+
+function bb: myEnum -> Integer
+function bbb: Integer -> myEnum
+
+rule foo dumps (a,b,c,bb,bbb)-> trace =
+{|
+    a := 3
+    b(2) := 4
+    c(2,3) := 5
+    bb(two) := 1
+    bbb(2) := three
+    program(self) := undef
+|}
+
