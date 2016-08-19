@@ -28,7 +28,8 @@ CASM unittest init foo
 
 function x : -> String
 
-rule foo = { 
+rule foo =
+{
     if x = "END" then
         program(self) := undef
     else

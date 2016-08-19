@@ -28,4 +28,4 @@ CASM unittest init foo rule foo = program(self) := undef
 
 // tests if "initially" handles ranged integers correctly => location out of range
 
-function bar : Integer(0..2) -> Integer(2..4) initially { 42 -> 3 } //@ ERROR( ? )
+function bar : Integer(0..2) -> Integer(2..4) initially { 42 -> 3 } //@ ERROR( fe02 )
