@@ -36,7 +36,7 @@ rule foo =
 {
     let c = not a in
     {
-        assert symbolic( c ) = symbolic( a )
+        assert isSymbolic( c ) = isSymbolic( a )
         
         assert c != false
         assert c != true
