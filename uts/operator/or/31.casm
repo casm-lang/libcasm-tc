@@ -40,7 +40,7 @@ rule foo =
     let b = false in
     let c = a or b in
     {
-        assert symbolic( c ) = symbolic( a )
+        assert isSymbolic( c ) = isSymbolic( a )
         
         assert c != false
         assert c != true

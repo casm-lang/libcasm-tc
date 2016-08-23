@@ -31,7 +31,7 @@ CASM unittest init foo
 function(symbolic) b : Integer -> Integer initially { 1 -> 1, 2 -> 2 }
 
 rule foo = {
-    assert symbolic( b(1) ) = false
+    assert isSymbolic( b(1) ) = false
     program(self) := undef
 }
 
