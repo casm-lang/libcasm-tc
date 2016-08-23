@@ -43,7 +43,7 @@ rule foo =
         
         assert c != true
         assert c != false
-        assert symbolic( c ) = false
+        assert isSymbolic( c ) = false
     }
     program( self ) := undef
 }

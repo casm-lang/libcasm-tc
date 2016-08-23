@@ -40,8 +40,8 @@ rule foo =
 {
     let c = a and b in
     {
-        assert symbolic( c ) = symbolic( a )
-        assert symbolic( c ) = symbolic( b )
+        assert isSymbolic( c ) = isSymbolic( a )
+        assert isSymbolic( c ) = isSymbolic( b )
         
         assert c != false
         assert c != true
