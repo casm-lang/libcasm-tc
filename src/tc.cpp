@@ -54,7 +54,7 @@ int main( int argc, const char *argv[] )
 	  {
 		  std::string c = "";
 		  std::regex expr
-		  ( "//@ ([\\S]+)[ ]*\\([ ]*([\\S]*)[ ]*\\)"
+		  ( "//@[ ]*([\\S]+)[ ]*\\([ ]*([\\S]*)[ ]*\\)"
 		  );
 		  std::sregex_iterator start( line.begin(), line.end(), expr );
 		  std::sregex_iterator end;

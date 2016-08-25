@@ -116,18 +116,31 @@ TEST_P( Runner, case )
     , ferr.c_str()
     );
     
+    u64 error_cnt = 0;
     u64 warning_cnt = 0;
     
     libstdhl::File::readLines
     ( ferr.c_str()
-    , [ &warning_cnt ]
+    , [ &error_cnt, &warning_cnt ]
       ( u32 cnt, const std::string& line )
       {
-          std::regex expr( "warning|Warning|WARNING" );
-          std::sregex_iterator start( line.begin(), line.end(), expr );
+          std::regex e( "error:" );
+          std::sregex_iterator start( line.begin(), line.end(), e );
           std::sregex_iterator end;
           
           for( std::sregex_iterator i = start; i != end; i++ )
+          {
+              std::smatch match = *i;
+              std::string mstr   = match.str();
+              //printf( "'%s'\n", mstr.c_str() );			  
+              error_cnt++;
+          }
+	  
+          std::regex w( "warning:" );
+          start = std::sregex_iterator( line.begin(), line.end(), w );
+          std::sregex_iterator we;
+ 	  
+          for( std::sregex_iterator i = start; i != we; i++ )
           {
               std::smatch match = *i;
               std::string mstr   = match.str();
@@ -144,7 +157,7 @@ TEST_P( Runner, case )
         {
             system( cmd );
         }
-        else if( warning_cnt != 0 )
+        else if( error_cnt or warning_cnt )
         {
             sprintf
             ( cmd
@@ -180,12 +193,12 @@ TEST_P( Runner, case )
     {
         EXPECT_NE( exec_result, 0 );
 
-        u64 error_cnt = 0;
+        u64 failure_cnt = 0;
         std::vector< ParamError > checked;
         
 	libstdhl::File::readLines
         ( ferr.c_str()
-        , [ &param, &checked, &error_cnt ]
+        , [ &param, &checked, &failure_cnt ]
 	  ( u32 cnt, const std::string& line )
 	  {
               std::string c = "";
@@ -225,19 +238,23 @@ TEST_P( Runner, case )
 
                   if( line_not_found or code_not_valid )
                   {
-                      error_cnt++;
+                      failure_cnt++;
                   }
               }
           }
         );
         
         EXPECT_EQ( param.error.size(), checked.size() );
-        
+        EXPECT_EQ( param.error.size(), error_cnt );
+	
         if( exec_result == 0
         or  param.error.size() != checked.size()
-        or  error_cnt > 0
+	or  param.error.size() != error_cnt
+        or  failure_cnt > 0
         )
         {
+	    printf( "%lu, %lu\n", param.error.size(), error_cnt );
+	    
             system( cmd );
         }
     }
