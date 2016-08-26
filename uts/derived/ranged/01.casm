@@ -31,6 +31,6 @@ CASM unittest init foo
 derived bar(a : Integer(2..4)) = a
 
 rule foo = {|
-    bar(42) //@ ERROR( ? )
+    print bar(42) //@ ERROR( ? )
     program(self) := undef
 |}
