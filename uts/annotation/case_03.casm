@@ -28,13 +28,14 @@ CASM unittest init foo
 
 rule foo = {
   let x = undef in
-  let y = undef in {
+  let y = undef in
+  {
     case y of
-      x: skip
-      2: assert false
-      3: assert false
-      4: assert false
-      default: assert false
+      x: { skip }
+      2: { assert false }
+      3: { assert false }
+      4: { assert false }
+      default: { assert false }
     endcase
   }
 

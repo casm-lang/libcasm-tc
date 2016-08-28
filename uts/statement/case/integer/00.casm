@@ -28,9 +28,10 @@ CASM unittest init foo
 
 rule foo =
 {
-    case true of
-    false:    { assert false }
-    true:     { assert true  }
+    case 0 of
+    0:        { assert true  }
+    -321:     { assert false }
+    123:      { assert false }
     default:  { assert false }
     endcase
     

@@ -26,33 +26,14 @@
 
 CASM unittest init foo
 
-rule foo = {
-  case 1 of
-    1: assert true
-    2: assert false
-    default: assert false
-  endcase
-
-  case 2 of
-    1: assert false
-    default: assert true
-  endcase
-
-  case 2 of
-    default: assert true
-    1: assert false
-  endcase
-
-  case "hallo" of
-    "Hallo": assert false
-    "hallo": assert true
-  endcase
-
-  case "hallo" of
-    "Hallo": assert false
-    default: assert true
-  endcase
-
-  program(self) := undef
+rule foo =
+{
+    case 4321 of
+    0:        { assert false }
+    123:      { assert false }
+    -321:     { assert false }
+    default:  { assert true  }
+    endcase
+    
+    program(self) := undef
 }
-

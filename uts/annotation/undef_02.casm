@@ -36,18 +36,11 @@ rule foo =
     else
        assert true
 
-    // case bar of
-    // false: assert false
-    // true:  assert false
-    // undef: assert true
-    // default: assert false
-    // endcase
-
     case baz of
-    0: assert false
-    1:  assert false
-//    undef: assert true
-    default: assert true
+    0: { assert false }
+    1: { assert false }
+    undef: { assert true }
+    default: { assert true }
     endcase
     
     program( self ) := undef    

@@ -28,10 +28,11 @@ CASM unittest init foo
 
 rule foo =
 {
-    case true of
-    false:    { assert false }
-    true:     { assert true  }
-    default:  { assert false }
+    case undef of
+    "foo":    { assert false }
+    "bar":    { assert false }
+    "baz":    { assert false }
+    default:  { assert true  }
     endcase
     
     program(self) := undef
