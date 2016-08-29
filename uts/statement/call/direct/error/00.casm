@@ -26,9 +26,9 @@
 
 CASM unittest init foo
 
-// tests direct rule call with wrong argument type
+// tests direct rule call with wrong number of arguments
 
-rule foo = call bar("bar") //@ ERROR( ? )
+rule foo = call bar(1,2,3,4,"bar",6) //@ ERROR( 5e01 )
 
-rule bar( a:Integer ) = program(self) := undef
+rule bar( a:Integer, b:Integer ) = program(self) := undef
 

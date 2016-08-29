@@ -26,9 +26,9 @@
 
 CASM unittest init foo
 
-// tests direct rule call with wrong number of arguments
+// tests indirect rule call with wrong argument type
 
-rule foo = call bar(1,2,3,4,"bar",6) //@ ERROR( ? )
+rule foo = let rr = @bar in call (rr)("bar") //@ ERROR( 5e05 )
 
-rule bar( a:Integer, b:Integer ) = program(self) := undef
+rule bar( a:Integer ) = program(self) := undef
 
