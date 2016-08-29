@@ -28,12 +28,11 @@ CASM unittest init foo
 
 rule foo =
 {
-    case 0.0 of
+    case 0.0 of {
     0.0:       { assert true  }
     -32.1:     { assert false }
     1.23:      { assert false }
     default:   { assert false }
-    endcase
-    
+    }
     program(self) := undef
 }
