@@ -7,13 +7,13 @@ init main
 
 rule main = {
   if b = 0 then
-	let x = a(0) in skip
+    let x = a(0) in skip
   else if b = 5 then 
-	let x = a(5) in skip
+    let x = a(5) in skip
   else if b = 10 then
-	a(10) := a(5)
+    a(10) := a(5)
   else if b = 15 then
-	program(self) := undef
+    program(self) := undef
 
   print "step"
   b := b + 1

@@ -34,7 +34,7 @@ function (static) bar : Integer -> Integer initially { 1 -> 3 }
 init foo
 
 rule foo = {|
-	assert baz(1) = 3
-	program(self) := undef
+    assert baz(1) = 3
+    program(self) := undef
 |}
 

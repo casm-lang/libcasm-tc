@@ -32,7 +32,7 @@ function baz: -> Integer initially { bar }
 function (static) bar : -> Integer initially { 3 }
 
 rule foo = {|
-	assert baz = 3
-	program(self) := undef
+    assert baz = 3
+    program(self) := undef
 |}
 

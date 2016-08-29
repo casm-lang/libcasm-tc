@@ -6,7 +6,7 @@ function (symbolic) foo : -> Int
 init initR
 
 rule initR = 
-	case foo of
-		1: program(self) := undef
-		default: impossible
-	endcase
+    case foo of
+        1: program(self) := undef
+        default: impossible
+    endcase

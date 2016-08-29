@@ -31,10 +31,10 @@ function b : Integer -> Integer initially {1->0, 2->0}
 
 rule bar( m:Integer, x:Integer, y:Integer ) =
 {|
-	if m = 1 then {
-		b(x) := 1
-	} else {
-		b(x) := b(x) + y
+    if m = 1 then {
+        b(x) := 1
+    } else {
+        b(x) := b(x) + y
         }
 |}
 
@@ -43,10 +43,10 @@ rule foo =
  a := @bar
  par
  forall i in [1..2] do
-	seq
-		call (a)(1,i,undef)
-		call (a)(2,i,1)
-	endseq
+    seq
+        call (a)(1,i,undef)
+        call (a)(2,i,1)
+    endseq
  endpar
  print b(1) + b(2)
  program(self) := undef

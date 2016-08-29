@@ -27,12 +27,12 @@
 CASM unittest init foo
 
 rule foo = {
-	let x = [ 1, "Hey!", true ] in {
-		assert nth( x, 1 ) = 1
-		assert nth( x, 2 ) = "Hey!"
-		assert nth( x, 3 ) = true
-	}
+    let x = [ 1, "Hey!", true ] in {
+        assert nth( x, 1 ) = 1
+        assert nth( x, 2 ) = "Hey!"
+        assert nth( x, 3 ) = true
+    }
 
-	program( self ) := undef
+    program( self ) := undef
 }
 
