@@ -4,7 +4,7 @@
 //  
 //  Developed by: Philipp Paulweber
 //                Emmanuel Pescosta
-//                https://github.com/ppaulweber/libcasm-tc
+//                https://github.com/casm-lang/libcasm-tc
 //  
 //  This file is part of libcasm-tc.
 //  

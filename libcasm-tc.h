@@ -1,9 +1,10 @@
 //  
-//  Copyright (c) 2015-2016 CASM Organization
+//  Copyright (c) 2014-2016 CASM Organization
 //  All rights reserved.
 //  
 //  Developed by: Philipp Paulweber
-//                https://github.com/ppaulweber/libcasm-tc
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
 //  
 //  This file is part of libcasm-tc.
 //  
