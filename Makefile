@@ -36,23 +36,32 @@ CPPFLAG += -Wall
 #CPPFLAG += -Wextra
 
 
-TARGET += obj/tc
+TARGET_TC += obj/tc
+TARGET_BM += obj/bm
 
-FILES   = $(shell find src -name '*.cpp' | cut -d'.' -f1)
-OBJECTS = $(FILES:%=obj/%.o)
+
+FILES_TC   = src/tc #$(shell find src -name '*.cpp' | cut -d'.' -f1)
+OBJECTS_TC = $(FILES_TC:%=obj/%.o)
+
+FILES_BM   = src/bm #$(shell find src -name '*.cpp' | cut -d'.' -f1)
+OBJECTS_BM = $(FILES_BM:%=obj/%.o)
 
 INCLUDE  = -I ../
 INCLUDE += -I ./
 
 
-default: $(TARGET)
+default: $(TARGET_TC) $(TARGET_BM)
 
 obj/src/%.o: src/%.cpp
 	@mkdir -p `dirname $@`
 	@echo "CPP " $<
 	@$(CPP) $(CPPFLAG) $(INCLUDE) -c $< -o $@
 
-$(TARGET): $(OBJECTS)
+$(TARGET_TC): $(OBJECTS_TC)
+	@echo "LD  " $@
+	@$(CPP) $(CPPFLAG) $(INCLUDE) -o $@ $(filter %.o,$^) -lstdc++ -lm
+
+$(TARGET_BM): $(OBJECTS_BM)
 	@echo "LD  " $@
 	@$(CPP) $(CPPFLAG) $(INCLUDE) -o $@ $(filter %.o,$^) -lstdc++ -lm
 
@@ -61,14 +70,16 @@ clean:
 	@rm -rf obj
 	@echo "RM  " test
 	@rm -f test
+	@echo "RM  " benchmark
+	@rm -f benchmark
 
 
 TEST_FILES_CASM  = $(shell grep -lnr uts -e "//@ TC" | sed -e "s/.casm//g")
-TEST_FILES_CPP   = $(shell find uts -name "*.cpp" | sed -e "s/.cpp//g")
+TEST_FILES_CPP   = uts/RunnerTest #$(shell find uts -name "*.cpp" | sed -e "s/.cpp//g")
 
-TEST_CASES       = $(TEST_FILES_CASM:%=obj/%.casm.cpp)
+TEST_CASES       = $(TEST_FILES_CASM:%=obj/%.tc.cpp)
 
-TEST_OBJECTS    += obj/uts_Runner.o
+TEST_OBJECTS    += obj/uts_Tests.o
 TEST_OBJECTS    += $(TEST_FILES_CPP:%=obj/%.o)
 
 TEST_INCLUDE  = -I ../gtest/googletest/include
@@ -78,32 +89,26 @@ TEST_LIBRARY  = -lstdc++
 TEST_LIBRARY += -lm
 TEST_LIBRARY += -lpthread
 
-obj/uts/%.o:   uts/%.cpp
+obj/uts/RunnerTest.o: uts/RunnerTest.cpp
 	@mkdir -p `dirname $@`
 	@echo "CPP " $<
 	@$(CPP) $(CPPFLAG) $(TEST_INCLUDE) $(INCLUDE) -c $< -o $@
 
-obj/uts_Runner.cpp: $(TEST_CASES)
+obj/uts_Tests.cpp: $(TEST_CASES)
 	@echo "CAT " $@
 	@cat $^ > $@
 
-obj/uts_Runner.o: obj/uts_Runner.cpp
+obj/uts_Tests.o: obj/uts_Tests.cpp
 	@mkdir -p `dirname $@`
 	@echo "CPP " $<
 	@$(CPP) $(CPPFLAG) $(TEST_INCLUDE) $(INCLUDE) -c $< -o $@
 
-obj/uts/%.casm.cpp: $(TARGET) uts/%.casm
+obj/uts/%.tc.cpp: $(TARGET_TC) uts/%.casm
 	@mkdir -p `dirname $@`
 	@echo "TC  " $(filter %.casm,$^)
-	@$(TARGET) $(filter %.casm,$^) $@
+	@$(TARGET_TC) $(filter %.casm,$^) $@
 
-obj/uts/%.casm: $(TARGET) uts/%.casm
-	@mkdir -p `dirname $@`
-	@echo "TC  " $(filter %.casm,$^)
-	@$(TARGET) $(filter %.casm,$^) $@
-	@touch $@
-
-test-cases:
+tests:
 	@( for i in $(TEST_FILES_CASM); do echo $$i; done )
 
 test: $(TEST_OBJECTS)
@@ -114,3 +119,51 @@ test: $(TEST_OBJECTS)
 test-run: test
 	@echo "RUN " $<
 	@./$<
+
+
+
+BENCHMARK_FILES_CASM  = $(shell grep -lnr uts -e "//@ BM" | sed -e "s/.casm//g")
+BENCHMARK_FILES_CPP   = uts/RunnerBenchmark #$(shell find uts -name "*.cpp" | sed -e "s/.cpp//g")
+
+BENCHMARK_CASES       = $(BENCHMARK_FILES_CASM:%=obj/%.bm.cpp)
+
+BENCHMARK_OBJECTS    += obj/uts_Benchmarks.o
+BENCHMARK_OBJECTS    += $(BENCHMARK_FILES_CPP:%=obj/%.o)
+
+BENCHMARK_INCLUDE  = -I ../hayai/src
+
+BENCHMARK_LIBRARY  = -lstdc++
+# BENCHMARK_LIBRARY += -lm
+# BENCHMARK_LIBRARY += -lpthread
+
+obj/uts/RunnerBenchmark.o: uts/RunnerBenchmark.cpp
+	@mkdir -p `dirname $@`
+	@echo "CPP " $<
+	@$(CPP) $(CPPFLAG) $(BENCHMARK_INCLUDE) $(INCLUDE) -c $< -o $@
+
+obj/uts_Benchmarks.cpp: $(BENCHMARK_CASES)
+	@echo "CAT " $@
+	@cat $^ > $@
+
+obj/uts_Benchmarks.o: obj/uts_Benchmarks.cpp
+	@mkdir -p `dirname $@`
+	@echo "CPP " $<
+	@$(CPP) $(CPPFLAG) $(BENCHMARK_INCLUDE) $(INCLUDE) -c $< -o $@
+
+obj/uts/%.bm.cpp: $(TARGET_BM) uts/%.casm
+	@mkdir -p `dirname $@`
+	@echo "BM  " $(filter %.casm,$^)
+	@$(TARGET_BM) $(filter %.casm,$^) $@
+
+benchmarks:
+	@( for i in $(BENCHMARK_FILES_CASM); do echo $$i; done )
+
+benchmark: $(BENCHMARK_OBJECTS)
+	@rm -f $@
+	@echo "LD  " $@
+	@$(CPP) $(CPPFLAG) $(BENCHMARK_INCLUDE) $(INCLUDE) $(BENCHMARK_LIBRARY) -o $@ $(filter %.o,$^) ../hayai/src/hayai_posix_main.cpp
+
+benchmark-run: benchmark
+	@echo "RUN " $<
+	@./$<
+

@@ -22,8 +22,8 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-#ifndef _LIB_CASMTC_RUNNER_H_
-#define _LIB_CASMTC_RUNNER_H_
+#ifndef _LIB_CASMTC_RUNNERTEST_H_
+#define _LIB_CASMTC_RUNNERTEST_H_
 
 #include "gtest/gtest.h"
 #include "stdhl/cpp/Default.h"
@@ -54,8 +54,8 @@ struct Param
 ; std::vector< ParamError > error
 ;};
 
-class Runner : public ::testing::TestWithParam< Param >
+class RunnerTest : public ::testing::TestWithParam< Param >
 {
 };
 
-#endif // _LIB_CASMTC_RUNNER_H_
+#endif // _LIB_CASMTC_RUNNERTEST_H_

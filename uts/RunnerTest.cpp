@@ -22,10 +22,10 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-#include "uts/Runner.h"
+#include "uts/RunnerTest.h"
 
 
-TEST_P( Runner, case )
+TEST_P( RunnerTest, case )
 {
     Param const& param = GetParam();
 
@@ -262,8 +262,8 @@ TEST_P( Runner, case )
 
 
 // INSTANTIATE_TEST_CASE_P
-// ( libcasm_tc__uts_Runner
-// , Runner
+// ( libcasm_tc__uts_RunnerTest
+// , RunnerTest
 // , ::testing::Values
 //   ( Param
 //     { "text.txt"

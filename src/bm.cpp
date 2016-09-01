@@ -37,8 +37,8 @@ int main( int argc, const char *argv[] )
     
     
     std::vector< std::string > cmd;
-    u1 no_tc_found = true;
-    u1 no_tc_command_found = true;
+    u1 no_bm_found = true;
+    u1 no_bm_command_found = true;
     
     struct ErrorInfo
     { std::string line
@@ -49,7 +49,7 @@ int main( int argc, const char *argv[] )
     
     libstdhl::File::readLines
     ( file_name
-      , [ file_name, dest_name, &no_tc_found, &no_tc_command_found , &error ]
+      , [ file_name, dest_name, &no_bm_found, &no_bm_command_found , &error ]
       ( u32 cnt, const std::string& line )
       {
           std::string c = "";
@@ -71,29 +71,19 @@ int main( int argc, const char *argv[] )
               
               args = std::regex_replace( args, std::regex( "\"" ),       "\\\"" );
               
-              if( func.compare( "TC" ) == 0 )
+              if( func.compare( "BM" ) == 0 )
               {
-                  no_tc_found = false;
+                  no_bm_found = false;
               }
-              else if( func.compare( "BM" ) == 0 )
+              else if( func.compare( "TC" ) == 0 )
               {
-                  continue;
-              }
-              else if( func.compare( "ERROR" ) == 0 )
-              {
-                  error.push_back
-                  ( ErrorInfo
-                    { std::to_string( cnt + 1 )
-                    , args
-                    }
-                  );
                   continue;
               }
               else
               {
                   fprintf
                   ( stderr
-                  , "%s:%i: error: unknown/invalid 'tc' command found: '%s'\n"
+                  , "%s:%i: error: unknown/invalid 'bm' command found: '%s'\n"
                   , file_name
                   , cnt
                   , mstr.c_str()
@@ -102,13 +92,13 @@ int main( int argc, const char *argv[] )
                   exit(-1);
               }
               
-              no_tc_command_found = false;
+              no_bm_command_found = false;
               break;
           }
       }
     );
     
-    if( no_tc_found or no_tc_command_found )
+    if( no_bm_found or no_bm_command_found )
     {
         assert(0);
     }
@@ -117,7 +107,7 @@ int main( int argc, const char *argv[] )
     std::string fn( file_name );
     std::replace( fn.begin(), fn.end(), '/', '_');
     std::replace( fn.begin(), fn.end(), '.', '_');
-
+    
     
     FILE* fd = 0;
     fd = fopen( dest_name, "w+" );
@@ -126,49 +116,19 @@ int main( int argc, const char *argv[] )
     fprintf
     ( fd
     , "\n"
-      "#ifndef _LIB_CASMTC_UTS_RUNNER_\n"
-      "#define _LIB_CASMTC_UTS_RUNNER_\n"
-      "#include \"gtest/gtest.h\"\n"
-      "#include \"stdhl/cpp/Default.h\"\n"
-      "#include \"uts/RunnerTest.h\"\n"
-      "#endif //_LIB_CASMTC_UTS_RUNNER_\n"
+      "#ifndef _LIB_CASMTC_UTS_BENCHMARKS_\n"
+      "#define _LIB_CASMTC_UTS_BENCHMARKS_\n"
+      "#include \"uts/RunnerBenchmark.h\"\n"
+      "#endif //_LIB_CASMTC_UTS_BENCHMARKS_\n"
       "\n"
-      "INSTANTIATE_TEST_CASE_P\n"
-      "( libcasm_tc__%s\n"
-      ", RunnerTest\n"
-      ", ::testing::Values\n"
-      "  ( Param\n"
-      "    { \"%s\"\n"
-      "    , \"%s\"\n"
-      "    , {"
-    , fn.c_str()
-    , file_name
-    , dest_name
-    );
-    
-    u1 first_error = true;
-    for( auto& e : error )
-    {
-        //printf( "::: '%s' '%s'\n", e.line.c_str(), e.code.c_str() );
-        
-        fprintf
-        ( fd
-        , "%s { \"%s\", \"%s\" }\n"
-          "      "
-        , first_error ? "" : ","
-        , e.line.c_str()
-        , e.code.c_str()
-        );
-        first_error = false;
-    }
-    
-    fprintf
-    ( fd
-    , "}\n"
-      "    }\n"
+      "BENCHMARK_P_INSTANCE\n"
+      "( RunnerFixture\n"
+      ", case\n"
+      ", ( \"%s\"\n"
       "  )\n"
       ");\n"
       "\n"
+    , file_name
     );
     
     assert( fclose( fd ) == 0 );

@@ -1,0 +1,84 @@
+//  
+//  Copyright (c) 2014-2016 CASM Organization
+//  All rights reserved.
+//  
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
+//  
+//  This file is part of libcasm-tc.
+//  
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//  
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//  
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//  
+
+//@ TC()
+//@ BM()
+
+CASM bubblesort init foo
+
+function array   : Integer -> Integer
+function i       :         -> Integer initially { -1 }
+function changes :         -> Boolean
+
+
+rule bubblesort =
+{
+    case i of
+    {
+        -1:
+        {
+            changes := false
+            i := 0
+        }
+        30:
+        {
+            if not changes then
+            {
+                forall j in [ 0..30 ] do 
+                    print dec(j) + "=" + dec( array( j ) )
+
+                program( self ) := undef
+            }
+            i := -1
+        }
+
+        _:
+        {
+            if array( i ) > array( i+1 ) then
+            {
+                if not changes then
+                {
+                    changes := true
+                    array(i) := array(i+1)
+                    array(i+1) := array(i)
+                }
+            }
+            i := i + 1
+        }
+    }
+}
+
+
+rule foo =
+{
+    forall j in [ 0..28 ] do
+    {
+        array( j ) := ( j + 1 )
+    }
+    
+    array( 30 ) := 0
+    array( 29 ) := 0
+
+    program( self ) := @bubblesort
+}
