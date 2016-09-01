@@ -28,8 +28,7 @@ CASM unittest init foo
 
 rule foo =
 {
-    let expr = true in
-    if expr then
+    if undef then //@ ERROR( ? )
        skip
     
     program( self ) := undef
