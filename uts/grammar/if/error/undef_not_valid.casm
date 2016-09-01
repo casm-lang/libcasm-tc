@@ -28,7 +28,7 @@ CASM unittest init foo
 
 rule foo =
 {
-    if undef then //@ ERROR( ? )
+    if undef then //@ ERROR( 1003 )
        skip
     
     program( self ) := undef
