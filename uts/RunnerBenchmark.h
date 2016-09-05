@@ -32,7 +32,7 @@
 #include "libcasm-tc.h"
 
 
-class libcasm_tc__ : public ::hayai::Fixture
+class bm : public ::hayai::Fixture
 {
 private:
     char m_cmd[4096];
@@ -45,7 +45,7 @@ public:
 
 
 #define BM( FN, SPEC )                                               \
-    BENCHMARK_F( libcasm_tc__, FN, 5, 5 )			     \
+    BENCHMARK_F( bm, libcasm_tc__##FN, 5, 5 )			     \
     {                                                                \
         run( SPEC );                                                 \
     }

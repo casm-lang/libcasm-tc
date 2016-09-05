@@ -25,7 +25,7 @@
 #include "uts/RunnerBenchmark.h"
 
 
-void libcasm_tc__::SetUp()
+void bm::SetUp()
 {        
     u32 exec_result = 0;
     assert( exec_result == 0 );
@@ -92,7 +92,7 @@ void libcasm_tc__::SetUp()
 }
 
 
-void libcasm_tc__::run( const char* spec )
+void bm::run( const char* spec )
 {
     assert( libstdhl::File::exists( spec ) );
     char cmd[4096];
@@ -101,10 +101,10 @@ void libcasm_tc__::run( const char* spec )
 }
 
 
-void libcasm_tc__::TearDown()
+void bm::TearDown()
 {
 }
 
 
 
-// BENCHMARK_P_INSTANCE( libcasm_tc__, case, ( "todo/benchmark/bubblesort.casm" ) );
+// BENCHMARK_P_INSTANCE( bm, benchmark_name, ( "todo/benchmark/bubblesort.casm" ) );
