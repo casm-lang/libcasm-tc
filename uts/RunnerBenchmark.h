@@ -45,7 +45,7 @@ public:
 
 
 #define BM( FN, SPEC )                                               \
-    BENCHMARK_F( libcasm_tc__, FN, 10, 10 )			     \
+    BENCHMARK_F( libcasm_tc__, FN, 5, 5 )			     \
     {                                                                \
         run( SPEC );                                                 \
     }
