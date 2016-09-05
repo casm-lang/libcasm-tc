@@ -24,6 +24,8 @@
 
 // should finish after 3 steps because of an empty update set
 
+//@ TC()
+
 CASM log2 init main
 
 function N : -> Integer initially { 9 }
