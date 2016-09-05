@@ -25,7 +25,7 @@
 //@ TC()
 //@ BM()
 
-CASM bubblesort init foo
+CASM init foo
 
 function array   : Integer -> Integer
 function i       :         -> Integer initially { -1 }
