@@ -31,7 +31,7 @@
 // | true  | undef | false | true  | sym'  |
 // | sym   | sym'  | false | sym'  | sym'  |
 
-CASM unittest init foo
+CASM init foo
 
 rule foo =
 {

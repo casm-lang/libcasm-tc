@@ -24,7 +24,7 @@
 
 // TC() // TODO: FIXME: PPA:
 
-CASM unittest init foo
+CASM init foo
 
 rule foo = {
     let x : List(Integer) = [ undef, 1, 2 ] in assert x = [ undef, 1, 2]

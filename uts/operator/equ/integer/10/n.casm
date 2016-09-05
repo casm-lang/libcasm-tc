@@ -30,7 +30,7 @@
 // | y : Type | false | x == y   | sym' |
 // | sym      | sym'  | sym'     | sym' |
 
-CASM unittest init foo
+CASM init foo
 
 rule foo =
 {

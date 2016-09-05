@@ -24,12 +24,11 @@
 
 //@ TC()
 
-CASM hello_world
-
-init main
+CASM init main
 
 rule main =
 {
     print "Hello World!"
+
     program(self) := undef
 }

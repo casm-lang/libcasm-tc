@@ -24,9 +24,7 @@
 
 //@ TC()
 
-CASM unittest
-
-init a
+CASM init a
 
 rule a =
 {

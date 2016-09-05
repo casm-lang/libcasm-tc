@@ -24,7 +24,7 @@
 
 //@ TC()
 
-CASM unittest init foo
+CASM init foo
 
 function a: -> Integer
 

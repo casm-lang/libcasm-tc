@@ -30,7 +30,7 @@
 // | y : String  | undef | x OP y      | sym'  |
 // | sym         | undef | sym'        | sym'  |
 
-CASM unittest init foo
+CASM init foo
 
 function (symbolic) b : -> String
 

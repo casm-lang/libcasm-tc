@@ -24,7 +24,7 @@
 
 // TC() // TODO: FIXME: PPA:
 
-CASM unittest init foo
+CASM init foo
 
 function a: -> List(Integer)
 

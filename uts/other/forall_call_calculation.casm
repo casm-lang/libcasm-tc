@@ -24,7 +24,7 @@
 
 //@ TC()
 
-CASM unittest init foo
+CASM init foo
 
 function a : -> RuleRef
 function b : Integer -> Integer initially {1->0, 2->0}

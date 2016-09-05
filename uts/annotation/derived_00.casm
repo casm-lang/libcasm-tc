@@ -24,7 +24,7 @@
 
 //@ TC()
 
-CASM unittest init foo
+CASM init foo
 
 derived d( p1, p2 ) = 3
 

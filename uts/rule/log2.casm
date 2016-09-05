@@ -26,7 +26,7 @@
 
 //@ TC()
 
-CASM log2 init main
+CASM init main
 
 function N : -> Integer initially { 9 }
 

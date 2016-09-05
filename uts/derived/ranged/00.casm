@@ -24,7 +24,7 @@
 
 //@ TC()
 
-CASM unittest init foo
+CASM init foo
 
 // tests if "derived" handles ranged integers correctly
 

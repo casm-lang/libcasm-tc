@@ -30,7 +30,7 @@
 // | y : Integer | undef | x >= y      | sym' |
 // | sym         | sym'  | sym'        | sym' |
 
-CASM unittest init foo
+CASM init foo
 
 function (symbolic) a : -> Integer
 function (symbolic) b : -> Integer

@@ -24,7 +24,7 @@
 
 // TC() // TODO: FIXME: PPA: List is currently not supported!
 
-CASM unittest init foo
+CASM init foo
 
 function a : List(Integer) -> Integer
 

@@ -24,7 +24,7 @@
 
 //@ TC()
 
-CASM unittest init foo
+CASM init foo
 
 rule foo = call bar(1,2,3,4,"bar",6)
 

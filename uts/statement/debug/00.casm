@@ -24,7 +24,7 @@
 
 //@ TC()
 
-CASM unittest init foo
+CASM init foo
 
 // cmdline "-dall" // TODO: FIXME: PPA: command line for debug channels etc.
 

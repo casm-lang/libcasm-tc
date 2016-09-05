@@ -24,9 +24,7 @@
 
 //@ TC()
 
-CASM hello_world
-
-init main
+CASM init main
 
 rule main =
 {

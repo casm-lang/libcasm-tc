@@ -24,7 +24,7 @@
 
 //@ TC()
 
-CASM unittest
+CASM
 
 init foo  //@ ERROR( a000 )
 

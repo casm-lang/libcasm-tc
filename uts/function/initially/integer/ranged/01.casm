@@ -24,7 +24,7 @@
 
 //@ TC()
 
-CASM unittest init foo rule foo = program(self) := undef
+CASM init foo rule foo = program(self) := undef
 
 // tests if "initially" handles ranged integers correctly => location out of range
 
