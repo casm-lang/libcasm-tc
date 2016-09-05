@@ -121,13 +121,12 @@ int main( int argc, const char *argv[] )
       "#include \"uts/RunnerBenchmark.h\"\n"
       "#endif //_LIB_CASMTC_UTS_BENCHMARKS_\n"
       "\n"
-      "BENCHMARK_P_INSTANCE\n"
-      "( RunnerFixture\n"
-      ", case\n"
-      ", ( \"%s\"\n"
-      "  )\n"
+      "BM\n"
+      "( %s\n"
+      ", \"%s\"\n"
       ");\n"
       "\n"
+    , fn.c_str()
     , file_name
     );
     

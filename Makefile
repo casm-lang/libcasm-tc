@@ -89,7 +89,7 @@ TEST_LIBRARY  = -lstdc++
 TEST_LIBRARY += -lm
 TEST_LIBRARY += -lpthread
 
-obj/uts/RunnerTest.o: uts/RunnerTest.cpp
+obj/uts/RunnerTest.o: uts/RunnerTest.cpp uts/RunnerTest.h
 	@mkdir -p `dirname $@`
 	@echo "CPP " $<
 	@$(CPP) $(CPPFLAG) $(TEST_INCLUDE) $(INCLUDE) -c $< -o $@
@@ -136,7 +136,7 @@ BENCHMARK_LIBRARY  = -lstdc++
 # BENCHMARK_LIBRARY += -lm
 # BENCHMARK_LIBRARY += -lpthread
 
-obj/uts/RunnerBenchmark.o: uts/RunnerBenchmark.cpp
+obj/uts/RunnerBenchmark.o: uts/RunnerBenchmark.cpp uts/RunnerBenchmark.h
 	@mkdir -p `dirname $@`
 	@echo "CPP " $<
 	@$(CPP) $(CPPFLAG) $(BENCHMARK_INCLUDE) $(INCLUDE) -c $< -o $@

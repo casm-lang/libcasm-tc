@@ -31,7 +31,7 @@ function top : -> String initially { "1" }
 
 rule foo = 
 {
-    forall i in [ bottom..top ] do skip //@ ERROR( ? )
+    forall i in [ bottom..top ] do skip //@ ERROR( 3001 )
     
     program( self ) := undef
 }

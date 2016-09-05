@@ -32,7 +32,7 @@
 #include "libcasm-tc.h"
 
 
-class RunnerFixture : public ::hayai::Fixture
+class libcasm_tc__ : public ::hayai::Fixture
 {
 private:
     char m_cmd[4096];
@@ -44,10 +44,11 @@ public:
 };
 
 
-BENCHMARK_P_F( RunnerFixture, case, 10, 100, ( const char* spec ) )
-{
-    run( spec );
-}
+#define BM( FN, SPEC )                                               \
+    BENCHMARK_F( libcasm_tc__, FN, 10, 10 )			     \
+    {                                                                \
+        run( SPEC );                                                 \
+    }
 
 
 #endif // _LIB_CASMTC_RUNNERBENCHMARK_H_
