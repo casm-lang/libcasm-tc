@@ -132,14 +132,25 @@ TEST_P( RunnerTest, case )
           {
               std::smatch match = *i;
               std::string mstr   = match.str();
-              //printf( "'%s'\n", mstr.c_str() );              
-              error_cnt++;
+
+	      std::regex expr( "@([\\S]+)\\{([\\S]+)\\}" );
+	      std::sregex_iterator expr_start( line.begin(), line.end(), expr );
+              std::sregex_iterator expr_end;
+              
+              for( std::sregex_iterator i = expr_start; i != expr_end; i++ )
+              {
+                  std::smatch match = *i;
+                  assert( match.size() == 3 );
+                  std::string mstr   = match.str();
+                  //printf( "'%s'\n", mstr.c_str() );              
+		  error_cnt++;
+	      }
           }
-      
+	  
           std::regex w( "warning:" );
           start = std::sregex_iterator( line.begin(), line.end(), w );
           std::sregex_iterator we;
-       
+	  
           for( std::sregex_iterator i = start; i != we; i++ )
           {
               std::smatch match = *i;
@@ -168,26 +179,6 @@ TEST_P( RunnerTest, case )
             
             system( cmd );
         }
-        
-        // libstdhl::File::readLines
-        // ( ferr.c_str()
-        // , [ &param, &checked ]
-    //   ( u32 cnt, const std::string& line )
-    //   {
-        //       std::string c = "";
-        //       std::regex expr
-    //       ( "@([\\S]+)\\{([\\S]+)\\}"
-    //       );
-        //       std::sregex_iterator start( line.begin(), line.end(), expr );
-        //       std::sregex_iterator end;
-          
-        //       for( std::sregex_iterator i = start; i != end; i++ )
-        //       {
-        //           std::smatch match = *i;
-        //           assert( match.size() == 3 );
-        //           std::string mstr   = match.str();
-        //           // printf( "'%s'\n", mstr.c_str() );              
-                  
     }
     else
     {
@@ -196,24 +187,24 @@ TEST_P( RunnerTest, case )
         u64 failure_cnt = 0;
         std::vector< ParamError > checked;
         
-    libstdhl::File::readLines
+	libstdhl::File::readLines
         ( ferr.c_str()
         , [ &param, &checked, &failure_cnt ]
-      ( u32 cnt, const std::string& line )
-      {
-              std::string c = "";
-              std::regex expr
-          ( "@([\\S]+)\\{([\\S]+)\\}"
-          );
+          ( u32 cnt, const std::string& line )
+	  {
+	      std::string c = "";
+	      std::regex expr
+              ( "@([\\S]+)\\{([\\S]+)\\}"
+              );
+	      
               std::sregex_iterator start( line.begin(), line.end(), expr );
               std::sregex_iterator end;
-          
+              
               for( std::sregex_iterator i = start; i != end; i++ )
               {
                   std::smatch match = *i;
                   assert( match.size() == 3 );
                   std::string mstr   = match.str();
-                  // printf( "'%s'\n", mstr.c_str() );              
                   
                   u1 line_not_found = true;
                   u1 code_not_valid = true;
@@ -222,7 +213,7 @@ TEST_P( RunnerTest, case )
                   {
                       if( e.line.compare( match[1].str() ) == 0 ) // found line!
                       {
-                          line_not_found = false;
+		          line_not_found = false;
                           
                           EXPECT_STREQ( e.code.c_str(), match[2].str().c_str() );
                           if( e.code.compare( match[2].str() ) == 0 )
@@ -235,14 +226,14 @@ TEST_P( RunnerTest, case )
                   
                   EXPECT_FALSE( line_not_found );
                   EXPECT_FALSE( code_not_valid );
-
+	      
                   if( line_not_found or code_not_valid )
                   {
                       failure_cnt++;
                   }
               }
-          }
-        );
+	  }
+	);
         
         EXPECT_EQ( param.error.size(), checked.size() );
         EXPECT_EQ( param.error.size(), error_cnt );
