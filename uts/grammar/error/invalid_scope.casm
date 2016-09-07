@@ -1,4 +1,4 @@
-//
+//  
 //  Copyright (c) 2014-2016 CASM Organization
 //  All rights reserved.
 //  
@@ -23,4 +23,13 @@
 //  
 
 //@ TC()
-//@ ERROR( 0000 )
+
+CASM init foo
+
+function bar : -> Integer
+
+rule foo = 
+{ 
+    x := 1 
+}} //@ERROR( 0000 )
+
