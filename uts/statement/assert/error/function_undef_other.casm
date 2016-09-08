@@ -26,11 +26,9 @@
 
 CASM init foo
 
-// tests if "derived" handles ranged integers correctly => value out of range
+function x : -> Integer initially { }
 
-derived bar(a : Integer(2..4)) = a
+rule foo = { 
+    assert 1 = x //@ ERROR ( 5a00 )
+}
 
-rule foo = {|
-    print bar(42) //@ ERROR( da00 )
-    program(self) := undef
-|}

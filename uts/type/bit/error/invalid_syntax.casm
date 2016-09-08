@@ -26,4 +26,5 @@
 
 CASM init foo rule foo = program( self ) := undef
 
-function f : -> Bit(1)
+function f : -> Bit //@ ERROR( b000 )  // invalid bit syntax
+

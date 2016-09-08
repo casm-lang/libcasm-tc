@@ -1,36 +1,65 @@
-//
+//  
 //  Copyright (c) 2014-2016 CASM Organization
 //  All rights reserved.
-//
+//  
 //  Developed by: Philipp Paulweber
 //                Emmanuel Pescosta
 //                https://github.com/casm-lang/libcasm-tc
-//
+//  
 //  This file is part of libcasm-tc.
-//
+//  
 //  libcasm-tc is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
-//
+//  
 //  libcasm-tc is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
-//
+//  
 //  You should have received a copy of the GNU General Public License
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
-//
+//  
 
-//@ TC()
+// TC()
 
 CASM init foo
 
-// tests if "derived" handles ranged integers correctly => value out of range
+rule foo = 
+{
+    let x = 4/10 in 
+        assert asInteger(x) = 0
+    let x = 10/5 in 
+        assert asInteger(x) = 2
 
-derived bar(a : Integer(2..4)) = a
+    let x = 0.4 in 
+        assert asInteger(x) = 0
+    let x = 2.0 in 
+        assert asInteger(x) = 2
 
-rule foo = {|
-    print bar(42) //@ ERROR( da00 )
+    let x = 4/10 in 
+        assert asFloating(x) = 0.4
+    let x = 10/5 in 
+        assert asFloating(x) = 2.0
+
+    let x = 0 in 
+        assert asRational(x) = 0r
+    let x = 0 in 
+        assert asRational(x) = 0/100
+    let x = 2 in 
+        assert asRational(x) = 2r
+    let x = 2 in 
+        assert asRational(x) = 100/50
+
+    let x = 0.4 in 
+        assert asRational(x) = 4/10
+    let x = 2.0 in 
+        assert asRational(x) = 2r
+
+    let x = 1.3 in 
+        assert asRational(x) = 13/10
+
     program(self) := undef
-|}
+}
+
