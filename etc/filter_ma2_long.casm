@@ -22,9 +22,7 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-CASM filter_specification
-
-init setup
+CASM init setup
 
 function x : -> Integer // initially { 10 }
 function m : -> Integer // initially { 0 }
