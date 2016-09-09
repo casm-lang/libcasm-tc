@@ -150,10 +150,10 @@ $(TARGET_BM): $(OBJECTS_BM)
 clean:
 	@echo "RM  " obj
 	@rm -rf obj
-	@echo "RM  " test
-	@rm -f test
-	@echo "RM  " benchmark
-	@rm -f benchmark
+	@echo "RM  " $(UT)
+	@rm -f $(UT)
+	@echo "RM  " $(BT)
+	@rm -f $(BT)
 
 
 #UT = $(TARGET:%.a=%-test.a)
