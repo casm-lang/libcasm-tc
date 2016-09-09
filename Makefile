@@ -216,9 +216,9 @@ $(UT): $(TO) $(CO) $(TARGET)
 
 
 
-test-run: $(UT)
-	@echo "RUN " $<
-	@./$<
+test-run: test
+	@echo "RUN " $(UT)
+	@./$(UT)
 
 
 
@@ -275,7 +275,6 @@ $(BT): $(BO) $(CO) $(TARGET)
 	  ../hayai/src/hayai_posix_main.cpp
 
 
-benchmark-run: $(BT)
-	@echo "RUN " $<
-	@./$<
-
+benchmark-run: benchmark
+	@echo "RUN " $(BT)
+	@./$(BT)
