@@ -27,7 +27,7 @@
 CASM init foo
 
 rule foo = 
-    let n = 3000 in 
+    let n = 8500 in
         {|
         print "Fibonacci(" + dec(n) + ") using dynamic programming: " 
         call fibo_d(n)
