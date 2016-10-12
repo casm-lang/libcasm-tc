@@ -26,7 +26,6 @@
 
 CASM init setup
 
-function (static) SIZE : -> Integer initially {100}
 function alive : Integer * Integer -> Boolean
 
 derived aliveNeighbours(x : Integer, y : Integer) = asInteger(alive(x - 1, y - 1))
@@ -49,8 +48,8 @@ rule updateCell(x : Integer, y : Integer) =
     }
 
 rule GameOfLife =
-    forall x in SIZE do
-        forall y in SIZE do
+    forall x in 100 do
+        forall y in 100 do
             call updateCell(x, y)
 
 rule setup =
@@ -69,8 +68,8 @@ rule setup =
      * from https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
      */
 
-    forall x in [0 .. SIZE + 1] do
-        forall y in [0 .. SIZE + 1] do
+    forall x in [0 .. 101] do
+        forall y in [0 .. 101] do
             alive(x, y) := false
 
     alive(50, 45) := true
