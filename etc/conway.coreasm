@@ -1,0 +1,105 @@
+CoreASM conway
+
+//  
+//  Copyright (c) 2014-2016 CASM Organization
+//  All rights reserved.
+//  
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
+//  
+//  This file is part of libcasm-tc.
+//  
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//  
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//  
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//  
+
+// should terminate after 55 steps (1 for setup and 54 for game of life)
+
+use StandardPlugins
+use ConditionalRule
+use Math
+
+init setup
+
+function alive : Int * Int -> Int
+
+derived aliveNeighbours( x, y ) = (alive(x - 1, y - 1))
+                                                  + (alive(x, y - 1))
+                                                  + (alive(x + 1, y - 1))
+                                                  + (alive(x - 1, y))
+                                                  + (alive(x + 1, y))
+                                                  + (alive(x - 1, y + 1))
+                                                  + (alive(x, y + 1))
+                                                  + (alive(x + 1, y + 1))
+
+rule updateCell(x, y) =
+par
+    let c = aliveNeighbours(x, y) in {
+        if c = 3 then {
+            if alive(x, y) = 0 then alive(x, y) := 1
+        }
+        if (c < 2) or (c > 3) then {
+            if alive(x, y) = 1 then alive(x, y) := 0
+        }
+    }
+endpar
+
+rule GameOfLife =
+{
+    forall x in [ 1 .. 100 ] do
+    {
+        forall y in [ 1 .. 100 ] do
+        {    updateCell( x, y)
+	}
+    }
+}
+
+rule setup =
+seq
+    /*
+     * Start pattern:
+     *
+     * X X X
+     * X   X
+     * X   X
+     *
+     * X   X
+     * X   X
+     * X X X
+     *
+     * from https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
+     */
+
+    forall x in [-1 .. 102] do
+        forall y in [-1 .. 102] do
+            alive(x, y) := 0
+
+    alive(50, 45) := 1
+    alive(51, 45) := 1
+    alive(52, 45) := 1
+    alive(50, 46) := 1
+    alive(52, 46) := 1
+    alive(50, 47) := 1
+    alive(52, 47) := 1
+
+    alive(50, 49) := 1
+    alive(52, 49) := 1
+    alive(50, 50) := 1
+    alive(52, 50) := 1
+    alive(50, 51) := 1
+    alive(51, 51) := 1
+    alive(52, 51) := 1
+
+    program(self) := @GameOfLife
+endseq

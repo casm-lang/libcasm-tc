@@ -1,0 +1,49 @@
+//  
+//  Copyright (c) 2014-2016 CASM Organization
+//  All rights reserved.
+//  
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
+//  
+//  This file is part of libcasm-tc.
+//  
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//  
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//  
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//  
+
+CASM init foo
+
+rule foo = 
+    let n = 80 in
+        {|
+        print "Fibonacci(" + dec(n) + ") using dynamic programming: " 
+        call fibo_d(n)
+        print "=" + dec(fibo(n))
+        program(self) := undef
+        |}
+
+function fibo : Integer -> Integer
+
+rule fibo_d(x:Integer) = 
+    iterate
+        if fibo(x) = undef then { 
+            if x < 0 then fibo(x) := 0
+            else if x < 2 then fibo(x) := x
+            else {|
+                call fibo_d(x-2)
+                call fibo_d(x-1)
+                fibo(x) := fibo(x-2) + fibo(x-1)
+            |}
+        }
+
