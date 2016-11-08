@@ -56,7 +56,7 @@ void bm::SetUp()
     assert( strcmp( env[ "CASM" ], "" ) != 0 );
     
     std::string bm   = "obj/.bm";
-    sprintf( m_cmd, "%s --tc > %s", env[ "CASM" ], bm.c_str() );
+    sprintf( m_cmd, "%s -t > %s", env[ "CASM" ], bm.c_str() );
     exec_result = system( m_cmd );
     assert( exec_result == 0 );
     
