@@ -26,9 +26,9 @@
 #define _LIB_CASMTC_RUNNERTEST_H_
 
 #include "gtest/gtest.h"
-#include "stdhl/cpp/Default.h"
-#include "stdhl/cpp/Type.h"
-#include "stdhl/cpp/File.h"
+#include "cpp/Default.h"
+#include "cpp/Type.h"
+#include "cpp/File.h"
 #include "libcasm-tc.h"
 
 #define TEST_NAME                                                       \

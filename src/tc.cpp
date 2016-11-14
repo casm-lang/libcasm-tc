@@ -22,8 +22,8 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-#include "stdhl/cpp/Default.h"
-#include "stdhl/cpp/File.h"
+#include "cpp/Default.h"
+#include "cpp/File.h"
 
 
 int main( int argc, const char *argv[] )
@@ -129,7 +129,7 @@ int main( int argc, const char *argv[] )
       "#ifndef _LIB_CASMTC_UTS_RUNNER_\n"
       "#define _LIB_CASMTC_UTS_RUNNER_\n"
       "#include \"gtest/gtest.h\"\n"
-      "#include \"stdhl/cpp/Default.h\"\n"
+      "#include \"cpp/Default.h\"\n"
       "#include \"uts/RunnerTest.h\"\n"
       "#endif //_LIB_CASMTC_UTS_RUNNER_\n"
       "\n"

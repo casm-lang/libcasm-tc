@@ -26,9 +26,9 @@
 #define _LIB_CASMTC_RUNNERBENCHMARK_H_
 
 #include "hayai.hpp"
-#include "stdhl/cpp/Default.h"
-#include "stdhl/cpp/Type.h"
-#include "stdhl/cpp/File.h"
+#include "cpp/Default.h"
+#include "cpp/Type.h"
+#include "cpp/File.h"
 #include "libcasm-tc.h"
 
 

@@ -22,8 +22,8 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //  
 
-#include "stdhl/cpp/Default.h"
-#include "stdhl/cpp/File.h"
+#include "cpp/Default.h"
+#include "cpp/File.h"
 
 
 int main( int argc, const char *argv[] )
