@@ -25,30 +25,27 @@
 #ifndef _LIB_CASMTC_RUNNERBENCHMARK_H_
 #define _LIB_CASMTC_RUNNERBENCHMARK_H_
 
-#include "hayai.hpp"
 #include "cpp/Default.h"
-#include "cpp/Type.h"
 #include "cpp/File.h"
+#include "cpp/Type.h"
+#include "hayai.hpp"
 #include "libcasm-tc.h"
-
 
 class bm : public ::hayai::Fixture
 {
-private:
-    char m_cmd[4096];
-    
-public:
+  private:
+    char m_cmd[ 4096 ];
+
+  public:
     virtual void SetUp();
     void run( const char* spec );
     virtual void TearDown();
 };
 
-
-#define BM( FN, SPEC )                                               \
-    BENCHMARK_F( bm, libcasm_tc__##FN, 5, 5 )			     \
-    {                                                                \
-        run( SPEC );                                                 \
+#define BM( FN, SPEC )                                                         \
+    BENCHMARK_F( bm, libcasm_tc__##FN, 5, 5 )                                  \
+    {                                                                          \
+        run( SPEC );                                                           \
     }
-
 
 #endif // _LIB_CASMTC_RUNNERBENCHMARK_H_

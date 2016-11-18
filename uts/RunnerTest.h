@@ -25,34 +25,33 @@
 #ifndef _LIB_CASMTC_RUNNERTEST_H_
 #define _LIB_CASMTC_RUNNERTEST_H_
 
-#include "gtest/gtest.h"
 #include "cpp/Default.h"
-#include "cpp/Type.h"
 #include "cpp/File.h"
+#include "cpp/Type.h"
 #include "libcasm-tc.h"
+#include "gtest/gtest.h"
 
-#define TEST_NAME                                                       \
-    ( std::string                                                       \
-      ( ::testing::UnitTest::GetInstance                                \
-        ()->current_test_info()->test_case_name()                       \
-      )                                                                 \
-      + "."                                                             \
-      + std::string                                                     \
-      ( ::testing::UnitTest::GetInstance                                \
-        ()->current_test_info()->name()                                 \
-      )                                                                 \
-    ).c_str()
+#define TEST_NAME                                                              \
+    ( std::string(::testing::UnitTest::GetInstance()                           \
+                      ->current_test_info()                                    \
+                      ->test_case_name() )                                     \
+        + "." + std::string(::testing::UnitTest::GetInstance()                 \
+                                ->current_test_info()                          \
+                                ->name() ) )                                   \
+        .c_str()
 
 struct ParamError
-{ std::string line
-; std::string code
-;};
+{
+    std::string line;
+    std::string code;
+};
 
 struct Param
-{ const char* specification
-; const char* output_path
-; std::vector< ParamError > error
-;};
+{
+    const char* specification;
+    const char* output_path;
+    std::vector< ParamError > error;
+};
 
 class RunnerTest : public ::testing::TestWithParam< Param >
 {

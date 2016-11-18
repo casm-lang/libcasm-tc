@@ -24,12 +24,11 @@
 
 #include "uts/RunnerBenchmark.h"
 
-
 void bm::SetUp()
-{        
+{
     u32 exec_result = 0;
     assert( exec_result == 0 );
-    
+
     std::unordered_map< std::string, const char* > env;
     env[ "EXPORT" ] = "export";
     env[ "ECHO" ] = "echo";
@@ -38,7 +37,7 @@ void bm::SetUp()
     env[ "CASM_BM" ];
     env[ "CASM_ARG_PRE" ];
     env[ "CASM_ARG_POST" ];
-    
+
     for( auto& e : env )
     {
         if( e.second == 0 )
@@ -51,37 +50,30 @@ void bm::SetUp()
             env[ e.first ] = env_data;
         }
     }
-    
-    
+
     assert( strcmp( env[ "CASM" ], "" ) != 0 );
-    
-    std::string bm   = "obj/.bm";
+
+    std::string bm = "obj/.bm";
     sprintf( m_cmd, "%s -t > %s", env[ "CASM" ], bm.c_str() );
     exec_result = system( m_cmd );
     assert( exec_result == 0 );
-    
+
     FILE* BM = fopen( bm.c_str(), "r" );
     fgets( m_cmd, 4096, BM );
     setenv( "CASM_BM", m_cmd, 1 );
-    
+
     env[ "CASM_BM" ] = getenv( "CASM_BM" );
     assert( (u64)env[ "CASM_BM" ] );
-    assert( strcmp( env[ "CASM_BM" ], "") != 0 );
-    
+    assert( strcmp( env[ "CASM_BM" ], "" ) != 0 );
+
     const char* uid = libcasm_tc::Profile::get( env[ "CASM_BM" ] );
-    
+
     switch( (u64)uid )
     {
         case libcasm_tc::Profile::INTERPRETER:
         {
-            sprintf
-            ( m_cmd
-            , "%s %s %s %s 2>&1 > obj/.bm"
-            , env[ "CASM" ]
-            , env[ "CASM_ARG_PRE" ]
-            , "%s"
-            , env[ "CASM_ARG_POST" ]
-            );            
+            sprintf( m_cmd, "%s %s %s %s 2>&1 > obj/.bm", env[ "CASM" ],
+                env[ "CASM_ARG_PRE" ], "%s", env[ "CASM_ARG_POST" ] );
             break;
         }
         default:
@@ -91,20 +83,17 @@ void bm::SetUp()
     }
 }
 
-
 void bm::run( const char* spec )
 {
     assert( libstdhl::File::exists( spec ) );
-    char cmd[4096];
+    char cmd[ 4096 ];
     sprintf( cmd, m_cmd, spec );
     assert( system( cmd ) == 0 );
 }
-
 
 void bm::TearDown()
 {
 }
 
-
-
-// BENCHMARK_P_INSTANCE( bm, benchmark_name, ( "todo/benchmark/bubblesort.casm" ) );
+// BENCHMARK_P_INSTANCE( bm, benchmark_name, ( "todo/benchmark/bubblesort.casm"
+// ) );

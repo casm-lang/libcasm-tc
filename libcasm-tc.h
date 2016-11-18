@@ -25,34 +25,31 @@
 #ifndef _LIB_CASMTC_H_
 #define _LIB_CASMTC_H_
 
-
 namespace libcasm_tc
 {
-    class CasmTC 
+    class CasmTC
     {
     };
-    
-    class Profile : public CasmTC 
+
+    class Profile : public CasmTC
     {
-    public:
+      public:
         enum Identifier
-        { INTERPRETER = 0
-        , COMPILER
-        , IDENTIFIER_MAX
+        {
+            INTERPRETER = 0,
+            COMPILER,
+            IDENTIFIER_MAX
         };
-        
+
         static const char* get( const char* id )
         {
-            static const char* uid[] =
-                { "interpreter"
-                  , "compiler"
-                };
-        
+            static const char* uid[] = { "interpreter", "compiler" };
+
             if( (i64)id == -1 )
             {
                 return (const char*)0;
             }
-            else if( (i64)id >= 0 and (i64)id < IDENTIFIER_MAX )
+            else if( (i64)id >= 0 and ( i64 ) id < IDENTIFIER_MAX )
             {
                 return uid[ (i64)id ];
             }
@@ -60,7 +57,7 @@ namespace libcasm_tc
             {
                 for( i64 i = 0; i < IDENTIFIER_MAX; i++ )
                 {
-                    if( strcmp( uid[i], id ) == 0 )
+                    if( strcmp( uid[ i ], id ) == 0 )
                     {
                         return (const char*)i;
                     }
@@ -78,7 +75,7 @@ namespace libcasm_tc
 
 #endif /* _LIB_CASMTC_H_ */
 
-//  
+//
 //  Local variables:
 //  mode: c++
 //  indent-tabs-mode: nil
@@ -86,4 +83,4 @@ namespace libcasm_tc
 //  tab-width: 4
 //  End:
 //  vim:noexpandtab:sw=4:ts=4:
-//  
+//
