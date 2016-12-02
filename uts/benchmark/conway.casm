@@ -22,6 +22,8 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+//@ BM()
+
 // should terminate after 55 steps (1 for setup and 54 for game of life)
 
 CASM init setup
