@@ -71,7 +71,7 @@ int main( int argc, const char* argv[] )
             {
                 no_bm_found = false;
             }
-            else if( func.compare( "TC" ) == 0 )
+            else if( func.compare( "TC" ) == 0  or func.compare( "ERROR" ) == 0 )
             {
                 continue;
             }
@@ -89,19 +89,28 @@ int main( int argc, const char* argv[] )
         }
     } );
 
-    if( no_bm_found or no_bm_command_found )
-    {
-        assert( 0 );
-    }
-
+    
     std::string fn( file_name );
     std::replace( fn.begin(), fn.end(), '/', '_' );
     std::replace( fn.begin(), fn.end(), '.', '_' );
-
+    std::replace( fn.begin(), fn.end(), '-', '_' );
+    
     FILE* fd = 0;
     fd = fopen( dest_name, "w+" );
     assert( fd );
 
+    
+    if( no_bm_found or no_bm_command_found )
+    {
+        fprintf( fd,
+                "// no BM command found\n"
+                 "\n" );
+        
+        assert( fclose( fd ) == 0 );
+        return 0;
+    }
+
+    
     fprintf( fd,
         "\n"
         "#ifndef _LIB_CASMTC_UTS_BENCHMARKS_\n"
