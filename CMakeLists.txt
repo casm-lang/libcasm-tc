@@ -22,7 +22,7 @@
 #   along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 #
 
-cmake_minimum_required( VERSION 3.6 )
+cmake_minimum_required( VERSION 3.1 )
 
 if( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../gtest" )
   set( LIBS .. )
