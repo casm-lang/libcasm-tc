@@ -98,22 +98,21 @@ int main( int argc, const char* argv[] )
     std::replace( fn.begin(), fn.end(), '/', '_' );
     std::replace( fn.begin(), fn.end(), '.', '_' );
     std::replace( fn.begin(), fn.end(), '-', '_' );
-    
+
     FILE* fd = 0;
     fd = fopen( dest_name, "w+" );
     assert( fd );
-    
 
     if( no_tc_found or no_tc_command_found )
     {
         fprintf( fd,
-                "// no TC command found\n"
-                 "\n" );
-        
+            "// no TC command found\n"
+            "\n" );
+
         assert( fclose( fd ) == 0 );
         return 0;
     }
-    
+
     fprintf( fd,
         "\n"
         "#ifndef _LIB_CASMTC_UTS_RUNNER_\n"
