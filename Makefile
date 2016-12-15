@@ -26,14 +26,13 @@ TARGET = casm-tc
 
 include .config.mk
 
-CWD := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 $(OBJ)/$(TARGET)-ut: 
 	@$(MAKE) $(MFLAGS) --no-print-directory -C $(OBJ) $(TARGET)-ut
 
 $(OBJ)/%.casm.tc.cpp: $(OBJ)/$(TARGET) %.casm
 	@mkdir -p `dirname $@`
-	$(OBJ)/$(TARGET) $(CWD)$(filter %.casm,$^) $(CWD)$@
+	$(OBJ)/$(TARGET) $(PWD)/$(filter %.casm,$^) $(PWD)/$@
 
 
 $(OBJ)/$(TARGET)-bm:
@@ -41,4 +40,4 @@ $(OBJ)/$(TARGET)-bm:
 
 $(OBJ)/%.casm.bm.cpp: $(OBJ)/$(TARGET)-bm %.casm
 	@mkdir -p `dirname $@`
-	$(OBJ)/$(TARGET)-bm $(CWD)$(filter %.casm,$^) $(CWD)$@
+	$(OBJ)/$(TARGET)-bm $(PWD)/$(filter %.casm,$^) $(PWD)/$@
