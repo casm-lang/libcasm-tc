@@ -42,6 +42,3 @@ $(OBJ)/$(TARGET)-bm:
 $(OBJ)/%.casm.bm.cpp: $(OBJ)/$(TARGET)-bm %.casm
 	@mkdir -p `dirname $@`
 	$(OBJ)/$(TARGET)-bm $(CWD)$(filter %.casm,$^) $(CWD)$@
-
-fake:
-	echo $(CASM)
