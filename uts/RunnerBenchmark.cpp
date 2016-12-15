@@ -50,8 +50,12 @@ void bm::SetUp()
             env[ e.first ] = env_data;
         }
     }
-
-    assert( strcmp( env[ "CASM" ], "" ) != 0 );
+    
+    if( strcmp( env[ "CASM" ], "" ) == 0 )
+    {
+	printf( "\nenvironment variable CASM not set, omitting test case!\n\n" );
+	return;
+    }
 
     std::string bm = "obj/.bm";
     sprintf( m_cmd, "%s -t > %s", env[ "CASM" ], bm.c_str() );

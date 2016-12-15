@@ -33,7 +33,7 @@ $(OBJ)/$(TARGET)-ut:
 
 $(OBJ)/%.casm.tc.cpp: $(OBJ)/$(TARGET) %.casm
 	@mkdir -p `dirname $@`
-	$(OBJ)/$(TARGET) $(CWD)/$(filter %.casm,$^) $(CWD)/$@
+	$(OBJ)/$(TARGET) $(CWD)$(filter %.casm,$^) $(CWD)$@
 
 
 $(OBJ)/$(TARGET)-bm:
@@ -41,4 +41,7 @@ $(OBJ)/$(TARGET)-bm:
 
 $(OBJ)/%.casm.bm.cpp: $(OBJ)/$(TARGET)-bm %.casm
 	@mkdir -p `dirname $@`
-	$(OBJ)/$(TARGET)-bm $(CWD)/$(filter %.casm,$^) $(CWD)/$@
+	$(OBJ)/$(TARGET)-bm $(CWD)$(filter %.casm,$^) $(CWD)$@
+
+fake:
+	echo $(CASM)
