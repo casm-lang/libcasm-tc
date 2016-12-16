@@ -22,8 +22,7 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "cpp/Default.h"
-#include "cpp/File.h"
+#include "libstdhlcpp.h"
 
 int main( int argc, const char* argv[] )
 {
@@ -32,7 +31,11 @@ int main( int argc, const char* argv[] )
     const char* file_name = argv[ 1 ];
     const char* dest_name = argv[ 2 ];
 
-    assert( libstdhl::File::exists( file_name ) );
+    if( not libstdhl::File::exists( file_name ) )
+    {
+        libstdhl::Log::error( "unable to open file '%s'", file_name );
+        assert( 0 );
+    }
 
     std::vector< std::string > cmd;
     u1 no_tc_found = true;
