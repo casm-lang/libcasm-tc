@@ -46,14 +46,14 @@ struct ParamError
     std::string code;
 };
 
-struct Param
+struct RunnerTestParam
 {
     const char* specification;
     const char* output_path;
     std::vector< ParamError > error;
 };
 
-class RunnerTest : public ::testing::TestWithParam< Param >
+class RunnerTest : public ::testing::TestWithParam< RunnerTestParam >
 {
 };
 

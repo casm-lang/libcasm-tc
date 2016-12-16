@@ -26,7 +26,7 @@
 
 TEST_P( RunnerTest, case )
 {
-    Param const& param = GetParam();
+    RunnerTestParam const& param = GetParam();
 
     EXPECT_NE( (u64)param.specification, 0 );
     EXPECT_TRUE( libstdhl::File::exists( param.specification ) );
@@ -62,11 +62,12 @@ TEST_P( RunnerTest, case )
 
     if( strcmp( env[ "CASM" ], "" ) == 0 )
     {
-	printf( "\nenvironment variable CASM not set, omitting test case!\n\n" );
-	SUCCEED();
-	return;
+        printf(
+            "\nenvironment variable CASM not set, omitting test case!\n\n" );
+        SUCCEED();
+        return;
     }
-    
+
     std::string tc = std::string( param.output_path ) + ".tc";
     std::string fout = std::string( param.output_path ) + ".stdout";
     std::string ferr = std::string( param.output_path ) + ".stderr";
@@ -231,10 +232,10 @@ TEST_P( RunnerTest, case )
 // ( libcasm_tc__uts_RunnerTest
 // , RunnerTest
 // , ::testing::Values
-//   ( Param
+//   ( RunnerTestParam
 //     { "text.txt"
 //     }
-//   , Param
+//   , RunnerTestParam
 //     { "text.txt"
 //     }
 //   )

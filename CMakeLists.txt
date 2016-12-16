@@ -75,23 +75,23 @@ foreach( CASM_UTS_FILE
     )
   string( SUBSTRING ${CASM_UTS_FILE} ${CWD_LENGTH} -1 UTS_FILE )
 
-  set( CXX_UTS_TC_FILE ${CMAKE_CURRENT_SOURCE_DIR}/obj/${UTS_FILE}.tc.cpp )
+  set( CXX_UTS_TC_FILE ${CMAKE_CURRENT_BINARY_DIR}/obj/${UTS_FILE}.tc.cpp )
   set( CXX_UTS_TC_FILES "${CXX_UTS_TC_FILES};${CXX_UTS_TC_FILE}" )
 
-  set( CXX_UTS_BM_FILE ${CMAKE_CURRENT_SOURCE_DIR}/obj/${UTS_FILE}.bm.cpp )
+  set( CXX_UTS_BM_FILE ${CMAKE_CURRENT_BINARY_DIR}/obj/${UTS_FILE}.bm.cpp )
   set( CXX_UTS_BM_FILES "${CXX_UTS_BM_FILES};${CXX_UTS_BM_FILE}" )
 
   add_custom_command(
     OUTPUT  ${CXX_UTS_TC_FILE} ${CXX_UTS_BM_FILE}
-    COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR} obj/${UTS_FILE}.tc.cpp
-    COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR} obj/${UTS_FILE}.bm.cpp
+    COMMAND DST=${CMAKE_CURRENT_BINARY_DIR} make -C ${CMAKE_CURRENT_SOURCE_DIR} obj/${UTS_FILE}.tc.cpp
+    COMMAND DST=${CMAKE_CURRENT_BINARY_DIR} make -C ${CMAKE_CURRENT_SOURCE_DIR} obj/${UTS_FILE}.bm.cpp
     DEPENDS ${TARGET} ${TARGET}-bm ${CASM_UTS_FILE}
     COMMENT "Generating test case ${UTS_FILE}"
     )
 endforeach()
 
 
-set( CXX_UTS_TEST ${CMAKE_CURRENT_SOURCE_DIR}/obj/uts_test.cpp )
+set( CXX_UTS_TEST ${CMAKE_CURRENT_BINARY_DIR}/obj/uts_test.cpp )
 add_custom_command(
   OUTPUT  ${CXX_UTS_TEST}
   COMMAND cat ${CXX_UTS_TC_FILES} > ${CXX_UTS_TEST}
@@ -99,7 +99,7 @@ add_custom_command(
   COMMENT "Generating test check ${CXX_UTS_TEST}"
 )
 
-set( CXX_UTS_BENCHMARK ${CMAKE_CURRENT_SOURCE_DIR}/obj/uts_benchmark.cpp )
+set( CXX_UTS_BENCHMARK ${CMAKE_CURRENT_BINARY_DIR}/obj/uts_benchmark.cpp )
 add_custom_command(
   OUTPUT  ${CXX_UTS_BENCHMARK}
   COMMAND cat ${CXX_UTS_BM_FILES} > ${CXX_UTS_BENCHMARK}

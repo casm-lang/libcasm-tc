@@ -129,7 +129,7 @@ int main( int argc, const char* argv[] )
         "( libcasm_tc__%s\n"
         ", RunnerTest\n"
         ", ::testing::Values\n"
-        "  ( Param\n"
+        "  ( RunnerTestParam\n"
         "    { \"%s\"\n"
         "    , \"%s\"\n"
         "    , {",
