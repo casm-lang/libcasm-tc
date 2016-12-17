@@ -29,17 +29,18 @@ include .config.mk
 
 MK_DIR := $(shell cd $(dir $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))); pwd)
 
-$(OBJ)/$(TARGET)-ut:
-	@$(MAKE) $(MFLAGS) --no-print-directory -C $(OBJ) $(TARGET)-ut
 
-$(OBJ)/%.casm.tc.cpp: $(OBJ)/$(TARGET) %.casm
-	@mkdir -p `dirname $(DST)/$@`
-	$(OBJ)/$(TARGET) $(MK_DIR)/$(filter %.casm,$^) $(DST)/$@
+$(OBJ)/$(TARGET):
+	$(MAKE) $(MFLAGS) --no-print-directory -C $(OBJ) $(TARGET)
+
+$(DST)/uts/%.casm.tc.cpp: $(OBJ)/$(TARGET) uts/%.casm
+	mkdir -p `dirname $(DST)/$(filter %.casm,$^)`
+	$(OBJ)/$(TARGET) $(MK_DIR)/$(filter %.casm,$^) $(DST)/$(filter %.casm,$^).tc.cpp
 
 
 $(OBJ)/$(TARGET)-bm:
-	@$(MAKE) $(MFLAGS) --no-print-directory -C $(OBJ) $(TARGET)-bm
+	$(MAKE) $(MFLAGS) --no-print-directory -C $(OBJ) $(TARGET)-bm
 
-$(OBJ)/%.casm.bm.cpp: $(OBJ)/$(TARGET)-bm %.casm
-	@mkdir -p `dirname $(DST)/$@`
-	$(OBJ)/$(TARGET)-bm $(MK_DIR)/$(filter %.casm,$^) $(DST)/$@
+$(DST)/uts/%.casm.bm.cpp: $(OBJ)/$(TARGET)-bm uts/%.casm
+	mkdir -p `dirname $(DST)/$(filter %.casm,$^)`
+	$(OBJ)/$(TARGET)-bm $(MK_DIR)/$(filter %.casm,$^) $(DST)/$(filter %.casm,$^).bm.cpp
