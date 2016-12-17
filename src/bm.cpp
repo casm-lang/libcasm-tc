@@ -96,6 +96,7 @@ int main( int argc, const char* argv[] )
     std::replace( fn.begin(), fn.end(), '/', '_' );
     std::replace( fn.begin(), fn.end(), '.', '_' );
     std::replace( fn.begin(), fn.end(), '-', '_' );
+    std::replace( fn.begin(), fn.end(), ' ', '_' );
 
     FILE* fd = 0;
     fd = fopen( dest_name, "w+" );
