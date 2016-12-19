@@ -24,7 +24,6 @@
 
 // should finish after 3 steps because of an empty update set
 
-//@ TC()
 
 CASM init main
 

@@ -22,7 +22,6 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-//@ TC()
 
 // | NEQ      | undef | x : Type | sym  |
 // |----------+-------+----------+------|

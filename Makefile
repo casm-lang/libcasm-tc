@@ -35,12 +35,8 @@ $(OBJ)/$(TARGET):
 
 %.casm.tc.cpp: $(OBJ)/$(TARGET) %.casm
 	mkdir -p "`dirname \"$(DST)/$(filter %.casm,$^)\"`"
-	$(OBJ)/$(TARGET) "$(MK_DIR)/$(filter %.casm,$^)" "$(DST)/$@"
+	$(OBJ)/$(TARGET) tc "$(MK_DIR)/$(filter %.casm,$^)" "$(DST)/$(@:%.tc.cpp=%)"
 
-
-$(OBJ)/$(TARGET)-bm:
-	$(MAKE) $(MFLAGS) --no-print-directory -C $(OBJ) $(TARGET)-bm
-
-%.casm.bm.cpp: $(OBJ)/$(TARGET)-bm %.casm
+%.casm.bm.cpp: $(OBJ)/$(TARGET) %.casm
 	mkdir -p "`dirname \"$(DST)/$(filter %.casm,$^)\"`"
-	$(OBJ)/$(TARGET)-bm "$(MK_DIR)/$(filter %.casm,$^)" "$(DST)/$@"
+	$(OBJ)/$(TARGET) bm "$(MK_DIR)/$(filter %.casm,$^)" "$(DST)/$(@:%.bm.cpp=%)"

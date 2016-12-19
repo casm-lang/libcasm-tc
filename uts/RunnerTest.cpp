@@ -105,8 +105,8 @@ TEST_P( RunnerTest, case )
     // printf( "exec: '%s'\n", cmd );
     exec_result = system( cmd );
 
-    sprintf( cmd, "%s \"%s\"; %s \"%s\"", env[ "CAT" ], fout.c_str(), env[ "CAT" ],
-        ferr.c_str() );
+    sprintf( cmd, "%s \"%s\"; %s \"%s\"", env[ "CAT" ], fout.c_str(),
+        env[ "CAT" ], ferr.c_str() );
 
     u64 error_cnt = 0;
     u64 warning_cnt = 0;

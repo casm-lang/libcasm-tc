@@ -22,5 +22,4 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-//@ TC()
 //@ ERROR( 0000 )
