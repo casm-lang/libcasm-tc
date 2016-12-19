@@ -22,8 +22,6 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// TODO: FIXME: PPA: FUTURE: IMPORTANT: ERROR: // division by 0 is undefined!
-
 // | OP          | undef | x : Integer | sym   |
 // |-------------+-------+-------------+-------|
 // | undef       | undef | undef       | undef |
@@ -36,7 +34,7 @@ rule foo =
 {
     let a : Integer = -321 in
     let b : Integer =    0 in
-    let c = a / b in //@ERROR( ? )
+    let c = a / b in //@ERROR( 8001 )
     {
         assert c  = 0 
         
