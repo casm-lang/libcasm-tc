@@ -22,43 +22,43 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// TC()
+//@ TC()
 
 CASM init foo
 
 rule foo = 
 {
-    let x = 4/10 in 
+    let x = 0r4/10 in
         assert asInteger(x) = 0
-    let x = 10/5 in 
+    let x = 0r10/5 in
         assert asInteger(x) = 2
 
-    let x = 0.4 in 
+    let x = 0.4 in
         assert asInteger(x) = 0
-    let x = 2.0 in 
+    let x = 2.0 in
         assert asInteger(x) = 2
 
-    let x = 4/10 in 
+    let x = 0r4/10 in
         assert asFloating(x) = 0.4
-    let x = 10/5 in 
+    let x = 0r10/5 in
         assert asFloating(x) = 2.0
 
     let x = 0 in 
-        assert asRational(x) = 0r
+        assert asRational(x) = 0r0
     let x = 0 in 
-        assert asRational(x) = 0/100
+        assert asRational(x) = 0r0/0'100
     let x = 2 in 
-        assert asRational(x) = 2r
+        assert asRational(x) = 0r2
     let x = 2 in 
-        assert asRational(x) = 100/50
+        assert asRational(x) = 0r0'100/50
 
-    let x = 0.4 in 
-        assert asRational(x) = 4/10
+    let x = 0.4 in
+        assert asRational(x) = 0r4/10
     let x = 2.0 in 
-        assert asRational(x) = 2r
+        assert asRational(x) = 0r2
 
     let x = 1.3 in 
-        assert asRational(x) = 13/10
+        assert asRational(x) = 0r13/10
 
     program(self) := undef
 }
