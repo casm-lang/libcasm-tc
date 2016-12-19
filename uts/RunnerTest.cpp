@@ -72,7 +72,7 @@ TEST_P( RunnerTest, case )
     std::string fout = std::string( param.output_path ) + ".stdout";
     std::string ferr = std::string( param.output_path ) + ".stderr";
 
-    sprintf( cmd, "%s -t > %s", env[ "CASM" ], tc.c_str() );
+    sprintf( cmd, "%s -t > \"%s\"", env[ "CASM" ], tc.c_str() );
     // printf( "exec: '%s'\n", cmd );
     exec_result = system( cmd );
     ASSERT_EQ( exec_result, 0 );
@@ -91,8 +91,8 @@ TEST_P( RunnerTest, case )
     {
         case libcasm_tc::Profile::INTERPRETER:
         {
-            sprintf( cmd, "%s %s %s %s > %s 2> %s", env[ "CASM" ],
-                env[ "CASM_ARG_PRE" ], param.specification,
+            sprintf( cmd, "\"%s\" %s \"%s\" %s > \"%s\" 2> \"%s\"",
+                env[ "CASM" ], env[ "CASM_ARG_PRE" ], param.specification,
                 env[ "CASM_ARG_POST" ], fout.c_str(), ferr.c_str() );
             break;
         }
@@ -102,9 +102,10 @@ TEST_P( RunnerTest, case )
         }
     }
 
+    // printf( "exec: '%s'\n", cmd );
     exec_result = system( cmd );
 
-    sprintf( cmd, "%s %s; %s %s", env[ "CAT" ], fout.c_str(), env[ "CAT" ],
+    sprintf( cmd, "%s \"%s\"; %s \"%s\"", env[ "CAT" ], fout.c_str(), env[ "CAT" ],
         ferr.c_str() );
 
     u64 error_cnt = 0;
@@ -158,7 +159,7 @@ TEST_P( RunnerTest, case )
         }
         else if( error_cnt or warning_cnt )
         {
-            sprintf( cmd, "%s %s", env[ "CAT" ], ferr.c_str() );
+            sprintf( cmd, "%s \"%s\"", env[ "CAT" ], ferr.c_str() );
 
             system( cmd );
         }
