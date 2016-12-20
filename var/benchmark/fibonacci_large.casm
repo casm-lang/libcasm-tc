@@ -22,16 +22,29 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// TC() // TODO: FIXME: PPA: List is currently not supported!
 
 CASM init foo
 
-function a : List(Integer) -> Integer
-
 rule foo = 
-{
-    a([0]) := 1
-    a([1, -1]) := 1
-    program(self) := undef
-}
+    let n = 8500 in
+        {|
+        print "Fibonacci(" + dec(n) + ") using dynamic programming: " 
+        call fibo_d(n)
+        print "=" + dec(fibo(n))
+        program(self) := undef
+        |}
+
+function fibo : Integer -> Integer
+
+rule fibo_d(x:Integer) = 
+    iterate
+        if fibo(x) = undef then { 
+            if x < 0 then fibo(x) := 0
+            else if x < 2 then fibo(x) := x
+            else {|
+                call fibo_d(x-2)
+                call fibo_d(x-1)
+                fibo(x) := fibo(x-2) + fibo(x-1)
+            |}
+        }
 

@@ -22,24 +22,25 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// TC()
-// BM()
 
-CASM quicksort init foo
+CASM init foo
 
-function stack : -> List(Tuple(Int, Int)) //initially { [] }
-function array : Int -> Int //initially { 0->9, 1->2, 2->10, 3->7, 4->8, 5->1, 6->6, 7->3, 8->4, 9->5}
-function p : -> Int //initially { undef }
-function pivot : -> Int
-function ll : -> Int
-function rr : -> Int
-function l : -> Int
-function r : -> Int
+// function stack : -> List(Tuple(Integer, Integer)) //initially { [] }
+function stack : Integer -> Tuple( Integer, Integer )
+function pos : -> Integer initially { 0 }
+
+function array : Integer -> Integer //initially { 0->9, 1->2, 2->10, 3->7, 4->8, 5->1, 6->6, 7->3, 8->4, 9->5}
+function p : -> Integer //initially { undef }
+function pivot : -> Integer
+function ll : -> Integer
+function rr : -> Integer
+function l : -> Integer
+function r : -> Integer
 function need_pop : -> Boolean
 function need_partition : -> Boolean
 
 rule partition_one_step =
-seqblock
+{|
     iterate
         if array(ll) < array(pivot) then ll := ll + 1
     iterate 
@@ -49,7 +50,7 @@ seqblock
         array(rr) := array(ll)
     } else 
         need_partition := false
-endseqblock
+|}
 
 rule partition =
 if pivot = undef then {
@@ -72,49 +73,63 @@ rule quicksort_once =
     if p = undef then
         call partition
     else    
-    seqblock
-        if l < p-1 then 
-            push [l,p-1] into stack
-        if p+1 < r then 
-            push [p+1,r] into stack
+    {|
+        if l < p-1 then
+        {
+            // push [l,p-1] into stack
+            stack( pos ) := [ l, p-1 ]
+            pos := pos + 1
+        }
+        if p+1 < r then
+        {
+            // push [p+1,r] into stack
+            stack( pos ) := [ p+1, r ]
+            pos := pos + 1
+        }
         need_pop := true
-    endseqblock
+    |}
 
 rule quicksort =
     if need_pop then {
-        let top = nth(stack, 1) in
-            if top != undef then {
-                stack := tail(stack)
+    //  let top = nth(stack, 1) in
+        let top = stack(0) in
+            if top != undef then
+            {
+                // stack := tail(stack)
+                forall i in pos do
+                    stack( i-1 ) := stack( i )
+                pos := pos - 1
+                
                 l := nth(top, 1)
                 r := nth(top, 2)
                 pivot := undef
                 p := undef
                 need_pop := false
             } else {
-                forall i in [0..2999] do {
+                forall i in [0..29] do {
                     assert array(i) <= array(i+1)
                     print array(i)
                 }
                 print "----------------"
-                //program(self) := @initR
                 program(self) := undef
             }
     }
     else
         call quicksort_once
 
-init initR
 
-rule initR = {
-    forall i in [0..3000] do {
-        array(i) := 3000 - i
+rule foo = {
+    forall i in [0..30] do {
+        array(i) := 30 - i
     }
     p := undef
     {|
-        stack := []
-        push [0,3000] into stack
+        // stack := []
+        // push [0,30] into stack
+
+        stack( pos ) := [ 0, 30 ]
+        pos := pos + 1
     |}
     need_pop := true
     program(self) := @quicksort
 }
-

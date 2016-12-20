@@ -22,46 +22,40 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-//@ BM()
-
 CASM init foo
 
-function array   : Integer -> Integer
-function i       :         -> Integer initially { -1 }
-function changes :         -> Boolean
+function array : Integer -> Integer
+function i : -> Integer
+function j : -> Integer
 
-rule bubblesort = 
-case i of {
-    -1:     {
-        changes := false
-        i := 0
-        }
-    200:
-        {
-        if not changes then {
-            forall j in [0..200] do 
-                print dec(j) + "=" + dec(array(j))
-            program(self) := undef
-        }
-        i := -1
-        }
+rule foo =
+{|
+    forall k in [0..10000] do
+        array(k) := k
+/*
+    program(self) := sieve
+|}
 
-    default:
-        {
-        if array(i) > array(i+1) then {
-            if not changes then {
-                changes := true
-                array(i) := array(i+1)
-                array(i+1) := array(i)
+rule sieve = 
+{|
+*/    i := 2
+    iterate    
+        if i * i <= 10000 then
+        {|
+        j := i 
+        iterate
+            if i * j <= 10000 then
+            {
+                array(i*j) := undef
+                j := j + 1
             }
-        }
-        i := i + 1
-        }
-}
+            i := i + 1
+        |}
 
-rule foo = {
-    forall j in [0..200] do {
-        array(j) := 200 - j
-    }
-    program(self) := @bubblesort
-}
+    forall k in [0..10000] do
+        if array(k) != undef then
+            print dec(array(k)) + " " 
+
+    program(self) := undef
+|}
+

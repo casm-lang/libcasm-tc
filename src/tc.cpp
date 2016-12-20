@@ -26,10 +26,21 @@
 
 int main( int argc, const char* argv[] )
 {
-    assert( argc == 3 );
+    assert( argc == 4 );
 
-    const char* file_name = argv[ 1 ];
-    const char* dest_name = argv[ 2 ];
+    assert( argv[ 1 ] );
+    std::string mode( argv[ 1 ] );
+
+    const char* file_name = argv[ 2 ];
+    const char* dest_name = argv[ 3 ];
+
+    // if( ( mode.compare( "tc" ) != 0 ) or ( mode.compare( "bm" ) != 0 ) )
+    // {
+    //     libstdhl::Log::error(
+    //         "incorrect mode '%s' provided, only 'tc' or 'bm' are valid",
+    //         mode.c_str() );
+    //     assert( 0 );
+    // }
 
     if( not libstdhl::File::exists( file_name ) )
     {
@@ -38,8 +49,8 @@ int main( int argc, const char* argv[] )
     }
 
     std::vector< std::string > cmd;
-    u1 no_tc_found = true;
-    u1 no_tc_command_found = true;
+
+    u1 no_cmd_found = true;
 
     struct ErrorInfo
     {
@@ -49,9 +60,8 @@ int main( int argc, const char* argv[] )
 
     std::vector< ErrorInfo > error;
 
-    libstdhl::File::readLines( file_name, [file_name, dest_name, &no_tc_found,
-                                              &no_tc_command_found,
-                                              &error]( u32 cnt,
+    libstdhl::File::readLines( file_name, [mode, file_name, dest_name,
+                                              &no_cmd_found, &error]( u32 cnt,
                                               const std::string& line ) {
         std::string c = "";
         std::regex expr( "//@[ ]*([\\S]+)[ ]*\\([ ]*([\\S]*)[ ]*\\)" );
@@ -70,15 +80,7 @@ int main( int argc, const char* argv[] )
 
             args = std::regex_replace( args, std::regex( "\"" ), "\\\"" );
 
-            if( func.compare( "TC" ) == 0 )
-            {
-                no_tc_found = false;
-            }
-            else if( func.compare( "BM" ) == 0 )
-            {
-                continue;
-            }
-            else if( func.compare( "ERROR" ) == 0 )
+            if( func.compare( "ERROR" ) == 0 )
             {
                 error.push_back( ErrorInfo{ std::to_string( cnt + 1 ), args } );
                 continue;
@@ -92,7 +94,7 @@ int main( int argc, const char* argv[] )
                 exit( -1 );
             }
 
-            no_tc_command_found = false;
+            no_cmd_found = false;
             break;
         }
     } );
@@ -104,58 +106,81 @@ int main( int argc, const char* argv[] )
     std::replace( fn.begin(), fn.end(), ' ', '_' );
 
     FILE* fd = 0;
-    fd = fopen( dest_name, "w+" );
-    assert( fd );
 
-    if( no_tc_found or no_tc_command_found )
+    if( mode.compare( "tc" ) == 0 )
     {
+        std::string fn_tc( dest_name );
+        fn_tc += ".tc.cpp";
+
+        fd = fopen( fn_tc.c_str(), "w+" );
+        assert( fd );
+
         fprintf( fd,
-            "// no TC command found\n"
+            "\n"
+            "#ifndef _LIB_CASMTC_UTS_RUNNER_\n"
+            "#define _LIB_CASMTC_UTS_RUNNER_\n"
+            "#include \"gtest/gtest.h\"\n"
+            "#include \"cpp/Default.h\"\n"
+            "#include \"uts/RunnerTest.h\"\n"
+            "#endif //_LIB_CASMTC_UTS_RUNNER_\n"
+            "\n"
+            "INSTANTIATE_TEST_CASE_P\n"
+            "( libcasm_tc__%s\n"
+            ", RunnerTest\n"
+            ", ::testing::Values\n"
+            "  ( RunnerTestParam\n"
+            "    { \"%s\"\n"
+            "    , \"%s\"\n"
+            "    , {",
+            fn.c_str(), file_name, fn_tc.c_str() );
+
+        u1 first_error = true;
+        for( auto& e : error )
+        {
+            // printf( "::: '%s' '%s'\n", e.line.c_str(), e.code.c_str() );
+
+            fprintf( fd,
+                "%s { \"%s\", \"%s\" }\n"
+                "      ",
+                first_error ? "" : ",", e.line.c_str(), e.code.c_str() );
+            first_error = false;
+        }
+
+        fprintf( fd,
+            "}\n"
+            "    }\n"
+            "  )\n"
+            ");\n"
             "\n" );
 
         assert( fclose( fd ) == 0 );
-        return 0;
     }
 
-    fprintf( fd,
-        "\n"
-        "#ifndef _LIB_CASMTC_UTS_RUNNER_\n"
-        "#define _LIB_CASMTC_UTS_RUNNER_\n"
-        "#include \"gtest/gtest.h\"\n"
-        "#include \"cpp/Default.h\"\n"
-        "#include \"uts/RunnerTest.h\"\n"
-        "#endif //_LIB_CASMTC_UTS_RUNNER_\n"
-        "\n"
-        "INSTANTIATE_TEST_CASE_P\n"
-        "( libcasm_tc__%s\n"
-        ", RunnerTest\n"
-        ", ::testing::Values\n"
-        "  ( RunnerTestParam\n"
-        "    { \"%s\"\n"
-        "    , \"%s\"\n"
-        "    , {",
-        fn.c_str(), file_name, dest_name );
-
-    u1 first_error = true;
-    for( auto& e : error )
+    if( mode.compare( "bm" ) == 0 )
     {
-        // printf( "::: '%s' '%s'\n", e.line.c_str(), e.code.c_str() );
+        std::string fn_bm( dest_name );
+        fn_bm += ".bm.cpp";
+
+        fd = fopen( fn_bm.c_str(), "w+" );
+        assert( fd );
 
         fprintf( fd,
-            "%s { \"%s\", \"%s\" }\n"
-            "      ",
-            first_error ? "" : ",", e.line.c_str(), e.code.c_str() );
-        first_error = false;
+            "\n"
+            "#ifndef _LIB_CASMTC_UTS_BENCHMARKS_\n"
+            "#define _LIB_CASMTC_UTS_BENCHMARKS_\n"
+            "#include \"uts/RunnerBenchmark.h\"\n"
+            "#endif //_LIB_CASMTC_UTS_BENCHMARKS_\n"
+            "\n"
+            "BM\n"
+            "( %s\n"
+            ", \"%s\"\n"
+            ");\n"
+            "\n",
+            fn.c_str(), file_name );
+
+        assert( fclose( fd ) == 0 );
     }
 
-    fprintf( fd,
-        "}\n"
-        "    }\n"
-        "  )\n"
-        ");\n"
-        "\n" );
-
-    assert( fclose( fd ) == 0 );
     return 0;
 }
 

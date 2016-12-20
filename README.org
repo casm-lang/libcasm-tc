@@ -5,8 +5,9 @@ CASM test cases for test applications, unit tests, integration tests etc.
 
 ** File Structure [proposed]
 
-- =etc= :: contains various other test examples/applications
-- =uts= :: contains unit test cases, integration tests etc.
+- =uts= :: contains unit test-cases/integration tests etc.
+- =var/etc= :: contains various other test examples/applications
+- =var/benchmark= :: contains benchmark applications etc.
 
 
 ** Copyright and License

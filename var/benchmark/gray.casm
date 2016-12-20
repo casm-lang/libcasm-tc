@@ -22,11 +22,10 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-//@ BM()
 
 CASM init foo
 
-derived nrbits = 16
+derived nrbits = 8
 
 function inputnr: -> Integer
 function input  : Integer -> Boolean
@@ -45,10 +44,10 @@ rule gray1(digit : Integer) = {
 // idea: bit 0 cycles through 0,1,1,0; bit 1 cycles through 0,0,1,1,1,1,0,0 (double the cycle)
 rule gray2(digit : Integer) = 
     case (inputnr/pow(2,digit)) % 4 of {
-        0: output2(digit) := false
-        1: output2(digit) := true
-        2: output2(digit) := true
-        3: output2(digit) := false
+       0: output2(digit) := false
+       1: output2(digit) := true
+       2: output2(digit) := true
+       3: output2(digit) := false
     }
 
 
@@ -71,20 +70,16 @@ rule main =
 rule main2 = {
     if inputnr < pow(2,nrbits) then
     {|
-        forall i in [0..15] do    {
+        forall i in [0..7] do    {
             input(i) := asBoolean((inputnr / pow(2,i)) % 2)
         }
-        forall i in [0..15] do    {
+        forall i in [0..7] do    {
             call gray1(i)
             call gray2(i)
         }
         inputnr := inputnr + 1
-        print dec(inputnr) + "=" + 
-dec(output1(0)) + dec(output1(1)) + dec(output1(2)) + dec(output1(3)) + dec(output1(4)) + dec(output1(5))+ dec(output1(6)) + dec(output1(7)) +
-dec(output1(8)) + dec(output1(9)) + dec(output1(10)) + dec(output1(11)) + dec(output1(12)) + dec(output1(13))+ dec(output1(14)) + dec(output1(15)) 
-+ ", " 
-        + dec(output2(0)) + dec(output2(1)) + dec(output2(2)) + dec(output2(3))+ dec(output2(4)) + dec(output2(5))+ dec(output2(6))+ dec(output2(7)) +
-        dec(output2(8)) + dec(output2(9)) + dec(output2(10)) + dec(output2(11))+ dec(output2(12)) + dec(output2(13))+ dec(output2(14))+ dec(output2(15)) 
+        print dec(inputnr) + "=" + dec(output1(0)) + dec(output1(1)) + dec(output1(2)) + dec(output1(3)) + dec(output1(4)) + dec(output1(5))+ dec(output1(6)) + dec(output1(7)) + ", " 
+                + dec(output2(0)) + dec(output2(1)) + dec(output2(2)) + dec(output2(3))+ dec(output2(4)) + dec(output2(5))+ dec(output2(6))+ dec(output2(7))
         assert output1(0) = output2(0)
         assert output1(1) = output2(1)
         assert output1(2) = output2(2)
@@ -93,14 +88,6 @@ dec(output1(8)) + dec(output1(9)) + dec(output1(10)) + dec(output1(11)) + dec(ou
         assert output1(5) = output2(5)
         assert output1(6) = output2(6)
         assert output1(7) = output2(7)
-        assert output1(8) = output2(8)
-        assert output1(9) = output2(9)
-        assert output1(10) = output2(10)
-        assert output1(11) = output2(11)
-        assert output1(12) = output2(12)
-        assert output1(13) = output2(13)
-        assert output1(14) = output2(14)
-        assert output1(15) = output2(15)
     |}
     else
         program(self) := undef

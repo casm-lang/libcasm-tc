@@ -40,7 +40,8 @@ endforeach()
 
 
 file( GLOB_RECURSE CXX_SRC_FILES "src/*.cpp" )
-file( GLOB_RECURSE CASM_UTS_FILES "uts/*.casm" )
+file( GLOB_RECURSE CASM_TC_FILES "uts/*.casm" )
+file( GLOB_RECURSE CASM_BM_FILES "var/benchmark/*.casm" )
 
 
 set( TARGET casm-tc )
@@ -50,7 +51,6 @@ project( ${TARGET} )
 include_directories(
   .
   src
-  #uts
   ${LIBS}/gtest/googletest
   ${LIBS}/gtest/googletest/include
   ${LIBS}/hayai/src
@@ -68,30 +68,22 @@ string( LENGTH "${CMAKE_CURRENT_SOURCE_DIR}/" CWD_LENGTH )
 
 
 set( CXX_UTS_TC_FILES "" )
-set( CXX_UTS_BM_FILES "" )
-
-foreach( CASM_UTS_FILE
-    ${CASM_UTS_FILES}
+foreach( CASM_TC_FILE
+    ${CASM_TC_FILES}
     )
-  string( SUBSTRING ${CASM_UTS_FILE} ${CWD_LENGTH} -1 UTS_FILE )
+  string( SUBSTRING ${CASM_TC_FILE} ${CWD_LENGTH} -1 UTS_FILE )
 
   set( CXX_UTS_TC_NAME ${UTS_FILE}.tc.cpp )
   set( CXX_UTS_TC_FILE ${CMAKE_CURRENT_BINARY_DIR}/${CXX_UTS_TC_NAME} )
   set( CXX_UTS_TC_FILES "${CXX_UTS_TC_FILES};${CXX_UTS_TC_FILE}" )
-
-  set( CXX_UTS_BM_NAME ${UTS_FILE}.bm.cpp )
-  set( CXX_UTS_BM_FILE ${CMAKE_CURRENT_BINARY_DIR}/${CXX_UTS_BM_NAME} )
-  set( CXX_UTS_BM_FILES "${CXX_UTS_BM_FILES};${CXX_UTS_BM_FILE}" )
   
   add_custom_command(
-    OUTPUT  ${CXX_UTS_TC_FILE} ${CXX_UTS_BM_FILE}
+    OUTPUT  ${CXX_UTS_TC_FILE}
     COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_UTS_TC_NAME} DST=${CMAKE_CURRENT_BINARY_DIR}
-    COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_UTS_BM_NAME} DST=${CMAKE_CURRENT_BINARY_DIR}
-    DEPENDS ${TARGET} ${TARGET}-bm ${CASM_UTS_FILE}
+    DEPENDS ${TARGET} ${CASM_UTS_FILE}
     COMMENT "Generating test case ${UTS_FILE}"
     )
 endforeach()
-
 
 set( CXX_UTS_TEST ${CMAKE_CURRENT_BINARY_DIR}/uts_test.cpp )
 add_custom_command(
@@ -101,12 +93,31 @@ add_custom_command(
   COMMENT "Generating test check ${CXX_UTS_TEST}"
 )
 
+
+set( CXX_UTS_BM_FILES "" )
+foreach( CASM_BM_FILE
+    ${CASM_BM_FILES}
+    )
+  string( SUBSTRING ${CASM_BM_FILE} ${CWD_LENGTH} -1 UTS_FILE )
+  
+  set( CXX_UTS_BM_NAME ${UTS_FILE}.bm.cpp )
+  set( CXX_UTS_BM_FILE ${CMAKE_CURRENT_BINARY_DIR}/${CXX_UTS_BM_NAME} )
+  set( CXX_UTS_BM_FILES "${CXX_UTS_BM_FILES};${CXX_UTS_BM_FILE}" )
+  
+  add_custom_command(
+    OUTPUT  ${CXX_UTS_BM_FILE}
+    COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_UTS_BM_NAME} DST=${CMAKE_CURRENT_BINARY_DIR}
+    DEPENDS ${TARGET} ${CASM_UTS_FILE}
+    COMMENT "Generating benchmark ${UTS_FILE}"
+    )
+endforeach()
+
 set( CXX_UTS_BENCHMARK ${CMAKE_CURRENT_BINARY_DIR}/uts_benchmark.cpp )
 add_custom_command(
   OUTPUT  ${CXX_UTS_BENCHMARK}
   COMMAND cat ${CXX_UTS_BM_FILES} > ${CXX_UTS_BENCHMARK}
   DEPENDS ${CXX_UTS_BM_FILES}
-  COMMENT "Generating benchmark  ${CXX_UTS_BENCHMARK}"
+  COMMENT "Generating benchmark run ${CXX_UTS_BENCHMARK}"
 )
 
 
@@ -118,7 +129,6 @@ target_link_libraries( ${TARGET}
   stdhl
 )
 
-add_dependencies( ${TARGET} ${TARGET}-bm )
 
 add_library( ${TARGET}-test OBJECT
   ${CXX_UTS_TEST}
@@ -134,16 +144,6 @@ add_executable( ${TARGET}-check
 target_link_libraries( ${TARGET}-check
 #   stdhl
   pthread
-)
-
-
-
-add_executable( ${TARGET}-bm
-  src/bm.cpp
-)
-
-target_link_libraries( ${TARGET}-bm
-  stdhl
 )
 
 

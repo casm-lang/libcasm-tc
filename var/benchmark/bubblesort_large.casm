@@ -22,30 +22,45 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-//@ BM()
 
 CASM init foo
 
-rule foo = 
-    let n = 8500 in
-        {|
-        print "Fibonacci(" + dec(n) + ") using dynamic programming: " 
-        call fibo_d(n)
-        print "=" + dec(fibo(n))
-        program(self) := undef
-        |}
+function array   : Integer -> Integer
+function i       :         -> Integer initially { -1 }
+function changes :         -> Boolean
 
-function fibo : Integer -> Integer
-
-rule fibo_d(x:Integer) = 
-    iterate
-        if fibo(x) = undef then { 
-            if x < 0 then fibo(x) := 0
-            else if x < 2 then fibo(x) := x
-            else {|
-                call fibo_d(x-2)
-                call fibo_d(x-1)
-                fibo(x) := fibo(x-2) + fibo(x-1)
-            |}
+rule bubblesort = 
+case i of {
+    -1:     {
+        changes := false
+        i := 0
+        }
+    200:
+        {
+        if not changes then {
+            forall j in [0..200] do 
+                print dec(j) + "=" + dec(array(j))
+            program(self) := undef
+        }
+        i := -1
         }
 
+    default:
+        {
+        if array(i) > array(i+1) then {
+            if not changes then {
+                changes := true
+                array(i) := array(i+1)
+                array(i+1) := array(i)
+            }
+        }
+        i := i + 1
+        }
+}
+
+rule foo = {
+    forall j in [0..200] do {
+        array(j) := 200 - j
+    }
+    program(self) := @bubblesort
+}

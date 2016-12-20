@@ -22,7 +22,6 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// TC() // TODO: FIXME: PPA: List is currently not supported!
 
 CASM init foo
 

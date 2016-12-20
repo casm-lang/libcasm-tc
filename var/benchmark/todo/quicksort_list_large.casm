@@ -22,8 +22,6 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// TC()
-// BM()
 
 CASM quicksort init foo
 
@@ -91,7 +89,7 @@ rule quicksort =
                 p := undef
                 need_pop := false
             } else {
-                forall i in [0..29] do {
+                forall i in [0..2999] do {
                     assert array(i) <= array(i+1)
                     print array(i)
                 }
@@ -106,13 +104,13 @@ rule quicksort =
 init initR
 
 rule initR = {
-    forall i in [0..30] do {
-        array(i) := 30 - i
+    forall i in [0..3000] do {
+        array(i) := 3000 - i
     }
     p := undef
     {|
         stack := []
-        push [0,30] into stack
+        push [0,3000] into stack
     |}
     need_pop := true
     program(self) := @quicksort
