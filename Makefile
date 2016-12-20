@@ -30,9 +30,6 @@ include .config.mk
 MK_DIR := $(shell cd $(dir $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))); pwd)
 
 
-$(OBJ)/$(TARGET):
-	$(MAKE) $(MFLAGS) --no-print-directory -C $(OBJ) $(TARGET)
-
 %.casm.tc.cpp: $(OBJ)/$(TARGET) %.casm
 	mkdir -p "`dirname \"$(DST)/$(filter %.casm,$^)\"`"
 	$(OBJ)/$(TARGET) tc "$(MK_DIR)/$(filter %.casm,$^)" "$(DST)/$(@:%.tc.cpp=%)"
