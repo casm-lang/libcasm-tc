@@ -80,7 +80,7 @@ foreach( CASM_TC_FILE
   add_custom_command(
     OUTPUT  ${CXX_UTS_TC_FILE}
     COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_UTS_TC_NAME} DST=${CMAKE_CURRENT_BINARY_DIR}
-    DEPENDS ${TARGET} ${CASM_UTS_FILE}
+    DEPENDS ${TARGET} ${CASM_TC_FILE}
     COMMENT "Generating test case ${UTS_FILE}"
     )
 endforeach()
@@ -107,7 +107,7 @@ foreach( CASM_BM_FILE
   add_custom_command(
     OUTPUT  ${CXX_UTS_BM_FILE}
     COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_UTS_BM_NAME} DST=${CMAKE_CURRENT_BINARY_DIR}
-    DEPENDS ${TARGET} ${CASM_UTS_FILE}
+    DEPENDS ${TARGET} ${CASM_BM_FILE}
     COMMENT "Generating benchmark ${UTS_FILE}"
     )
 endforeach()
