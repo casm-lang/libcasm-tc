@@ -22,13 +22,11 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-//@ TC()
-
 CASM init foo
 
 rule foo =
 {
-    let x : Rational = 0r in
+    let x : Rational = 0r0 in
     {
         assert asBoolean( x ) = false //@ ERROR(?)
     }

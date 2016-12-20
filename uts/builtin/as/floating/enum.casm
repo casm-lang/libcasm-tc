@@ -22,8 +22,6 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-//@ TC()
-
 CASM init foo
 
 enum myEnum = { one, two, three }
