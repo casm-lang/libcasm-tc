@@ -37,7 +37,8 @@ int main( int argc, const char* argv[] )
     // if( ( mode.compare( "tc" ) != 0 ) or ( mode.compare( "bm" ) != 0 ) )
     // {
     //     libstdhl::Log::error(
-    //         "incorrect mode '%s' provided, only 'tc' or 'bm' are valid", mode.c_str() );
+    //         "incorrect mode '%s' provided, only 'tc' or 'bm' are valid",
+    //         mode.c_str() );
     //     assert( 0 );
     // }
 
