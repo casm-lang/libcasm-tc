@@ -72,14 +72,14 @@ foreach( CASM_TC_FILE
     ${CASM_TC_FILES}
     )
   string( SUBSTRING ${CASM_TC_FILE} ${CWD_LENGTH} -1 UTS_FILE )
-
   set( CXX_UTS_TC_NAME ${UTS_FILE}.tc.cpp )
   set( CXX_UTS_TC_FILE ${CMAKE_CURRENT_BINARY_DIR}/${CXX_UTS_TC_NAME} )
   set( CXX_UTS_TC_FILES "${CXX_UTS_TC_FILES};${CXX_UTS_TC_FILE}" )
-  
+  get_filename_component( CXX_UTS_TC_DIR ${CXX_UTS_TC_FILE} DIRECTORY )
   add_custom_command(
     OUTPUT  ${CXX_UTS_TC_FILE}
-    COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_UTS_TC_NAME} DST=${CMAKE_CURRENT_BINARY_DIR}
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CXX_UTS_TC_DIR}
+    COMMAND ${TARGET} tc ${CASM_TC_FILE} ${CXX_UTS_TC_FILE}
     DEPENDS ${TARGET} ${CASM_TC_FILE}
     COMMENT "Generating test case ${UTS_FILE}"
     )
@@ -99,14 +99,14 @@ foreach( CASM_BM_FILE
     ${CASM_BM_FILES}
     )
   string( SUBSTRING ${CASM_BM_FILE} ${CWD_LENGTH} -1 UTS_FILE )
-  
   set( CXX_UTS_BM_NAME ${UTS_FILE}.bm.cpp )
   set( CXX_UTS_BM_FILE ${CMAKE_CURRENT_BINARY_DIR}/${CXX_UTS_BM_NAME} )
   set( CXX_UTS_BM_FILES "${CXX_UTS_BM_FILES};${CXX_UTS_BM_FILE}" )
-  
+  get_filename_component( CXX_UTS_BM_DIR ${CXX_UTS_BM_FILE} DIRECTORY )
   add_custom_command(
     OUTPUT  ${CXX_UTS_BM_FILE}
-    COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR} ${CXX_UTS_BM_NAME} DST=${CMAKE_CURRENT_BINARY_DIR}
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CXX_UTS_BM_DIR}
+    COMMAND ${TARGET} bm ${CASM_BM_FILE} ${CXX_UTS_BM_FILE}
     DEPENDS ${TARGET} ${CASM_BM_FILE}
     COMMENT "Generating benchmark ${UTS_FILE}"
     )

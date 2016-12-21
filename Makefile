@@ -25,15 +25,3 @@
 TARGET = casm-tc
 
 include .config.mk
-
-
-MK_DIR := $(shell cd $(dir $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))); pwd)
-
-
-%.casm.tc.cpp: $(OBJ)/$(TARGET) %.casm
-	mkdir -p "`dirname \"$(DST)/$(filter %.casm,$^)\"`"
-	$(OBJ)/$(TARGET) tc "$(MK_DIR)/$(filter %.casm,$^)" "$(DST)/$(@:%.tc.cpp=%)"
-
-%.casm.bm.cpp: $(OBJ)/$(TARGET) %.casm
-	mkdir -p "`dirname \"$(DST)/$(filter %.casm,$^)\"`"
-	$(OBJ)/$(TARGET) bm "$(MK_DIR)/$(filter %.casm,$^)" "$(DST)/$(@:%.bm.cpp=%)"

@@ -112,10 +112,7 @@ int main( int argc, const char* argv[] )
 
     if( mode.compare( "tc" ) == 0 )
     {
-        std::string fn_tc( dest_name );
-        fn_tc += ".tc.cpp";
-
-        fd = fopen( fn_tc.c_str(), "w+" );
+        fd = fopen( dest_name, "w+" );
         assert( fd );
 
         fprintf( fd,
@@ -135,7 +132,7 @@ int main( int argc, const char* argv[] )
             "    { \"%s\"\n"
             "    , \"%s\"\n"
             "    , {",
-            fn.c_str(), file_name, fn_tc.c_str() );
+            fn.c_str(), file_name, dest_name );
 
         u1 first_error = true;
         for( auto& e : error )
@@ -161,10 +158,7 @@ int main( int argc, const char* argv[] )
 
     if( mode.compare( "bm" ) == 0 )
     {
-        std::string fn_bm( dest_name );
-        fn_bm += ".bm.cpp";
-
-        fd = fopen( fn_bm.c_str(), "w+" );
+        fd = fopen( dest_name, "w+" );
         assert( fd );
 
         fprintf( fd,
