@@ -22,9 +22,7 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-CASM f500_r500_u500
-
-init example
+CASM init example
 
 rule example =
 {    
