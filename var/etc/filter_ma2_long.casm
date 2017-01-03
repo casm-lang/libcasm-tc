@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2014-2016 CASM Organization
+//  Copyright (c) 2014-2017 CASM Organization
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
@@ -42,6 +42,6 @@ rule filter_ma2_long =
     y := ( x + m ) / 2
     m := x
     c := c + 1
-    if c = 123456789 then
+    if c = 12345678 then
        program(self) := undef
 }

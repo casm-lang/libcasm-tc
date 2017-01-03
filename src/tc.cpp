@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2014-2016 CASM Organization
+//  Copyright (c) 2014-2017 CASM Organization
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
@@ -28,7 +28,7 @@ int main( int argc, const char* argv[] )
 {
     libstdhl::Log::DefaultSource = libstdhl::Log::Source(
         [&argv]( void* arg ) -> const char* { return argv[ 0 ]; } );
-    
+
     assert( argc == 4 );
 
     assert( argv[ 1 ] );
@@ -36,7 +36,7 @@ int main( int argc, const char* argv[] )
 
     const char* file_name = argv[ 2 ];
     const char* dest_name = argv[ 3 ];
-    
+
     // if( ( mode.compare( "tc" ) != 0 ) or ( mode.compare( "bm" ) != 0 ) )
     // {
     //     libstdhl::Log::error(
