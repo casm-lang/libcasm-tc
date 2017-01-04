@@ -22,7 +22,7 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "uts/RunnerTest.h"
+#include "RunnerTest.h"
 
 TEST_P( RunnerTest, case )
 {

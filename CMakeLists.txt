@@ -132,7 +132,7 @@ target_link_libraries( ${TARGET}
 
 add_library( ${TARGET}-test OBJECT
   ${CXX_UTS_TEST}
-  uts/RunnerTest.cpp
+  src/RunnerTest.cpp
 )
   
 add_executable( ${TARGET}-check
@@ -149,7 +149,7 @@ target_link_libraries( ${TARGET}-check
 
 add_library( ${TARGET}-benchmark OBJECT
   ${CXX_UTS_BENCHMARK}
-  uts/RunnerBenchmark.cpp
+  src/RunnerBenchmark.cpp
 )
   
 add_executable( ${TARGET}-run
