@@ -22,7 +22,7 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "uts/RunnerBenchmark.h"
+#include "src/RunnerBenchmark.h"
 
 void bm::SetUp()
 {
