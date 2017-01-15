@@ -25,13 +25,13 @@
 
 CASM init foo
 
-// tests if initializer are checked correctly, bar is not declared when baz is initialized
+// y is not yet decleared when initialising x
 
-function baz: -> Integer initially { bar } //@ ERROR( ? )
-function (static) bar : -> Integer initially { 3 }
+function x : -> Integer initially { y }  //@ ERROR( ? )
+function y : -> Integer initially { 3 }
 
-rule foo = {|
-    assert baz = 3
-    program(self) := undef
-|}
-
+rule foo =
+{
+    assert x = 3
+    program( self ) := undef
+}

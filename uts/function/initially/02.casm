@@ -25,13 +25,12 @@
 
 CASM init foo
 
-// tests if initializer are checked correctly, bar is not declared when baz is initialized
+function squared : Integer -> Integer initially { 2 -> 4,
+                                                  3 -> 9 }
 
-function baz: -> Integer initially { bar } //@ ERROR( ? )
-function (static) bar : -> Integer initially { 3 }
-
-rule foo = {|
-    assert baz = 3
-    program(self) := undef
-|}
-
+rule foo =
+{
+    assert squared(2) = 4
+    assert squared(3) = 9
+    program( self ) := undef
+}

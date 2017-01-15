@@ -25,10 +25,10 @@
 
 CASM init foo
 
-// tests if initializer are checked correctly, bar is not declared when baz is initialized
+// tests if initializer are checked correctly
 
-function baz: -> Integer initially { bar } //@ ERROR( ? )
 function (static) bar : -> Integer initially { 3 }
+function baz: -> Integer initially { bar }
 
 rule foo = {|
     assert baz = 3
