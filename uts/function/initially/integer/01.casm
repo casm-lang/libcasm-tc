@@ -27,7 +27,7 @@ CASM init foo
 
 // tests if initializer are checked correctly, that is bar is initialized before baz
 
-function baz: Integer -> Integer initially { 1 -> bar(1) }  //@ ERROR( ? )
+function baz: Integer -> Integer initially { 1 -> bar(1) }  //@ ERROR( c000 )
 function (static) bar : Integer -> Integer initially { 1 -> 3 }
 
 rule foo = {|

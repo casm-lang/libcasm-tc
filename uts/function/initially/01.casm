@@ -27,7 +27,7 @@ CASM init foo
 
 // y is not yet decleared when initialising x
 
-function x : -> Integer initially { y }  //@ ERROR( ? )
+function x : -> Integer initially { y }  //@ ERROR( c000 )
 function y : -> Integer initially { 3 }
 
 rule foo =
