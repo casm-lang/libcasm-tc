@@ -1,0 +1,94 @@
+//
+//  Copyright (c) 2014-2017 CASM Organization
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+
+
+// should terminate after 55 steps (1 for setup and 54 for game of life)
+
+CASM init setup
+
+function alive : Integer * Integer -> Boolean
+
+derived aliveNeighbours(x : Integer, y : Integer) = Boolean2Int(alive(x - 1, y - 1))
+                                                  + Boolean2Int(alive(x, y - 1))
+                                                  + Boolean2Int(alive(x + 1, y - 1))
+                                                  + Boolean2Int(alive(x - 1, y))
+                                                  + Boolean2Int(alive(x + 1, y))
+                                                  + Boolean2Int(alive(x - 1, y + 1))
+                                                  + Boolean2Int(alive(x, y + 1))
+                                                  + Boolean2Int(alive(x + 1, y + 1))
+
+rule updateCell(x : Integer, y : Integer) =
+    let c = aliveNeighbours(x, y) in {
+        if c = 3 then {
+            if not alive(x, y) then alive(x, y) := true
+        }
+        if (c < 2) or (c > 3) then {
+            if alive(x, y) then alive(x, y) := false
+        }
+        // print c + ", " + x + ", " + y
+    }
+
+rule GameOfLife =
+    forall x in 100 do
+        forall y in 100 do
+            call updateCell(x, y)
+
+rule setup =
+{|
+    /*
+     * Start pattern:
+     *
+     * X X X
+     * X   X
+     * X   X
+     *
+     * X   X
+     * X   X
+     * X X X
+     *
+     * from https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
+     */
+
+    forall x in [-1 .. 101] do
+        forall y in [-1 .. 101] do
+            alive(x, y) := false
+
+    alive(50, 45) := true
+    alive(51, 45) := true
+    alive(52, 45) := true
+    alive(50, 46) := true
+    alive(52, 46) := true
+    alive(50, 47) := true
+    alive(52, 47) := true
+
+    alive(50, 49) := true
+    alive(52, 49) := true
+    alive(50, 50) := true
+    alive(52, 50) := true
+    alive(50, 51) := true
+    alive(51, 51) := true
+    alive(52, 51) := true
+
+    program(self) := @GameOfLife
+|}
