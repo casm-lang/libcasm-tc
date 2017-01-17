@@ -23,8 +23,15 @@
 //
 
 
-CASM init foo rule foo = program(self) := undef
+CASM init foo
 
-// tests if "initially" handles ranged integers correctly => value out of range
+// tests if initializer are checked correctly
 
-function bar : -> Integer(2..4) initially { 42 } //@ ERROR( fd00 )
+function (static) bar : Integer -> Integer initially { 1 -> 3 }
+function baz: Integer -> Integer initially { 1 -> bar(1) }
+
+rule foo = {|
+    assert baz(1) = 3
+    program(self) := undef
+|}
+

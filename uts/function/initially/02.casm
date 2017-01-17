@@ -23,8 +23,14 @@
 //
 
 
-CASM init foo rule foo = program(self) := undef
+CASM init foo
 
-// tests if "initially" handles ranged integers correctly => value out of range
+function squared : Integer -> Integer initially { 2 -> 4,
+                                                  3 -> 9 }
 
-function bar : -> Integer(2..4) initially { 42 } //@ ERROR( fd00 )
+rule foo =
+{
+    assert squared(2) = 4
+    assert squared(3) = 9
+    program( self ) := undef
+}

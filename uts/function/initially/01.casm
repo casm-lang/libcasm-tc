@@ -23,8 +23,15 @@
 //
 
 
-CASM init foo rule foo = program(self) := undef
+CASM init foo
 
-// tests if "initially" handles ranged integers correctly => value out of range
+// y is not yet decleared when initialising x
 
-function bar : -> Integer(2..4) initially { 42 } //@ ERROR( fd00 )
+function x : -> Integer initially { y }  //@ ERROR( c000 )
+function y : -> Integer initially { 3 }
+
+rule foo =
+{
+    assert x = 3
+    program( self ) := undef
+}

@@ -25,7 +25,7 @@
 
 CASM init foo
 
-function x : -> Integer initially { }
+function x : -> Integer
 
 rule foo = { 
     assert x = 1 //@ ERROR( 5a00 )
