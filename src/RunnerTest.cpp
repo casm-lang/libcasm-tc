@@ -26,7 +26,8 @@
 
 TEST_P( RunnerTest, case )
 {
-    RunnerTestParam const& param = GetParam();
+    libcasm_tc::RunnerTestParam& param
+        = (libcasm_tc::RunnerTestParam&)GetParam();
 
     EXPECT_NE( (u64)param.specification, 0 );
     EXPECT_TRUE( libstdhl::File::exists( param.specification ) );
@@ -35,6 +36,7 @@ TEST_P( RunnerTest, case )
     ASSERT_EQ( exec_result, 0 );
 
     std::unordered_map< std::string, const char* > env;
+
     env[ "EXPORT" ] = "export";
     env[ "ECHO" ] = "echo";
     env[ "CAT" ] = "cat";
@@ -169,7 +171,7 @@ TEST_P( RunnerTest, case )
         EXPECT_NE( exec_result, 0 );
 
         u64 failure_cnt = 0;
-        std::vector< ParamError > checked;
+        std::vector< libcasm_tc::ParamError > checked;
 
         libstdhl::File::readLines( ferr.c_str(), [&param, &checked,
                                                      &failure_cnt]( u32 cnt,

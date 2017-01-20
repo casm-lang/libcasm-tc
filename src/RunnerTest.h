@@ -28,7 +28,9 @@
 #include "cpp/Default.h"
 #include "cpp/File.h"
 #include "cpp/Type.h"
+
 #include "libcasm-tc.h"
+
 #include "gtest/gtest.h"
 
 #define TEST_NAME                                                              \
@@ -40,21 +42,38 @@
                                 ->name() ) )                                   \
         .c_str()
 
-struct ParamError
+namespace libcasm_tc
 {
-    std::string line;
-    std::string code;
-};
+    struct ParamError
+    {
+        std::string line;
+        std::string code;
+    };
 
-struct RunnerTestParam
-{
-    const char* specification;
-    const char* output_path;
-    std::vector< ParamError > error;
-};
+    class RunnerTestParam
+    {
+      public:
+        const char* specification;
+        const char* output_path;
+        std::vector< ParamError > error;
+    };
 
-class RunnerTest : public ::testing::TestWithParam< RunnerTestParam >
+    inline void PrintTo( const RunnerTestParam& obj, ::std::ostream* os ){};
+}
+
+class RunnerTest
+    : public ::testing::TestWithParam< libcasm_tc::RunnerTestParam >
 {
 };
 
 #endif // _LIB_CASMTC_RUNNERTEST_H_
+
+//
+//  Local variables:
+//  mode: c++
+//  indent-tabs-mode: nil
+//  c-basic-offset: 4
+//  tab-width: 4
+//  End:
+//  vim:noexpandtab:sw=4:ts=4:
+//
