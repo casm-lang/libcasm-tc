@@ -27,7 +27,7 @@
 
 CASM init setup
 
-function alive : Integer * Integer -> Boolean
+function alive : Integer * Integer -> Boolean defined { false }
 
 derived aliveNeighbours(x : Integer, y : Integer) = asInteger(alive(x - 1, y - 1))
                                                   + asInteger(alive(x, y - 1))
@@ -68,10 +68,6 @@ rule setup =
      *
      * from https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
      */
-
-    forall x in [0 .. 101] do
-        forall y in [0 .. 101] do
-            alive(x, y) := false
 
     alive(50, 45) := true
     alive(51, 45) := true
