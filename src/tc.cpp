@@ -22,7 +22,7 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "libstdhlcpp.h"
+#include "libstdhl.h"
 
 int main( int argc, const char* argv[] )
 {
