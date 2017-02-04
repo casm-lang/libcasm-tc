@@ -1,28 +1,28 @@
-CoreASM fibbo
+CoreASM bubblesort
 
-//  
+//
 //  Copyright (c) 2014-2017 CASM Organization
 //  All rights reserved.
-//  
+//
 //  Developed by: Philipp Paulweber
 //                Emmanuel Pescosta
 //                https://github.com/casm-lang/libcasm-tc
-//  
+//
 //  This file is part of libcasm-tc.
-//  
+//
 //  libcasm-tc is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
-//  
+//
 //  libcasm-tc is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //  GNU General Public License for more details.
-//  
+//
 //  You should have received a copy of the GNU General Public License
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
-//  
+//
 
 use StandardPlugins
 use ConditionalRule
@@ -30,26 +30,41 @@ use Math
 
 init foo
 
-rule foo = 
-    let n = 7500 in
-        seq
-            print "Fibonacci(" + n + ") using dynamic programming: " 
-            fibo_d(n)
-            print "=" + fibo(n)
+function array   : Int -> Int
+function i       :     -> Int
+function changes :     -> Boolean
+
+rule bubblesort = 
+    if (i = -1) then {
+        changes := false
+        i := 0
+        }
+    else if (i = 200) then
+        {
+        if not changes then {
+            forall j in [0..200] do 
+                print j + "=" + array(j)
             program(self) := undef
-        endseq
-
-function fibo : Int -> Int
-
-rule fibo_d( x ) = 
-    iterate
-        if fibo(x) = undef then { 
-            if x < 0 then fibo(x) := 0
-            else if x < 2 then fibo(x) := x
-            else seq
-                fibo_d(x-2)
-                fibo_d(x-1)
-                fibo(x) := fibo(x-2) + fibo(x-1)
-            endseq
+        }
+        i := -1
+        }
+    else
+        {
+        if array(i) > array(i+1) then {
+            if not changes then {
+                changes := true
+                array(i) := array(i+1)
+                array(i+1) := array(i)
+            }
+        }
+        i := i + 1
         }
 
+rule foo =
+par
+    i := -1
+    forall j in [0..200] do {
+        array(j) := 200 - j
+    }
+    program(self) := @bubblesort
+endpar

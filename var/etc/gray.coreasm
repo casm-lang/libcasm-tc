@@ -1,0 +1,89 @@
+CoreASM gray
+
+//
+//  Copyright (c) 2014-2017 CASM Organization
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+
+use StandardPlugins
+use ConditionalRule
+use Math
+
+init foo
+
+derived nrbits = 16
+
+function inputnr: -> Integer
+function input1  : Integer -> Boolean
+function output1 : Integer -> Integer
+function output2 : Integer -> Integer
+
+
+// gray = bin XOR (bin >> 1)
+rule gray1(digit) =
+    if digit < nrbits-1 then
+        output1(digit) := input1(digit) xor input1(digit+1)
+    else
+        output1(digit) := input1(digit)
+
+// idea: bit 0 cycles through 0,1,1,0; bit 1 cycles through 0,0,1,1,1,1,0,0 (double the cycle)
+rule gray2(digit) =
+    case (inputnr/pow(2,digit)) % 4 of
+        0: output2(digit) := 0
+        1: output2(digit) := 1
+        2: output2(digit) := 1
+        3: output2(digit) := 0
+    endcase
+
+
+rule foo = 
+    if false then {
+        program(self) := @main    
+    } else     {
+        inputnr := 0
+        program(self) := @main2
+    }
+
+rule main =
+seq
+    gray1(0)
+    gray2(0)
+    program(self) := undef
+endseq
+
+// all 4 bit numbers and their gray encoding
+rule main2 = {
+    if inputnr < pow(2,nrbits) then
+    seq
+        forall i in [0..15] do    {
+            input1(i) := asBoolean((inputnr / pow(2,i)) % 2)
+        }
+        forall i in [0..15] do    {
+            gray1(i)
+            gray2(i)
+        }
+        inputnr := inputnr + 1
+        print inputnr + "=" + output1(0) + output1(1) + output1(2) + output1(3) + output1(4) + output1(5)+ output1(6) + output1(7) + output1(8) + output1(9) + output1(10) + output1(11) + output1(12) + output1(13)+ output1(14) + output1(15)  + ", " + output2(0) + output2(1) + output2(2) + output2(3)+ output2(4) + output2(5)+ output2(6) + output2(7) + output2(8) + output2(9) + output2(10) + output2(11)+ output2(12) + output2(13)+ output2(14) + output2(15)
+    endseq
+    else
+        program(self) := undef
+}

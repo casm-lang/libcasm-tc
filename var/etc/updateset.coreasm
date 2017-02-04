@@ -1,0 +1,338 @@
+CoreASM updateset
+
+//
+//  Copyright (c) 2014-2017 CASM Organization
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+
+// the output should be:
+// ~~~
+// 1664a
+// 5ac5d
+// 7e0ad
+// 123456 steps later...
+// ~~~
+
+init setup
+
+use StandardPlugins
+use ConditionalRule
+use Math
+
+function x : -> Integer initially { 0 }
+function y : -> Integer initially { 0 }
+function z : -> Integer initially { 0 }
+
+function cnt : -> Integer initially { 0 }
+
+rule setup =
+par
+    x := 0
+    y := 0
+    z := 0
+    cnt := 0
+    program(self) := @foo
+endpar
+
+rule foo = 
+seq
+    x := 1
+    x := 1
+    y := 1
+    z := 1
+    x := 1
+    par
+    seq
+    cnt := cnt + 1
+
+    x := 1
+    x := 1
+    y := 1
+    z := 1
+    y := 1
+    x := 1
+    x := 1
+    x := 1
+    y := 1
+    x := 1
+    z := 1
+    x := 1
+    y := 1
+    x := 1
+    z := 1
+    x := 1
+    y := 1
+    z := 1
+    x := 1
+    x := 1
+    x := 1
+    x := 1
+    y := 1
+    z := 1
+    y := 1
+    x := 1
+    x := 1
+    x := 1
+    y := 1
+    x := 1
+    z := 1
+    x := 1
+    y := 1
+    x := 1
+    z := 1
+    x := 1
+    y := 1
+    z := 1
+    x := 1
+    x := 1
+    x := 1
+    x := 1
+    y := 1
+    z := 1
+    y := 1
+    x := 1
+    x := 1
+    x := 1
+    y := 1
+    x := 1
+    z := 1
+    x := 1
+    y := 1
+    x := 1
+    z := 1
+    x := 1
+    y := 1
+    z := 1
+    x := 1
+    x := 1
+    x := 1
+    x := 1
+    y := 1
+    z := 1
+    y := 1
+    x := 1
+    x := 1
+    x := 1
+    y := 1
+    x := 1
+    z := 1
+    x := 1
+    y := 1
+    x := 1
+    z := 1
+    x := 1
+    y := 1
+    z := 1
+    x := 1
+    x := 1
+    x := 1
+    x := 1
+    y := 1
+    z := 1
+    y := 1
+    x := 1
+    x := 1
+    x := 1
+    y := 1
+    x := 1
+    z := 1
+    x := 1
+    y := 1
+    x := 1
+    z := 1
+    x := 1
+    y := 1
+    z := 1
+    x := 1
+    x := 1
+    z := 1
+    x := 1
+    x := 1
+    x := 1
+    x := 1
+    x := 1
+    endseq
+    endpar
+    x := 1
+    x := 1
+    x := 1
+    x := 1
+    x := 1
+    x := 1
+    x := 1
+    x := 1
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    z := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    z := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    x := ( x - y * z ) % 554321
+    z := ( x - y * z ) % 554321
+    x := ( x - y * z ) % 554321
+    y := ( x - y * z ) % 554321
+    z := ( x - y * z ) % 554321
+    x := ( x - y * z ) % 554321
+    x := ( x - y * z ) % 554321
+    x := ( x - y * z ) % 554321
+    x := ( x - y * z ) % 554321
+    y := ( x - y * z ) % 554321
+    z := ( x - y * z ) % 554321
+    y := ( x - y * z ) % 554321
+    x := ( x - y * z ) % 554321
+    x := ( x - y * z ) % 554321
+    x := ( x - y * z ) % 554321
+    y := ( x - y * z ) % 554321
+    x := ( x - y * z ) % 554321
+    z := ( x - y * z ) % 554321
+    x := ( x - y * z ) % 554321
+    y := ( x - y * z ) % 554321
+    x := ( x - y + z ) % 554321
+    z := ( x - y + z ) % 554321
+    x := ( x - y + z ) % 554321
+    y := ( x - y + z ) % 554321
+    z := ( x - y + z ) % 554321
+    x := ( x - y + z ) % 554321
+    x := ( x - y + z ) % 554321
+    x := ( x - y + z ) % 554321
+    x := ( x - y + z ) % 554321
+    y := ( x - y + z ) % 554321
+    z := ( x - y + z ) % 554321
+    y := ( x - y + z ) % 554321
+    x := ( x - y + z ) % 554321
+    x := ( x - y + z ) % 554321
+    x := ( x + y + z ) % 554321
+    y := ( x + y + z ) % 554321
+    x := ( x + y + z ) % 554321
+    z := ( x + y + z ) % 554321
+    x := ( x + y + z ) % 554321
+    y := ( x + y + z ) % 554321
+    x := ( x + y + z ) % 554321
+    z := ( x * y + z ) % 554321
+    x := ( x * y + z ) % 554321
+    y := ( x * y + z ) % 554321
+    z := ( x * y + z ) % 554321
+    x := ( x * y + z ) % 554321
+    x := ( x * y + z ) % 554321
+    x := ( x * y + z ) % 554321
+    x := ( x * y + z ) % 554321
+    y := ( x * y + z ) % 554321
+    z := ( x * y + z ) % 554321
+    y := ( x * y + z ) % 554321
+    x := ( x * y + z ) % 554321
+    x := ( x * y + z ) % 554321
+    x := ( x * y + z ) % 554321
+    y := ( x * y + z ) % 554321
+    x := ( x * y + z ) % 554321
+    z := ( x * y + z ) % 554321
+    x := ( x * y * z ) % 554321
+    y := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    z := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    y := ( x * y * z ) % 554321
+    z := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    y := ( x * y * z ) % 554321
+    z := ( x * y * z ) % 554321
+    y := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    y := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    z := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    y := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    z := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    y := ( x * y * z ) % 554321
+    z := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    x := ( x * y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    z := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    z := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    z := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    z := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    z := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    z := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    z := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    y := ( x + y * z ) % 554321
+    z := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+    x := ( x + y * z ) % 554321
+
+    if cnt > 123455 then
+    {
+        print hex(x)
+        print hex(y)
+        print hex(z)
+        program(self) := undef
+    }   
+endseq

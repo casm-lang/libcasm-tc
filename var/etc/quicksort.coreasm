@@ -1,0 +1,145 @@
+CoreASM quicksort
+
+//
+//  Copyright (c) 2014-2017 CASM Organization
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+
+use StandardPlugins
+use ConditionalRule
+use Math
+
+init foo
+
+// function stack : -> List(Tuple(Int, Int)) //initially { [] }
+function stackA : Int -> Int
+function stackB : Int -> Int
+function pos : -> Int
+
+function array : Int -> Int //initially { 0->9, 1->2, 2->10, 3->7, 4->8, 5->1, 6->6, 7->3, 8->4, 9->5}
+function p : -> Int //initially { undef }
+function pivot : -> Int
+function ll : -> Int
+function rr : -> Int
+function l : -> Int
+function r : -> Int
+function need_pop : -> Boolean
+function need_partition : -> Boolean
+
+rule partition_one_step =
+seq
+    iterate
+        if array(ll) < array(pivot) then ll := ll + 1
+    iterate 
+        if array(rr) >= array(pivot) and ll < rr then rr := rr - 1
+    if ll < rr then {
+        array(ll) := array(rr)
+        array(rr) := array(ll)
+    } else 
+        need_partition := false
+endseq
+
+rule partition =
+if pivot = undef then {
+    pivot := r
+    rr := r - 1
+    ll := l
+    need_partition := true
+} else
+    if need_partition then
+        partition_one_step
+    else {
+        p := ll
+        if pivot != ll then {
+            array(pivot) := array(ll)
+            array(ll) := array(pivot)
+        }
+    }
+
+rule quicksort_once =
+    if p = undef then
+        partition
+    else    
+    seq
+        if l < p-1 then
+        {
+            // push [l,p-1] into stack
+            stackA( pos ) := l
+            stackB( pos ) := p-1
+            pos := pos + 1
+        }
+        if p+1 < r then
+        {
+            // push [p+1,r] into stack
+            stackA( pos ) := p+1
+            stackB( pos ) := r
+            pos := pos + 1
+        }
+        need_pop := true
+    endseq
+
+rule quicksort =
+    if need_pop then {
+    //  let top = nth(stack, 1) in
+        let l = stackA(0) in
+        let r = stackB(0) in
+            if l != undef then
+            {
+                // stack := tail(stack)
+                forall i in [1..pos] do {
+                    stackA( i-1 ) := stackA( i )
+                    stackB( i-1 ) := stackB( i )
+                }
+                pos := pos - 1
+
+                pivot := undef
+                p := undef
+                need_pop := false
+            } else {
+                forall i in [0..299] do {
+                    //assert array(i) <= array(i+1)
+                    print array(i)
+                }
+                print "----------------"
+                program(self) := undef
+            }
+    }
+    else
+        quicksort_once
+
+
+rule foo =
+par
+    forall i in [0..300] do {
+        array(i) := 300 - i
+    }
+    p := undef
+    seq
+        // stack := []
+        // push [0,300] into stack
+        stackA( 0 ) := 0
+        stackB( 0 ) := 3
+        pos := 1
+    endseq
+    need_pop := true
+    program(self) := @quicksort
+endpar
