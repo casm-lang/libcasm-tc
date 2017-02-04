@@ -97,7 +97,7 @@ rule quicksort =
             {
                 // stack := tail(stack)
                 forall i in pos do
-                    stack( i-1 ) := stack( i )
+                    stack( i ) := stack( i + 1 )
                 pos := pos - 1
                 
                 l := nth(top, 1)
