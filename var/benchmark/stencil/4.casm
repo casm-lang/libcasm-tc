@@ -1,0 +1,129 @@
+//
+//  Copyright (c) 2014-2017 CASM Organization
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+
+CASM init updateCells
+
+function data : Integer *
+                Integer *
+                Integer *
+                Integer -> Floating defined { 0.5 }
+
+function (static) kernel : Integer *
+                           Integer *
+                           Integer *
+                           Integer -> Floating defined { 0.1 }
+
+derived applyStencil(x : Integer, y : Integer, z : Integer, a : Integer) =
+    kernel(-1, -1, -1, -1) * data(x - 1, y - 1, z - 1, a - 1) +
+    kernel( 0, -1, -1, -1) * data(    x, y - 1, z - 1, a - 1) +
+    kernel(+1, -1, -1, -1) * data(x + 1, y - 1, z - 1, a - 1) +
+    kernel(-1,  0, -1, -1) * data(x - 1,     y, z - 1, a - 1) +
+    kernel( 0,  0, -1, -1) * data(    x,     y, z - 1, a - 1) +
+    kernel(+1,  0, -1, -1) * data(x + 1,     y, z - 1, a - 1) +
+    kernel(-1, +1, -1, -1) * data(x - 1, y + 1, z - 1, a - 1) +
+    kernel( 0, +1, -1, -1) * data(    x, y + 1, z - 1, a - 1) +
+    kernel(+1, +1, -1, -1) * data(x + 1, y + 1, z - 1, a - 1) +
+    kernel(-1, -1,  0, -1) * data(x - 1, y - 1,     z, a - 1) +
+    kernel( 0, -1,  0, -1) * data(    x, y - 1,     z, a - 1) +
+    kernel(+1, -1,  0, -1) * data(x + 1, y - 1,     z, a - 1) +
+    kernel(-1,  0,  0, -1) * data(x - 1,     y,     z, a - 1) +
+    kernel( 0,  0,  0, -1) * data(    x,     y,     z, a - 1) +
+    kernel(+1,  0,  0, -1) * data(x + 1,     y,     z, a - 1) +
+    kernel(-1, +1,  0, -1) * data(x - 1, y + 1,     z, a - 1) +
+    kernel( 0, +1,  0, -1) * data(    x, y + 1,     z, a - 1) +
+    kernel(+1, +1,  0, -1) * data(x + 1, y + 1,     z, a - 1) +
+    kernel(-1, -1, +1, -1) * data(x - 1, y - 1, z + 1, a - 1) +
+    kernel( 0, -1, +1, -1) * data(    x, y - 1, z + 1, a - 1) +
+    kernel(+1, -1, +1, -1) * data(x + 1, y - 1, z + 1, a - 1) +
+    kernel(-1,  0, +1, -1) * data(x - 1,     y, z + 1, a - 1) +
+    kernel( 0,  0, +1, -1) * data(    x,     y, z + 1, a - 1) +
+    kernel(+1,  0, +1, -1) * data(x + 1,     y, z + 1, a - 1) +
+    kernel(-1, +1, +1, -1) * data(x - 1, y + 1, z + 1, a - 1) +
+    kernel( 0, +1, +1, -1) * data(    x, y + 1, z + 1, a - 1) +
+    kernel(+1, +1, +1, -1) * data(x + 1, y + 1, z + 1, a - 1) +
+    kernel(-1, -1, -1,  0) * data(x - 1, y - 1, z - 1,     a) +
+    kernel( 0, -1, -1,  0) * data(    x, y - 1, z - 1,     a) +
+    kernel(+1, -1, -1,  0) * data(x + 1, y - 1, z - 1,     a) +
+    kernel(-1,  0, -1,  0) * data(x - 1,     y, z - 1,     a) +
+    kernel( 0,  0, -1,  0) * data(    x,     y, z - 1,     a) +
+    kernel(+1,  0, -1,  0) * data(x + 1,     y, z - 1,     a) +
+    kernel(-1, +1, -1,  0) * data(x - 1, y + 1, z - 1,     a) +
+    kernel( 0, +1, -1,  0) * data(    x, y + 1, z - 1,     a) +
+    kernel(+1, +1, -1,  0) * data(x + 1, y + 1, z - 1,     a) +
+    kernel(-1, -1,  0,  0) * data(x - 1, y - 1,     z,     a) +
+    kernel( 0, -1,  0,  0) * data(    x, y - 1,     z,     a) +
+    kernel(+1, -1,  0,  0) * data(x + 1, y - 1,     z,     a) +
+    kernel(-1,  0,  0,  0) * data(x - 1,     y,     z,     a) +
+    kernel( 0,  0,  0,  0) * data(    x,     y,     z,     a) +
+    kernel(+1,  0,  0,  0) * data(x + 1,     y,     z,     a) +
+    kernel(-1, +1,  0,  0) * data(x - 1, y + 1,     z,     a) +
+    kernel( 0, +1,  0,  0) * data(    x, y + 1,     z,     a) +
+    kernel(+1, +1,  0,  0) * data(x + 1, y + 1,     z,     a) +
+    kernel(-1, -1, +1,  0) * data(x - 1, y - 1, z + 1,     a) +
+    kernel( 0, -1, +1,  0) * data(    x, y - 1, z + 1,     a) +
+    kernel(+1, -1, +1,  0) * data(x + 1, y - 1, z + 1,     a) +
+    kernel(-1,  0, +1,  0) * data(x - 1,     y, z + 1,     a) +
+    kernel( 0,  0, +1,  0) * data(    x,     y, z + 1,     a) +
+    kernel(+1,  0, +1,  0) * data(x + 1,     y, z + 1,     a) +
+    kernel(-1, +1, +1,  0) * data(x - 1, y + 1, z + 1,     a) +
+    kernel( 0, +1, +1,  0) * data(    x, y + 1, z + 1,     a) +
+    kernel(+1, +1, +1,  0) * data(x + 1, y + 1, z + 1,     a) +
+    kernel(-1, -1, -1, +1) * data(x - 1, y - 1, z - 1, a + 1) +
+    kernel( 0, -1, -1, +1) * data(    x, y - 1, z - 1, a + 1) +
+    kernel(+1, -1, -1, +1) * data(x + 1, y - 1, z - 1, a + 1) +
+    kernel(-1,  0, -1, +1) * data(x - 1,     y, z - 1, a + 1) +
+    kernel( 0,  0, -1, +1) * data(    x,     y, z - 1, a + 1) +
+    kernel(+1,  0, -1, +1) * data(x + 1,     y, z - 1, a + 1) +
+    kernel(-1, +1, -1, +1) * data(x - 1, y + 1, z - 1, a + 1) +
+    kernel( 0, +1, -1, +1) * data(    x, y + 1, z - 1, a + 1) +
+    kernel(+1, +1, -1, +1) * data(x + 1, y + 1, z - 1, a + 1) +
+    kernel(-1, -1,  0, +1) * data(x - 1, y - 1,     z, a + 1) +
+    kernel( 0, -1,  0, +1) * data(    x, y - 1,     z, a + 1) +
+    kernel(+1, -1,  0, +1) * data(x + 1, y - 1,     z, a + 1) +
+    kernel(-1,  0,  0, +1) * data(x - 1,     y,     z, a + 1) +
+    kernel( 0,  0,  0, +1) * data(    x,     y,     z, a + 1) +
+    kernel(+1,  0,  0, +1) * data(x + 1,     y,     z, a + 1) +
+    kernel(-1, +1,  0, +1) * data(x - 1, y + 1,     z, a + 1) +
+    kernel( 0, +1,  0, +1) * data(    x, y + 1,     z, a + 1) +
+    kernel(+1, +1,  0, +1) * data(x + 1, y + 1,     z, a + 1) +
+    kernel(-1, -1, +1, +1) * data(x - 1, y - 1, z + 1, a + 1) +
+    kernel( 0, -1, +1, +1) * data(    x, y - 1, z + 1, a + 1) +
+    kernel(+1, -1, +1, +1) * data(x + 1, y - 1, z + 1, a + 1) +
+    kernel(-1,  0, +1, +1) * data(x - 1,     y, z + 1, a + 1) +
+    kernel( 0,  0, +1, +1) * data(    x,     y, z + 1, a + 1) +
+    kernel(+1,  0, +1, +1) * data(x + 1,     y, z + 1, a + 1) +
+    kernel(-1, +1, +1, +1) * data(x - 1, y + 1, z + 1, a + 1) +
+    kernel( 0, +1, +1, +1) * data(    x, y + 1, z + 1, a + 1) +
+    kernel(+1, +1, +1, +1) * data(x + 1, y + 1, z + 1, a + 1)
+
+rule updateCells =
+{
+    forall x in 5 do
+        forall y in 5 do
+            forall z in 5 do
+                forall a in 5 do
+                    data(x, y, z, a) := applyStencil(x, y, z, a)
+
+    program(self) := undef
+}
