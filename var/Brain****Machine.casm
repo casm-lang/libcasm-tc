@@ -166,35 +166,20 @@ rule bf =
     ip := ip + 1
 |}
 
-rule jump_right =
+rule jump_right = call jump(+1)
+rule jump_left = call jump(-1)
+
+rule jump(dir : Integer(-1..1)) =
 {|
-    bc := 1
+    assert dir != 0 // enum would be nice, but requires an if expr. ...
+
+    bc := dir
 
     iterate {
         if bc = 0 then
             skip
         else {|
-            ip := ip + 1
-            case prog(ip) of
-            {
-                '[': bc := bc + 1
-                ']': bc := bc - 1
-            }
-        |}
-    }
-
-    assert bc = 0
-|}
-
-rule jump_left =
-{|
-    bc := -1
-
-    iterate {
-        if bc = 0 then
-            skip
-        else {|
-            ip := ip - 1
+            ip := ip + dir
             case prog(ip) of
             {
                 '[': bc := bc + 1
