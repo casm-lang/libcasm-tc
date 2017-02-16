@@ -184,6 +184,7 @@ rule jump(dir : Integer(-1..1)) =
             {
                 '[': bc := bc + 1
                 ']': bc := bc - 1
+                undef: diedie // bf syntax error: branch mismatch
             }
         |}
     }
