@@ -141,7 +141,7 @@ function (static) prog: Integer -> Integer(0..255) initially
     110 -> '.'
 }
 
-function mem: Integer -> Integer defined { 0 }
+function mem: Integer -> Integer(0..255) defined { 0 }
 
 function ip: -> Integer initially { 0 } // instruction pointer
 function mp: -> Integer initially { 0 } // memory pointer
