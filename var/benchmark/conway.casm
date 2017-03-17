@@ -29,14 +29,15 @@ CASM init setup
 
 function alive : Integer * Integer -> Boolean defined { false }
 
-derived aliveNeighbours(x : Integer, y : Integer) = asInteger(alive(x - 1, y - 1))
-                                                  + asInteger(alive(x, y - 1))
-                                                  + asInteger(alive(x + 1, y - 1))
-                                                  + asInteger(alive(x - 1, y))
-                                                  + asInteger(alive(x + 1, y))
-                                                  + asInteger(alive(x - 1, y + 1))
-                                                  + asInteger(alive(x, y + 1))
-                                                  + asInteger(alive(x + 1, y + 1))
+derived aliveNeighbours(x : Integer, y : Integer) -> Integer
+    = asInteger(alive(x - 1, y - 1))
+    + asInteger(alive(x, y - 1))
+    + asInteger(alive(x + 1, y - 1))
+    + asInteger(alive(x - 1, y))
+    + asInteger(alive(x + 1, y))
+    + asInteger(alive(x - 1, y + 1))
+    + asInteger(alive(x, y + 1))
+    + asInteger(alive(x + 1, y + 1))
 
 rule updateCell(x : Integer, y : Integer) =
     let c = aliveNeighbours(x, y) in {
