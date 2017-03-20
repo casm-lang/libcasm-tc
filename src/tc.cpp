@@ -26,8 +26,10 @@
 
 int main( int argc, const char* argv[] )
 {
-    libstdhl::Log::DefaultSource = libstdhl::Log::Source(
-        [&argv]( void* arg ) -> const char* { return argv[ 0 ]; } );
+    const auto source = libstdhl::make< libstdhl::Log::Source >(
+        argv[ 0 ], "Test Case Generator Tool" );
+
+    libstdhl::Log::defaultSource( source );
 
     assert( argc == 4 );
 
