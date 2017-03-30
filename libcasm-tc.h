@@ -25,55 +25,16 @@
 #ifndef _LIB_CASMTC_H_
 #define _LIB_CASMTC_H_
 
+#include "src/Profile.h"
+
 namespace libcasm_tc
 {
     class CasmTC
     {
     };
-
-    class Profile : public CasmTC
-    {
-      public:
-        enum Identifier
-        {
-            INTERPRETER = 0,
-            COMPILER,
-            IDENTIFIER_MAX
-        };
-
-        static const char* get( const char* id )
-        {
-            static const char* uid[] = { "interpreter", "compiler" };
-
-            if( (i64)id == -1 )
-            {
-                return (const char*)0;
-            }
-            else if( (i64)id >= 0 and ( i64 ) id < IDENTIFIER_MAX )
-            {
-                return uid[ (i64)id ];
-            }
-            else
-            {
-                for( i64 i = 0; i < IDENTIFIER_MAX; i++ )
-                {
-                    if( strcmp( uid[ i ], id ) == 0 )
-                    {
-                        return (const char*)i;
-                    }
-                }
-            }
-            return 0;
-        }
-
-        static const char* get( Identifier id )
-        {
-            return get( (const char*)id );
-        }
-    };
 }
 
-#endif /* _LIB_CASMTC_H_ */
+#endif // _LIB_CASMTC_H_
 
 //
 //  Local variables:
