@@ -88,6 +88,7 @@ TEST_P( RunnerTest, case )
     EXPECT_STRNE( env[ "CASM_TC" ], "" );
 
     const char* uid = libcasm_tc::Profile::get( env[ "CASM_TC" ] );
+    fclose( TC );
 
     switch( (u64)uid )
     {

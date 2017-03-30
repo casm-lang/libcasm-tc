@@ -22,8 +22,8 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef _LIB_CASMTC_RUNNERBENCHMARK_H_
-#define _LIB_CASMTC_RUNNERBENCHMARK_H_
+#ifndef _LIB_CASMTC_RUNNER_BENCHMARK_H_
+#define _LIB_CASMTC_RUNNER_BENCHMARK_H_
 
 #include "cpp/Default.h"
 #include "cpp/File.h"
@@ -48,4 +48,4 @@ class bm : public ::hayai::Fixture
         run( SPEC );                                                           \
     }
 
-#endif // _LIB_CASMTC_RUNNERBENCHMARK_H_
+#endif // _LIB_CASMTC_RUNNER_BENCHMARK_H_

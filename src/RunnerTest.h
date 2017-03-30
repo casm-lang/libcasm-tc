@@ -22,8 +22,8 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef _LIB_CASMTC_RUNNERTEST_H_
-#define _LIB_CASMTC_RUNNERTEST_H_
+#ifndef _LIB_CASMTC_RUNNER_TEST_H_
+#define _LIB_CASMTC_RUNNER_TEST_H_
 
 #include "cpp/Default.h"
 #include "cpp/File.h"
@@ -66,7 +66,7 @@ class RunnerTest
 {
 };
 
-#endif // _LIB_CASMTC_RUNNERTEST_H_
+#endif // _LIB_CASMTC_RUNNER_TEST_H_
 
 //
 //  Local variables:
