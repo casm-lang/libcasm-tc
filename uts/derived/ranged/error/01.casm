@@ -31,6 +31,6 @@ derived bar( a : Integer ) : Integer( 2..4 ) = 42
 
 rule foo =
 {|
-    print bar( 3 ) //@ ERROR( da01 )
+    println( bar( 3 ) ) //@ ERROR( da01 )
     program( self ) := undef
 |}

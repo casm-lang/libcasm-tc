@@ -27,7 +27,7 @@ CASM init foo
 
 rule foo =
 {
-    print asBit( 24, 44 ) + undef
+    println( asBit( 24, 44 ) + undef )
     
     program( self ) := undef
 }

@@ -37,9 +37,9 @@ rule foo =
     let b : Bit(16) = 0b0000'1111 in
     let c = a or b in
     {
-        print dec(a)
-        print dec(b)
-        print dec(c)
+        println( dec(a) )
+        println( dec(b) )
+        println( dec(c) )
         assert c  = asBit( undef, 16 )
         
         assert isSymbolic( c ) = false

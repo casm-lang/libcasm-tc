@@ -78,12 +78,12 @@ rule main2 = {
             call gray2(i)
         }
         inputnr := inputnr + 1
-        print dec(inputnr) + "=" + 
+        println( dec(inputnr) + "=" +
 dec(output1(0)) + dec(output1(1)) + dec(output1(2)) + dec(output1(3)) + dec(output1(4)) + dec(output1(5))+ dec(output1(6)) + dec(output1(7)) +
 dec(output1(8)) + dec(output1(9)) + dec(output1(10)) + dec(output1(11)) + dec(output1(12)) + dec(output1(13))+ dec(output1(14)) + dec(output1(15)) 
 + ", " 
         + dec(output2(0)) + dec(output2(1)) + dec(output2(2)) + dec(output2(3))+ dec(output2(4)) + dec(output2(5))+ dec(output2(6))+ dec(output2(7)) +
-        dec(output2(8)) + dec(output2(9)) + dec(output2(10)) + dec(output2(11))+ dec(output2(12)) + dec(output2(13))+ dec(output2(14))+ dec(output2(15)) 
+        dec(output2(8)) + dec(output2(9)) + dec(output2(10)) + dec(output2(11))+ dec(output2(12)) + dec(output2(13))+ dec(output2(14))+ dec(output2(15)) )
         assert output1(0) = output2(0)
         assert output1(1) = output2(1)
         assert output1(2) = output2(2)

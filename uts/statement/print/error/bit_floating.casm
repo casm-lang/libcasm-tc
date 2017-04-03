@@ -33,11 +33,11 @@ function bar4 : -> Bit(55)
 
 rule foo =
 {
-    print bar0 +  0.1 //@ ERROR( 1001 )
-    print bar1 +  8.0 //@ ERROR( 1001 )
-    print bar2 +  1.6 //@ ERROR( 1001 )
-    print bar3 +  3.2 //@ ERROR( 1001 )
-    print bar4 + -5.5 //@ ERROR( 1001 )
+    println( bar0 +  0.1 ) //@ ERROR( 1001 )
+    println( bar1 +  8.0 ) //@ ERROR( 1001 )
+    println( bar2 +  1.6 ) //@ ERROR( 1001 )
+    println( bar3 +  3.2 ) //@ ERROR( 1001 )
+    println( bar4 + -5.5 ) //@ ERROR( 1001 )
     
     program( self ) := undef
 }

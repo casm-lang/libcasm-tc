@@ -155,7 +155,7 @@ rule bf =
         '<': mp := mp - 1
         '+': mem(mp) := mem(mp) + 1
         '-': mem(mp) := mem(mp) - 1
-        '.': print char(mem(mp))
+        '.': println( char(mem(mp)) )
         ',': impossible // cannot read user input
         '[': if mem(mp) = 0 then call jump_right
         ']': if mem(mp) != 0 then call jump_left

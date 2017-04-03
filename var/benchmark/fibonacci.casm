@@ -28,9 +28,9 @@ CASM init foo
 rule foo = 
     let n = 27 in 
         {|
-        print "Fibonacci(" + dec(n) + ") using dynamic programming: " 
+        println( "Fibonacci(" + dec(n) + ") using dynamic programming: " )
         call fibo_d(n)
-        print "=" + dec(fibo(n))
+        println( "=" + dec(fibo(n)) )
         program(self) := undef
         |}
 

@@ -317,9 +317,9 @@ rule foo =
 
     if cnt > 123455 then
     {
-        print hex(x)
-        print hex(y)
-        print hex(z)
+        println( hex(x) )
+        println( hex(y) )
+        println( hex(z) )
         program(self) := undef
     }   
 |}
