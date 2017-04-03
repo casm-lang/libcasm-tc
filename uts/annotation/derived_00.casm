@@ -25,7 +25,7 @@
 
 CASM init foo
 
-derived d( p1, p2 ) = 3
+derived d( p1, p2 ) -> Integer = 3
 
 rule foo = {
   let x = undef in
