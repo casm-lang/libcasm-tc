@@ -29,9 +29,9 @@ function f : -> Integer
 
 rule foo = 
 {|
-    assure 2 >= 1
+    assure( 2 >= 1 )
     f := -1
-    assure f < 0
+    assure( f < 0 )
     program(self) := undef
 |}
 
