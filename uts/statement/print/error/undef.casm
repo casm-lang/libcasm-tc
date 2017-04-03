@@ -27,7 +27,7 @@ CASM init foo
 
 rule foo =
 {
-    print undef //@ ERROR( 1002 )
+    println( undef ) //@ ERROR( 1002 )
     
     program( self ) := undef
 }

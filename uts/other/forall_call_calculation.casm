@@ -47,7 +47,7 @@ rule foo =
         call (a)(2,i,1)
     endseq
  endpar
- print b(1) + b(2)
+ println( b(1) + b(2) )
  program(self) := undef
 |}
 

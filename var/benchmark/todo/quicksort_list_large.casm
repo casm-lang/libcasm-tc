@@ -91,9 +91,9 @@ rule quicksort =
             } else {
                 forall i in [0..2999] do {
                     assert array(i) <= array(i+1)
-                    print array(i)
+                    println( array(i) )
                 }
-                print "----------------"
+                println( "----------------" )
                 //program(self) := @initR
                 program(self) := undef
             }

@@ -33,9 +33,9 @@ rule foo =
     let c = trunc( a, 5 ) in
     {
         assert c = b
-        print bin( a )
-        print bin( b )
-        print bin( c )
+        println( bin( a ) )
+        println( bin( b ) )
+        println( bin( c ) )
     }
     program(self) := undef
 }

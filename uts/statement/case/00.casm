@@ -39,14 +39,14 @@ rule foo =
     
     assert true
     
-    print true
+    println( true )
     case 1 of {
       1:       { assert true  }
       2:       { assert false }
       default: { assert false }
     }
-    print true
-    print true
+    println( true )
+    println( true )
 
     let asdf = 20 in 
     case 1 of {
