@@ -28,7 +28,7 @@ rule foo =
 {
     let x : RuleRef = @bar in
     {
-        assert asFloating( x ) = 0.0 //@ ERROR(?)
+        assert( asFloating( x ) = 0.0 ) //@ ERROR(?)
     }
 
     program(self) := undef

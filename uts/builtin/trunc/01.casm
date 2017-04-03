@@ -31,7 +31,7 @@ rule foo =
     let b : Bit(5)  =       0b1'0111 in
     let c = trunc( a, 5 ) in
     {
-        assert c = b
+        assert( c = b) 
         println( bin( a ) )
         println( bin( b ) )
         println( bin( c ) )

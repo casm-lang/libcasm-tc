@@ -28,7 +28,7 @@ CASM init foo
 rule foo = {
   let x = undef in   //@ ERROR( 1000 )
     let y = undef in //@ ERROR( 1000 ) 
-      assert (asBit( x, 1) or asBit( y, 1 )) != asBit( 1, 1 )
+      assert( (asBit( x, 1) or asBit( y, 1 )) != asBit( 1, 1 )) 
 
   program( self ) := undef
 }

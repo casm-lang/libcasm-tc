@@ -26,7 +26,7 @@ CASM init foo
 
 rule foo =
 {
-    assert asBoolean( undef ) = undef
+    assert( asBoolean( undef ) = undef) 
     program(self) := undef
 }
 

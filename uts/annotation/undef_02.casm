@@ -31,15 +31,15 @@ function baz : -> Integer
 rule foo =
 {
     if bar != undef then // PPA: TODO: if undef etc.
-       assert false
+       assert( false) 
     else
-       assert true
+       assert( true) 
 
     case baz of {
-      0: { assert false }
-      1: { assert false }
-      undef: { assert true }
-      default: { assert true }
+      0: { assert( false ) }
+      1: { assert( false ) }
+      undef: { assert( true ) }
+      default: { assert( true ) }
     }
     
     program( self ) := undef    

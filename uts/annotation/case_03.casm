@@ -31,10 +31,10 @@ rule foo = {
   {
     case y of {
       x: { skip }
-      2: { assert false }
-      3: { assert false }
-      4: { assert false }
-      default: { assert false }
+      2: { assert( false ) }
+      3: { assert( false ) }
+      4: { assert( false ) }
+      default: { assert( false ) }
     }
   }
 

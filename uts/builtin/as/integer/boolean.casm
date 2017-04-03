@@ -28,12 +28,12 @@ rule foo =
 {
     let x : Boolean = false in
     {
-        assert asInteger( x ) = 0
+        assert( asInteger( x ) = 0) 
     }
 
     let x : Boolean = true in
     {
-        assert asInteger( x ) = 1
+        assert( asInteger( x ) = 1) 
     }
 
     program(self) := undef

@@ -38,7 +38,7 @@ rule foo =
     let b : Bit(16) = 0 in
     let c = a or b in
     {
-        assert isSymbolic( c ) = isSymbolic( a )
+        assert( isSymbolic( c ) = isSymbolic( a )) 
     }
     program( self ) := undef
 }

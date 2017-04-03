@@ -28,8 +28,8 @@ function x : Integer -> Integer defined { 42 } initially { 1 -> 21, 123456 -> 0 
 
 rule foo =
 {
-    assert x( 1 ) = 21
-    assert x( -123456 ) = 42
-    assert x( 123456 ) = 0
+    assert( x( 1 ) = 21) 
+    assert( x( -123456 ) = 42) 
+    assert( x( 123456 ) = 0) 
     program( self ) := undef
 }

@@ -31,7 +31,7 @@ rule foo =
     let b : Bit(16) = 0b01'0101'0111 in
     let c = shr( a, 4 ) in
     {
-        assert c = b
+        assert( c = b) 
         println( bin( a ) )
         println( bin( b ) )
         println( bin( c ) )

@@ -27,7 +27,7 @@ CASM init foo
 
 rule foo = {
   let x = undef in //@ ERROR( 1000 )
-  let y = hex( x ) in assert y = "undef"
+  let y = hex( x ) in assert( y = "undef") 
 
   program( self ) := undef
 }

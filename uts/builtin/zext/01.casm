@@ -31,7 +31,7 @@ rule foo =
     let b : Bit(10) = 0b00'0001'0111 in
     let c = zext( a, 10 ) in
     {
-        assert c = b
+        assert( c = b) 
         println( bin( a ) )
         println( bin( b ) )
         println( bin( c ) )

@@ -40,9 +40,9 @@ rule foo =
         println( dec(a) )
         println( dec(b) )
         println( dec(c) )
-        assert c  = asBit( undef, 16 )
+        assert( c  = asBit( undef, 16 )) 
         
-        assert isSymbolic( c ) = false
+        assert( isSymbolic( c ) = false) 
     }
     program( self ) := undef
 }

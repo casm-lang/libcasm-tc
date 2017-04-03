@@ -32,7 +32,7 @@ rule foo =
     let b : Bit( 32 )  = 0    in
     let c = zext( a, 32 ) in
     {
-        assert c = b
+        assert( c = b) 
         println( bin( a ) )
         println( bin( b ) )
         println( bin( c ) )

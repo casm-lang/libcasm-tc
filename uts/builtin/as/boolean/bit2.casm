@@ -28,7 +28,7 @@ rule foo =
 {
     let x : Bit(2) = 0 in
     {
-        assert asBoolean( x ) = false //@ ERROR(?)
+        assert( asBoolean( x ) = false ) //@ ERROR(?)
     }
 
     program(self) := undef

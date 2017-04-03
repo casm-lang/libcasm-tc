@@ -39,10 +39,10 @@ rule foo =
     let b = undef in
     let c = a xor b in
     {
-        assert isSymbolic( c ) = isSymbolic( a )
+        assert( isSymbolic( c ) = isSymbolic( a )) 
         
-        assert c != false
-        assert c != true
+        assert( c != false) 
+        assert( c != true) 
     }
     program( self ) := undef
 }

@@ -28,9 +28,9 @@ CASM init foo
 rule foo =
 {
     case undef of {
-    false:    { assert false }
-    true:     { assert false }
-    default:  { assert true  }
+    false:    { assert( false ) }
+    true:     { assert( false ) }
+    default:  { assert( true  ) }
     }
     program(self) := undef
 }

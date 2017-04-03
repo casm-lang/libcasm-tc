@@ -37,10 +37,10 @@ rule foo =
     let b : Bit(16) =    0 in
     let c = a or b in
     {
-        assert c  = asBit( 0, 16 )
+        assert( c  = asBit( 0, 16 )) 
         
-        assert c != undef
-        assert isSymbolic( c ) = false
+        assert( c != undef) 
+        assert( isSymbolic( c ) = false) 
     }
     program( self ) := undef
 }
