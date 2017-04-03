@@ -29,7 +29,7 @@ CASM init foo
 
 rule foo = 
 {
-    debug trace "hello world from debug"
+    debug( trace, "hello world from debug" )
     program( self ) := undef
 }
 
