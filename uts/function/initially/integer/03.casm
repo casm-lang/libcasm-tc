@@ -27,7 +27,9 @@ CASM init foo
 
 // tests if initializer are checked correctly
 
-function (static) bar : Integer -> Integer initially { 1 -> 3 }
+[static]
+function bar : Integer -> Integer initially { 1 -> 3 }
+
 function baz: Integer -> Integer initially { 1 -> bar(1) }
 
 rule foo = {|
