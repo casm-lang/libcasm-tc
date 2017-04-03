@@ -26,7 +26,7 @@
 
 CASM init foo
 
-function x : -> Integer( 0..5 ) defined { 10 } //@ ERROR( fb01 )
+function x : -> Integer<0..5> defined { 10 } //@ ERROR( fb01 )
 
 rule foo =
 {

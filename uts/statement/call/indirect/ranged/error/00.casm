@@ -27,7 +27,7 @@ CASM init foo
 
 // tests if "call" handles ranged integers correctly => value out of range
 
-rule bar(a : Integer(2..4)) = skip
+rule bar(a : Integer<2..4>) = skip
 
 rule foo = {|
     let rr = @bar in
