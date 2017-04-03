@@ -25,7 +25,7 @@
 
 CASM init foo
 
-rule foo = let rr = @bar in call (rr)(1,2,3,4,"bar",6)
+rule foo = let rr = @bar in call (*rr)(1,2,3,4,"bar",6)
 
 rule bar( a:Integer, b:Integer, c:Integer, d:Integer, e:String, f:Integer ) = program(self) := undef
 

@@ -27,7 +27,7 @@ CASM init foo
 
 // tests indirect rule call with wrong argument type
 
-rule foo = let rr = @bar in call (rr)("bar") //@ ERROR( 5e05 )
+rule foo = let rr = @bar in call (*rr)("bar") //@ ERROR( 5e05 )
 
 rule bar( a:Integer ) = program(self) := undef
 
