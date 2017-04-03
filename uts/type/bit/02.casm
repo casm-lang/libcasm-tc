@@ -25,4 +25,4 @@
 
 CASM init foo rule foo = program( self ) := undef
 
-function f : -> Bit(32)
+function f : -> Bit<32>

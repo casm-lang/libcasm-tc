@@ -23,18 +23,18 @@
 //
 
 
-// | OP          | undef | x : Bit(16) | sym   |
+// | OP          | undef | x : Bit<16> | sym   |
 // |-------------+-------+-------------+-------|
 // | undef       | undef | undef       | undef |
-// | y : Bit(16) | undef | x OP y      | sym'  |
+// | y : Bit<16> | undef | x OP y      | sym'  |
 // | sym         | undef | sym'        | sym'  |
 
 CASM init foo
 
 rule foo =
 {
-    let a : Bit(16) =  40 in
-    let b : Bit(16) =  20 in
+    let a : Bit<16> =  40 in
+    let b : Bit<16> =  20 in
     let c = a + b in
     {
         assert( c  = asBit( 60, 16 )) 

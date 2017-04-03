@@ -23,19 +23,19 @@
 //
 
 
-// | OP          | undef | x : Bit(16) | sym   |
+// | OP          | undef | x : Bit<16> | sym   |
 // |-------------+-------+-------------+-------|
 // | undef       | undef | undef       | undef |
-// | y : Bit(16) | undef | x OP y      | sym'  |
+// | y : Bit<16> | undef | x OP y      | sym'  |
 // | sym         | undef | sym'        | sym'  |
 
 CASM init foo
 
-function (symbolic) b : -> Bit(16)
+function (symbolic) b : -> Bit<16>
 
 rule foo =
 {
-    let a : Bit(16) = 123 in
+    let a : Bit<16> = 123 in
     let c = a + b in
     {
         assert( isSymbolic( c ) = isSymbolic( b )) 

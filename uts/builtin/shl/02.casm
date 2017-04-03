@@ -27,8 +27,8 @@ CASM init foo
 
 rule foo = 
 {
-    let a : Bit(64) = 0xdead'feed'1234 in
-    let b : Bit(64) = 0xdead'feed'1234'00 in
+    let a : Bit<64> = 0xdead'feed'1234 in
+    let b : Bit<64> = 0xdead'feed'1234'00 in
     let c = shl( a, 8 ) in
     {
         assert( c = b) 
