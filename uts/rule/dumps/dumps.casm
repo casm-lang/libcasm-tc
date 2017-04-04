@@ -36,7 +36,8 @@ function c : Integer * Integer -> Integer
 function bb: myEnum -> Integer
 function bbb: Integer -> myEnum
 
-rule foo dumps (a,b,c,bb,bbb)-> trace =
+[dumps [a,b,c,bb,bbb]]
+rule foo =
 {|
     a := 3
     b(2) := 4
