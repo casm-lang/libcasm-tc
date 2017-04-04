@@ -25,7 +25,7 @@
 
 CASM init foo
 
-function x : -> Integer<0..1> initially { 1 }
+function x : -> Integer'[0..1] initially { 1 }
 
 rule foo =
 seq

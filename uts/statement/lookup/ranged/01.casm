@@ -27,7 +27,7 @@ CASM init foo
 
 // tests if "lookup" handles ranged integers correctly => location out of range
 
-function bar : Integer<0..2> -> Integer<2..4>
+function bar : Integer'[0..2] -> Integer'[2..4]
 
 rule foo = {|
     assert( bar(42) = 3 ) //@ ERROR( fe00 )
