@@ -31,14 +31,14 @@ function data : Integer *
                 Integer *
                 Integer -> Floating defined { 0.5 }
 
-function (static) kernel : Integer *
+[static] function kernel : Integer *
                            Integer *
                            Integer *
                            Integer *
                            Integer *
                            Integer -> Floating defined { 0.1 }
 
-derived applyStencil(x : Integer, y : Integer, z : Integer, a : Integer, b : Integer, c : Integer) =
+derived applyStencil(x : Integer, y : Integer, z : Integer, a : Integer, b : Integer, c : Integer) -> Floating =
     kernel(-1, -1, -1, -1, -1, -1) * data(x - 1, y - 1, z - 1, a - 1, b - 1, c - 1) +
     kernel( 0, -1, -1, -1, -1, -1) * data(    x, y - 1, z - 1, a - 1, b - 1, c - 1) +
     kernel(+1, -1, -1, -1, -1, -1) * data(x + 1, y - 1, z - 1, a - 1, b - 1, c - 1) +

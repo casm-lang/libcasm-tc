@@ -26,7 +26,7 @@
 CASM init foo
 
 // function stack : -> List(Tuple(Integer, Integer)) //initially { [] }
-function stack : Integer -> Tuple( Integer, Integer )
+function stack : Integer -> Tuple< Integer, Integer >
 function pos : -> Integer initially { 0 }
 
 function array : Integer -> Integer //initially { 0->9, 1->2, 2->10, 3->7, 4->8, 5->1, 6->6, 7->3, 8->4, 9->5}
@@ -107,7 +107,7 @@ rule quicksort =
                 need_pop := false
             } else {
                 forall i in [0..29] do {
-                    assert array(i) <= array(i+1)
+                    assert( array(i) <= array(i+1) )
                     println( array(i) )
                 }
                 println( "----------------" )
