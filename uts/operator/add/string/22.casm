@@ -31,8 +31,8 @@
 
 CASM init foo
 
-function (symbolic) a : -> String
-function (symbolic) b : -> String
+[symbolic] function a : -> String
+[symbolic] function b : -> String
 
 rule foo =
 {

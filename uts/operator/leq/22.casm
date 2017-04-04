@@ -31,8 +31,8 @@
 
 CASM init foo
 
-function (symbolic) a : -> Integer
-function (symbolic) b : -> Integer
+[symbolic] function a : -> Integer
+[symbolic] function b : -> Integer
 
 rule foo =
 {

@@ -31,8 +31,8 @@
 
 CASM init foo
 
-function (symbolic) a : -> Bit<16>
-function (symbolic) b : -> Bit<16>
+[symbolic] function a : -> Bit<16>
+[symbolic] function b : -> Bit<16>
 
 rule foo =
 {

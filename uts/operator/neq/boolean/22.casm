@@ -31,8 +31,8 @@
 
 CASM init foo
 
-function (symbolic) a : -> Boolean
-function (symbolic) b : -> Boolean
+[symbolic] function a : -> Boolean
+[symbolic] function b : -> Boolean
 
 rule foo =
 {
