@@ -25,4 +25,4 @@
 
 CASM init foo rule foo = program( self ) := undef
 
-function f : -> Integer<7..-7> //@ ERROR( 2000 )
+function f : -> Integer'[7..-7] //@ ERROR( 2000 )
