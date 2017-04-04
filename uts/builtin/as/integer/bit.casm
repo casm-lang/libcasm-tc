@@ -27,7 +27,7 @@ CASM init foo
 
 rule foo = 
 {
-    let x : Bit<8> = 5 in 
+    let x : Bit'8 = 5 in 
     {
         assert( asInteger( x ) = 5) 
     }

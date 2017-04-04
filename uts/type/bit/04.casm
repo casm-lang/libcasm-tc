@@ -25,5 +25,5 @@
 
 CASM init foo rule foo = program( self ) := undef
 
-function f : -> Bit<16> initially { 16 }
+function f : -> Bit'16 initially { 16 }
 
