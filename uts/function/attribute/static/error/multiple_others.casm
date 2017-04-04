@@ -30,5 +30,6 @@ rule foo =
     program( self ) := undef
 }
 
-function ( static, symbolic, static ) a : -> Integer //@ ERROR( fa01 )
+[static, symbolic, static] //@ ERROR( fa01 )
+function a : -> Integer
 
