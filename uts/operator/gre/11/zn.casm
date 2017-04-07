@@ -37,11 +37,11 @@ rule foo =
     let b : Integer = -321 in
     let c = a > b in
     {
-        assert c
+        assert( c) 
         
-        assert c != undef
-        assert c != false
-        assert isSymbolic( c ) = false
+        assert( c != undef) 
+        assert( c != false) 
+        assert( isSymbolic( c ) = false) 
     }
     program( self ) := undef
 }

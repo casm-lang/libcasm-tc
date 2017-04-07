@@ -26,14 +26,14 @@ CASM init foo
 
 rule foo =
 {
-    let x : Bit(1) = 0 in
+    let x : Bit'1 = 0 in
     {
-        assert asBoolean( x ) = false
+        assert( asBoolean( x ) = false) 
     }
 
-    let x : Bit(1) = 1 in
+    let x : Bit'1 = 1 in
     {
-        assert asBoolean( x ) = true
+        assert( asBoolean( x ) = true) 
     }
 
     program(self) := undef

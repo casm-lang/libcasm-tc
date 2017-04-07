@@ -31,23 +31,23 @@ rule foo =
 {
     case 1 of
     {    
-         1: assert true  
-         2: assert false 
-         _: assert false 
+         1: assert( true  ) 
+         2: assert( false ) 
+         _: assert( false ) 
     }
     
     case 1 of
     {    
-         2: assert false  
-         _: assert false 
-         1: assert true 
+         2: assert( false  ) 
+         _: assert( false ) 
+         1: assert( true ) 
     }
     
     case 1 of
     {    
-         _: assert false 
-         1: assert true  
-         2: assert false 
+         _: assert( false ) 
+         1: assert( true  ) 
+         2: assert( false ) 
     }
     
     program(self) := undef

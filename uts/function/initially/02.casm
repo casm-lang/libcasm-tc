@@ -30,7 +30,7 @@ function squared : Integer -> Integer initially { 2 -> 4,
 
 rule foo =
 {
-    assert squared(2) = 4
-    assert squared(3) = 9
+    assert( squared(2) = 4) 
+    assert( squared(3) = 9) 
     program( self ) := undef
 }

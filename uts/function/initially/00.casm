@@ -30,8 +30,8 @@ function y : -> Integer initially { x }
 
 rule foo =
 {
-    assert x = 3
-    assert y = 3
-    assert program( self ) = @foo
+    assert( x = 3) 
+    assert( y = 3) 
+    assert( program( self ) = @foo) 
     program( self ) := undef
 }

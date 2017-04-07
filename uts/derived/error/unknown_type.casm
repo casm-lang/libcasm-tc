@@ -25,7 +25,7 @@
 
 CASM init foo
 
-derived a = [] //@ERROR( de00 )
+derived a -> List<Integer> = [] //@ERROR( de00 )
 
 rule foo = skip
 

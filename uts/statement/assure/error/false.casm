@@ -27,6 +27,6 @@ CASM init foo
 
 rule foo = 
 {|
-    assure 2 <= 1 //@ ERROR( 5a00 )
+    assure( 2 <= 1 ) //@ ERROR( 5a00 )
 |}
 

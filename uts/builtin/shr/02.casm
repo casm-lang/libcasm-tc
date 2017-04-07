@@ -27,14 +27,14 @@ CASM init foo
 
 rule foo = 
 {
-    let a : Bit(64) = 0xdead'feed'1234'00 in
-    let b : Bit(64) = 0xdead'feed'1234 in
+    let a : Bit'64 = 0xdead'feed'1234'00 in
+    let b : Bit'64 = 0xdead'feed'1234 in
     let c = shr( a, 8 ) in
     {
-        assert c = b
-        print bin( a )
-        print bin( b )
-        print bin( c )
+        assert( c = b) 
+        println( bin( a ) )
+        println( bin( b ) )
+        println( bin( c ) )
     }
     program(self) := undef
 }

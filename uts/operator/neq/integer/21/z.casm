@@ -31,17 +31,17 @@
 
 CASM init foo
 
-function (symbolic) a : -> Integer
+[symbolic] function a : -> Integer
 
 rule foo =
 {
     let b : Integer = 0 in
     let c = a != b in
     {
-        assert isSymbolic( c ) = isSymbolic( a )
+        assert( isSymbolic( c ) = isSymbolic( a )) 
         
-        assert c != undef
-        assert c != false
+        assert( c != undef) 
+        assert( c != false) 
     }
     program( self ) := undef
 }

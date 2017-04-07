@@ -38,8 +38,8 @@ rule foo =
         b := a
     }
 
-    assert a = 4
-    assert b = 3
+    assert( a = 4) 
+    assert( b = 3) 
 
     program( self ) := undef
 |}

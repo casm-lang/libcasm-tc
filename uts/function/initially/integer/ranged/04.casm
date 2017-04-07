@@ -27,6 +27,7 @@ CASM init foo rule foo = program(self) := undef
 
 // tests if "initially" handles ranged integers correctly => value out of range
 
-function (static) baz : Integer -> Integer initially { 1 -> 42 }
+[static]
+function baz : Integer -> Integer initially { 1 -> 42 }
 
-function bar : Integer(0..2) -> Integer(2..4) initially { 1 -> baz(1) } //@ ERROR( fd00 )
+function bar : Integer'[0..2] -> Integer'[2..4] initially { 1 -> baz(1) } //@ ERROR( fd00 )

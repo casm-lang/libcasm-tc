@@ -28,8 +28,8 @@ function x : Integer -> Boolean defined { true }
 
 rule foo =
 {
-    assert x( 1 ) = true
-    assert x( -123456 ) = true
-    assert x( 123456 ) = true
+    assert( x( 1 ) = true) 
+    assert( x( -123456 ) = true) 
+    assert( x( 123456 ) = true) 
     program( self ) := undef
 }

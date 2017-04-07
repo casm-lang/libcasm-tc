@@ -26,9 +26,9 @@ CASM init foo
 
 rule foo =
 {
-    let x : Bit(1) = 0 in
+    let x : Bit'1 = 0 in
     {
-        assert asFloating( x ) = 0.0 //@ ERROR(?)
+        assert( asFloating( x ) = 0.0 ) //@ ERROR(?)
     }
 
     program(self) := undef

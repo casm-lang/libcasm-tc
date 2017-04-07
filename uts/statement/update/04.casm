@@ -25,12 +25,12 @@
 
 CASM init foo
 
-function x : -> Integer( 0..1 ) initially { 1 }
+function x : -> Integer'[0..1] initially { 1 }
 
 rule foo =
 seq
     x := 2*x - 2    // temporarily we leave the subrange, but as long as we do not assign no problem here
-    assert x = 0
+    assert( x = 0) 
     program(self) := undef
 endseq
 

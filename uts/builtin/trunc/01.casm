@@ -27,14 +27,14 @@ CASM init foo
 
 rule foo = 
 {
-    let a : Bit(10) = 0b01'0101'0111 in
-    let b : Bit(5)  =       0b1'0111 in
+    let a : Bit'10 = 0b01'0101'0111 in
+    let b : Bit'5  =       0b1'0111 in
     let c = trunc( a, 5 ) in
     {
-        assert c = b
-        print bin( a )
-        print bin( b )
-        print bin( c )
+        assert( c = b) 
+        println( bin( a ) )
+        println( bin( b ) )
+        println( bin( c ) )
     }
     program(self) := undef
 }

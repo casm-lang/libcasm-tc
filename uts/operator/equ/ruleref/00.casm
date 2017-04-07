@@ -36,7 +36,7 @@ rule B = skip
 
 rule foo =
 {
-    assert @A = @A
-    assert @A != @B
-    assert @A != undef
+    assert( @A = @A) 
+    assert( @A != @B) 
+    assert( @A != undef) 
 }

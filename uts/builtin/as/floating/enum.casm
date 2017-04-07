@@ -30,7 +30,7 @@ rule foo =
 {
     let x : myEnum = two in
     {
-        assert asFloating( x ) = 2.0 //@ ERROR(?)
+        assert( asFloating( x ) = 2.0 ) //@ ERROR(?)
     }
 
     program(self) := undef

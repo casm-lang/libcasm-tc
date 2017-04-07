@@ -28,7 +28,7 @@ rule foo =
 {
     let x : Integer = 42 in
     {
-        assert asInteger( x ) = 42
+        assert( asInteger( x ) = 42) 
     }
 
     program(self) := undef

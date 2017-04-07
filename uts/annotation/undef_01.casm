@@ -26,14 +26,14 @@
 CASM init foo
 
 rule foo = {
-  assert undef + undef = undef
-  assert undef - undef = undef
-  assert undef * undef = undef
-  assert undef / undef = undef
-  assert (undef < undef) = undef
-  assert (undef <= undef) = true
-  assert (undef >= undef) = true
-  assert (undef > undef) = undef
+  assert( undef + undef = undef) 
+  assert( undef - undef = undef) 
+  assert( undef * undef = undef) 
+  assert( undef / undef = undef) 
+  assert( (undef < undef) = undef) 
+  assert( (undef <= undef) = true) 
+  assert( (undef >= undef) = true) 
+  assert( (undef > undef) = undef) 
 
   program( self ) := undef
 }

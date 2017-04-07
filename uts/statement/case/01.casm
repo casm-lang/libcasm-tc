@@ -29,9 +29,9 @@ rule foo =
 {
   case 3 of
   {
-      1: { assert false }
-      2: { assert false }
-      _: { assert true  }
+      1: { assert( false ) }
+      2: { assert( false ) }
+      _: { assert( true  ) }
   }
   
   program(self) := undef

@@ -30,7 +30,7 @@ rule foo =
 {
     let x : myEnum = two in
     {
-        assert asInteger( x ) = 2
+        assert( asInteger( x ) = 2) 
     }
 
     program(self) := undef

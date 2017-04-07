@@ -1,0 +1,143 @@
+// Railroad crossing example
+// Adopted from https://github.com/CoreASM/coreasm.core/blob/master/org.coreasm.engine/test-rsc/without_test_class/RailroadCrossing.coreasm
+
+CASM init run
+
+// @require "Track track1 is empty"
+// @require "Track track2 is empty"
+// @require "Gate is opened"
+
+enum Track = {track1, track2}
+enum TrackStatus = {empty, coming, crossing}
+enum Direction = {open, close}
+enum GateState = {opened, closed}
+enum Agent = {trackController, gateController, observer, environment}
+
+// parameters
+[static] function dmin : -> Integer initially { 5 }
+[static] function dmax : -> Integer initially { 10 }
+[static] function dopen : -> Integer initially { 2 }
+[static] function dclose : -> Integer initially { 2 }
+[static] function waitTime : -> Integer initially { 3 }
+
+function deadline : Track -> Integer defined { infinity }
+function trackStatus : Track -> TrackStatus defined { empty }
+function dir : -> Direction
+function gateState : -> GateState initially { opened }
+
+function agentProgram : Agent -> RuleRef initially
+{
+    trackController -> @TrackControl,
+    gateController -> @GateControl,
+    observer -> @ObserverProgram,
+    environment -> @EnvironmentProgram
+}
+
+rule run =
+{
+    // "multi agent" ASM
+    forall agent in Agent do
+        call (*agentProgram(agent))()
+
+    call TimeTick
+    call Randomize
+
+    if now >= 60 then
+        program(self) := undef
+}
+
+// fake time builtins
+[static] function infinity : -> Integer initially { 999999999 }
+function now : -> Integer initially { 1 }
+
+rule TimeTick =
+    now := now + 1
+
+// fake random builtin (random number between 0.0 and 1.0)
+function random : -> Floating initially { 0.0 }
+
+rule Randomize =
+{|
+    random := random + 0.3
+    if random >= 1.0 then
+        random := 0.0
+|}
+
+// ---------------------------------------------------------------------------
+
+rule GateControl =
+{
+    if dir = open and gateState = closed then gateState := opened
+    if dir = close and gateState = opened then gateState := closed
+}
+
+// ---------------------------------------------------------------------------
+
+// Is it safe to open the guard?
+derived safeToOpen -> Boolean =
+    forall t in Track holds trackStatus(t) = empty or (now + dopen) < deadline(t)
+
+rule TrackControl =
+{
+    forall t in Track do
+    {
+        call SetDeadline(t)
+        call SignalClose(t)
+        call ClearDeadline(t)
+    }
+
+    call SignalOpen
+}
+
+rule SetDeadline(x : Track) =
+    if trackStatus(x) = coming and deadline(x) = infinity then
+        deadline(x) := now + waitTime
+
+rule SignalClose(x : Track) =
+    if now >= deadline(x) and now <= deadline(x) + 1 then
+        dir := close
+
+rule ClearDeadline(x : Track) =
+    if trackStatus(x) = empty and deadline(x) < infinity then
+        deadline(x) := infinity
+
+rule SignalOpen = 
+    if dir = close and safeToOpen then
+        dir := open
+
+// ---------------------------------------------------------------------------
+
+rule ObserverProgram =
+{
+    println("Time: " + dec(now) + " seconds")
+    forall t in Track do
+        println("Track " + asString(t) + " is " + asString(trackStatus(t)))
+    println("Gate is " + asString(gateState))
+    println("")
+}
+
+// ---------------------------------------------------------------------------
+
+function passingTime : Track -> Integer
+
+rule EnvironmentProgram =
+    forall t in Track do // FIXME forall should be choose
+    {
+        if trackStatus(t) = empty then
+            if random < 0.05 then
+            {
+                trackStatus(t) := coming
+                passingTime(t) := now + dmin
+            }
+
+        if trackStatus(t) = coming then
+            if passingTime(t) < now then
+            {
+                trackStatus(t) := crossing
+                passingTime(t) := now + 3
+            }
+
+        if trackStatus(t) = crossing then
+            if passingTime(t) < now then
+                trackStatus(t) := empty
+    }

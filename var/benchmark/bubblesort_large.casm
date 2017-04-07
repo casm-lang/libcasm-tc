@@ -39,7 +39,7 @@ case i of {
         {
         if not changes then {
             forall j in [0..200] do 
-                print dec(j) + "=" + dec(array(j))
+                println( dec(j) + "=" + dec(array(j)) )
             program(self) := undef
         }
         i := -1

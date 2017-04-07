@@ -25,17 +25,17 @@
 
 CASM init foo
 
-function a : -> Bit(30) initially { 0b0101'0111'0000'0 }
+function a : -> Bit'30 initially { 0b0101'0111'0000'0 }
 
 rule foo = 
 {
-    let b : Bit(30)  = 0b0101'0111 in
+    let b : Bit'30  = 0b0101'0111 in
     let c = shr( a, 5 ) in
     {
-        assert c = b
-        print bin( a )
-        print bin( b )
-        print bin( c )
+        assert( c = b) 
+        println( bin( a ) )
+        println( bin( b ) )
+        println( bin( c ) )
     }
     program(self) := undef
 }

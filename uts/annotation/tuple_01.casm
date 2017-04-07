@@ -28,7 +28,7 @@ CASM init foo
 rule foo = {
   let x = undef in
     let y = x in
-        let z:Tuple( Integer, Tuple( Integer, Integer )) = y in skip
+        let z:Tuple< Integer, Tuple< Integer, Integer >> = y in skip
   
   program( self ) := undef
 }

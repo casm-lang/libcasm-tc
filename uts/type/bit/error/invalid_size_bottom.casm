@@ -25,4 +25,4 @@
 
 CASM init foo rule foo = program( self ) := undef
 
-function f : -> Bit( 0 ) //@ ERROR( b001 )  // invalid bit size
+function f : -> Bit' 0  //@ ERROR( b001 )  // invalid bit size

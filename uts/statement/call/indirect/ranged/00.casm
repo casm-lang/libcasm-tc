@@ -27,10 +27,10 @@ CASM init foo
 
 // tests if "call" handles ranged integers correctly
 
-rule bar(a : Integer(2..4)) = skip
+rule bar(a : Integer'[2..4]) = skip
 
 rule foo = {|
     let rr = @bar in
-        call (rr)(3)
+        call (*rr)(3)
     program(self) := undef
 |}

@@ -25,4 +25,4 @@
 
 CASM init foo rule foo = program( self ) := undef
 
-function f : -> Integer( 0 .. 8 )
+function f : -> Integer'[0..8]

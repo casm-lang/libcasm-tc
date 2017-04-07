@@ -30,5 +30,6 @@ rule foo =
     program( self ) := undef
 }
 
-function (static) a : -> Integer
+[static]
+function a : -> Integer
 

@@ -30,7 +30,7 @@ function a: -> Integer
 rule foo = {
     let x = undef in
         let y = undef in
-            let z : Integer = x + y in assert z = undef
+            let z : Integer = x + y in assert( z = undef) 
 
     program( self ) := undef
 }

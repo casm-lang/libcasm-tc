@@ -28,9 +28,9 @@ CASM init foo
 rule foo =
 {
     if false then
-        assert false
+        assert( false) 
     else
-        assert true
+        assert( true) 
     
     program( self ) := undef
 }

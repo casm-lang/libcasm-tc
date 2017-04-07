@@ -31,14 +31,14 @@
 
 CASM init foo
 
-function (symbolic) a : -> String
+[symbolic] function a : -> String
 
 rule foo =
 {
     let b : String = "test" in
     let c = a + b in
     {
-        assert isSymbolic( c ) = isSymbolic( a )
+        assert( isSymbolic( c ) = isSymbolic( a )) 
     }
     program( self ) := undef
 }

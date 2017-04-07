@@ -28,7 +28,7 @@ rule foo =
 {
     let x : String = "test" in
     {
-        assert asInteger( x ) = 0 //@ ERROR(?)
+        assert( asInteger( x ) = 0 ) //@ ERROR(?)
     }
 
     program(self) := undef

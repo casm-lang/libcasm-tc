@@ -37,9 +37,9 @@ rule foo =
     let b : Integer = 123 in
     let c = a <= b in
     {
-        assert c  = undef
+        assert( c  = undef) 
         
-        assert isSymbolic( c ) = false
+        assert( isSymbolic( c ) = false) 
     }
     program( self ) := undef
 }
