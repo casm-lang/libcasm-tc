@@ -25,7 +25,7 @@ function trackStatus : Track -> TrackStatus defined { empty }
 function dir : -> Direction
 function gateState : -> GateState initially { opened }
 
-function agentProgram : Agent -> RuleRef initially
+function agentProgram : Agent -> RuleRef< -> Void > initially
 {
     trackController -> @TrackControl,
     gateController -> @GateControl,
