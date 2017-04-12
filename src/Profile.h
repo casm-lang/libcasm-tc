@@ -45,7 +45,8 @@ namespace libcasm_tc
 
         static const char* get( const char* id )
         {
-            static const char* uid[] = { "interpreter", "compiler", "format" };
+            static const char* uid[]
+                = { "interpreter", "compiler", "format", "language-server" };
 
             if( (i64)id == -1 )
             {
