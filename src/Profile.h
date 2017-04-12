@@ -39,6 +39,7 @@ namespace libcasm_tc
             INTERPRETER = 0,
             COMPILER,
             FORMAT,
+            LANGUAGE_SERVER,
             IDENTIFIER_MAX
         };
 
