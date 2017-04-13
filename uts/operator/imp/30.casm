@@ -32,20 +32,20 @@
 
 CASM init foo
 
-function (symbolic) a : -> Boolean
+[symbolic] function a : -> Boolean
 
 rule foo =
 {
     let b = undef in
     let c = a implies b in
     {
-        assert isSymbolic( c ) = isSymbolic( a )
-        assert isSymbolic( c ) = isSymbolic( b )
+        assert( isSymbolic( c ) = isSymbolic( a ) )
+        assert( isSymbolic( c ) = isSymbolic( b ) )
         
-        assert c != false
-        assert c != true
+        assert( c != false )
+        assert( c != true )
 
-	assert c = a => b
+        assert( c = a => b )
     }
     program( self ) := undef
 }
