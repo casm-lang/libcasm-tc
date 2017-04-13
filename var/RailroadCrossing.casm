@@ -121,7 +121,7 @@ rule ObserverProgram =
 function passingTime : Track -> Integer
 
 rule EnvironmentProgram =
-    forall t in Track do // FIXME forall should be choose
+    choose t in Track do
     {
         if trackStatus(t) = empty then
             if random < 0.05 then
