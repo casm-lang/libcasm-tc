@@ -29,7 +29,7 @@
 
 CASM init foo
 
-function (symbolic) a : -> Floating
+[symbolic] function a : -> Floating
 
 rule foo =
 {

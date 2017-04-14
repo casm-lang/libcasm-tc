@@ -29,7 +29,7 @@
 
 CASM init foo
 
-function (symbolic) a : -> Integer
+[symbolic] function a : -> Integer
 
 rule foo =
 {
