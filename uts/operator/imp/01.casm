@@ -23,12 +23,12 @@
 //
 
 
-// | IMP   | undef | false | true  | sym  |
-// |-------+-------+-------+-------+------|
-// | undef | undef | true  | undef | sym' |
-// | false | undef | true  | false | sym' |
-// | true  | true  | true  | true  | true |
-// | sym   | sym'  | true  | sym'  | sym' |
+// | IMP   | undef | false | true  | sym   |
+// |-------+-------+-------+-------+-------|
+// | undef | undef | undef | true  | sym'  |
+// | false | true  | true  | true  | true  |
+// | true  | undef | false | true  | sym'  |
+// | sym   | sym'  | sym'  | true  | sym'  |
 
 CASM init foo
 

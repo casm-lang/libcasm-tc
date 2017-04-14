@@ -38,10 +38,10 @@ rule foo =
     let b = true  in
     let c = a implies b in
     {
-        assert( c  = true )
+        assert( c  = false )
         
         assert( c != undef )
-        assert( c != false )
+        assert( c != true )
         assert( isSymbolic( c ) = false )
 
         assert( c = a => b )
