@@ -25,16 +25,17 @@
 
 // a : Integer ^ b : Integer -> Integer
 // 
-// | case | b     | 0     | 1     | 2     | 3     | 4     | 5     |
-// |------+-------+-------+-------+-------+-------+-------+-------|
-// |    a | POW   | undef | b < 0 | b = 0 | b = 1 | b > 1 | sym   |
-// |------+-------+-------+-------+-------+-------+-------+-------|
-// |    0 | undef | undef | undef |     1 | undef | undef | undef |
-// |    1 | a < 0 |*undef | undef |    -1 | a     | a ^ b | sym'  |
-// |    2 | a = 0 | 0     | undef | undef | 0     | 0     | 0     |
-// |    3 | a = 1 | 1     | 1     |     1 | 1     | 1     | 1     |
-// |    4 | a > 1 | undef | undef |     1 | a     | a ^ b | sym'  |
-// |    5 | sym   | undef | undef |  sym' | sym'  | sym'  | sym'  |
+// | case | b      | 0     | 1             |     2 | 3     | 4        | 5     |
+// |------+--------+-------+---------------+-------+-------+----------+-------|
+// |    a | POW    | undef | b < 0         | b = 0 | b = 1 | b > 1    | sym   |
+// |------+--------+-------+---------------+-------+-------+----------+-------|
+// |    0 | undef  | undef | undef         | undef | undef | undef    | undef |
+// |    1 | a < -1 |*undef | undef         |     1 | a     | a ^ b    | sym'  |
+// |    2 | a = -1 | undef | (-1) ^ abs(b) |     1 | -1    | (-1) ^ b | sym'  |
+// |    3 | a = 0  | undef | undef         | undef | 0     | 0        | sym'  |
+// |    4 | a = 1  | 1     | 1             |     1 | 1     | 1        | 1     |
+// |    5 | a > 1  | undef | undef         |     1 | a     | a ^ b    | sym'  |
+// |    6 | sym    | sym'  | sym'          |  sym' | sym'  | sym'     | sym'  |
 
 CASM init foo
 
