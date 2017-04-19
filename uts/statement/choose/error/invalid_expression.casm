@@ -24,15 +24,9 @@
 
 CASM init foo
 
-rule foo =
+rule foo = 
 {
-    let x : RuleRef< -> Void > = @bar in
-    {
-        assert( asString( x ) = "" ) //@ ERROR(?)
-    }
-
-    program(self) := undef
+    choose i in undef do skip //@ ERROR( 1004 )
+    
+    program( self ) := undef
 }
-
-rule bar = skip
-

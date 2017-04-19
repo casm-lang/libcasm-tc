@@ -22,17 +22,24 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+
+// | NOT | undef | x : Floating | sym  |
+// |-----+-------+--------------+------|
+// | -   | undef | -x	        | sym' |
+
 CASM init foo
 
 rule foo =
 {
-    let x : RuleRef< -> Void > = @bar in
+    let a = undef in
+    let c = -a in
     {
-        assert( asString( x ) = "" ) //@ ERROR(?)
+        assert( c  = undef   )
+	
+        assert( c != 0 - 1.0 )
+        assert( c != 0.0     )
+        assert( c != 0 + 1.0 )
+        assert( isSymbolic( c ) = false )
     }
-
-    program(self) := undef
+    program( self ) := undef
 }
-
-rule bar = skip
-

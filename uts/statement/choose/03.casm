@@ -24,15 +24,23 @@
 
 CASM init foo
 
-rule foo =
+enum Color =
 {
-    let x : RuleRef< -> Void > = @bar in
-    {
-        assert( asString( x ) = "" ) //@ ERROR(?)
-    }
-
-    program(self) := undef
+    Red,
+    Green,
+    Blue
 }
 
-rule bar = skip
+rule foo =
+{
+    choose i in Color do
+        case i of
+        {
+            .Red: skip
+            .Green: skip
+            .Blue: skip
+            _: assert( false )
+        }
 
+    program( self ) := undef
+}

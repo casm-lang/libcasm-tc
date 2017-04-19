@@ -25,7 +25,7 @@ function trackStatus : Track -> TrackStatus defined { empty }
 function dir : -> Direction
 function gateState : -> GateState initially { opened }
 
-function agentProgram : Agent -> RuleRef initially
+function agentProgram : Agent -> RuleRef< -> Void > initially
 {
     trackController -> @TrackControl,
     gateController -> @GateControl,
@@ -121,7 +121,7 @@ rule ObserverProgram =
 function passingTime : Track -> Integer
 
 rule EnvironmentProgram =
-    forall t in Track do // FIXME forall should be choose
+    choose t in Track do
     {
         if trackStatus(t) = empty then
             if random < 0.05 then

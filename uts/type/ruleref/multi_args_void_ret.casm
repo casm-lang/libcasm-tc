@@ -24,15 +24,12 @@
 
 CASM init foo
 
+rule targetRule(x : Integer, y : Integer) =
+    skip
+
 rule foo =
 {
-    let x : RuleRef< -> Void > = @bar in
-    {
-        assert( asString( x ) = "" ) //@ ERROR(?)
-    }
-
+    let r : RuleRef< Integer * Integer -> Void > = @targetRule in
+        call (*r)(21, 42)
     program(self) := undef
 }
-
-rule bar = skip
-
