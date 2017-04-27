@@ -29,7 +29,7 @@ rule foo =
 {
     let bar = 1 in
     {
-	print( bar )
+	println( bar )
     }
 
     program( self ) := undef

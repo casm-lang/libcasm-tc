@@ -29,12 +29,12 @@ rule foo =
 {
     let bar = 1 in
     {
-	print( bar )
+	println( bar )
     }
 
     let bar = 2 in
     {
-	print( bar )
+	println( bar )
     }
 
     program( self ) := undef
