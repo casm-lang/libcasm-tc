@@ -142,7 +142,7 @@ add_executable( ${TARGET}-check
 )
 
 target_link_libraries( ${TARGET}-check
-#   stdhl
+  stdhl
   pthread
 )
 
@@ -151,14 +151,15 @@ add_library( ${TARGET}-benchmark OBJECT
   ${CXX_UTS_BENCHMARK}
   src/RunnerBenchmark.cpp
 )
-  
+
 add_executable( ${TARGET}-run
   ${LIBS}/hayai/src/hayai_posix_main.cpp
+  ${LIBS}/gtest/googletest/src/gtest-all.cc
   $<TARGET_OBJECTS:${TARGET}-benchmark>
 )
 
 target_link_libraries( ${TARGET}-run
-#   stdhl
+  stdhl
   pthread
 )
 
