@@ -26,6 +26,8 @@
 
 void bm::SetUp()
 {
+    m_cmd[ 0 ] = '\0';
+
     u32 exec_result = 0;
     assert( exec_result == 0 );
 
@@ -90,7 +92,6 @@ void bm::SetUp()
 
 void bm::run( const char* spec )
 {
-    assert( libstdhl::File::exists( spec ) );
     char cmd[ 4096 ];
     sprintf( cmd, m_cmd, spec );
     assert( system( cmd ) == 0 );
