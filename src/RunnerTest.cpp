@@ -172,51 +172,57 @@ TEST_P( RunnerTest, case )
         EXPECT_NE( exec_result, 0 );
 
         u64 failure_cnt = 0;
-        std::vector< libcasm_tc::ParamError > checked;
+        std::unordered_map< std::string, libcasm_tc::ParamError > checked;
 
-        libstdhl::File::readLines( ferr.c_str(), [&param, &checked,
-                                                     &failure_cnt]( u32 cnt,
-                                                     const std::string& line ) {
-            std::string c = "";
-            std::regex expr( "@([\\S]+)\\{([\\S]+)\\}" );
+        libstdhl::File::readLines(
+            ferr.c_str(), [&param, &checked, &failure_cnt, &error_cnt](
+                              u32 cnt, const std::string& line ) {
+                std::string c = "";
+                std::regex expr( "@([\\S]+)\\{([\\S]+)\\}" );
 
-            std::sregex_iterator start( line.begin(), line.end(), expr );
-            std::sregex_iterator end;
+                std::sregex_iterator start( line.begin(), line.end(), expr );
+                std::sregex_iterator end;
 
-            for( std::sregex_iterator i = start; i != end; i++ )
-            {
-                std::smatch match = *i;
-                assert( match.size() == 3 );
-                std::string mstr = match.str();
-
-                u1 line_not_found = true;
-                u1 code_not_valid = true;
-
-                for( auto& e : param.error )
+                for( std::sregex_iterator i = start; i != end; i++ )
                 {
-                    if( e.line.compare( match[ 1 ].str() ) == 0 ) // found line!
-                    {
-                        line_not_found = false;
+                    std::smatch match = *i;
+                    assert( match.size() == 3 );
+                    std::string mstr = match.str();
 
-                        EXPECT_STREQ(
-                            e.code.c_str(), match[ 2 ].str().c_str() );
-                        if( e.code.compare( match[ 2 ].str() ) == 0 )
+                    u1 line_not_found = true;
+                    u1 code_not_valid = true;
+
+                    for( auto& e : param.error )
+                    {
+                        if( e.line.compare( match[ 1 ].str() )
+                            == 0 ) // found line!
                         {
-                            code_not_valid = false;
-                            checked.push_back( e );
+                            line_not_found = false;
+
+                            EXPECT_STREQ(
+                                e.code.c_str(), match[ 2 ].str().c_str() );
+                            if( e.code.compare( match[ 2 ].str() ) == 0 )
+                            {
+                                code_not_valid = false;
+                                auto result = checked.emplace(
+                                    e.line + ":" + e.code, e );
+                                if( not result.second )
+                                {
+                                    error_cnt--;
+                                }
+                            }
                         }
                     }
-                }
 
-                EXPECT_FALSE( line_not_found );
-                EXPECT_FALSE( code_not_valid );
+                    EXPECT_FALSE( line_not_found );
+                    EXPECT_FALSE( code_not_valid );
 
-                if( line_not_found or code_not_valid )
-                {
-                    failure_cnt++;
+                    if( line_not_found or code_not_valid )
+                    {
+                        failure_cnt++;
+                    }
                 }
-            }
-        } );
+            } );
 
         EXPECT_EQ( param.error.size(), checked.size() );
         EXPECT_EQ( param.error.size(), error_cnt );
