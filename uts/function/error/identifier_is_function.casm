@@ -25,12 +25,12 @@
 
 CASM init foo
 
-function x : -> Integer  //@ ERROR( 0010 )
+function x : -> Integer  //@ ERROR( f010 )
 
 rule foo = 
 {
     x := 1
 }
 
-function x : -> Integer  //@ ERROR( 0010 )
+function x : -> Integer  //@ ERROR( f010 )
 

@@ -25,10 +25,10 @@
 
 CASM
 
-init foo //@ ERROR( a001 )
+init foo //@ERROR( a001 )
 
 rule foo = skip
 
-init bar //@ ERROR( a001 )
+init bar //@ERROR( a001 )
 
-init baz //@ ERROR( a001 )
+init baz //@ERROR( a001 )
