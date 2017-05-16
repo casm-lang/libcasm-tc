@@ -49,7 +49,7 @@ function alive : Integer * Integer -> Boolean defined { false } initially {
     (50, 51) -> true, (51, 51) -> true, (52, 51) -> true
 }
 
-derived aliveNeighbours(x : Integer, y : Integer) -> Integer
+derived aliveNeighbours(x, y) -> Integer
     = asInteger(alive(x - 1, y - 1))
     + asInteger(alive(x, y - 1))
     + asInteger(alive(x + 1, y - 1))
@@ -59,7 +59,7 @@ derived aliveNeighbours(x : Integer, y : Integer) -> Integer
     + asInteger(alive(x, y + 1))
     + asInteger(alive(x + 1, y + 1))
 
-rule updateCell(x : Integer, y : Integer) =
+rule updateCell(x, y) =
     let c = aliveNeighbours(x, y) in {
         if c = 3 then {
             if not alive(x, y) then alive(x, y) := true
