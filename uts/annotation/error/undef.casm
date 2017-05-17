@@ -34,5 +34,4 @@ rule foo =
     assert( bar + "bazfoo" = "something" ) //@ERROR( 1001 )
     assert( asInteger( undef ) = asFloating( undef ) ) //@ERROR( 1001 )
     
-    program( self ) := undef
 }

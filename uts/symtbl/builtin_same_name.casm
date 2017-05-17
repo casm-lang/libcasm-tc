@@ -31,5 +31,4 @@ rule foo =
 
     assert( true, "this is a true assertion" )
 
-    program( self ) := undef
 }

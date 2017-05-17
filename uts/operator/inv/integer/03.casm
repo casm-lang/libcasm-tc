@@ -41,5 +41,4 @@ rule foo =
         assert( c != 0     )
         assert( c != 0 + 1 )
     }
-    program( self ) := undef
 }

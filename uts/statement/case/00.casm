@@ -57,6 +57,6 @@ rule foo =
         
     bar := 10
   
-  program(self) := undef
+    program( self ) := undef
 }
 

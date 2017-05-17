@@ -31,5 +31,4 @@ derived bar(a : Integer'[2..4]) -> Integer = a
 
 rule foo = {|
     assert( bar(3) = 3) 
-    program(self) := undef
 |}

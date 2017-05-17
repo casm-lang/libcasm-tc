@@ -47,5 +47,4 @@ rule foo =
 
         assert( c = a => b )
     }
-    program( self ) := undef
 }

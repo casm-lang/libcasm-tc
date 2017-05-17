@@ -29,34 +29,33 @@ function bar : -> Integer
 
 rule foo =
 {
-    assert( true) 
+    assert( true)
 
-    case 1 of {    
-      1:       assert( true  ) 
-      2:       assert( false ) 
-      default: assert( false ) 
+    case 1 of {
+      1:       assert( true  )
+      2:       assert( false )
+      default: assert( false )
     }
-    
-    assert( true) 
-    
+
+    assert( true)
+
     println( true )
     case 1 of {
-      1:       assert( true ) 
-      2:       assert( false) 
-      default: assert( false) 
+      1:       assert( true )
+      2:       assert( false)
+      default: assert( false)
     }
     println( true )
     println( true )
 
     let asdf = 20 in 
     case 1 of {
-         1:       assert( true ) 
-         2:       assert( false) 
+         1:       assert( true )
+         2:       assert( false)
          asdf:    bar := 10
     }
-    
-    
-  
-  program(self) := undef
+
+
+    program( self ) := undef
 }
 

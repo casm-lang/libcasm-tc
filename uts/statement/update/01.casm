@@ -30,7 +30,7 @@ function x : -> String
 rule foo =
 {
     if x = "END" then
-        program(self) := undef
+        skip
     else
         x := "END"
 }

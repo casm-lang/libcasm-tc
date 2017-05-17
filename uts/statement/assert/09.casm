@@ -42,6 +42,5 @@ rule foo =
     assert( (undef = 1) = false) 
     assert( (undef != 1 ) = true) 
 
-    program( self ) := undef
 }
 

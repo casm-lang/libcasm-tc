@@ -29,5 +29,4 @@ function bar : Integer'[0..2] -> Integer'[2..4] initially { 1 -> 2 }
 
 rule foo = {|
     assert( bar(1) = 2) 
-    program(self) := undef
 |}

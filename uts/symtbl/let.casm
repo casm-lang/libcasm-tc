@@ -32,5 +32,4 @@ rule foo =
 	println( bar )
     }
 
-    program( self ) := undef
 }

@@ -31,5 +31,4 @@ rule foo =
 {
     let r : RuleRef = @targetRule in //@ERROR( ? )
         call (*r)(21, 42)
-    program(self) := undef
 }

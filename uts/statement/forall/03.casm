@@ -44,6 +44,4 @@ rule baz =
     assert( bar( -2 ) = -2) 
     assert( bar( -3 ) = -3) 
     assert( bar( -4 ) = undef) 
-    
-    program( self ) := undef
 }

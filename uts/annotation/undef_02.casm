@@ -42,5 +42,4 @@ rule foo =
       default: { assert( true ) }
     }
     
-    program( self ) := undef    
 }

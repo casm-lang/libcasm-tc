@@ -40,5 +40,4 @@ rule foo =
     {
         assert( isSymbolic( c ) = isSymbolic( b )) 
     }
-    program( self ) := undef
 }

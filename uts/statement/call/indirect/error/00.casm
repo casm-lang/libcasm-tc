@@ -27,7 +27,9 @@ CASM init foo
 
 // tests indirect rule call with wrong number of arguments
 
-rule foo = let rr = @bar in call (*rr)(1,2,3,4,"bar",6) //@ ERROR( 5e04 )
+rule foo =
+    let rr = @bar in
+        call (*rr)(1,2,3,4,"bar",6) //@ ERROR( 5e04 )
 
-rule bar( a:Integer, b:Integer ) = program(self) := undef
+rule bar( a:Integer, b:Integer ) = skip
 

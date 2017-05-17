@@ -32,6 +32,5 @@ rule foo = {
     assert( 3 * 4  <= 15) 
     assert( 5 * 3  <= 15) 
 
-    program( self ) := undef
 }
 

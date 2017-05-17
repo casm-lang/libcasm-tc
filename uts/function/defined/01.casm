@@ -31,5 +31,4 @@ rule foo =
     assert( x( 1 ) = undef) 
     assert( x( -123456 ) = undef) 
     assert( x( 123456 ) = undef) 
-    program( self ) := undef
 }

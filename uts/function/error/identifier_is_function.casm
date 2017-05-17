@@ -30,6 +30,8 @@ function x : -> Integer  //@ ERROR( f010 )
 rule foo = 
 {
     x := 1
+
+    program( self ) := undef
 }
 
 function x : -> Integer  //@ ERROR( f010 )

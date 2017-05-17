@@ -29,5 +29,4 @@ rule foo =
 {
     println( undef + -321 )
     
-    program( self ) := undef
 }

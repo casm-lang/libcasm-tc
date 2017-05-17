@@ -28,5 +28,4 @@ rule foo =
 {
     choose i in undef do skip //@ ERROR( 1004 )
     
-    program( self ) := undef
 }

@@ -33,5 +33,4 @@ function y : -> Integer initially { 3 }
 rule foo =
 {
     assert( x = 3) 
-    program( self ) := undef
 }

@@ -41,5 +41,4 @@ rule foo =
         assert( c != 0r0/1 + 0r1/1 )
         assert( isSymbolic( c ) = false )
     }
-    program( self ) := undef
 }

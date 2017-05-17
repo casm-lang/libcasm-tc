@@ -29,5 +29,4 @@ rule foo =
 { 
     assert( false ) //@ ERROR( 5a00 )
     
-    program( self ) := undef
 }

@@ -36,6 +36,5 @@ rule foo =
         assert( asFloating( x ) = 1.0) 
     }
 
-    program(self) := undef
 }
 

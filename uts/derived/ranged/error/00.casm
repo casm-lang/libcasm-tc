@@ -31,5 +31,4 @@ derived bar(a : Integer'[2..4]) -> Integer = a
 
 rule foo = {|
     println( bar(42) ) //@ ERROR( da00 )
-    program(self) := undef
 |}

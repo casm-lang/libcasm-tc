@@ -39,5 +39,4 @@ rule foo =
             .Blue: assert(false)
         }
 
-    program(self) := undef
 }

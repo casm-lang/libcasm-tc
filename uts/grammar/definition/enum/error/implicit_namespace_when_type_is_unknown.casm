@@ -33,5 +33,4 @@ rule foo =
     let c = .Red in //@ERROR( 0000 )
         skip
 
-    program(self) := undef
 }

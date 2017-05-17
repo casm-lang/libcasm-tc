@@ -29,5 +29,4 @@ rule foo =
 {
     println( undef + "very long string ..." )
     
-    program( self ) := undef
 }

@@ -32,6 +32,5 @@ function b : Integer -> Integer initially { 1 -> 1, 2 -> 2 }
 
 rule foo = {
     assert( isSymbolic( b(1) ) = false) 
-    program(self) := undef
 }
 

@@ -23,6 +23,8 @@
 //
 
 
-CASM init foo rule foo = program( self ) := undef
+CASM init foo
+
+rule foo = skip
 
 function f : -> Tuple< Integer, Integer'[-7..7], String, Bit'48, Integer, Boolean >

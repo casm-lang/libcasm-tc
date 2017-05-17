@@ -23,7 +23,9 @@
 //
 
 
-CASM init foo rule foo = program(self) := undef
+CASM init foo
+
+rule foo = skip
 
 // tests if "initially" handles ranged integers correctly => value out of range
 

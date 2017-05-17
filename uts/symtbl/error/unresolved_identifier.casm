@@ -33,5 +33,4 @@ rule foo =
     call bar //@ERROR( ? )
     call qux //@ERROR( ? )
 
-    program( self ) := undef
 }

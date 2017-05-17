@@ -34,5 +34,4 @@ rule foo =
     let c : Color = Color.Red in
         skip
 
-    program(self) := undef
 }

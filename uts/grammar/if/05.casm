@@ -38,5 +38,4 @@ rule foo =
         else
             assert( false) 
         
-    program( self ) := undef
 }

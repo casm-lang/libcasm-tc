@@ -33,5 +33,4 @@ rule foo =
     -321:     { assert( false ) }
     default:  { assert( false ) }
     }
-    program(self) := undef
 }

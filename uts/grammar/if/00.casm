@@ -31,5 +31,4 @@ rule foo =
     if expr then
        skip
     
-    program( self ) := undef
 }

@@ -35,5 +35,4 @@ rule foo =
 
     let x : ABC = .C in skip
 
-    program( self ) := undef
 }

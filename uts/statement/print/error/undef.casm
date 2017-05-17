@@ -29,5 +29,4 @@ rule foo =
 {
     println( undef ) //@ ERROR( 1002 )
     
-    program( self ) := undef
 }

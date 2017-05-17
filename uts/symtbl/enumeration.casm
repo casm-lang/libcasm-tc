@@ -29,5 +29,4 @@ enum ABC = { A, B, C }
 
 rule foo =
 {
-    program( self ) := undef
 }

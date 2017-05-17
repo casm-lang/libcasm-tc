@@ -35,5 +35,4 @@ rule foo =
       default: { assert( true ) } //@ ERROR( 5c00 )
   }
   
-  program(self) := undef
 }

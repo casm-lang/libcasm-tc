@@ -31,5 +31,4 @@ rule foo =
 {
     choose i in [ bottom..top ] do skip //@ ERROR( 3001 )
     
-    program( self ) := undef
 }

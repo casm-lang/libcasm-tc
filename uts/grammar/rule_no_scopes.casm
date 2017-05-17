@@ -23,4 +23,6 @@
 //
 
 
-CASM init foo rule foo = program( self ) := undef
+CASM init foo
+
+rule foo = skip

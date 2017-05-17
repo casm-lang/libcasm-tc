@@ -50,5 +50,4 @@ rule foo =
          2: assert( false ) 
     }
     
-    program(self) := undef
 }

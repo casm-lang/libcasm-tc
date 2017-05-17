@@ -44,6 +44,7 @@ rule foo =
     c(2,3) := 5
     bb(two) := 1
     bbb(2) := three
-    program(self) := undef
+
+    program( self ) := undef
 |}
 

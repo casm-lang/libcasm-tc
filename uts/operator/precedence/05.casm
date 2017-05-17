@@ -35,5 +35,4 @@ rule foo =
         assert( -(a) = 1) 
     
     assert( -(-0.3) = 0.3) 
-    program( self ) := undef
 }

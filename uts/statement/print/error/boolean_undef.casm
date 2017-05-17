@@ -30,5 +30,4 @@ rule foo =
     println( false + undef ) //@ ERROR( 8000 )
     println( true  + undef ) //@ ERROR( 8000 )
     
-    program( self ) := undef
 }

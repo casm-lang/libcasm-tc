@@ -23,6 +23,8 @@
 //
 
 
-CASM init foo rule foo = program( self ) := undef
+CASM init foo
+
+rule foo = skip
 
 function f : -> Bit' 321  //@ ERROR( b001 )  // invalid bit size

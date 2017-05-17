@@ -30,7 +30,7 @@ function x : -> Integer initially { 1 }
 rule foo = 
 { 
     if x = 10 then
-        program(self) := undef
+        skip
     else
         x := x + 1
 }

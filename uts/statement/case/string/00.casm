@@ -33,5 +33,4 @@ rule foo =
     "baz":    { assert( false ) }
     default:  { assert( false ) }
     }
-    program(self) := undef
 }

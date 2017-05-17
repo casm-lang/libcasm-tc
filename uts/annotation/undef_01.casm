@@ -35,6 +35,5 @@ rule foo = {
   assert( (undef >= undef) = true) 
   assert( (undef > undef) = undef) 
 
-  program( self ) := undef
 }
 

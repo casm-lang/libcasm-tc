@@ -34,6 +34,5 @@ function baz: -> Integer initially { bar }
 
 rule foo = {|
     assert( baz = 3) 
-    program(self) := undef
 |}
 

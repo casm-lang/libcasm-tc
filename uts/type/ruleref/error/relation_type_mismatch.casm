@@ -31,5 +31,4 @@ rule foo =
 {
     let r : RuleRef< Floating * Integer -> Void > = @targetRule in //@ERROR( ? )
         call (*r)(21.0, 42)
-    program(self) := undef
 }

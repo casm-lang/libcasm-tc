@@ -31,5 +31,4 @@ rule foo =
     println( macro( 1 ) )
     println( macro( 2 ) )
     println( macro( 3 ) )
-    program(self) := undef
 }

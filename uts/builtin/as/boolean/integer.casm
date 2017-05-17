@@ -36,6 +36,5 @@ rule foo =
         assert( asBoolean( x ) = true) 
     }
 
-    program(self) := undef
 }
 

@@ -39,5 +39,4 @@ rule foo =
     println( "3" + bar3 ) //@ ERROR( 1001 )
     println( "4" + bar4 ) //@ ERROR( 1001 )
     
-    program( self ) := undef
 }

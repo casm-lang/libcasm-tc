@@ -31,6 +31,5 @@ rule foo =
         assert( asInteger( x ) = 0 ) //@ ERROR(?)
     }
 
-    program(self) := undef
 }
 

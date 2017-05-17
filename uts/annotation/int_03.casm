@@ -29,6 +29,5 @@ rule foo = {
     let x:Integer = undef in
         let y = undef in
             let z = x + y in assert( z = undef) 
-    program( self ) := undef
 }
 

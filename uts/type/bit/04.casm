@@ -23,7 +23,9 @@
 //
 
 
-CASM init foo rule foo = program( self ) := undef
+CASM init foo
+
+rule foo = skip
 
 function f : -> Bit'16 initially { 16 }
 

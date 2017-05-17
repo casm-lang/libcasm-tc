@@ -30,5 +30,4 @@ function x : -> Integer'[0..5] defined { 10 } //@ ERROR( fb01 )
 
 rule foo =
 {
-    program( self ) := undef
 }

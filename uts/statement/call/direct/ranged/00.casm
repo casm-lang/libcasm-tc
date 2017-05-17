@@ -31,5 +31,4 @@ rule bar(a : Integer'[2..4]) = skip
 
 rule foo = {|
     call bar(3)
-    program(self) := undef
 |}

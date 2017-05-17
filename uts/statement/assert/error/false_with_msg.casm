@@ -29,5 +29,4 @@ rule foo =
 { 
     assert( false, "this is the assert message of this check!" ) //@ ERROR( ? )
     
-    program( self ) := undef
 }

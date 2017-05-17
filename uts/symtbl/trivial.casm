@@ -27,5 +27,4 @@ CASM init foo
 
 rule foo =
 {
-    program( self ) := undef
 }

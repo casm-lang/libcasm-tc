@@ -27,7 +27,6 @@ CASM init foo
 
 rule foo =
 {
-    program( self ) := undef
 }
 
 [symbolic, static, symbolic] //@ ERROR( fa02 )

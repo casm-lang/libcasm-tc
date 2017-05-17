@@ -33,6 +33,7 @@ rule foo = {
             a := x + y
             assert( a = undef) 
         |}
+
     program( self ) := undef
 }
 

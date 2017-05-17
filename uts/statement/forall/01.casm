@@ -42,6 +42,4 @@ rule baz =
     assert( bar(  0 ) = +0) 
     assert( bar(  1 ) = +1) 
     assert( bar(  2 ) = undef) 
-    
-    program( self ) := undef
 }

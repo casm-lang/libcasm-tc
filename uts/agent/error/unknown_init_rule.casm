@@ -27,7 +27,4 @@ CASM
 
 init foo  //@ ERROR( a000 )
 
-rule bar =
-{
-    program(self) := undef
-}
+rule bar = skip

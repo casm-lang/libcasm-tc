@@ -33,5 +33,4 @@ rule foo =
     println( "-321" + -321 ) //@ ERROR( 1001 )
     println(    "0" + 0    ) //@ ERROR( 1001 )
     
-    program( self ) := undef
 }

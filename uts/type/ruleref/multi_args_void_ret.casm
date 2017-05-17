@@ -31,5 +31,4 @@ rule foo =
 {
     let r : RuleRef< Integer * Integer -> Void > = @targetRule in
         call (*r)(21, 42)
-    program(self) := undef
 }

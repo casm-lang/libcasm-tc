@@ -30,5 +30,4 @@ rule foo =
 
     assert( false, "this " + asString(1234) + " is the msg!" ) //@ ERROR( ? )
     
-    program( self ) := undef
 }

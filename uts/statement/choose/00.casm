@@ -34,5 +34,4 @@ rule foo =
             _: assert( false )
         }
     
-    program( self ) := undef
 }

@@ -29,5 +29,4 @@ rule foo =
 {
     println( undef + asBit( 24, 44 ) )
     
-    program( self ) := undef
 }

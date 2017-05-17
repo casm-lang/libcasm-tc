@@ -35,6 +35,5 @@ rule foo = {
     }
   }
   
-  program( self ) := undef
 }
 

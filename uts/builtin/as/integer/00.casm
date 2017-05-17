@@ -58,6 +58,5 @@ rule foo =
     let x = 1.3 in 
         assert( asRational(x) = 0r13/10) 
 
-    program(self) := undef
 }
 

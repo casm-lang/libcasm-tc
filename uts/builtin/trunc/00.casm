@@ -37,6 +37,5 @@ rule foo =
         println( bin( b ) )
         println( bin( c ) )
     }
-    program(self) := undef
 }
 

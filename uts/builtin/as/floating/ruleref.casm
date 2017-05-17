@@ -31,7 +31,6 @@ rule foo =
         assert( asFloating( x ) = 0.0 ) //@ ERROR(?)
     }
 
-    program(self) := undef
 }
 
 rule bar = skip
