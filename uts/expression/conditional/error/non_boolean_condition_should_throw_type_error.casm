@@ -29,5 +29,5 @@ CASM init foo
 
 rule foo =
     let condition : String = undef in
-        let result = ( if condition then "THEN" else "ELSE" ) in //@ ERROR( ? )
+        let result = ( if condition then "THEN" else "ELSE" ) in //@ ERROR( 1005 )
             skip
