@@ -26,5 +26,11 @@
 CASM init foo
 
 rule foo = {
-    assert( asBit(7, 24) = asBit(7, "asdf") ) //@ ERROR( ? ) //@ ERROR( ? )
+    assert(
+        asBit(7, 24)
+        =
+        asBit(  //@ ERROR( 1300 )
+        7,
+        "asdf") //@ ERROR( 1b00 )
+    ) 
 }
