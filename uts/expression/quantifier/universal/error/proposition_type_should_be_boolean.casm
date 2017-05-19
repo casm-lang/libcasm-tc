@@ -29,5 +29,5 @@ CASM init foo
 derived wrongPredicate(x) -> String = "a string"
 
 rule foo =
-    let result = forall x in [0..2] holds wrongPredicate(x) in //@ ERROR( ? )
+    let result = forall x in [0..2] holds wrongPredicate(x) in //@ ERROR( 1400 )
         skip

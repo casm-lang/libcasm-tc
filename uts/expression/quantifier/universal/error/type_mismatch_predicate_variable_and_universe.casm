@@ -28,5 +28,5 @@
 CASM init foo
 
 rule foo =
-    let result = forall x : String in [0..2] holds undef in //@ ERROR( ? )
+    let result = forall x : String in [0..2] holds undef in //@ ERROR( 1401 )
         skip

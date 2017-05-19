@@ -29,6 +29,6 @@ CASM init foo
 derived predicate(x) -> Boolean = true
 
 rule foo =
-    let universe : Range<Integer> = undef in
+    let universe : List<Integer> = undef in
         let result = forall x in universe holds predicate(x) in //@ ERROR( 9002 )
             skip

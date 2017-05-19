@@ -28,5 +28,5 @@
 CASM init foo
 
 rule foo =
-    let result = exists x : String in [0..2] with undef in //@ ERROR( ? )
+    let result = exists x : String in [0..2] with undef in //@ ERROR( 1411 )
         skip
