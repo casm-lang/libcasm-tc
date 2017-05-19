@@ -39,4 +39,7 @@ rule foo =
             .Blue: assert(false)
         }
 
+    let c = Color.Blue in
+        if c != .Blue then
+            assert(false)
 }

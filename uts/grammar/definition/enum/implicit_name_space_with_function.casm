@@ -37,5 +37,8 @@ rule foo =
         .Blue: assert(true)
     }
 
+    if colorFunction != .Blue then
+        assert(false)
+
     colorFunction := .Red // Color namespace from type of colorFunction
 }
