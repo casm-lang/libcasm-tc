@@ -29,5 +29,9 @@ CASM init foo
 
 rule foo =
     let condition : Boolean = undef in
-        let result = ( if condition then "String" else 42 ) in //@ ERROR( 1006 )
-            skip
+        let result =        //@ ERROR( 1200 )
+	    ( if condition  //@ ERROR( 1201 )
+	      then "String" //@ ERROR( 1006 )
+	      else 42 )     //@ ERROR( 1006 )
+	    in
+              skip
