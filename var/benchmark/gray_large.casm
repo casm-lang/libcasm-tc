@@ -43,7 +43,7 @@ rule gray1(digit : Integer) = {
 
 // idea: bit 0 cycles through 0,1,1,0; bit 1 cycles through 0,0,1,1,1,1,0,0 (double the cycle)
 rule gray2(digit : Integer) = 
-    case (inputnr/pow(2,digit)) % 4 of {
+    case (inputnr/2^digit) % 4 of {
         0: output2(digit) := false
         1: output2(digit) := true
         2: output2(digit) := true
@@ -68,10 +68,10 @@ rule main =
 
 // all 4 bit numbers and their gray encoding
 rule main2 = {
-    if inputnr < pow(2,nrbits) then
+    if inputnr < 2^nrbits then
     {|
         forall i in [0..15] do    {
-            input(i) := asBoolean((inputnr / pow(2,i)) % 2)
+            input(i) := asBoolean((inputnr / 2^i) % 2)
         }
         forall i in [0..15] do    {
             call gray1(i)
