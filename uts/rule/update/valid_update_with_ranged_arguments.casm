@@ -22,15 +22,17 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-
 CASM init foo
 
 function f: Integer * Integer'[1..5] * Integer -> Integer
 
-rule foo = {|
+rule foo =
+{|
+    // WHEN
     f(-100, 2, 100) := 2
+
+    // THEN
     assert( f(-100, 2, 100) = 2) 
 
     program( self ) := undef
 |}
-
