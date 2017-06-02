@@ -22,21 +22,16 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// update should persist (undef should be typed as Integer)
+// symbol resolver should say that rule bar is not allowed in update
 
 CASM init foo
 
-function y : Integer -> Integer initially { 10 -> 42 }
-
 rule foo =
-{|
-    assert( y( 10 ) != undef )
-
-    // WHEN
-    y( 10 ) := undef
-
-    // THEN
-    assert( y( 10 ) = undef )
+{
+    bar( 21 ) := 42 //@ ERROR( ? )
 
     program( self ) := undef
-|}
+}
+
+rule bar(x : Integer) -> Integer =
+    skip

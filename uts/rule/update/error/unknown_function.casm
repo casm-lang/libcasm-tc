@@ -22,21 +22,14 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// update should persist (undef should be typed as Integer)
+// symboler resolver should say the the function `undeclaredFunction` is
+// unknown
 
 CASM init foo
 
-function y : Integer -> Integer initially { 10 -> 42 }
-
 rule foo =
-{|
-    assert( y( 10 ) != undef )
-
-    // WHEN
-    y( 10 ) := undef
-
-    // THEN
-    assert( y( 10 ) = undef )
+{
+    undeclaredFunction := 42 //@ ERROR( f000 )
 
     program( self ) := undef
-|}
+}

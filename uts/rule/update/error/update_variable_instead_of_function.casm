@@ -22,21 +22,14 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// update should persist (undef should be typed as Integer)
+// symbol resolver should say that variable x is not allowed in update
 
 CASM init foo
 
-function y : Integer -> Integer initially { 10 -> 42 }
-
 rule foo =
-{|
-    assert( y( 10 ) != undef )
-
-    // WHEN
-    y( 10 ) := undef
-
-    // THEN
-    assert( y( 10 ) = undef )
+{
+    let x = 10 in
+        x := 42 //@ ERROR( ? )
 
     program( self ) := undef
-|}
+}

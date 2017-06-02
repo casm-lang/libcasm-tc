@@ -22,21 +22,16 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// update should persist (undef should be typed as Integer)
+// type checker should say that the second argument has wrong type (String
+// instead of Integer)
 
 CASM init foo
 
-function y : Integer -> Integer initially { 10 -> 42 }
+function y : Integer * Integer -> Integer
 
 rule foo =
-{|
-    assert( y( 10 ) != undef )
-
-    // WHEN
-    y( 10 ) := undef
-
-    // THEN
-    assert( y( 10 ) = undef )
+{
+    y( 1, "2" ) := 42 //@ ERROR( ? )
 
     program( self ) := undef
-|}
+}

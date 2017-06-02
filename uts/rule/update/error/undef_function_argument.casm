@@ -22,21 +22,16 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// update should persist (undef should be typed as Integer)
+// runtime exception saying that the function arguments must be defined
 
 CASM init foo
 
-function y : Integer -> Integer initially { 10 -> 42 }
+function y : Integer -> Integer
 
 rule foo =
-{|
-    assert( y( 10 ) != undef )
-
-    // WHEN
-    y( 10 ) := undef
-
-    // THEN
-    assert( y( 10 ) = undef )
+{
+    let arg = undef in
+        y( arg ) := 42 //@ ERROR( ? )
 
     program( self ) := undef
-|}
+}
