@@ -27,7 +27,6 @@ CASM init foo
 
 rule foo = 
 {
-    let x : Bit(8) = 0x5 in skip
-    program(self) := undef
+    let x : Bit'8 = 0x5 in skip
 }
 

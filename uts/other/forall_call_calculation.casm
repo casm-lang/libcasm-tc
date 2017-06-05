@@ -25,7 +25,7 @@
 
 CASM init foo
 
-function a : -> RuleRef
+function a : -> RuleRef< Integer * Integer * Integer -> Void >
 function b : Integer -> Integer initially {1->0, 2->0}
 
 rule bar( m:Integer, x:Integer, y:Integer ) =
@@ -43,11 +43,11 @@ rule foo =
  par
  forall i in [1..2] do
     seq
-        call (a)(1,i,undef)
-        call (a)(2,i,1)
+        call (*a)(1,i,undef)
+        call (*a)(2,i,1)
     endseq
  endpar
- print b(1) + b(2)
+ println( b(1) + b(2) )
  program(self) := undef
 |}
 

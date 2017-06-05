@@ -38,9 +38,7 @@ rule foo =
 
 rule baz =
 {
-    assert bar(  1 ) = undef
-    assert bar(  0 ) = undef
-    assert bar( -1 ) = undef
-    
-    program( self ) := undef
+    assert( bar(  1 ) = undef) 
+    assert( bar(  0 ) = undef) 
+    assert( bar( -1 ) = undef) 
 }

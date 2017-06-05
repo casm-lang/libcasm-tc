@@ -27,6 +27,5 @@ CASM init main
 
 rule main =
 {
-    print "Hello " + "World!"
-    program(self) := undef
+    println( "Hello " + "World!" )
 }

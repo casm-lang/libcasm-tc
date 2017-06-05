@@ -27,6 +27,5 @@ CASM init main
 
 rule main =
 {
-    print undef //@ ERROR( 1002 )
-    program(self) := undef
+    println( undef ) //@ ERROR( 1002 )
 }

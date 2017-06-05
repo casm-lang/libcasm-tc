@@ -34,11 +34,10 @@ rule foo =
     let a = true in
     let c = not a in
     {
-        assert c  = false
+        assert( c  = false) 
         
-        assert c != undef
-        assert c != true
-        assert isSymbolic( c ) = false
+        assert( c != undef) 
+        assert( c != true) 
+        assert( isSymbolic( c ) = false) 
     }
-    program( self ) := undef
 }

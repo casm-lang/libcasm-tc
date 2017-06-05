@@ -28,14 +28,13 @@ rule foo =
 {
     let x : Boolean = false in
     {
-        assert asFloating( x ) = 0.0
+        assert( asFloating( x ) = 0.0) 
     }
 
     let x : Boolean = true in
     {
-        assert asFloating( x ) = 1.0
+        assert( asFloating( x ) = 1.0) 
     }
 
-    program(self) := undef
 }
 

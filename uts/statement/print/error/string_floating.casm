@@ -27,11 +27,10 @@ CASM init foo
 
 rule foo =
 {
-    print    "1" +    0.1    //@ ERROR( 1001 )
-    print    "5" +    5.0    //@ ERROR( 1001 )
-    print  "123" +    1.23   //@ ERROR( 1001 )
-    print "-321" + -321.0    //@ ERROR( 1001 )
-    print    "0" +    0.0    //@ ERROR( 1001 )
+    println(    "1" +    0.1  )   //@ ERROR( 1001 )
+    println(    "5" +    5.0  )   //@ ERROR( 1001 )
+    println(  "123" +    1.23 )   //@ ERROR( 1001 )
+    println( "-321" + -321.0  )   //@ ERROR( 1001 )
+    println(    "0" +    0.0  )   //@ ERROR( 1001 )
     
-    program( self ) := undef
 }

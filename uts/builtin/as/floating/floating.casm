@@ -28,9 +28,8 @@ rule foo =
 {
     let x : Floating = 42.42 in
     {
-        assert asFloating( x ) = 42.42
+        assert( asFloating( x ) = 42.42) 
     }
 
-    program(self) := undef
 }
 

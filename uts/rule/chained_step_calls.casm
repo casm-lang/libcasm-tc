@@ -40,6 +40,6 @@ rule c =
 rule d =
 {
     {|
-        program(self) := undef
+        skip
     |}
 }

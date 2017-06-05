@@ -25,15 +25,14 @@
 
 CASM init foo
 
-function bar : -> Bit(4)
+function bar : -> Bit'4
 
 rule foo =
 {
-    print    1 + bar //@ ERROR( b002 )
-    print    5 + bar //@ ERROR( b002 )
-    print  123 + bar //@ ERROR( b002 )
-    print -321 + bar //@ ERROR( b002 )
-    print    0 + bar //@ ERROR( b002 )
+    println(    1 + bar ) //@ ERROR( b002 )
+    println(    5 + bar ) //@ ERROR( b002 )
+    println(  123 + bar ) //@ ERROR( b002 )
+    println( -321 + bar ) //@ ERROR( b002 )
+    println(    0 + bar ) //@ ERROR( b002 )
     
-    program( self ) := undef
 }

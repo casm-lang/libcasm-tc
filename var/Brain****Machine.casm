@@ -26,7 +26,7 @@
 
 CASM init bf
 
-function (static) prog: Integer -> Integer(0..255) initially
+[static] function prog: Integer -> Integer'[0..255] initially
 {
     0 -> '+',
     1 -> '+',
@@ -141,7 +141,7 @@ function (static) prog: Integer -> Integer(0..255) initially
     110 -> '.'
 }
 
-function mem: Integer -> Integer(0..255) defined { 0 }
+function mem: Integer -> Integer'[0..255] defined { 0 }
 
 function ip: -> Integer initially { 0 } // instruction pointer
 function mp: -> Integer initially { 0 } // memory pointer
@@ -155,7 +155,7 @@ rule bf =
         '<': mp := mp - 1
         '+': mem(mp) := mem(mp) + 1
         '-': mem(mp) := mem(mp) - 1
-        '.': print char(mem(mp))
+        '.': print(char(mem(mp)))
         ',': impossible // cannot read user input
         '[': if mem(mp) = 0 then call jump_right
         ']': if mem(mp) != 0 then call jump_left
@@ -169,9 +169,9 @@ rule bf =
 rule jump_right = call jump(+1)
 rule jump_left = call jump(-1)
 
-rule jump(dir : Integer(-1..1)) =
+rule jump(dir : Integer'[-1..1]) =
 {|
-    assert dir != 0 // enum would be nice, but requires an if expr. ...
+    assert(dir != 0) // enum would be nice, but requires an if expr. ...
 
     bc := dir
 
@@ -184,10 +184,10 @@ rule jump(dir : Integer(-1..1)) =
             {
                 '[': bc := bc + 1
                 ']': bc := bc - 1
-                undef: diedie // bf syntax error: branch mismatch
+                undef: abort // bf syntax error: branch mismatch
             }
         |}
     }
 
-    assert bc = 0
+    assert(bc = 0)
 |}

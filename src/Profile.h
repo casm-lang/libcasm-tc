@@ -39,14 +39,12 @@ namespace libcasm_tc
             INTERPRETER = 0,
             COMPILER,
             FORMAT,
-            LANGUAGE_SERVER,
             IDENTIFIER_MAX
         };
 
         static const char* get( const char* id )
         {
-            static const char* uid[]
-                = { "interpreter", "compiler", "format", "language-server" };
+            static const char* uid[] = { "interpreter", "compiler", "format" };
 
             if( (i64)id == -1 )
             {

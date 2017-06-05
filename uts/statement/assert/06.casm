@@ -26,11 +26,10 @@
 CASM init foo
 
 rule foo = { 
-    assert 1 != 2
-    assert 3 * (5+4) != 4 * (5+4)
-    assert 3 * (5+4) != 40
-    assert 40 != 3 * (5+4)
+    assert( 1 != 2) 
+    assert( 3 * (5+4) != 4 * (5+4)) 
+    assert( 3 * (5+4) != 40) 
+    assert( 40 != 3 * (5+4)) 
 
-    program( self ) := undef
 }
 

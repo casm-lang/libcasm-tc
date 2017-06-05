@@ -23,11 +23,15 @@
 //
 
 
-CASM init foo rule foo = program( self ) := undef
+CASM init foo
+
+rule foo = skip
 
 function s : -> String
 
 rule bar =
 {
     s := "asdf  //@ ERROR( 0002 )
+
+    program( self ) := undef
 }

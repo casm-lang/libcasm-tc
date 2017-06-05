@@ -31,7 +31,6 @@ rule foo =
         if false then
             skip
         else
-            assert true
+            assert( true) 
     
-    program( self ) := undef
 }

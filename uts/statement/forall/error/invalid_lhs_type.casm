@@ -32,5 +32,4 @@ rule foo =
 {
     forall i in [ bottom..top ] do skip //@ ERROR( 3000 )
     
-    program( self ) := undef
 }

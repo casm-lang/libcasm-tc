@@ -31,6 +31,5 @@ rule foo = {
   let x = undef in
   let y = a( x ) in skip
 
-  program( self ) := undef
 }
 

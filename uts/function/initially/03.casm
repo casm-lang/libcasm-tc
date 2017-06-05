@@ -32,5 +32,4 @@ function f : Integer -> Integer initially { 2 -> 4,  //@ ERROR( 7000 )
 
 rule foo =
 {
-    program( self ) := undef
 }

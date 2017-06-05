@@ -28,11 +28,10 @@ CASM init foo
 rule foo =
 {
     case undef of {
-    "foo":    { assert false }
-    "bar":    { assert false }
-    "baz":    { assert false }
-    undef:    { assert true  }
-    default:  { assert false }
+    "foo":    { assert( false ) }
+    "bar":    { assert( false ) }
+    "baz":    { assert( false ) }
+    undef:    { assert( true  ) }
+    default:  { assert( false ) }
     }
-    program(self) := undef
 }

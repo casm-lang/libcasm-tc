@@ -30,9 +30,8 @@ rule foo =
 {
     let x : myEnum = one in
     {
-        assert asString( x ) = "one"
+        assert( asString( x ) = "one") 
     }
 
-    program(self) := undef
 }
 

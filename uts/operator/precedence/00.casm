@@ -27,7 +27,6 @@ CASM init foo
 
 rule foo =
 {
-    assert 10 > 0 and true = 0 < 10 = true or false and true or 20 >= 3 * 9 = not false
-    assert 1 + undef + 2 = undef
-    program( self ) := undef
+    assert( 10 > 0 and true = 0 < 10 = true or false and true or 20 >= 3 * 9 = not false) 
+    assert( 1 + undef + 2 = undef) 
 }

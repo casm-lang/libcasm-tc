@@ -29,14 +29,13 @@ rule foo =
 {
     if true then
         if true then
-            assert true
+            assert( true) 
         else
-            assert false
+            assert( false) 
     else
         if false then
-            assert false
+            assert( false) 
         else
-            assert false
+            assert( false) 
         
-    program( self ) := undef
 }

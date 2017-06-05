@@ -37,5 +37,6 @@ rule foo =
         x( 1 ) := 0
         x( 1 ) := 2 //@ ERROR( 7001 )
     |}
+
     program( self ) := undef
 }

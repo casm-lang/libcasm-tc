@@ -32,6 +32,5 @@ rule foo = {
   let y = undef in
   let z = x % y in skip
 
-  program( self ) := undef
 }
 

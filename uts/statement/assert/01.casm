@@ -26,8 +26,7 @@
 CASM init foo
 
 rule foo = { 
-    assert "test" = "test"
+    assert( "test" = "test") 
 
-    program( self ) := undef
 }
 

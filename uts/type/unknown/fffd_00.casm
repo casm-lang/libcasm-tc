@@ -23,6 +23,8 @@
 //
 
 
-CASM init foo rule foo = program( self ) := undef
+CASM init foo
 
-function f : -> Abstract( Integer ) //@ ERROR( fffd )
+rule foo = skip
+
+function f : -> Abstract< Integer > //@ ERROR( fffd )

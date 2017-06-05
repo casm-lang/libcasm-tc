@@ -54,7 +54,7 @@ rule sieve =
 
     forall k in [0..10000] do
         if array(k) != undef then
-            print dec(array(k)) + " " 
+            println( dec(array(k)) + " " )
 
     program(self) := undef
 |}

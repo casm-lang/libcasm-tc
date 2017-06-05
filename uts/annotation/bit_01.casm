@@ -26,6 +26,5 @@
 CASM init foo
 
 rule foo = {
-    assert asBit(7, 24) = asBit(7, 32) //@ ERROR( b002 )
-    program( self ) := undef
+    assert( asBit(7, 24) = asBit(7, 32) ) //@ ERROR( 1300 )
 }

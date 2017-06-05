@@ -31,14 +31,13 @@
 
 CASM init foo
 
-function (symbolic) a : -> Integer
+[symbolic] function a : -> Integer
 
 rule foo =
 {
     let b : Integer = -321 in
     let c = a <= b in
     {
-        assert isSymbolic( c ) = isSymbolic( a )
+        assert( isSymbolic( c ) = isSymbolic( a )) 
     }
-    program( self ) := undef
 }

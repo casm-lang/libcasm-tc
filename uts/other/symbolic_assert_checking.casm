@@ -27,10 +27,10 @@ CASM init foo
 
 // cmdline "-s"
 
-function(symbolic) b : Integer -> Integer initially { 1 -> 1, 2 -> 2 }
+[symbolic]
+function b : Integer -> Integer initially { 1 -> 1, 2 -> 2 }
 
 rule foo = {
-    assert isSymbolic( b(1) ) = false
-    program(self) := undef
+    assert( isSymbolic( b(1) ) = false) 
 }
 

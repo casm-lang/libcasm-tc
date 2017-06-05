@@ -27,8 +27,8 @@ CASM init foo
 
 rule foo =
 {
-    program( self ) := undef
 }
 
-function ( static, static ) a : -> Integer //@ ERROR( fa01 )
+[static, static] //@ ERROR( fa01 )
+function a : -> Integer
 

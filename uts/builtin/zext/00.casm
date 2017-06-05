@@ -25,17 +25,16 @@
 
 CASM init foo
 
-function a : -> Bit(16) initially { 0 }
+function a : -> Bit'16 initially { 0 }
 
 rule foo = 
 {
-    let b : Bit( 32 )  = 0    in
+    let b : Bit' 32   = 0    in
     let c = zext( a, 32 ) in
     {
-        assert c = b
-        print bin( a )
-        print bin( b )
-        print bin( c )
+        assert( c = b )
+        println( bin( a ) )
+        println( bin( b ) )
+        println( bin( c ) )
     }
-    program(self) := undef
 }

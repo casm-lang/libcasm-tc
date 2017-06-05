@@ -31,8 +31,9 @@ rule foo = {
     let x = undef in
         let y = undef in {|
             a := x + y
-            assert a = undef
+            assert( a = undef) 
         |}
+
     program( self ) := undef
 }
 

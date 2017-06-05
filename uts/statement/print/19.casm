@@ -27,7 +27,6 @@ CASM init foo
 
 rule foo =
 {
-    print "very long string ..." + undef
+    println( "very long string ..." + undef )
     
-    program( self ) := undef
 }

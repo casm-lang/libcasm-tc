@@ -28,10 +28,11 @@ CASM init foo
 function a: -> Integer
 
 rule foo = {
-  let x = undef in
-  let y:Integer = undef in
-  let z = x + y in a := z
+    let x = undef in
+        let y:Integer = undef in
+            let z = x + y in
+                a := z
 
-  program( self ) := undef
+    program( self ) := undef
 }
 

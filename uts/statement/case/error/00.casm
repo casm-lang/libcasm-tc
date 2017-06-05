@@ -29,11 +29,10 @@ rule foo =
 {
   case 3 of
   {
-      1: { assert false }
-      2: { assert false }
-      _: { assert true  }       //@ ERROR( 5c00 )
-      default: { assert true  } //@ ERROR( 5c00 )
+      1: { assert( false ) }
+      2: { assert( false ) }
+      _: { assert( true  ) }       //@ ERROR( 5c00 )
+      default: { assert( true ) } //@ ERROR( 5c00 )
   }
   
-  program(self) := undef
 }

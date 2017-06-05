@@ -38,12 +38,10 @@ rule foo =
 
 rule baz =
 {
-    assert bar(  1 ) = undef
-    assert bar(  0 ) = undef
-    assert bar( -1 ) = -1
-    assert bar( -2 ) = -2
-    assert bar( -3 ) = -3
-    assert bar( -4 ) = undef
-    
-    program( self ) := undef
+    assert( bar(  1 ) = undef) 
+    assert( bar(  0 ) = undef) 
+    assert( bar( -1 ) = -1) 
+    assert( bar( -2 ) = -2) 
+    assert( bar( -3 ) = -3) 
+    assert( bar( -4 ) = undef) 
 }

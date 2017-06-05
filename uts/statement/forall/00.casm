@@ -29,5 +29,4 @@ rule foo =
 {
     forall i in [ 0..0 ] do skip
     
-    program( self ) := undef
 }

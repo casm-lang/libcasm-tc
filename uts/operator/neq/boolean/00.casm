@@ -37,11 +37,10 @@ rule foo =
     let b : Boolean = undef in
     let c = a != b in
     {
-        assert not c
+        assert( not c) 
         
-        assert c != undef
-        assert c != true
-        assert isSymbolic( c ) = false
+        assert( c != undef) 
+        assert( c != true) 
+        assert( isSymbolic( c ) = false) 
     }
-    program( self ) := undef
 }

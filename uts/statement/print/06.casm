@@ -27,7 +27,6 @@ CASM init foo
 
 rule foo =
 {
-    print undef + -3.21
+    println( undef + -3.21 )
     
-    program( self ) := undef
 }

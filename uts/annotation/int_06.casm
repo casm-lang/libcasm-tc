@@ -30,6 +30,5 @@ rule foo = {
         let y = undef in
             let z:Integer = x + y in skip
 
-    program( self ) := undef
 }
 

@@ -28,6 +28,6 @@ CASM init foo
 function x : -> Integer
 
 rule foo = { 
-    assert 1 = x //@ ERROR ( 5a00 )
+    assert( 1 = x ) //@ ERROR ( 5a00 )
 }
 

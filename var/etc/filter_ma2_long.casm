@@ -22,26 +22,16 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-CASM init setup
+CASM init filter_ma2_long
 
-function x : -> Integer // initially { 10 }
-function m : -> Integer // initially { 0 }
+function x : -> Integer initially { 10 }
+function m : -> Integer initially { 0 }
 function y : -> Integer
-function c : -> Integer
-
-rule setup =
-{
-    x := 10
-    m := 0
-    c := 0
-    program(self) := @filter_ma2_long
-}
+function c : -> Integer initially { 0 }
 
 rule filter_ma2_long =
-{
-    y := ( x + m ) / 2
-    m := x
-    c := c + 1
-    if c = 12345678 then
-       program(self) := undef
-}
+    if c < 1234567 then {
+        y := ( x + m ) + 2
+        m := x
+        c := c + 1
+    }

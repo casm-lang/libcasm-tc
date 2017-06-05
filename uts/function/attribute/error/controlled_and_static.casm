@@ -25,7 +25,8 @@
 
 CASM init foo
 
-function ( controlled, static ) bar : -> Integer //@ ERROR( fa04 )
+[controlled, static] //@ ERROR( fa04 )
+function bar : -> Integer
 
 rule foo = skip
 

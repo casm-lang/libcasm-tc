@@ -28,7 +28,9 @@ function bar : Integer -> Integer
 
 rule foo =
 {
-    assert 1 + 2 = 3
+    assert( 1 + 2 = 3 )
 
     bar( 4 ) := bar( 5 )
+
+    program( self ) := undef
 }

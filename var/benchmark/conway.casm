@@ -22,23 +22,44 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+CASM init GameOfLife
 
-// should terminate after 55 steps (1 for setup and 54 for game of life)
+/*
+ * Start pattern:
+ *
+ * X X X
+ * X   X
+ * X   X
+ *
+ * X   X
+ * X   X
+ * X X X
+ *
+ * should terminate after 54 steps
+ *
+ * from https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
+ */
+function alive : Integer * Integer -> Boolean defined { false } initially {
+    (50, 45) -> true, (51, 45) -> true, (52, 45) -> true,
+    (50, 46) -> true,                   (52, 46) -> true,
+    (50, 47) -> true,                   (52, 47) -> true,
 
-CASM init setup
+    (50, 49) -> true,                   (52, 49) -> true,
+    (50, 50) -> true,                   (52, 50) -> true,
+    (50, 51) -> true, (51, 51) -> true, (52, 51) -> true
+}
 
-function alive : Integer * Integer -> Boolean defined { false }
+derived aliveNeighbours(x, y) -> Integer
+    = asInteger(alive(x - 1, y - 1))
+    + asInteger(alive(x, y - 1))
+    + asInteger(alive(x + 1, y - 1))
+    + asInteger(alive(x - 1, y))
+    + asInteger(alive(x + 1, y))
+    + asInteger(alive(x - 1, y + 1))
+    + asInteger(alive(x, y + 1))
+    + asInteger(alive(x + 1, y + 1))
 
-derived aliveNeighbours(x : Integer, y : Integer) = asInteger(alive(x - 1, y - 1))
-                                                  + asInteger(alive(x, y - 1))
-                                                  + asInteger(alive(x + 1, y - 1))
-                                                  + asInteger(alive(x - 1, y))
-                                                  + asInteger(alive(x + 1, y))
-                                                  + asInteger(alive(x - 1, y + 1))
-                                                  + asInteger(alive(x, y + 1))
-                                                  + asInteger(alive(x + 1, y + 1))
-
-rule updateCell(x : Integer, y : Integer) =
+rule updateCell(x, y) =
     let c = aliveNeighbours(x, y) in {
         if c = 3 then {
             if not alive(x, y) then alive(x, y) := true
@@ -49,41 +70,6 @@ rule updateCell(x : Integer, y : Integer) =
     }
 
 rule GameOfLife =
-    forall x in 100 do
-        forall y in 100 do
+    forall x in [1..100] do
+        forall y in [1..100] do
             call updateCell(x, y)
-
-rule setup =
-{|
-    /*
-     * Start pattern:
-     *
-     * X X X
-     * X   X
-     * X   X
-     *
-     * X   X
-     * X   X
-     * X X X
-     *
-     * from https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
-     */
-
-    alive(50, 45) := true
-    alive(51, 45) := true
-    alive(52, 45) := true
-    alive(50, 46) := true
-    alive(52, 46) := true
-    alive(50, 47) := true
-    alive(52, 47) := true
-
-    alive(50, 49) := true
-    alive(52, 49) := true
-    alive(50, 50) := true
-    alive(52, 50) := true
-    alive(50, 51) := true
-    alive(51, 51) := true
-    alive(52, 51) := true
-
-    program(self) := @GameOfLife
-|}

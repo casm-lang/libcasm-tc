@@ -29,9 +29,13 @@ function x : -> Integer
 
 rule foo = { //@ ERROR( 0010 )
     x := 1
+
+    program( self ) := undef
 }
 
 rule foo = { //@ ERROR( 0010 )
     x := 2
+
+    program( self ) := undef
 }
 

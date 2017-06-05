@@ -28,9 +28,8 @@ rule foo =
 {
     let x : Rational = 0r1/10 in
     {
-        assert asFloating( x ) = 0.1
+        assert( asFloating( x ) = 0.1) 
     }
 
-    program(self) := undef
 }
 

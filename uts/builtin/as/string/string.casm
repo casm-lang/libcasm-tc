@@ -28,9 +28,8 @@ rule foo =
 {
     let x : String = "test" in
     {
-        assert asString( x ) = "test"
+        assert( asString( x ) = "test") 
     }
 
-    program(self) := undef
 }
 

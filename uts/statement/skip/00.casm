@@ -25,7 +25,4 @@
 
 CASM init foo
 
-rule foo = program( self ) := undef
-
-rule bar = skip
-
+rule foo = skip
