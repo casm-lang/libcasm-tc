@@ -25,7 +25,6 @@
 
 CASM init foo
 
-derived a -> List<Integer> = [] //@ERROR( de00 )
+derived a -> Abstract< Integer > = undef //@ERROR( 0100 )
 
 rule foo = skip
-
