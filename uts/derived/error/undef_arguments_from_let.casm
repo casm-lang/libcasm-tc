@@ -28,9 +28,18 @@ CASM init foo
 derived d( p1, p2 ) -> Integer = 3
 
 rule foo = {
-  let x = undef in
-  let y = undef in
-  let z = d( x, y ) in skip
-
+  let x             //@ ERROR( 1200 )
+      =
+      undef         //@ ERROR( 1201 )
+      in
+  let y             //@ ERROR( 1200 )
+      =
+      undef         //@ ERROR( 1201 )
+      in
+  let z             //@ ERROR( 1200 )
+      =
+      d(            //@ ERROR( 1201 )
+      x,            //@ ERROR( 1000 )
+      y ) in        //@ ERROR( 1000 )
+      skip
 }
-
