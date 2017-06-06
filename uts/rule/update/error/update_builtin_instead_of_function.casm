@@ -28,7 +28,7 @@ CASM init foo
 
 rule foo =
 {
-    asString( 21 ) := "42" //@ ERROR( ? )
+    asString( 21 ) := "42" //@ ERROR( 0501 )
 
     program( self ) := undef
 }

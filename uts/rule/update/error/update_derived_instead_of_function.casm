@@ -29,7 +29,7 @@ CASM init foo
 
 rule foo =
 {
-    bar( 21 ) := 42 //@ ERROR( ? )
+    bar( 21 ) := 42 //@ ERROR( 0501 )
 
     program( self ) := undef
 }
