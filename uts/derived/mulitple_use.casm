@@ -24,7 +24,7 @@
 
 CASM init foo
 
-derived macro( y ) -> Integer = y * y
+derived macro( y ) -> String = asString( y * y )
 
 rule foo =
 {
