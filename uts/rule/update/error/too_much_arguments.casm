@@ -31,7 +31,7 @@ function y : Integer * Integer -> Integer
 
 rule foo =
 {
-    y( 1, 2, 3 ) := 42 //@ ERROR( ? )
+    y( 1, 2, 3 ) := 42 //@ ERROR( 1312 )
 
     program( self ) := undef
 }

@@ -29,7 +29,7 @@ CASM init foo
 rule foo =
 {
     let x = 10 in
-        x := 42 //@ ERROR( ? )
+        x := 42 //@ ERROR( 0501 )
 
     program( self ) := undef
 }

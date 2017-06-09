@@ -30,8 +30,11 @@ function y : Integer -> Integer
 
 rule foo =
 {
-    let arg = undef in
-        y( arg ) := 42 //@ ERROR( fe03 )
+    let arg               //@ ERROR( 1200 )
+    =
+    undef                 //@ ERROR( 1201 )
+    in
+        y( arg ) := 42    //@ ERROR( 1000 )
 
     program( self ) := undef
 }

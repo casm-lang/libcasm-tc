@@ -30,7 +30,7 @@ CASM init foo
 
 rule foo =
 {
-    y( 42 ) := 42 //@ ERROR( ? )
+    y( 42 ) := 42 //@ ERROR( cc00 )
 
     program( self ) := undef
 }
