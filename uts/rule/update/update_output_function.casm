@@ -22,15 +22,15 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// consistency check should say that a monitored function cannot be updated
+// update should be possible
 
 CASM init foo
 
-[monitored] function y : Integer -> Integer
+[output] function y : Integer -> Integer
 
 rule foo =
 {
-    y( 42 ) := 42 //@ ERROR( cc00 )
+    y( 42 ) := 42
 
     program( self ) := undef
 }
