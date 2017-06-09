@@ -26,12 +26,12 @@
 // line comments. The problem was that the position of token `x` was wrong (1
 // line above in the comment).
 
-CASM init tokenWithoutIdentation
+CASM init tokenWithoutIndentation
 
-rule tokenWithoutIdentation = { // just a comment
+rule tokenWithoutIndentation = { // just a comment
 x //@ ERROR(0500)
 }
 
-rule tokenWithIdentation = { // just a comment
+rule tokenWithIndentation = { // just a comment
     x //@ ERROR(0500)
 }
