@@ -29,9 +29,7 @@ function bar : -> Integer
 
 rule foo =
 {
-    assert( ( 1 + undef ) * 0.3 = undef ) //@ERROR( 1001 )
-    assert( 2 * 3 + 4 = 10 ) //@ERROR( 1001 )
-    assert( bar + "bazfoo" = "something" ) //@ERROR( 1001 )
-    assert( asInteger( undef ) = asFloating( undef ) ) //@ERROR( 1001 )
-    
+    assert( ( 1 + undef ) * 0.3 = undef ) //@ERROR( 1101 )
+    assert( bar + "bazfoo" = "something" ) //@ERROR( 1101 )
+    assert( asInteger( undef ) = asFloating( undef ) ) //@ERROR( 1100 )
 }
