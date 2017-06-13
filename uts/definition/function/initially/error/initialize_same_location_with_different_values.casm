@@ -22,14 +22,11 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// location 2 is initialized with two different values
 
 CASM init foo
-
-// location 2 is initialized with two different values
 
 function f : Integer -> Integer initially { 2 -> 4,  //@ ERROR( 7000 )
                                             2 -> 9 } //@ ERROR( 7000 )
 
-rule foo =
-{
-}
+rule foo = skip
