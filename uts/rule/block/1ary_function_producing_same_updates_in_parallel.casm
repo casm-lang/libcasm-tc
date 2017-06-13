@@ -22,6 +22,7 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// Producing the same updates in parallel should work
 
 CASM init foo
 
@@ -31,11 +32,11 @@ rule foo =
 {
     {|
         x( 1 ) := 0
-        x( 1 ) := 1 //@ ERROR( 7001 )
+        x( 1 ) := 1
     |}
     {|
         x( 1 ) := 0
-        x( 1 ) := 2 //@ ERROR( 7001 )
+        x( 1 ) := 1
     |}
 
     program( self ) := undef

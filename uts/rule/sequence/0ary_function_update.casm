@@ -22,25 +22,16 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// updates should immediately be visible when using sequential execution semantics
 
 CASM init foo
 
-function a: -> Integer
-function b: -> Integer
+function x: -> Integer
 
-rule foo =  
+rule foo =
 {|
-    a := 3
-    b := 4
-
-    {
-        a := b
-        b := a
-    }
-
-    assert( a = 4) 
-    assert( b = 3) 
+    x := 42
+    assert( x = 42 )
 
     program( self ) := undef
 |}
-

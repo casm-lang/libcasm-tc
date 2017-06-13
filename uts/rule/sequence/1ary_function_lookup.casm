@@ -22,21 +22,27 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// Tests if the sequential execution semantics is respected during a lookup
 
 CASM init foo
 
 function x: Integer -> Integer
 
 rule foo =
-{
-    {|
-        x( 1 ) := 0
-        x( 1 ) := 1
-    |}
-    {|
-        x( 1 ) := 0
-        x( 1 ) := 1
-    |}
+{|
+    x( 1 ) := 1
+    x( 11 ) := 1
+
+    {
+        x( 1 ) := 2 // this update should NOT be visible during lookup
+
+        {|
+            x( 11 ) := 2
+
+            assert( x( 1 ) = 1 )
+            assert( x( 11 ) = 2 )
+        |}
+    }
 
     program( self ) := undef
-}
+|}

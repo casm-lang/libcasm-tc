@@ -22,22 +22,16 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// Same location has been updated in parallel using different update values
 
 CASM init foo
 
-function stop: -> Boolean
 function x: Integer -> Integer
 
-rule foo = 
-{|
-    forall i in [ 1, 2 ] do 
-    {
-        x( i ) := i
-    }
-
-    assert( x(1) = 1) 
-    assert( x(2) = 2) 
+rule foo =
+{
+    x( 1 ) := 1 //@ ERROR( 7000 )
+    x( 1 ) := 2 //@ ERROR( 7000 )
 
     program( self ) := undef
-|}
-
+}

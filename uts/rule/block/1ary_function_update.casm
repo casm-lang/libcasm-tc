@@ -22,19 +22,29 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// Updates should not immediately be visible, only after merge of the block rule
 
 CASM init foo
 
 function x: Integer -> Integer
 
 rule foo =
-{|
+{
     x( 1 ) := 1
+    x( 2 ) := 2
 
-    {
-        x( 1 ) := 2
-        assert( x( 1 ) = 1) 
-    }
+    // updates should not be visible yet
+    assert( x( 1 ) = undef )
+    assert( x( 2 ) = undef )
+
+    program( self ) := @check
+}
+
+rule check =
+{
+    // updates should now be visible because they have been merged
+    assert( x( 1 ) = 1 )
+    assert( x( 2 ) = 2 )
 
     program( self ) := undef
-|}
+}

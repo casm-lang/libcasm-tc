@@ -22,26 +22,23 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-
 CASM init foo
 
-function x: Integer -> Integer
+function a: -> Integer
+function b: -> Integer
 
 rule foo =
 {|
-    x( 1 ) := 1
-    x( 11 ) := 1
+    a := 3
+    b := 4
 
     {
-        x( 1 ) := 2
-
-        {|
-            x( 11 ) := 2
-
-            assert( x( 1 ) = 1) 
-            assert( x( 11 ) = 2) 
-        |}
+        a := b
+        b := a
     }
+
+    assert( a = 4 )
+    assert( b = 3 )
 
     program( self ) := undef
 |}
