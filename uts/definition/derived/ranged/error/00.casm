@@ -22,13 +22,12 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// tests if "derived" handles ranged integers correctly => value out of range
 
 CASM init foo
 
-// tests if "derived" handles ranged integers correctly => value out of range
+derived bar(a : Integer'[2..4]) -> Integer = a
 
-derived bar(a : Integer'[2..4]) -> String = asString( a )
-
-rule foo = {|
-    println( bar(42) ) //@ ERROR( da00 )
-|}
+rule foo =
+    let x = bar( 42 ) in //@ ERROR( da00 )
+        skip
