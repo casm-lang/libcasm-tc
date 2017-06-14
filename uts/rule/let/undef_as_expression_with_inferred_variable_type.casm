@@ -22,14 +22,11 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// type checker should infer variable type (should be Integer) and type undef as
+// Integer
 
 CASM init foo
 
 rule foo =
-{
-    let bar = 1 in
-    {
-	println( bar )
-    }
-
-}
+    let x = undef in
+        assert( ( x + 42 ) = undef )

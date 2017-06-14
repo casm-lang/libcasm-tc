@@ -22,19 +22,11 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// type checker should say that the let expression has wrong type (String
+// instead of Integer)
 
 CASM init foo
 
 rule foo =
-{
-    let bar = 1 in
-    {
-	println( bar )
-    }
-
-    let bar = 2 in
-    {
-	println( bar )
-    }
-
-}
+    let x : Integer = "42" in //@ ERROR( 1202 )
+        skip
