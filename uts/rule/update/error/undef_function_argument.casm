@@ -30,9 +30,9 @@ function y : Integer -> Integer
 
 rule foo =
 {
-    let arg               //@ ERROR( 1200 )
+    let arg               //@ ERROR( 1203 )
     =
-    undef                 //@ ERROR( 1201 )
+    undef                 //@ ERROR( 1204 )
     in
         y( arg ) := 42    //@ ERROR( 1000 )
 
