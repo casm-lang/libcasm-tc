@@ -22,17 +22,15 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// simple initially test should work
 
 CASM init foo
 
-// tests if initializer are checked correctly
+function squared : Integer -> Integer initially { 2 -> 4,
+                                                  3 -> 9 }
 
-[static]
-function bar : Integer -> Integer initially { 1 -> 3 }
-
-function baz: Integer -> Integer initially { 1 -> bar(1) }
-
-rule foo = {|
-    assert( baz(1) = 3) 
-|}
-
+rule foo =
+{
+    assert( squared(2) = 4 )
+    assert( squared(3) = 9 )
+}

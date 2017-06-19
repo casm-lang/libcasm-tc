@@ -22,12 +22,11 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// out of range
+// functions without arguments should be possible
 
 CASM init foo
 
-function x : -> Integer'[0..5] defined { 10 } //@ ERROR( fb01 )
+function f : -> Integer initially { 42 }
 
 rule foo =
-{
-}
+    assert( f = 42 )

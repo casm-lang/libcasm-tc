@@ -22,13 +22,14 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// type inference should say that the type of the defined value is wrong (String
+// instead of Integer)
+
 CASM init foo
 
-function x : Integer -> Integer defined { 42 } initially { 1 -> 21, 123456 -> 0 }
+function x : -> Integer defined {
+    "string" //@ ERROR( fb02 )
+}
 
 rule foo =
-{
-    assert( x( 1 ) = 21) 
-    assert( x( -123456 ) = 42) 
-    assert( x( 123456 ) = 0) 
-}
+    skip

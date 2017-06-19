@@ -22,17 +22,17 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-
 CASM init foo
 
-// tests if initializer are checked correctly, bar is not declared when baz is initialized
+function x : Integer -> Integer defined { 0 } initially { 1 -> 10, 2 -> 20 }
 
-function baz: -> Integer initially { bar } //@ ERROR( c000 )
+rule foo =
+{|
+    x( 1 ) := 1000
 
-[static]
-function bar : -> Integer initially { 3 }
+    assert( x( 1 ) = 1000 ) // udpate
+    assert( x( 2 ) = 20 ) // function state
+    assert( x( 3 ) = 0 ) // default value
 
-rule foo = {|
-    assert( baz = 3) 
+    program( self ) := undef
 |}
-

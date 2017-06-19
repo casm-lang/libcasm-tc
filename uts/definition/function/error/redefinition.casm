@@ -22,17 +22,11 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-
 CASM init foo
 
-// tests if "initially" handles ranged integers correctly
+function x : -> Integer  //@ ERROR( f010 )
 
-function bar : Integer'[0..2] -> Integer'[2..4] initially { 1 -> 3 }
+function x : -> Integer  //@ ERROR( f010 )
 
-rule foo =
-{
-    assert( bar(0) = undef) 
-    assert( bar(1) = 3) 
-    assert( bar(2) = undef) 
-    
-}
+rule foo = 
+    skip

@@ -22,14 +22,13 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// symbol resolver should say that function `x` with one argument doesn't
+// exist
 
 CASM init foo
 
-function squared : Integer -> Integer initially { 2 -> 4,
-                                                  3 -> 9 }
+function x : Integer * Integer -> Integer
 
 rule foo =
-{
-    assert( squared(2) = 4) 
-    assert( squared(3) = 9) 
-}
+    let y = x( 1 ) in //@ ERROR( 1312 )
+        skip

@@ -22,14 +22,13 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// symbol resolver should say that function `x` with three arguments doesn't
+// exist
 
 CASM init foo
 
-rule foo = skip
+function x : Integer * Integer -> Integer
 
-// tests if "initially" handles ranged integers correctly => value out of range
-
-[static]
-function baz : Integer -> Integer initially { 1 -> 42 }
-
-function bar : Integer'[0..2] -> Integer'[2..4] initially { 1 -> baz(1) } //@ ERROR( fd00 )
+rule foo =
+    let y = x( 1, 2, 3 ) in //@ ERROR( 1312 )
+        skip

@@ -22,12 +22,11 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-
 CASM init foo
 
 function a : -> Integer //@ ERROR( 0010 )
 
 enum a = { bar, baz } //@ ERROR( 0010 )
 
-rule foo = skip
-
+rule foo =
+    skip

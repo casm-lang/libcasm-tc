@@ -22,15 +22,9 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-
 CASM init foo
 
-// y is not yet decleared when initialising x
-
-function x : -> Integer initially { y }  //@ ERROR( c000 )
-function y : -> Integer initially { 3 }
+function x : Integer -> Integer
 
 rule foo =
-{
-    assert( x = 3) 
-}
+    assert( x( 1 ) = undef )

@@ -22,11 +22,14 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// symbol resolver should say that function `x` with one argument doesn't
+// exist
 
 CASM init foo
 
-rule foo = skip
+function x : Integer * Integer -> Integer initially {
+    1 -> 42 //@ ERROR( 1312 )
+}
 
-// tests if "initially" handles ranged integers correctly => value out of range
-
-function bar : -> Integer'[2..4] initially { 42 } //@ ERROR( fd00 )
+rule foo =
+    skip

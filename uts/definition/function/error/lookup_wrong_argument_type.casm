@@ -22,17 +22,13 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// type inference should say the the function lookup argument has wrong type
+// (String instead of Integer)
 
 CASM init foo
 
-// tests if initializer are checked correctly, that is bar is initialized before baz
+function x : Integer -> Integer
 
-function baz: Integer -> Integer initially { 1 -> bar(1) }  //@ ERROR( c000 )
-
-[static]
-function bar : Integer -> Integer initially { 1 -> 3 }
-
-rule foo = {|
-    assert( baz(1) = 3) 
-|}
-
+rule foo =
+    let y = x( "string" ) in //@ ERROR( 1302 )
+        skip

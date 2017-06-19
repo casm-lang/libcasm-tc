@@ -22,12 +22,12 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// type mismatch
+// `y` is not yet decleared when initialising `x`
 
 CASM init foo
 
-function x : -> Boolean defined { 3 } //@ ERROR( fb02 )
+function x : -> Integer initially { y }  //@ ERROR( c000 )
+function y : -> Integer initially { 3 }
 
 rule foo =
-{
-}
+    skip

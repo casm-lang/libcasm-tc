@@ -22,15 +22,15 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// test defined + initially
+// `x` is already defined when using it in `y`
 
 CASM init foo
 
-function x : Integer -> Boolean defined { true } initially { 1 -> false }
+function x : -> Integer initially { 3 }
+function y : -> Integer initially { x }
 
 rule foo =
 {
-    assert( x( 1 ) = false) 
-    assert( x( -123456 ) = true) 
-    assert( x( 123456 ) = true) 
+    assert( x = 3 )
+    assert( y = 3 )
 }

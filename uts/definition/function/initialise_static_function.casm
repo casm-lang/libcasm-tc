@@ -22,11 +22,11 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// location 2 is initialized with two different values
+// initialising a static function should work
 
 CASM init foo
 
-function f : Integer -> Integer initially { 2 -> 4,  //@ ERROR( 7000 )
-                                            2 -> 9 } //@ ERROR( 7000 )
+[static] function x : -> Integer initially { 3 }
 
-rule foo = skip
+rule foo =
+    assert( x = 3 )

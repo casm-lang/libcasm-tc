@@ -22,14 +22,14 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// tests if "initially" handles ranged integers correctly => location out of range
 
 CASM init foo
 
-rule foo = skip
+function x : Integer'[0..10] -> Integer initially {
+    42 //@ ERROR( fe01 )
+       -> 1
+}
 
-// tests if "initially" handles ranged integers correctly => location out of range
-
-[static]
-function baz : Integer -> Integer initially { 1 -> 42 }
-
-function bar : Integer'[0..2] -> Integer'[2..4] initially { baz(1) -> 3 } //@ ERROR( fe01 )
+rule foo =
+    skip

@@ -22,12 +22,13 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// location 2 is initialized with two different values -> should give and update
+// set conflict
+
 CASM init foo
 
-function a : -> Integer //@ ERROR( 0010 )
-
-enum bar = { a } //@ ERROR( 0010 )
+function f : Integer -> Integer initially { 2 -> 4,  //@ ERROR( 7000 )
+                                            2 -> 9 } //@ ERROR( 7000 )
 
 rule foo =
     skip
-
