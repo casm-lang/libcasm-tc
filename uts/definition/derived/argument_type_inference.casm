@@ -22,14 +22,14 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// `x` and `y` should be of type Integer (inferred from the derived expression)
+// and thus both undef values should be typed as Integer
+
 CASM init foo
 
-derived square( y ) -> Integer =
-    y * y
+derived bar( x, y ) -> Integer =
+    x + y
 
 rule foo =
-{
-    assert( square( 1 ) = 1 )
-    assert( square( 2 ) = 4 )
-    assert( square( 3 ) = 9 )
-}
+    let x = bar( undef, undef ) in
+        skip

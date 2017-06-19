@@ -24,12 +24,11 @@
 
 CASM init foo
 
-derived square( y ) -> Integer =
-    y * y
+derived bar -> Integer = //@ ERROR( ? )
+    42
+
+derived bar -> Integer = //@ ERROR( ? )
+    42
 
 rule foo =
-{
-    assert( square( 1 ) = 1 )
-    assert( square( 2 ) = 4 )
-    assert( square( 3 ) = 9 )
-}
+    skip

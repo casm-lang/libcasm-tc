@@ -22,14 +22,14 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// tests if "derived" validates the return value correctly => return value out
+// of range
+
 CASM init foo
 
-derived square( y ) -> Integer =
-    y * y
+derived bar( a : Integer ) -> Integer'[2..4] =
+    42 //@ ERROR( da01 )
 
 rule foo =
-{
-    assert( square( 1 ) = 1 )
-    assert( square( 2 ) = 4 )
-    assert( square( 3 ) = 9 )
-}
+    let x = bar( 3 ) in
+        skip

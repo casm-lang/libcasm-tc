@@ -22,14 +22,14 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// symbol resolver should say that derived `bar` with three arguments doesn't
+// exist
+
 CASM init foo
 
-derived square( y ) -> Integer =
-    y * y
+derived bar( x, y ) -> Integer =
+    42
 
 rule foo =
-{
-    assert( square( 1 ) = 1 )
-    assert( square( 2 ) = 4 )
-    assert( square( 3 ) = 9 )
-}
+    let x = bar( 1, 2, 3 ) in //@ ERROR( ? )
+        skip

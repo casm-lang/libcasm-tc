@@ -22,14 +22,13 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// undef argument value should work
+
 CASM init foo
 
-derived square( y ) -> Integer =
-    y * y
+derived bar( x : Integer ) -> Integer =
+    42
 
 rule foo =
-{
-    assert( square( 1 ) = 1 )
-    assert( square( 2 ) = 4 )
-    assert( square( 3 ) = 9 )
-}
+    let x = bar( undef ) in
+        skip

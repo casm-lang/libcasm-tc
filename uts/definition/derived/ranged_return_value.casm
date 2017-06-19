@@ -22,14 +22,12 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// tests if "derived" handles ranged integers as return value correctly
+
 CASM init foo
 
-derived square( y ) -> Integer =
-    y * y
+derived bar( a : Integer ) -> Integer'[2..4] =
+    a
 
 rule foo =
-{
-    assert( square( 1 ) = 1 )
-    assert( square( 2 ) = 4 )
-    assert( square( 3 ) = 9 )
-}
+    assert( bar( 3 ) = 3 )

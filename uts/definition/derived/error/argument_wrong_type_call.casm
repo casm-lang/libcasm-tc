@@ -22,14 +22,14 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// type inference should say that the type of the `arg` value is wrong (String
+// instead of the declared Integer)
+
 CASM init foo
 
-derived square( y ) -> Integer =
-    y * y
+derived bar( arg : Integer ) -> Integer =
+    arg
 
 rule foo =
-{
-    assert( square( 1 ) = 1 )
-    assert( square( 2 ) = 4 )
-    assert( square( 3 ) = 9 )
-}
+    let x = bar( "string" ) in //@ERROR( 1303 )
+        skip
