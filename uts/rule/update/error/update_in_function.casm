@@ -22,11 +22,11 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
-// consistency check should say that a input function cannot be updated
+// consistency check should say that a in function cannot be updated
 
 CASM init foo
 
-[input] function y : Integer -> Integer
+[in] function y : Integer -> Integer
 
 rule foo =
 {
@@ -34,3 +34,4 @@ rule foo =
 
     program( self ) := undef
 }
+
