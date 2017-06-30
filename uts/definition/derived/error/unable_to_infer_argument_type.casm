@@ -29,10 +29,10 @@
 CASM init foo
 
 derived bar(
-             arg //@ ERROR( ? )
+             arg //@ ERROR( 1eee )
                  ) -> Integer = 3
 
 rule foo =
     let x : Integer = bar(
-                           undef //@ ERROR( ? )
+                           undef //@ ERROR( 1eee )
                                  ) in skip

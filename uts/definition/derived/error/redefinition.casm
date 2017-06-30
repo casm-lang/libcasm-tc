@@ -24,10 +24,10 @@
 
 CASM init foo
 
-derived bar -> Integer = //@ ERROR( ? )
+derived bar -> Integer = //@ ERROR( d000 )
     42
 
-derived bar -> Integer = //@ ERROR( ? )
+derived bar -> Integer = //@ ERROR( d000 )
     42
 
 rule foo =

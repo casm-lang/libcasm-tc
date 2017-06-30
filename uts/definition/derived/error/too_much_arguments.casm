@@ -31,5 +31,5 @@ derived bar( x, y ) -> Integer =
     42
 
 rule foo =
-    let x = bar( 1, 2, 3 ) in //@ ERROR( ? )
+    let x = bar( 1, 2, 3 ) in //@ ERROR( 1313 )
         skip

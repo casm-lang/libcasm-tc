@@ -32,11 +32,10 @@ function someFunction : -> Integer
 rule someRule -> Integer =
 {
     someFunction := 42 // side effect
-    result := 21
 }
 
 derived bar -> Integer =
-    someRule() //@ ERROR( ? )
+    someRule() //@ ERROR( 5100 )
 
 rule foo =
     skip

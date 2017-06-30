@@ -28,7 +28,7 @@
 CASM init foo
 
 derived bar( arg : String ) -> Integer =
-    arg //@ERROR( ? )
+    arg //@ERROR( 1323 )
 
 rule foo =
     skip
