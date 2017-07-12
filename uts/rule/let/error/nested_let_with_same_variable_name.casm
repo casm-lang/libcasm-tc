@@ -28,5 +28,5 @@ CASM init foo
 
 rule foo =
     let x : Integer = undef in
-        let x : Integer = undef in //@ ERROR( ? )
+        let x : Integer = undef in //@ ERROR( 0502 )
             skip
