@@ -28,7 +28,7 @@ CASM init foo
 
 derived bar -> Integer =
     choose x in 21 do
-        choose x in 42 do //@ ERROR( ? )
+        choose x in 42 do //@ ERROR( 0502 )
             undef
 
 rule foo =
