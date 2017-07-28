@@ -40,11 +40,15 @@
 //  statement from your version.
 //
 
-// NonExistingFile.casm does not exist, so the import should fail.
+// imports LibB using a relative path -> casmi should search LibB in the
+// Module folder
 
-CASM init test //@DISABLED() TODO: FIXME: @ppaulweber: the 'DISABLED' will be removed during the casm-lang/casm#14 by @emmanuel099
+CASM init foo
 
-import NonExistingFile //@ ERROR( 0503 )
+import .LibB as B
 
-rule test =
+derived id -> String =
+    "Module Lib A -> " + B.id
+
+rule foo =
     skip

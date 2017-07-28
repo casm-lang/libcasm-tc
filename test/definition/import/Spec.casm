@@ -40,11 +40,13 @@
 //  statement from your version.
 //
 
-// NonExistingFile.casm does not exist, so the import should fail.
+CASM init foo
 
-CASM init test //@DISABLED() TODO: FIXME: @ppaulweber: the 'DISABLED' will be removed during the casm-lang/casm#14 by @emmanuel099
+import Module.LibA
+import Module.LibA as A
 
-import NonExistingFile //@ ERROR( 0503 )
-
-rule test =
-    skip
+rule foo =
+{
+    assert( Module.LibA.id = "Module Lib A -> Module Lib B -> Lib C -> Module Lib D" )
+    assert( A.id = "Module Lib A -> Module Lib B -> Lib C -> Module Lib D" )
+}

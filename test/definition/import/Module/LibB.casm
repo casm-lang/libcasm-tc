@@ -40,11 +40,15 @@
 //  statement from your version.
 //
 
-// NonExistingFile.casm does not exist, so the import should fail.
+// imports LibC using an absolute path -> casmi should search LibC in the
+// project path (which is the directory of Spec.casm)
 
-CASM init test //@DISABLED() TODO: FIXME: @ppaulweber: the 'DISABLED' will be removed during the casm-lang/casm#14 by @emmanuel099
+CASM init foo
 
-import NonExistingFile //@ ERROR( 0503 )
+import LibC as C
 
-rule test =
+derived id -> String =
+    "Module Lib B -> " + C.id
+
+rule foo =
     skip
