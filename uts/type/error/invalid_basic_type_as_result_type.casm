@@ -22,9 +22,10 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// basic type 'Abstract' is invalid
 
 CASM init foo
 
 rule foo = skip
 
-function f : -> Abstract< Integer > //@ ERROR( fffd )
+function f : -> Abstract //@ ERROR( 0100 )
