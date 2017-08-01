@@ -22,16 +22,17 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// tests that 'asBoolean' cannot convert rule reference values!
+// no type relation defined
+
 CASM init foo
 
 rule foo =
 {
     let x : RuleRef< -> Void > = @bar in
     {
-        assert( asBoolean( x ) = false ) //@ ERROR(?)
+        assert( asBoolean( x ) = false ) //@ ERROR( 1000 )
     }
-
 }
 
 rule bar = skip
-

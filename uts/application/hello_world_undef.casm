@@ -22,10 +22,11 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// test shall print the "undef" string
 
 CASM init main
 
 rule main =
 {
-    println( undef ) //@ ERROR( 1002 )
+    println( undef )
 }

@@ -22,16 +22,17 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// tests that 'asBoolean' cannot convert enumeration values!
+// no type relation defined
+
 CASM init foo
 
 enum myEnum = { one, two, three }
 
 rule foo =
 {
-    let x : myEnum = one in
+    let x : myEnum = myEnum.one in
     {
-        assert( asBoolean( x ) = false ) //@ ERROR(?)
+        assert( asBoolean( x ) = false ) //@ ERROR( 1000 )
     }
-
 }
-

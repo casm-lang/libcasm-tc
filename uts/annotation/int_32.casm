@@ -22,6 +22,8 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// tests if the type inference finds the correct Integer type for the let variable 'x'
+// triggers error in function lookup, due to undef argument
 
 CASM init foo
 
@@ -29,7 +31,7 @@ function a: Integer -> Integer
 
 rule foo = {
   let x = undef in
-  let y = a( x ) in skip
+  let y = a( x ) in skip //@ ERROR( fe00 )
 
 }
 

@@ -33,5 +33,5 @@ rule main =
 {
     if N > 1 then
         N := N / 2
-    println( N )
+    println( asString( N ) )
 }

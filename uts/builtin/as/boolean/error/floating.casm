@@ -22,14 +22,15 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// tests that 'asBoolean' cannot convert floating values!
+// no type relation defined
+
 CASM init foo
 
 rule foo =
 {
     let x : Floating = 0.0 in
     {
-        assert( asBoolean( x ) = false ) //@ ERROR(?)
+        assert( asBoolean( x ) = false ) //@ ERROR( 1000 )
     }
-
 }
-
