@@ -27,4 +27,4 @@ CASM init foo
 
 rule foo = skip
 
-function f : Integer'[200..400] -> Integer'[-100..100]
+function f : Integer'[200..400] -> Integer
