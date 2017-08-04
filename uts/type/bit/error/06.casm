@@ -22,10 +22,13 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// bit-size of rhs does not fit into bit-size of lhs
+// shall throw a update type mismatch
+
 
 CASM init foo
 
 rule foo = skip
 
-function f : -> Bit'8 initially { 0b1111'0000'1111'0000 } //@ ERROR( b001 )
+function f : -> Bit'8 initially { 0b1111'0000'1111'0000 } //@ ERROR( 1205 )
 

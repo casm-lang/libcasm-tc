@@ -27,5 +27,4 @@ CASM init foo
 
 rule foo = skip
 
-function f : -> Bit //@ ERROR( b000 )  // invalid bit syntax
-
+function f : -> Bit

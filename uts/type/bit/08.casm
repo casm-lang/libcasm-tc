@@ -22,6 +22,8 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// value 0x5 does fit into Bit'8
+
 
 CASM init foo
 
@@ -29,4 +31,3 @@ rule foo =
 {
     let x : Bit'8 = 0x5 in skip
 }
-

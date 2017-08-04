@@ -22,6 +22,8 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// value 0x16 does fit into Bit'16
+
 
 CASM init foo
 

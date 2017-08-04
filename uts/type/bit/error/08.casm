@@ -22,11 +22,14 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// bit-size of rhs does not fit into bit-size of lhs
+// shall throw a type mismatch
+
 
 CASM init foo
 
 rule foo = 
 {
-    let x : Bit'8 = 0x123 in skip //@ ERROR( b003 )
+    let x : Bit'8 = 0x123 in skip //@ ERROR( 1202 )
 }
 
