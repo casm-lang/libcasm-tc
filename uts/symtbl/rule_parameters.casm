@@ -27,12 +27,12 @@ CASM init foo
 
 rule bar( qux : Integer ) =
 {
-    println( qux )
+    println( asString( qux ) )
 }
 
 rule foo =
 {
-    call bar
+    call bar( 1 )
 
-    call (*@bar)()
+    call (*@bar)( 2 )
 }

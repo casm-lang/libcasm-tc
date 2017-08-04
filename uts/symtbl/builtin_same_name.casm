@@ -29,6 +29,5 @@ rule foo =
 {
     assert( true )
 
-    assert( true, "this is a true assertion" )
-
+    assert( true, "this is an assertion with condition 'true'" )
 }

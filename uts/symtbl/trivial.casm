@@ -25,6 +25,4 @@
 
 CASM init foo
 
-rule foo =
-{
-}
+rule foo = skip

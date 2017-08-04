@@ -27,10 +27,11 @@ CASM init foo
 
 rule foo =
 {
-    bar      //@ERROR( ? )
-    qux      //@ERROR( ? )
+    bar      //@ERROR( 0500 )
 
-    call bar //@ERROR( ? )
-    call qux //@ERROR( ? )
+    qux      //@ERROR( 0500 )
 
+    call bar //@ERROR( 0500 )
+
+    call qux //@ERROR( 0500 )
 }

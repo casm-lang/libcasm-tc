@@ -27,6 +27,4 @@ CASM init foo
 
 enum ABC = { A, B, C }
 
-rule foo =
-{
-}
+rule foo = skip
