@@ -192,25 +192,33 @@ TEST_P( RunnerTest, case )
                     u1 line_not_found = true;
                     u1 code_not_valid = true;
 
+                    std::vector< libcasm_tc::ParamError > errorCodes;
+
                     for( auto& e : param.error )
                     {
                         if( e.line.compare( match[ 1 ].str() )
                             == 0 ) // found line!
                         {
+                            errorCodes.emplace_back( e );
                             line_not_found = false;
+                        }
+                    }
 
-                            EXPECT_STREQ(
-                                e.code.c_str(), match[ 2 ].str().c_str() );
-                            if( e.code.compare( match[ 2 ].str() ) == 0 )
+                    for( auto& e : errorCodes )
+                    {
+                        if( e.code.compare( match[ 2 ].str() ) == 0 )
+                        {
+                            code_not_valid = false;
+
+                            auto result
+                                = checked.emplace( e.line + ":" + e.code, e );
+
+                            if( not result.second )
                             {
-                                code_not_valid = false;
-                                auto result = checked.emplace(
-                                    e.line + ":" + e.code, e );
-                                if( not result.second )
-                                {
-                                    error_cnt--;
-                                }
+                                error_cnt--;
                             }
+
+                            break;
                         }
                     }
 
