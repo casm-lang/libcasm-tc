@@ -30,6 +30,10 @@ function top : -> Integer initially { 1 }
 
 rule foo = 
 {
-    forall i in [ bottom..top ] do skip //@ ERROR( 3000 )
-    
+    forall
+    i               //@ ERROR( 1004 )
+    in
+    [ bottom..top ] //@ ERROR( 1014 ) //@ ERROR( 1600 )
+    do
+    skip
 }

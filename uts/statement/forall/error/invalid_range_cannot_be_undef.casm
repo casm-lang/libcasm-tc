@@ -27,6 +27,10 @@ CASM init foo
 
 rule foo = 
 {
-    forall i in undef do skip //@ ERROR( 1004 )
-    
+    forall
+    i       //@ ERROR( 1004 )
+    in
+    undef   //@ ERROR( 1014 )
+    do
+    skip
 }
