@@ -26,19 +26,20 @@
 CASM init foo
 
 function bar : Integer -> Integer 
-function pos : -> Integer initially { 0 }
 
 rule foo = 
 {
-    forall i in pos do
-        bar( i ) := i
-    
+    forall i in [ 0..0 ] do
+        bar(i) := i
+
     program( self ) := @baz
 }
 
 rule baz =
 {
-    assert( bar(  1 ) = undef) 
-    assert( bar(  0 ) = undef) 
+    assert( bar( -2 ) = undef) 
     assert( bar( -1 ) = undef) 
+    assert( bar(  0 ) = +0) 
+    assert( bar(  1 ) = undef) 
+    assert( bar(  2 ) = undef) 
 }
