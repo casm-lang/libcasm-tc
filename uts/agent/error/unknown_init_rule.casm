@@ -22,9 +22,10 @@
 //  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 //
 
+// The symbol resolver should say that 'foo' has not been defined
 
 CASM
 
-init foo  //@ ERROR( a000 )
+init foo  //@ ERROR( 0500 )
 
 rule bar = skip
