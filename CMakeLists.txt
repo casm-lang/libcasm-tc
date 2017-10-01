@@ -64,8 +64,6 @@ include( FeatureSummary )
 include( GenerateExportHeader )
 include( CPack )
 
-string( SUBSTRING ${PROJECT} 3 -1 APPLICATION )
-
 add_subdirectory( src )
 add_subdirectory( etc
   EXCLUDE_FROM_ALL
@@ -106,7 +104,7 @@ endif()
 
 
 set( ${PROJECT}_VERSION ${GIT_REVTAG} )
-set_property( TARGET ${PROJECT} PROPERTY VERSION ${PROJECT}_VERSION )
+set_property( TARGET ${PROJECT} PROPERTY VERSION ${${PROJECT}_VERSION} )
 set_property( TARGET ${PROJECT} PROPERTY PREFIX  "" )
 
 
@@ -114,12 +112,12 @@ set_property( TARGET ${PROJECT} PROPERTY PREFIX  "" )
 # application
 #
 
-add_executable( ${APPLICATION}
-  $<TARGET_OBJECTS:${APPLICATION}-cpp>
+add_executable( ${PROJECT}-generator
+  $<TARGET_OBJECTS:${PROJECT}-generator-cpp>
   )
 
 if( ${LIBSTDHL_FOUND} )
-  target_link_libraries( ${APPLICATION}
+  target_link_libraries( ${PROJECT}-generator
     ${PROJECT}
     ${LIBSTDHL_LIBRARY}
     )
@@ -136,7 +134,7 @@ add_library( ${PROJECT}-test STATIC
   $<TARGET_OBJECTS:${PROJECT}-test-cases>
   )
 
-set_property( TARGET ${PROJECT}-test PROPERTY VERSION ${PROJECT}_VERSION )
+set_property( TARGET ${PROJECT}-test PROPERTY VERSION ${${PROJECT}_VERSION} )
 set_property( TARGET ${PROJECT}-test PROPERTY PREFIX  "" )
 
 
@@ -166,7 +164,7 @@ add_library( ${PROJECT}-benchmark STATIC
   $<TARGET_OBJECTS:${PROJECT}-benchmark-cases>
   )
 
-set_property( TARGET ${PROJECT}-benchmark PROPERTY VERSION ${PROJECT}_VERSION )
+set_property( TARGET ${PROJECT}-benchmark PROPERTY VERSION ${${PROJECT}_VERSION} )
 set_property( TARGET ${PROJECT}-benchmark PROPERTY PREFIX  "" )
 
 
@@ -196,7 +194,6 @@ install(
     ${PROJECT}
     ${PROJECT}-test
     ${PROJECT}-benchmark    
-    ${APPLICATION}
   EXPORT   ${PROJECT}Targets
   LIBRARY  DESTINATION lib
   ARCHIVE  DESTINATION lib

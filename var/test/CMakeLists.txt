@@ -55,8 +55,8 @@ foreach( CASM_TEST_FILE
   add_custom_command(
     OUTPUT  ${CXX_TEST_FILE}
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CXX_TEST_DIR}
-    COMMAND ${APPLICATION} test ${CASM_TEST_FILE} ${CXX_TEST_FILE}
-    DEPENDS ${APPLICATION} ${CASM_TEST_FILE}
+    COMMAND ${PROJECT}-generator test ${CASM_TEST_FILE} ${CXX_TEST_FILE}
+    DEPENDS ${PROJECT}-generator ${CASM_TEST_FILE}
     COMMENT "Generating test case ${TEST_FILE}"
     )
 endforeach()

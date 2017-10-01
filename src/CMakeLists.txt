@@ -52,8 +52,8 @@ add_library( ${PROJECT}-cpp OBJECT
   RunnerTest.cpp
   )
 
-add_library( ${APPLICATION}-cpp OBJECT
-  ${APPLICATION}.cpp
+add_library( ${PROJECT}-generator-cpp OBJECT
+  generator.cpp
   )
 
 
