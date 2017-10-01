@@ -21,155 +21,221 @@
 #   You should have received a copy of the GNU General Public License
 #   along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
 #
+#   Additional permission under GNU GPL version 3 section 7
+#
+#   libcasm-tc is distributed under the terms of the GNU General Public License
+#   with the following clarification and special exception: Linking libcasm-tc
+#   statically or dynamically with other modules is making a combined work
+#   based on libcasm-tc. Thus, the terms and conditions of the GNU General
+#   Public License cover the whole combination. As a special exception,
+#   the copyright holders of libcasm-tc give you permission to link libcasm-tc
+#   with independent modules to produce an executable, regardless of the
+#   license terms of these independent modules, and to copy and distribute
+#   the resulting executable under terms of your choice, provided that you
+#   also meet, for each linked independent module, the terms and conditions
+#   of the license of that module. An independent module is a module which
+#   is not derived from or based on libcasm-tc. If you modify libcasm-tc, you
+#   may extend this exception to your version of the library, but you are
+#   not obliged to do so. If you do not wish to do so, delete this exception
+#   statement from your version.
+#
 
-cmake_minimum_required( VERSION 3.1 )
+set( PROJECT libcasm-tc )
 
-if( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../gtest" )
-  set( LIBS .. )
-else()
-  set( LIBS lib )
+cmake_minimum_required( VERSION ${CMAKE_VERSION} )
+
+project( ${PROJECT} LANGUAGES C CXX )
+set( CMAKE_CXX_STANDARD 11 )
+set( CMAKE_VERSION 3.2 )
+set( CMAKE_INCLUDE_CURRENT_DIR ON )
+set( CMAKE_MODULE_PATH ${${PROJECT}_SOURCE_DIR}/.cmake )
+
+include( LibPackage )
+
+package_git( ${PROJECT} )
+package_git_submodule( libstdhl master REQUIRED obj   ../stdhl lib/stdhl )
+package_git_submodule( libgtest master REQUIRED build ../gtest lib/gtest )
+package_git_submodule( libhayai master REQUIRED build ../hayai lib/hayai )
+
+find_package( Threads REQUIRED )
+
+include( ECMGenerateHeaders )
+include( FeatureSummary )
+include( GenerateExportHeader )
+include( CPack )
+
+string( SUBSTRING ${PROJECT} 3 -1 APPLICATION )
+
+add_subdirectory( src )
+add_subdirectory( etc
+  EXCLUDE_FROM_ALL
+  )
+add_subdirectory( var
+  EXCLUDE_FROM_ALL
+  )
+
+add_custom_target( sync
+  COMMAND
+    make sync > ${PROJECT_BINARY_DIR}/CMakeSync 2>&1
+  DEPENDS
+    libgtest
+    libhayai
+    libstdhl
+  WORKING_DIRECTORY
+    ${PROJECT_SOURCE_DIR}
+  )
+
+add_dependencies( ${PROJECT}-cpp
+  sync
+  )
+
+
+#
+# library
+#
+
+add_library( ${PROJECT} STATIC
+  $<TARGET_OBJECTS:${PROJECT}-cpp>
+  )
+
+if( ${LIBSTDHL_FOUND} )
+  target_link_libraries( ${PROJECT}
+    ${LIBSTDHL_LIBRARY}
+    )
 endif()
 
-foreach( DEPENDENCY
-    stdhl
-    )
-  if( NOT TARGET ${DEPENDENCY} )
-    add_subdirectory( ${LIBS}/${DEPENDENCY} lib/${DEPENDENCY} )
-  endif()  
-endforeach()
+
+set( ${PROJECT}_VERSION ${GIT_REVTAG} )
+set_property( TARGET ${PROJECT} PROPERTY VERSION ${PROJECT}_VERSION )
+set_property( TARGET ${PROJECT} PROPERTY PREFIX  "" )
 
 
-file( GLOB_RECURSE CXX_SRC_FILES "src/*.cpp" )
-file( GLOB_RECURSE CASM_TC_FILES "uts/*.casm" )
-file( GLOB_RECURSE CASM_BM_FILES "var/benchmark/*.casm" )
+#
+# application
+#
 
-
-set( TARGET casm-tc )
-project( ${TARGET} )
-
-
-include_directories(
-  .
-  src
-  ${LIBS}/gtest/googletest
-  ${LIBS}/gtest/googletest/include
-  ${LIBS}/hayai/src
-  ${LIBS}/stdhl
-)
-
-
-set( CMAKE_CXX_FLAGS          "${CMAKE_CXX_FLAGS}          -std=c++11 -Wall" )
-set( CMAKE_CXX_FLAGS_DEBUG    "${CMAKE_CXX_FLAGS_DEBUG}    -O0" )
-set( CMAKE_CXX_FLAGS_RELEASE  "${CMAKE_CXX_FLAGS_RELEASE}  -O3" )
-set( CMAKE_CXX_FLAGS_SANITIZE "${CMAKE_CXX_FLAGS_SANITIZE} -O1 -Wextra -g -fno-omit-frame-pointer -fno-optimize-sibling-calls -fsanitize=undefined -fsanitize=address" )
-
-
-string( LENGTH "${CMAKE_CURRENT_SOURCE_DIR}/" CWD_LENGTH )
-
-
-set( CXX_UTS_TC_FILES "" )
-foreach( CASM_TC_FILE
-    ${CASM_TC_FILES}
-    )
-  string( SUBSTRING ${CASM_TC_FILE} ${CWD_LENGTH} -1 UTS_FILE )
-  set( CXX_UTS_TC_NAME ${UTS_FILE}.tc.cpp )
-  set( CXX_UTS_TC_FILE ${CMAKE_CURRENT_BINARY_DIR}/${CXX_UTS_TC_NAME} )
-  set( CXX_UTS_TC_FILES "${CXX_UTS_TC_FILES};${CXX_UTS_TC_FILE}" )
-  get_filename_component( CXX_UTS_TC_DIR ${CXX_UTS_TC_FILE} DIRECTORY )
-  add_custom_command(
-    OUTPUT  ${CXX_UTS_TC_FILE}
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CXX_UTS_TC_DIR}
-    COMMAND ${TARGET} tc ${CASM_TC_FILE} ${CXX_UTS_TC_FILE}
-    DEPENDS ${TARGET} ${CASM_TC_FILE}
-    COMMENT "Generating test case ${UTS_FILE}"
-    )
-endforeach()
-
-set( CXX_UTS_TEST ${CMAKE_CURRENT_BINARY_DIR}/uts_test.cpp )
-add_custom_command(
-  OUTPUT  ${CXX_UTS_TEST}
-  COMMAND cat ${CXX_UTS_TC_FILES} > ${CXX_UTS_TEST}
-  DEPENDS ${CXX_UTS_TC_FILES}
-  COMMENT "Generating test check ${CXX_UTS_TEST}"
-)
-
-
-set( CXX_UTS_BM_FILES "" )
-foreach( CASM_BM_FILE
-    ${CASM_BM_FILES}
-    )
-  string( SUBSTRING ${CASM_BM_FILE} ${CWD_LENGTH} -1 UTS_FILE )
-  set( CXX_UTS_BM_NAME ${UTS_FILE}.bm.cpp )
-  set( CXX_UTS_BM_FILE ${CMAKE_CURRENT_BINARY_DIR}/${CXX_UTS_BM_NAME} )
-  set( CXX_UTS_BM_FILES "${CXX_UTS_BM_FILES};${CXX_UTS_BM_FILE}" )
-  get_filename_component( CXX_UTS_BM_DIR ${CXX_UTS_BM_FILE} DIRECTORY )
-  add_custom_command(
-    OUTPUT  ${CXX_UTS_BM_FILE}
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CXX_UTS_BM_DIR}
-    COMMAND ${TARGET} bm ${CASM_BM_FILE} ${CXX_UTS_BM_FILE}
-    DEPENDS ${TARGET} ${CASM_BM_FILE}
-    COMMENT "Generating benchmark ${UTS_FILE}"
-    )
-endforeach()
-
-set( CXX_UTS_BENCHMARK ${CMAKE_CURRENT_BINARY_DIR}/uts_benchmark.cpp )
-add_custom_command(
-  OUTPUT  ${CXX_UTS_BENCHMARK}
-  COMMAND cat ${CXX_UTS_BM_FILES} > ${CXX_UTS_BENCHMARK}
-  DEPENDS ${CXX_UTS_BM_FILES}
-  COMMENT "Generating benchmark run ${CXX_UTS_BENCHMARK}"
-)
-
-
-add_executable( ${TARGET}
-  src/tc.cpp
-)
-
-target_link_libraries( ${TARGET}
-  stdhl
-)
-
-
-add_library( ${TARGET}-test OBJECT
-  ${CXX_UTS_TEST}
-  src/RunnerTest.cpp
-)
-  
-add_executable( ${TARGET}-check
-  ${LIBS}/gtest/googletest/src/gtest_main.cc
-  ${LIBS}/gtest/googletest/src/gtest-all.cc  
-  $<TARGET_OBJECTS:${TARGET}-test>
-)
-
-target_link_libraries( ${TARGET}-check
-  stdhl
-  pthread
-)
-
-
-add_library( ${TARGET}-benchmark OBJECT
-  ${CXX_UTS_BENCHMARK}
-  src/RunnerBenchmark.cpp
-)
-
-add_executable( ${TARGET}-run
-  ${LIBS}/hayai/src/hayai_posix_main.cpp
-  ${LIBS}/gtest/googletest/src/gtest-all.cc
-  $<TARGET_OBJECTS:${TARGET}-benchmark>
-)
-
-target_link_libraries( ${TARGET}-run
-  stdhl
-  pthread
-)
-
-
-if( NOT CMAKE_BUILD_TYPE )
-  set( CMAKE_BUILD_TYPE Debug
-    CACHE STRING "Choose the type of build : debug sanitize release."
-    FORCE
+add_executable( ${APPLICATION}
+  $<TARGET_OBJECTS:${APPLICATION}-cpp>
   )
-endif( NOT CMAKE_BUILD_TYPE )
+
+if( ${LIBSTDHL_FOUND} )
+  target_link_libraries( ${APPLICATION}
+    ${PROJECT}
+    ${LIBSTDHL_LIBRARY}
+    )
+endif()
 
 
-message( "* ${CMAKE_BUILD_TYPE} : ${TARGET} : ${LIBS}" )
+
+#
+# test
+# 
+
+add_library( ${PROJECT}-test STATIC
+  $<TARGET_OBJECTS:${PROJECT}-cpp>
+  $<TARGET_OBJECTS:${PROJECT}-test-cases>
+  )
+
+set_property( TARGET ${PROJECT}-test PROPERTY VERSION ${PROJECT}_VERSION )
+set_property( TARGET ${PROJECT}-test PROPERTY PREFIX  "" )
+
+
+add_executable( ${PROJECT}-check
+  EXCLUDE_FROM_ALL
+  $<TARGET_OBJECTS:${PROJECT}-cpp>
+  $<TARGET_OBJECTS:${PROJECT}-test-cpp>
+  $<TARGET_OBJECTS:${PROJECT}-test-cases>
+  )
+
+if( ${LIBSTDHL_FOUND} )
+  target_link_libraries( ${PROJECT}-check
+    ${LIBSTDHL_LIBRARY}
+    ${LIBGTEST_LIBRARY}
+    ${LIBGTEST_MAIN}
+    Threads::Threads
+    )
+endif()
+
+
+#
+# benchmark
+#
+
+add_library( ${PROJECT}-benchmark STATIC
+  $<TARGET_OBJECTS:${PROJECT}-cpp>
+  $<TARGET_OBJECTS:${PROJECT}-benchmark-cases>
+  )
+
+set_property( TARGET ${PROJECT}-benchmark PROPERTY VERSION ${PROJECT}_VERSION )
+set_property( TARGET ${PROJECT}-benchmark PROPERTY PREFIX  "" )
+
+
+add_executable( ${PROJECT}-run
+  EXCLUDE_FROM_ALL
+  $<TARGET_OBJECTS:${PROJECT}-cpp>
+  $<TARGET_OBJECTS:${PROJECT}-benchmark-cpp>
+  $<TARGET_OBJECTS:${PROJECT}-benchmark-cases>
+  )
+
+if( ${LIBSTDHL_FOUND} )
+  target_link_libraries( ${PROJECT}-run
+    ${LIBSTDHL_LIBRARY}
+    ${LIBHAYAI_LIBRARY}
+    ${LIBGTEST_LIBRARY}
+    Threads::Threads
+    )
+endif()
+
+
+#
+# install
+#
+
+install(
+  TARGETS
+    ${PROJECT}
+    ${PROJECT}-test
+    ${PROJECT}-benchmark    
+    ${APPLICATION}
+  EXPORT   ${PROJECT}Targets
+  LIBRARY  DESTINATION lib
+  ARCHIVE  DESTINATION lib
+  RUNTIME  DESTINATION bin
+  INCLUDES DESTINATION include
+  )
+
+generate_export_header( ${PROJECT} )
+
+install(
+  FILES
+  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT}_export.h"
+  DESTINATION
+  "include/${PROJECT}"
+  )
+
+export(
+  TARGETS ${PROJECT} ${PROJECT}-test ${PROJECT}-benchmark
+  FILE    ${PROJECT}Config.cmake
+  )
+
+
+#
+# cmake
+#
+
+install(
+  FILES
+    .cmake/Find${PROJECT}.cmake
+  DESTINATION
+    "share/cmake/Module/${PROJECT}"
+  )
+
+
+#
+# build features and checks
+#
+
+include( LibCompile )
+compile_flags( CXX )
+compile_check()
+feature_summary( WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES )

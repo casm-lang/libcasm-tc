@@ -1,0 +1,153 @@
+//
+//  Copyright (c) 2014-2017 CASM Organization
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+//  Additional permission under GNU GPL version 3 section 7
+//
+//  libcasm-tc is distributed under the terms of the GNU General Public License
+//  with the following clarification and special exception: Linking libcasm-tc
+//  statically or dynamically with other modules is making a combined work
+//  based on libcasm-tc. Thus, the terms and conditions of the GNU General
+//  Public License cover the whole combination. As a special exception,
+//  the copyright holders of libcasm-tc give you permission to link libcasm-tc
+//  with independent modules to produce an executable, regardless of the
+//  license terms of these independent modules, and to copy and distribute
+//  the resulting executable under terms of your choice, provided that you
+//  also meet, for each linked independent module, the terms and conditions
+//  of the license of that module. An independent module is a module which
+//  is not derived from or based on libcasm-tc. If you modify libcasm-tc, you
+//  may extend this exception to your version of the library, but you are
+//  not obliged to do so. If you do not wish to do so, delete this exception
+//  statement from your version.
+//
+
+
+CASM init foo
+
+// function stack : -> List(Tuple(Integer, Integer)) //initially { [] }
+function stack : Integer -> Tuple( Integer, Integer )
+function pos : -> Integer initially { 0 }
+
+function array : Integer -> Integer //initially { 0->9, 1->2, 2->10, 3->7, 4->8, 5->1, 6->6, 7->3, 8->4, 9->5}
+function p : -> Integer //initially { undef }
+function pivot : -> Integer
+function ll : -> Integer
+function rr : -> Integer
+function l : -> Integer
+function r : -> Integer
+function need_pop : -> Boolean
+function need_partition : -> Boolean
+
+rule partition_one_step =
+{|
+    iterate
+        if array(ll) < array(pivot) then ll := ll + 1
+    iterate 
+        if array(rr) >= array(pivot) and ll < rr then rr := rr - 1
+    if ll < rr then {
+        array(ll) := array(rr)
+        array(rr) := array(ll)
+    } else 
+        need_partition := false
+|}
+
+rule partition =
+if pivot = undef then {
+    pivot := r
+    rr := r - 1
+    ll := l
+    need_partition := true
+} else
+    if need_partition then
+        call partition_one_step
+    else {
+        p := ll
+        if pivot != ll then {
+            array(pivot) := array(ll)
+            array(ll) := array(pivot)
+        }
+    }
+
+rule quicksort_once =
+    if p = undef then
+        call partition
+    else    
+    {|
+        if l < p-1 then
+        {
+            // push [l,p-1] into stack
+            stack( pos ) := [ l, p-1 ]
+            pos := pos + 1
+        }
+        if p+1 < r then
+        {
+            // push [p+1,r] into stack
+            stack( pos ) := [ p+1, r ]
+            pos := pos + 1
+        }
+        need_pop := true
+    |}
+
+rule quicksort =
+    if need_pop then {
+    //  let top = nth(stack, 1) in
+        let top = stack(0) in
+            if top != undef then
+            {
+                // stack := tail(stack)
+                forall i in pos do
+                    stack( i ) := stack( i + 1 )
+                pos := pos - 1
+                
+                l := nth(top, 1)
+                r := nth(top, 2)
+                pivot := undef
+                p := undef
+                need_pop := false
+            } else {
+                forall i in [0..299] do {
+                    assert array(i) <= array(i+1)
+                    print array(i)
+                }
+                print "----------------"
+                program(self) := undef
+            }
+    }
+    else
+        call quicksort_once
+
+
+rule foo = {
+    forall i in [0..300] do {
+        array(i) := 300 - i
+    }
+    p := undef
+    {|
+        // stack := []
+        // push [0,300] into stack
+
+        stack( pos ) := [ 0, 300 ]
+        pos := pos + 1
+    |}
+    need_pop := true
+    program(self) := @quicksort
+}

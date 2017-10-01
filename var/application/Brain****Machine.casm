@@ -1,0 +1,211 @@
+//
+//  Copyright (c) 2014-2017 CASM Organization
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+//  Additional permission under GNU GPL version 3 section 7
+//
+//  libcasm-tc is distributed under the terms of the GNU General Public License
+//  with the following clarification and special exception: Linking libcasm-tc
+//  statically or dynamically with other modules is making a combined work
+//  based on libcasm-tc. Thus, the terms and conditions of the GNU General
+//  Public License cover the whole combination. As a special exception,
+//  the copyright holders of libcasm-tc give you permission to link libcasm-tc
+//  with independent modules to produce an executable, regardless of the
+//  license terms of these independent modules, and to copy and distribute
+//  the resulting executable under terms of your choice, provided that you
+//  also meet, for each linked independent module, the terms and conditions
+//  of the license of that module. An independent module is a module which
+//  is not derived from or based on libcasm-tc. If you modify libcasm-tc, you
+//  may extend this exception to your version of the library, but you are
+//  not obliged to do so. If you do not wish to do so, delete this exception
+//  statement from your version.
+//
+
+// a small brainfuck interpreter
+
+CASM init bf
+
+[static] function prog: Integer -> Integer'[0..255] initially
+{
+    0 -> '+',
+    1 -> '+',
+    2 -> '+',
+    3 -> '+',
+    4 -> '+',
+    5 -> '+',
+    6 -> '+',
+    7 -> '+',
+    8 -> '+',
+    9 -> '+',
+    10 -> '[',
+    11 -> '>',
+    12 -> '+',
+    13 -> '+',
+    14 -> '+',
+    15 -> '+',
+    16 -> '+',
+    17 -> '+',
+    18 -> '+',
+    19 -> '>',
+    20 -> '+',
+    21 -> '+',
+    22 -> '+',
+    23 -> '+',
+    24 -> '+',
+    25 -> '+',
+    26 -> '+',
+    27 -> '+',
+    28 -> '+',
+    29 -> '+',
+    30 -> '>',
+    31 -> '+',
+    32 -> '+',
+    33 -> '+',
+    34 -> '>',
+    35 -> '+',
+    36 -> '<',
+    37 -> '<',
+    38 -> '<',
+    39 -> '<',
+    40 -> '-',
+    41 -> ']',
+    42 -> '>',
+    43 -> '+',
+    44 -> '+',
+    45 -> '.',
+    46 -> '>',
+    47 -> '+',
+    48 -> '.',
+    49 -> '+',
+    50 -> '+',
+    51 -> '+',
+    52 -> '+',
+    53 -> '+',
+    54 -> '+',
+    55 -> '+',
+    56 -> '.',
+    57 -> '.',
+    58 -> '+',
+    59 -> '+',
+    60 -> '+',
+    61 -> '.',
+    62 -> '>',
+    63 -> '+',
+    64 -> '+',
+    65 -> '.',
+    66 -> '<',
+    67 -> '<',
+    68 -> '+',
+    69 -> '+',
+    70 -> '+',
+    71 -> '+',
+    72 -> '+',
+    73 -> '+',
+    74 -> '+',
+    75 -> '+',
+    76 -> '+',
+    77 -> '+',
+    78 -> '+',
+    79 -> '+',
+    80 -> '+',
+    81 -> '+',
+    82 -> '+',
+    83 -> '.',
+    84 -> '>',
+    85 -> '.',
+    86 -> '+',
+    87 -> '+',
+    88 -> '+',
+    89 -> '.',
+    90 -> '-',
+    91 -> '-',
+    92 -> '-',
+    93 -> '-',
+    94 -> '-',
+    95 -> '-',
+    96 -> '.',
+    97 -> '-',
+    98 -> '-',
+    99 -> '-',
+    100 -> '-',
+    101 -> '-',
+    102 -> '-',
+    103 -> '-',
+    104 -> '-',
+    105 -> '.',
+    106 -> '>',
+    107 -> '+',
+    108 -> '.',
+    109 -> '>',
+    110 -> '.'
+}
+
+function mem: Integer -> Integer'[0..255] defined { 0 }
+
+function ip: -> Integer initially { 0 } // instruction pointer
+function mp: -> Integer initially { 0 } // memory pointer
+function bc: -> Integer initially { 0 } // bracket counter
+
+rule bf =
+{|
+    case prog(ip) of
+    {
+        '>': mp := mp + 1
+        '<': mp := mp - 1
+        '+': mem(mp) := mem(mp) + 1
+        '-': mem(mp) := mem(mp) - 1
+        '.': print(char(mem(mp)))
+        ',': impossible // cannot read user input
+        '[': if mem(mp) = 0 then call jump_right
+        ']': if mem(mp) != 0 then call jump_left
+        undef: program(self) := undef
+        _: skip
+    }
+
+    ip := ip + 1
+|}
+
+rule jump_right = call jump(+1)
+rule jump_left = call jump(-1)
+
+rule jump(dir : Integer'[-1..1]) =
+{|
+    assert(dir != 0) // enum would be nice, but requires an if expr. ...
+
+    bc := dir
+
+    iterate {
+        if bc = 0 then
+            skip
+        else {|
+            ip := ip + dir
+            case prog(ip) of
+            {
+                '[': bc := bc + 1
+                ']': bc := bc - 1
+                undef: abort // bf syntax error: branch mismatch
+            }
+        |}
+    }
+
+    assert(bc = 0)
+|}

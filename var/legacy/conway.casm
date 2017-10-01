@@ -1,0 +1,112 @@
+//
+//  Copyright (c) 2014-2017 CASM Organization
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                https://github.com/casm-lang/libcasm-tc
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+//  Additional permission under GNU GPL version 3 section 7
+//
+//  libcasm-tc is distributed under the terms of the GNU General Public License
+//  with the following clarification and special exception: Linking libcasm-tc
+//  statically or dynamically with other modules is making a combined work
+//  based on libcasm-tc. Thus, the terms and conditions of the GNU General
+//  Public License cover the whole combination. As a special exception,
+//  the copyright holders of libcasm-tc give you permission to link libcasm-tc
+//  with independent modules to produce an executable, regardless of the
+//  license terms of these independent modules, and to copy and distribute
+//  the resulting executable under terms of your choice, provided that you
+//  also meet, for each linked independent module, the terms and conditions
+//  of the license of that module. An independent module is a module which
+//  is not derived from or based on libcasm-tc. If you modify libcasm-tc, you
+//  may extend this exception to your version of the library, but you are
+//  not obliged to do so. If you do not wish to do so, delete this exception
+//  statement from your version.
+//
+
+
+// should terminate after 55 steps (1 for setup and 54 for game of life)
+
+CASM init setup
+
+function alive : Integer * Integer -> Boolean
+
+derived aliveNeighbours(x : Integer, y : Integer) = Boolean2Int(alive(x - 1, y - 1))
+                                                  + Boolean2Int(alive(x, y - 1))
+                                                  + Boolean2Int(alive(x + 1, y - 1))
+                                                  + Boolean2Int(alive(x - 1, y))
+                                                  + Boolean2Int(alive(x + 1, y))
+                                                  + Boolean2Int(alive(x - 1, y + 1))
+                                                  + Boolean2Int(alive(x, y + 1))
+                                                  + Boolean2Int(alive(x + 1, y + 1))
+
+rule updateCell(x : Integer, y : Integer) =
+    let c = aliveNeighbours(x, y) in {
+        if c = 3 then {
+            if not alive(x, y) then alive(x, y) := true
+        }
+        if (c < 2) or (c > 3) then {
+            if alive(x, y) then alive(x, y) := false
+        }
+        // print c + ", " + x + ", " + y
+    }
+
+rule GameOfLife =
+    forall x in 100 do
+        forall y in 100 do
+            call updateCell(x, y)
+
+rule setup =
+{|
+    /*
+     * Start pattern:
+     *
+     * X X X
+     * X   X
+     * X   X
+     *
+     * X   X
+     * X   X
+     * X X X
+     *
+     * from https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
+     */
+
+    forall x in [-1 .. 101] do
+        forall y in [-1 .. 101] do
+            alive(x, y) := false
+
+    alive(50, 45) := true
+    alive(51, 45) := true
+    alive(52, 45) := true
+    alive(50, 46) := true
+    alive(52, 46) := true
+    alive(50, 47) := true
+    alive(52, 47) := true
+
+    alive(50, 49) := true
+    alive(52, 49) := true
+    alive(50, 50) := true
+    alive(52, 50) := true
+    alive(50, 51) := true
+    alive(51, 51) := true
+    alive(52, 51) := true
+
+    program(self) := @GameOfLife
+|}

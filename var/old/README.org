@@ -1,1 +1,0 @@
-This folder contains 'old' CASM example and benchmark files from the pre-2014 CASM implementation!
