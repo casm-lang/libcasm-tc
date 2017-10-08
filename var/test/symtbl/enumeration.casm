@@ -43,6 +43,6 @@
 
 CASM init foo
 
-enum ABC = { A, B, C }
+enumeration ABC = { A, B, C }
 
 rule foo = skip

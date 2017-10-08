@@ -42,7 +42,7 @@
 
 CASM init foo
 
-enum Color = { Red, Green, Blue }
+enumeration Color = { Red, Green, Blue }
 
 rule foo =
 {

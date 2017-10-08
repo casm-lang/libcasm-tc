@@ -42,7 +42,7 @@
 
 CASM init foo
 
-enum myEnum = { one, two, three }
+enumeration myEnum = { one, two, three }
 
 rule foo =
 {

@@ -44,7 +44,7 @@ CASM init foo
 
 function a : -> Integer //@ ERROR( 0010 )
 
-enum bar = { a } //@ ERROR( 0010 )
+enumeration bar = { a } //@ ERROR( 0010 )
 
 rule foo =
     skip

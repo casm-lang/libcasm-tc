@@ -42,7 +42,7 @@
 
 CASM init foo
 
-enum Color =
+enumeration Color =
 {
     Red,
     Green,

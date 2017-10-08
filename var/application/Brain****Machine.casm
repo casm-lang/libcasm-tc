@@ -189,7 +189,7 @@ rule jump_left = call jump(-1)
 
 rule jump(dir : Integer'[-1..1]) =
 {|
-    assert(dir != 0) // enum would be nice, but requires an if expr. ...
+    assert(dir != 0) // enumeration would be nice, but requires an if expr. ...
 
     bc := dir
 

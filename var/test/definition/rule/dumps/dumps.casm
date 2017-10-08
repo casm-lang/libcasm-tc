@@ -45,7 +45,7 @@ CASM init foo
 
 // TODO: FIXME: PPA: check if the dumps is really correct!!!
 
-enum myEnum = { one, two, three }
+enumeration myEnum = { one, two, three }
 
 function a : -> Integer
 function b : Integer -> Integer

@@ -7,11 +7,11 @@ CASM init run
 // @require "Track track2 is empty"
 // @require "Gate is opened"
 
-enum Track = {track1, track2}
-enum TrackStatus = {empty, coming, crossing}
-enum Direction = {open, close}
-enum GateState = {opened, closed}
-enum Agent = {trackController, gateController, observer, environment}
+enumeration Track = {track1, track2}
+enumeration TrackStatus = {empty, coming, crossing}
+enumeration Direction = {open, close}
+enumeration GateState = {opened, closed}
+enumeration Agent = {trackController, gateController, observer, environment}
 
 // parameters
 [static] function dmin : -> Integer initially { 5 }
