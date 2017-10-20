@@ -41,7 +41,7 @@
 #
 
 include_directories(
-  ${PROJECT_BINARY_DIR}/src
+  ${PROJECT_BINARY_DIR}/etc/src
   ${LIBHAYAI_INCLUDE_DIR}
   ${LIBSTDHL_INCLUDE_DIR}
   ${LIBPASS_INCLUDE_DIR}

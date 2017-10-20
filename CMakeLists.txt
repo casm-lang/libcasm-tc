@@ -64,11 +64,11 @@ include( FeatureSummary )
 include( GenerateExportHeader )
 include( CPack )
 
-add_subdirectory( src )
-add_subdirectory( etc
+add_subdirectory( etc )
+add_subdirectory( test
   EXCLUDE_FROM_ALL
   )
-add_subdirectory( var
+add_subdirectory( benchmark
   EXCLUDE_FROM_ALL
   )
 

@@ -45,11 +45,11 @@
 
 CASM test cases for test applications, unit tests, integration tests etc.
 
-** File Structure [proposed]
+** File Structure
 
-- =uts= :: contains unit test-cases/integration tests etc.
-- =var/etc= :: contains various other test examples/applications
-- =var/benchmark= :: contains benchmark applications etc.
+- =application= :: contains various applications
+- =test= :: contains unit test-cases/integration tests etc.
+- =benchmark= :: contains benchmarks etc.
 
 
 ** Copyright and License

@@ -41,41 +41,41 @@
 #
 
 string( LENGTH "${CMAKE_CURRENT_SOURCE_DIR}/" CWD_LENGTH )
-file( GLOB_RECURSE CASM_TEST_FILES "*.casm" )
-set( CXX_TEST_FILES "" )
-foreach( CASM_TEST_FILE
-    ${CASM_TEST_FILES}
+file( GLOB_RECURSE CASM_BENCHMARK_FILES "*.casm" )
+set( CXX_BENCHMARK_FILES "" )
+foreach( CASM_BENCHMARK_FILE
+    ${CASM_BENCHMARK_FILES}
     )
-  set( TEST_FILE "" )
-  string( SUBSTRING ${CASM_TEST_FILE} ${CWD_LENGTH} -1 TEST_FILE )
-  set( CXX_TEST_NAME ${TEST_FILE}.test.cpp )
-  set( CXX_TEST_FILE ${CMAKE_CURRENT_BINARY_DIR}/${CXX_TEST_NAME} )
-  set( CXX_TEST_FILES "${CXX_TEST_FILES};${CXX_TEST_FILE}" )
-  get_filename_component( CXX_TEST_DIR ${CXX_TEST_FILE} DIRECTORY )
+  set( BENCHMARK_FILE "" )
+  string( SUBSTRING ${CASM_BENCHMARK_FILE} ${CWD_LENGTH} -1 BENCHMARK_FILE )
+  set( CXX_BENCHMARK_NAME ${BENCHMARK_FILE}.benchmark.cpp )
+  set( CXX_BENCHMARK_FILE ${CMAKE_CURRENT_BINARY_DIR}/${CXX_BENCHMARK_NAME} )
+  set( CXX_BENCHMARK_FILES "${CXX_BENCHMARK_FILES};${CXX_BENCHMARK_FILE}" )
+  get_filename_component( CXX_BENCHMARK_DIR ${CXX_BENCHMARK_FILE} DIRECTORY )
   add_custom_command(
-    OUTPUT  ${CXX_TEST_FILE}
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CXX_TEST_DIR}
-    COMMAND ${PROJECT}-generator test ${CASM_TEST_FILE} ${CXX_TEST_FILE}
-    DEPENDS ${PROJECT}-generator ${CASM_TEST_FILE}
-    COMMENT "Generating test case ${TEST_FILE}"
+    OUTPUT  ${CXX_BENCHMARK_FILE}
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CXX_BENCHMARK_DIR}
+    COMMAND ${PROJECT}-generator benchmark ${CASM_BENCHMARK_FILE} ${CXX_BENCHMARK_FILE}
+    DEPENDS ${PROJECT}-generator ${CASM_BENCHMARK_FILE}
+    COMMENT "Generating benchmark case ${BENCHMARK_FILE}"
     )
 endforeach()
 
-set( CXX_TEST ${CMAKE_CURRENT_BINARY_DIR}/cases.cpp )
+set( CXX_BENCHMARK ${CMAKE_CURRENT_BINARY_DIR}/cases.cpp )
 add_custom_command(
-  OUTPUT  ${CXX_TEST}
-  COMMAND cat ${CXX_TEST_FILES} > ${CXX_TEST}
-  DEPENDS ${CXX_TEST_FILES}
-  COMMENT "Updating  test cases ${CXX_TEST}"
+  OUTPUT  ${CXX_BENCHMARK}
+  COMMAND cat ${CXX_BENCHMARK_FILES} > ${CXX_BENCHMARK}
+  DEPENDS ${CXX_BENCHMARK_FILES}
+  COMMENT "Updating  benchmark cases ${CXX_BENCHMARK}"
   )
 
 
 include_directories(
-  ${PROJECT_BINARY_DIR}/src
-  ${LIBGTEST_INCLUDE_DIR}
+  ${PROJECT_BINARY_DIR}/etc/src
+  ${LIBHAYAI_INCLUDE_DIR}
   ${LIBSTDHL_INCLUDE_DIR}
   )
 
-add_library( ${PROJECT}-test-cases OBJECT
-  ${CXX_TEST}
+add_library( ${PROJECT}-benchmark-cases OBJECT
+  ${CXX_BENCHMARK}
   )
