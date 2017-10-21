@@ -40,13 +40,14 @@
 //  statement from your version.
 //
 
-CASM init foo
+CASM init main
 
-rule foo =
-    let n = 27 in {|
-        println("Fibonacci(" + dec(n) + ") using dynamic programming:")
+rule main =
+    let n = 27 in
+    {|
+        print("Fibonacci(" + dec(n) + ") using dynamic programming = ")
         call fibonacci(n)
-        println("=" + dec(f(n)))
+        println(dec(f(n)))
         program(self) := undef
     |}
 
