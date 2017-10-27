@@ -40,15 +40,16 @@
 //  statement from your version.
 //
 
+// The cases (without the default case) should be evaluated top-down, the first
+// matching case should be selected.
 
 CASM init foo
 
 rule foo =
-{
-  case 3 of
-  {
-      1: { assert( false ) }
-      2: { assert( false ) }
-      _: { assert( true  ) }
-  }
-}
+    case 2 of
+    {
+        1: assert( false )
+        2: assert( true ) // first matching case
+        2: assert( false )
+        _: assert( false )
+    }

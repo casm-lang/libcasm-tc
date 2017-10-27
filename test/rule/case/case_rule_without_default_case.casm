@@ -40,32 +40,12 @@
 //  statement from your version.
 //
 
+// Default-case is optional
 
 CASM init foo
 
-function bar : -> Integer
-
 rule foo =
-{
-    case 1 of
-    {    
-         1: assert( true  ) 
-         2: assert( false ) 
-         _: assert( false ) 
+    case 42 of
+    {
+        42: skip
     }
-    
-    case 1 of
-    {    
-         2: assert( false  ) 
-         _: assert( false ) 
-         1: assert( true ) 
-    }
-    
-    case 1 of
-    {    
-         _: assert( false ) 
-         1: assert( true  ) 
-         2: assert( false ) 
-    }
-    
-}
