@@ -42,7 +42,7 @@
 
 CASM init foo
 
-derived isEven( x ) -> Boolean =
+derived isEven( x : Integer ) -> Boolean =
     x % 2 = 0
 
 rule foo =

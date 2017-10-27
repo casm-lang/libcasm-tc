@@ -44,7 +44,7 @@
 
 CASM init foo
 
-derived wrongPredicate(x) -> String = "a string"
+derived wrongPredicate( x : Integer ) -> String = "a string"
 
 rule foo =
     let result = exists x in [0..2] with wrongPredicate(x) in //@ ERROR( 1410 )

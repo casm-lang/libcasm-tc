@@ -42,7 +42,7 @@
 
 CASM init foo
 
-derived square( y ) -> Integer =
+derived square( y : Integer ) -> Integer =
     y * y
 
 rule foo =

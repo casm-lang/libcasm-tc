@@ -44,7 +44,7 @@
 
 CASM init foo
 
-derived bar(x) -> Integer =
+derived bar( x : Integer ) -> Integer =
     choose y in x do // -> local variable y
         y
 

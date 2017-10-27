@@ -46,8 +46,8 @@
 CASM init foo
 
 rule foo =
-    assert( bar(42) = 42 )
+    assert( bar( 42 ) = 42 )
 
-derived bar(x) -> Integer =
+derived bar( x : Integer ) -> Integer =
     choose y in x do // -> local variable y
         y

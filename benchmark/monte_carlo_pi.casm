@@ -46,7 +46,7 @@ function hits : -> Integer initially { 0 }
 function misses : -> Integer initially { 0 }
 function iterations : -> Integer initially { 1'000'000 }
 
-derived inUnitCircle(x, y) -> Boolean =
+derived inUnitCircle( x : Floating, y : Floating ) -> Boolean =
     sqrt(x^2 + y^2) <= 1.0
 
 rule ThrowTheDart =

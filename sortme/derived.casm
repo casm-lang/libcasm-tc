@@ -42,7 +42,7 @@
 
 CASM init main
 
-derived concat( x, y, z ) -> String = x + " | " + y + " | " + z
+derived concat( x : String, y : String, z : String ) -> String = x + " | " + y + " | " + z
 
 rule main =
     println( concat( "some", "text", "!!!" ) )

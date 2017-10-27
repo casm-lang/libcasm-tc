@@ -45,7 +45,7 @@
 
 CASM init foo
 
-derived bar( x, y ) -> Integer =
+derived bar( x : Integer, y : Integer ) -> Integer =
     42
 
 rule foo =

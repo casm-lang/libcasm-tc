@@ -44,7 +44,7 @@
 
 CASM init foo
 
-derived predicate(x) -> Boolean = true
+derived predicate( x : Integer ) -> Boolean = true
 
 rule foo =
     let universe : List<Integer> = undef in

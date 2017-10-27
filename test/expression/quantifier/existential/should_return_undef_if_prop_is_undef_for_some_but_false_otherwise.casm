@@ -42,7 +42,7 @@
 
 CASM init foo
 
-derived predicate(x) -> Boolean =
+derived predicate( x : Integer ) -> Boolean =
     if x = 1 then undef else false
 
 rule foo =

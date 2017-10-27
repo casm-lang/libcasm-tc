@@ -44,7 +44,7 @@
 
 CASM init foo
 
-derived myExp( x, n ) -> Integer =
+derived myExp( x : Integer, n : Integer ) -> Integer =
     if n = 0 then
         1
     else

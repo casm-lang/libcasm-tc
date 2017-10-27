@@ -42,7 +42,7 @@
 
 CASM init foo
 
-derived isNegative(x) -> Boolean =
+derived isNegative( x : Integer ) -> Boolean =
     x < 0
 
 rule foo =
