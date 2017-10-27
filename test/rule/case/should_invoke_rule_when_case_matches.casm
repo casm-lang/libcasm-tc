@@ -40,16 +40,29 @@
 //  statement from your version.
 //
 
+// Make sure the rule of matching and default cases are properly invoked
 
 CASM init foo
 
+function reachedRuleOfCase42 : -> Boolean initially { false }
+function reachedRuleOfDefaultCase : -> Boolean initially { false }
+
 rule foo =
-{
-    case undef of {
-    "foo":    { assert( false ) }
-    "bar":    { assert( false ) }
-    "baz":    { assert( false ) }
-    undef:    { assert( true  ) }
-    default:  { assert( false ) }
+{|
+    case 42 of
+    {
+        42: reachedRuleOfCase42 := true
+        _: assert( false )
     }
-}
+
+    case 21 of
+    {
+        42: assert( false )
+        _: reachedRuleOfDefaultCase := true
+    }
+
+    assert( reachedRuleOfCase42 )
+    assert( reachedRuleOfDefaultCase )
+
+    program( self ) := undef
+|}

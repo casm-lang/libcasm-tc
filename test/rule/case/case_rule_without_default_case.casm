@@ -40,15 +40,12 @@
 //  statement from your version.
 //
 
+// Default-case is optional
 
 CASM init foo
 
-rule foo = {
-  case 1 of {
-    2: { assert( false ) }
-    3: { assert( false ) }
-    4: { assert( false ) }
-    default: { assert( true ) }
-  }
-}
-
+rule foo =
+    case 42 of
+    {
+        42: skip
+    }

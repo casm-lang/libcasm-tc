@@ -40,21 +40,12 @@
 //  statement from your version.
 //
 
-
 CASM init foo
 
-rule foo = {
-  let x = undef in
-  let y = undef in
-  {
-    case y of {
-      x: { skip }
-      2: { assert( false ) }
-      3: { assert( false ) }
-      4: { assert( false ) }
-      default: { assert( false ) }
+rule foo =
+    case true of
+    {
+        false:   assert( false )
+        true:    assert( true )
+        default: assert( false )
     }
-  }
-
-}
-

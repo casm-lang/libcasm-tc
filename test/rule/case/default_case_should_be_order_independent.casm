@@ -40,15 +40,28 @@
 //  statement from your version.
 //
 
+// Although the cases are evaluated top-down, the default case rule should only
+// be called if none of the other cases match.
 
 CASM init foo
 
 rule foo =
 {
-    case 4.321 of {
-    0.0:       { assert( false ) }
-    1.23:      { assert( false ) }
-    -32.1:     { assert( false ) }
-    default:   { assert( true  ) }
+    case 1 of
+    {
+        1: assert( true ) // match
+        _: assert( false )
+    }
+
+    case 1 of
+    {
+        _: assert( false )
+        1: assert( true ) // match
+    }
+
+    case 2 of
+    {
+        _: assert( true )
+        1: assert( false )
     }
 }

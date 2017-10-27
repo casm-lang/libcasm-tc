@@ -40,15 +40,15 @@
 //  statement from your version.
 //
 
+// Type inference should infer type of variable x
 
 CASM init foo
 
 rule foo =
-{
-    case 0 of {
-    0:        { assert( true  ) }
-    -321:     { assert( false ) }
-    123:      { assert( false ) }
-    default:  { assert( false ) }
-    }
-}
+    let x = undef in
+        case 1 of
+        {
+            2: skip
+            x: skip
+            _: skip
+        }

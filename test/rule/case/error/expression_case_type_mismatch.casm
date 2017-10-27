@@ -40,41 +40,14 @@
 //  statement from your version.
 //
 
+// Type inference should complain that the case expression "2" has an incorrect
+// value type
 
 CASM init foo
 
-function bar : -> Integer
-
 rule foo =
-{
-    assert( true) 
-
-    case 1 of {    
-      1:       { assert( true  ) }
-      2:       { assert( false ) }
-      default: { assert( false ) }
+    case 3 of
+    {
+        1: skip
+        "2": skip //@ ERROR( ? )
     }
-    
-    assert( true) 
-    
-    println( true )
-    case 1 of {
-      1:       { assert( true  ) }
-      2:       { assert( false ) }
-      default: { assert( false ) }
-    }
-    println( true )
-    println( true )
-
-    let asdf = 20 in 
-    case 1 of {
-         1:       { assert( true  ) }
-         2:       { assert( false ) }
-         asdf: { assert( false ) }
-    }
-        
-    bar := 10
-  
-    program( self ) := undef
-}
-

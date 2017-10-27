@@ -40,15 +40,11 @@
 //  statement from your version.
 //
 
-
 CASM init foo
 
 rule foo =
-{
-    case 1.23 of {
-    0.0:      { assert( false ) }
-    1.23:     { assert( true  ) }
-    -32.1:    { assert( false ) }
-    default:  { assert( false ) }
+    case undef of
+    {
+        42:      assert( false )
+        default: assert( true )
     }
-}
