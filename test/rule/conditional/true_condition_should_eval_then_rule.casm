@@ -42,7 +42,7 @@
 
 CASM init foo
 
-rule testConditionalRule(condition) -> String =
+rule testConditionalRule( condition : Boolean ) -> String =
     if condition then
         result := "THEN"
     else
