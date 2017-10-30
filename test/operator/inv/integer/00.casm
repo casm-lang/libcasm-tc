@@ -49,7 +49,7 @@ CASM init foo
 
 rule foo =
 {
-    let a = undef in
+    let a : Integer = undef in
     let c = -a in
     {
         assert( c  = undef )

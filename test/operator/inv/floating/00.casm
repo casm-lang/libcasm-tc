@@ -49,14 +49,14 @@ CASM init foo
 
 rule foo =
 {
-    let a = undef in
+    let a : Floating = undef in
     let c = -a in
     {
         assert( c  = undef   )
 	
-        assert( c != 0 - 1.0 )
+        assert( c != 0.0 - 1.0 )
         assert( c != 0.0     )
-        assert( c != 0 + 1.0 )
+        assert( c != 0.0 + 1.0 )
         assert( isSymbolic( c ) = false )
     }
 }

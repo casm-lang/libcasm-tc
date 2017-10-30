@@ -55,8 +55,8 @@ rule foo =
     {
         assert( isSymbolic( c ) = isSymbolic( a ) )
         
-        assert( c != 0 - 1 )
-        assert( c != 0	   )
-        assert( c != 0 + 1 )
+        assert( c != 0.0 - 1.0 )
+        assert( c != 0.0       )
+        assert( c != 0.0 + 1.0 )
     }
 }

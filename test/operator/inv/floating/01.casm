@@ -52,7 +52,7 @@ rule foo =
     let a = 12.3 in
     let c = -a in
     {
-        assert( c  = 0 - 12.3 )
+        assert( c  = 0.0 - 12.3 )
         
         assert( c != undef )
         assert( isSymbolic( c ) = false )
