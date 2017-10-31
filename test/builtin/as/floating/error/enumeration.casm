@@ -42,8 +42,12 @@
 
 CASM init foo
 
+enumeration myEnum = { one, two, three }
+
 rule foo =
 {
-    assert( asFloating( undef ) = undef) 
+    let x = myEnum.two in
+    {
+        assert( asFloating( x ) = 2.0 ) //@ ERROR( 1324 )
+    }
 }
-

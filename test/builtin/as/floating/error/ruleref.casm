@@ -42,14 +42,13 @@
 
 CASM init foo
 
-enumeration myEnum = { one, two, three }
-
 rule foo =
 {
-    let x : myEnum = two in
+    let x : RuleRef< -> Void > = @bar in
     {
-        assert( asFloating( x ) = 2.0 ) //@ ERROR(?)
+        assert( asFloating( x ) = undef ) //@ ERROR( 1324 )
     }
 
 }
 
+rule bar = skip

@@ -44,10 +44,18 @@ CASM init foo
 
 rule foo =
 {
-    let x : Floating = 42.42 in
+    let x : Floating = undef in
     {
-        assert( asFloating( x ) = 42.42) 
+        assert( asFloating( x ) = undef ) 
     }
 
-}
+    let x : Floating = 42.42 in
+    {
+        assert( asFloating( x ) = 42.42 ) 
+    }
 
+    let x : Floating = -24.24 in
+    {
+        assert( asFloating( x ) = -24.24 )
+    }
+}
