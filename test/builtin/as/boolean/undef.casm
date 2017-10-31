@@ -44,6 +44,6 @@ CASM init foo
 
 rule foo =
 {
-    assert( asBoolean( undef ) = undef) 
+    let x : Boolean = undef in
+        assert( asBoolean( x ) = undef)
 }
-

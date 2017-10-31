@@ -40,14 +40,15 @@
 //  statement from your version.
 //
 
+// tests that 'asBoolean' cannot convert string values!
+// no type relation defined
+
 CASM init foo
 
 rule foo =
 {
     let x : String = "test" in
     {
-        assert( asBoolean( x ) = false ) //@ ERROR(?)
+        assert( asBoolean( x ) = false ) //@ ERROR( 1324 )
     }
-
 }
-

@@ -49,6 +49,6 @@ rule foo =
 {
     let x : Rational = 0r0 in
     {
-        assert( asBoolean( x ) = false ) //@ ERROR( 1000 )
+        assert( asBoolean( x ) = false ) //@ ERROR( 1324 )
     }
 }

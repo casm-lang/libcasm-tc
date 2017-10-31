@@ -49,7 +49,7 @@ rule foo =
 {
     let x : RuleRef< -> Void > = @bar in
     {
-        assert( asBoolean( x ) = false ) //@ ERROR( 1000 )
+        assert( asBoolean( x ) = false ) //@ ERROR( 1324 )
     }
 }
 

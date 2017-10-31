@@ -53,6 +53,5 @@ rule foo =
     {
         assert( asBoolean( x ) = true) 
     }
-
 }
 
