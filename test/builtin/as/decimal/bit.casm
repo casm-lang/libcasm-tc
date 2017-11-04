@@ -44,8 +44,24 @@ CASM init foo
 
 rule foo =
 {
-    let x : String = "test" in
+    let x : Bit'1 = undef in
     {
-        assert( asFloating( x ) = undef ) //@ ERROR( 1324 )
+        assert( asDecimal( x ) = undef )
+    }
+
+    let x : Bit'1 = 0 in
+    {
+	println( asString( asDecimal( x ) ) )
+        assert( asDecimal( x ) = 0.0 )
+    }
+
+    let x : Bit'8 = 10 in
+    {
+        assert( asDecimal( x ) = 10.0 )
+    }
+
+    let x : Bit'32 = 1234 in
+    {
+        assert( asDecimal( x ) = 1234.0 )
     }
 }

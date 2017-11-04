@@ -42,12 +42,25 @@
 
 CASM init foo
 
-enumeration myEnum = { one, two, three }
-
 rule foo =
 {
-    let x = myEnum.two in
+    let x : Integer = undef in
     {
-        assert( asFloating( x ) = 2.0 ) //@ ERROR( 1324 )
+        assert( asDecimal( x ) = undef )
+    }
+
+    let x : Integer = 0 in
+    {
+        assert( asDecimal( x ) = 0.0 )
+    }
+
+    let x : Integer = 42 in
+    {
+        assert( asDecimal( x ) = 42.0 )
+    }
+
+    let x : Integer = -24 in
+    {
+        assert( asDecimal( x ) = -24.0 )
     }
 }

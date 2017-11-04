@@ -44,13 +44,13 @@ CASM init updateCells
 
 function data : Integer *
                 Integer *
-                Integer -> Floating defined { 0.5 }
+                Integer -> Decimal defined { 0.5 }
 
 [static] function kernel : Integer *
                            Integer *
-                           Integer -> Floating defined { 0.1 }
+                           Integer -> Decimal defined { 0.1 }
 
-derived applyStencil(x : Integer, y : Integer, z : Integer) -> Floating =
+derived applyStencil(x : Integer, y : Integer, z : Integer) -> Decimal =
     kernel(-1, -1, -1) * data(x - 1, y - 1, z - 1) +
     kernel( 0, -1, -1) * data(    x, y - 1, z - 1) +
     kernel(+1, -1, -1) * data(x + 1, y - 1, z - 1) +
