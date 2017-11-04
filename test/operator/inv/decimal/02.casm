@@ -40,15 +40,21 @@
 //  statement from your version.
 //
 
-// tests that 'asBoolean' cannot convert floating values!
-// no type relation defined
+
+// | NOT | undef | x : Decimal | sym  |
+// |-----+-------+--------------+------|
+// | -   | undef | -x	        | sym' |
 
 CASM init foo
 
 rule foo =
 {
-    let x : Floating = 0.0 in
+    let a = 0.0 - 5.6 in
+    let c = -a in
     {
-        assert( asBoolean( x ) = false ) //@ ERROR( 1324 )
+        assert( c  = 5.6 )
+        
+        assert( c != undef )
+        assert( isSymbolic( c ) = false )
     }
 }

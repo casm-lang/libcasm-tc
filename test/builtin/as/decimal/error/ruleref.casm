@@ -44,23 +44,11 @@ CASM init foo
 
 rule foo =
 {
-    let x : Integer = undef in
+    let x : RuleRef< -> Void > = @bar in
     {
-        assert( asFloating( x ) = undef )
+        assert( asDecimal( x ) = undef ) //@ ERROR( 1324 )
     }
 
-    let x : Integer = 0 in
-    {
-        assert( asFloating( x ) = 0.0 )
-    }
-
-    let x : Integer = 42 in
-    {
-        assert( asFloating( x ) = 42.0 )
-    }
-
-    let x : Integer = -24 in
-    {
-        assert( asFloating( x ) = -24.0 )
-    }
 }
+
+rule bar = skip

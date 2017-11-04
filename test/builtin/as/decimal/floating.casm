@@ -40,23 +40,22 @@
 //  statement from your version.
 //
 
-
-// | NOT | undef | x : Floating | sym  |
-// |-----+-------+--------------+------|
-// | -   | undef | -x	        | sym' |
-
 CASM init foo
 
 rule foo =
 {
-    let a : Floating = undef in
-    let c = -a in
+    let x : Decimal = undef in
     {
-        assert( c  = undef   )
-	
-        assert( c != 0.0 - 1.0 )
-        assert( c != 0.0     )
-        assert( c != 0.0 + 1.0 )
-        assert( isSymbolic( c ) = false )
+        assert( asDecimal( x ) = undef ) 
+    }
+
+    let x : Decimal = 42.42 in
+    {
+        assert( asDecimal( x ) = 42.42 ) 
+    }
+
+    let x : Decimal = -24.24 in
+    {
+        assert( asDecimal( x ) = -24.24 )
     }
 }

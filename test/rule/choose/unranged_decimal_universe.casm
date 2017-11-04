@@ -43,5 +43,5 @@
 CASM init foo
 
 rule foo =
-    choose x in Floating do
+    choose x in Decimal do
         skip

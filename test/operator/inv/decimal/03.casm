@@ -40,22 +40,23 @@
 //  statement from your version.
 //
 
+
+// | NOT | undef | x : Decimal | sym  |
+// |-----+-------+--------------+------|
+// | -   | undef | -x	        | sym' |
+
 CASM init foo
+
+[symbolic] function a : -> Decimal
 
 rule foo =
 {
-    let x : Boolean = undef in
+    let c = -a in
     {
-        assert( asFloating( x ) = undef ) 
-    }
-
-    let x : Boolean = false in
-    {
-        assert( asFloating( x ) = 0.0 )
-    }
-
-    let x : Boolean = true in
-    {
-        assert( asFloating( x ) = 1.0 ) 
+        assert( isSymbolic( c ) = isSymbolic( a ) )
+        
+        assert( c != 0.0 - 1.0 )
+        assert( c != 0.0       )
+        assert( c != 0.0 + 1.0 )
     }
 }

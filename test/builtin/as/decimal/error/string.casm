@@ -40,23 +40,12 @@
 //  statement from your version.
 //
 
-
-// | NOT | undef | x : Floating | sym  |
-// |-----+-------+--------------+------|
-// | -   | undef | -x	        | sym' |
-
 CASM init foo
-
-[symbolic] function a : -> Floating
 
 rule foo =
 {
-    let c = -a in
+    let x : String = "test" in
     {
-        assert( isSymbolic( c ) = isSymbolic( a ) )
-        
-        assert( c != 0.0 - 1.0 )
-        assert( c != 0.0       )
-        assert( c != 0.0 + 1.0 )
+        assert( asDecimal( x ) = undef ) //@ ERROR( 1324 )
     }
 }

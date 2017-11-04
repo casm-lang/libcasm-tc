@@ -44,8 +44,10 @@ CASM init foo
 
 rule foo =
 {
-    let x : Rational = 0r1/10 in
+    let x : Decimal = 42.42 in
     {
-        assert( asFloating( x ) = 0.1 ) //@ ERROR( 1324 )
+        assert( asString( x ) = "" ) //@ ERROR(?)
     }
+
 }
+

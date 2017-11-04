@@ -41,7 +41,7 @@
 //
 
 
-// | NOT | undef | x : Floating | sym  |
+// | NOT | undef | x : Decimal | sym  |
 // |-----+-------+--------------+------|
 // | -   | undef | -x	        | sym' |
 
@@ -49,12 +49,14 @@ CASM init foo
 
 rule foo =
 {
-    let a = 12.3 in
+    let a : Decimal = undef in
     let c = -a in
     {
-        assert( c  = 0.0 - 12.3 )
-        
-        assert( c != undef )
+        assert( c  = undef   )
+	
+        assert( c != 0.0 - 1.0 )
+        assert( c != 0.0     )
+        assert( c != 0.0 + 1.0 )
         assert( isSymbolic( c ) = false )
     }
 }

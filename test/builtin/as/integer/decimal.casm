@@ -44,7 +44,7 @@ CASM init foo
 
 rule foo =
 {
-    let x : Floating = 42.42 in
+    let x : Decimal = 42.42 in
     {
         assert( asInteger( x ) = 42) 
     }

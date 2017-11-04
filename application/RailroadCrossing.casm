@@ -54,7 +54,7 @@ rule TimeTick =
     now := now + 1
 
 // fake random builtin (random number between 0.0 and 1.0)
-function random : -> Floating initially { 0.0 }
+function random : -> Decimal initially { 0.0 }
 
 rule Randomize =
 {|

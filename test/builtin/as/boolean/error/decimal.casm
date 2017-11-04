@@ -40,28 +40,15 @@
 //  statement from your version.
 //
 
+// tests that 'asBoolean' cannot convert floating values!
+// no type relation defined
+
 CASM init foo
 
 rule foo =
 {
-    let x : Bit'1 = undef in
+    let x : Decimal = 0.0 in
     {
-        assert( asFloating( x ) = undef )
-    }
-
-    let x : Bit'1 = 0 in
-    {
-	println( asString( asFloating( x ) ) )
-        assert( asFloating( x ) = 0.0 )
-    }
-
-    let x : Bit'8 = 10 in
-    {
-        assert( asFloating( x ) = 10.0 )
-    }
-
-    let x : Bit'32 = 1234 in
-    {
-        assert( asFloating( x ) = 1234.0 )
+        assert( asBoolean( x ) = false ) //@ ERROR( 1324 )
     }
 }

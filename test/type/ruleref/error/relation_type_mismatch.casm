@@ -47,6 +47,6 @@ rule targetRule(x : Integer, y : Integer) =
 
 rule foo =
 {
-    let r : RuleRef< Floating * Integer -> Void > = @targetRule in //@ERROR( 1202 )
+    let r : RuleRef< Decimal * Integer -> Void > = @targetRule in //@ERROR( 1202 )
         call (*r)(21.0, 42)
 }
