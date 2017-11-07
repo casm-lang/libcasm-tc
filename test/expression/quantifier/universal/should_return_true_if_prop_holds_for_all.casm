@@ -47,4 +47,4 @@ derived isPositive( x : Integer ) -> Boolean =
 
 rule foo =
     let result = forall x in [1..3] holds isPositive(x) in
-        assert(result = true, "should hold because all given numbers are positive")
+        assert( result = true ) // should hold because all given numbers are positive

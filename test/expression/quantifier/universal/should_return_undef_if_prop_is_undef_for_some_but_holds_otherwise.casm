@@ -47,5 +47,5 @@ derived predicate( x : Integer ) -> Boolean =
 
 rule foo =
     let result = forall x in [1..3] holds predicate(x) in
-        assert(result = undef,
-               "should be undef because predicate is undef for 1 but true otherwise")
+        assert( result = undef )
+        // should be undef because predicate is undef for 1 but true otherwise

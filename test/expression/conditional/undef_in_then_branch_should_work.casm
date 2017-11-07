@@ -47,4 +47,4 @@ CASM init foo
 rule foo =
     let condition : Boolean = true in
         let result = ( if condition then undef else "ELSE" ) in
-            assert( result = undef, "should be an undefined string" ) // TODO add typeof check
+            assert( result = undef ) // should be an undefined string

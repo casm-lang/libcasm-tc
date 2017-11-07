@@ -44,4 +44,4 @@ CASM init foo
 
 rule foo =
     let result = forall x in [1..3] holds x >= 0 in
-        assert(result = true, "should hold because all given numbers are positive")
+        assert( result = true ) // should hold because all given numbers are positive
