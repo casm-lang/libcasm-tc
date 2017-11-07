@@ -45,4 +45,4 @@ CASM init foo
 rule foo =
     let condition : Boolean = true in
         let result = ( if condition then "THEN" else "ELSE" ) in
-            assert( result = "THEN", "should take the then branch" )
+            assert( result = "THEN" ) // should take the then branch

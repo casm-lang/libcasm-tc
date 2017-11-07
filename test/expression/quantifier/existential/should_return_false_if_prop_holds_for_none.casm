@@ -47,4 +47,4 @@ derived isNegative( x : Integer ) -> Boolean =
 
 rule foo =
     let result = exists x in [1..3] with isNegative(x) in
-        assert(result = false, "shouldn't hold because numbers are >= 1")
+        assert( result = false ) // shouldn't hold because numbers are >= 1

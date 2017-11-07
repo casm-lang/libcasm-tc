@@ -47,4 +47,4 @@ derived isEven( x : Integer ) -> Boolean =
 
 rule foo =
     let result = exists x in [1..3] with isEven(x) in
-        assert(result = true, "should hold because 2 is even")
+        assert( result = true ) // should hold because 2 is even
