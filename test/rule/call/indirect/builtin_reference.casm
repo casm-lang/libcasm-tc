@@ -40,12 +40,12 @@
 //  statement from your version.
 //
 
-// printWrapper calls builtin 'println' by reference
+// convert calls builtin 'asString' by reference
 
 CASM init foo
 
 rule foo =
-    call printWrapper( "hello world", @println )
+    assert( convert( 42, @asString ) = "42" )
 
-rule printWrapper( str : String, printer : FuncRef< String -> Void > ) =
-    (*printer)( str )
+derived convert( i : Integer, c : FuncRef< Integer -> String >) -> String =
+    (*c)(i)
