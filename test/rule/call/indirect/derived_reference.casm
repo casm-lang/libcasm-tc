@@ -40,19 +40,13 @@
 //  statement from your version.
 //
 
-// foo calls rule 'bar' by reference
+// foo calls derived 'bar' by reference
 
 CASM init foo
 
-function barCalled : -> Boolean initially { false }
-
 rule foo =
-{|
-    call (*@bar)( 42 )
-    assert( barCalled )
+    let ref = @bar in
+        assert( (*ref)() = 42 )
 
-    program( self ) := undef
-|}
-
-rule bar( x : Integer ) =
-    barCalled := true
+derived bar -> Integer =
+    42
