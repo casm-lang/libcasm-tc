@@ -40,12 +40,14 @@
 //  statement from your version.
 //
 
+// double calls function 'halfTruth' by reference
 
 CASM init foo
 
+function halfTruth : -> Integer initially { 21 }
+
 rule foo =
-    let rr = @bar in
-        call (*rr)(1,2,3,4,"bar",6)
+    assert( double( @halfTruth ) = 42 )
 
-rule bar( a:Integer, b:Integer, c:Integer, d:Integer, e:String, f:Integer ) = skip
-
+derived double( ref : FuncRef< -> Integer > ) -> Integer =
+    2 * (*ref)()
