@@ -40,7 +40,7 @@
 //  statement from your version.
 //
 
-// tests that 'asBoolean' cannot convert rational values!
+// tests that 'as Boolean' cannot convert rational values!
 // no type relation defined
 
 CASM init foo
@@ -48,7 +48,5 @@ CASM init foo
 rule foo =
 {
     let x : Rational = 0r0 in
-    {
-        assert( asBoolean( x ) = false ) //@ ERROR( 1324 )
-    }
+    	assert( x as Boolean = false ) //@ ERROR( 1324 )
 }

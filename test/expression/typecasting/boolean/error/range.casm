@@ -40,14 +40,13 @@
 //  statement from your version.
 //
 
+// tests that 'as Boolean' cannot convert range values!
+// no type relation defined
+
 CASM init foo
 
 rule foo =
 {
-    let x : Integer = undef in assert( x as Boolean = undef )
-    let x : Integer = -123  in assert( x as Boolean = false )
-    let x : Integer = -1    in assert( x as Boolean = false )
-    let x : Integer = 0     in assert( x as Boolean = false )
-    let x : Integer = 1     in assert( x as Boolean = true  )
-    let x : Integer = 123   in assert( x as Boolean = true  )
+    let x : Range< Integer > = [1..10] in
+    	assert( x as Boolean = false ) //@ ERROR( 1324 )
 }

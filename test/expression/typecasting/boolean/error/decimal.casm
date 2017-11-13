@@ -40,7 +40,7 @@
 //  statement from your version.
 //
 
-// tests that 'asBoolean' cannot convert floating values!
+// tests that 'as Boolean' cannot convert decimal values!
 // no type relation defined
 
 CASM init foo
@@ -48,7 +48,5 @@ CASM init foo
 rule foo =
 {
     let x : Decimal = 0.0 in
-    {
-        assert( asBoolean( x ) = false ) //@ ERROR( 1324 )
-    }
+    	assert( x as Boolean = false ) //@ ERROR( 1324 )
 }

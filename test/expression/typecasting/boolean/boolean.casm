@@ -44,15 +44,7 @@ CASM init foo
 
 rule foo =
 {
-    let x : Boolean = false in
-    {
-        assert( asBoolean( x ) = false) 
-    }
-
-    let x : Boolean = true in
-    {
-        assert( asBoolean( x ) = true) 
-    }
-
+    let x : Boolean = undef in assert( x as Boolean = undef )
+    let x : Boolean = false in assert( x as Boolean = false )
+    let x : Boolean = true  in assert( x as Boolean = true  )
 }
-

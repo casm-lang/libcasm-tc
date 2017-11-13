@@ -44,15 +44,19 @@ CASM init foo
 
 rule foo =
 {
-    let x : Bit'1 = 0 in
-    {
-        assert( asBoolean( x ) = false) 
-    }
+    let x : Bit = undef in assert( x as Boolean = undef )
+    let x : Bit = 0     in assert( x as Boolean = false )
+    let x : Bit = 1     in assert( x as Boolean = true  )
 
-    let x : Bit'1 = 1 in
-    {
-        assert( asBoolean( x ) = true) 
-    }
+    let x : Bit'1 = undef in assert( x as Boolean = undef )
+    let x : Bit'1 = 0     in assert( x as Boolean = false )
+    let x : Bit'1 = 1     in assert( x as Boolean = true  )
 
+    let x : Bit'8 = undef in assert( x as Boolean = undef )
+    let x : Bit'8 = 0     in assert( x as Boolean = false )
+    let x : Bit'8 = 1     in assert( x as Boolean = true  )
+
+    let x : Bit'23 = undef in assert( x as Boolean = undef )
+    let x : Bit'23 = 0     in assert( x as Boolean = false )
+    let x : Bit'23 = 1     in assert( x as Boolean = true  )
 }
-

@@ -50,7 +50,5 @@ enumeration myEnum = { one, two, three }
 rule foo =
 {
     let x : myEnum = myEnum.one in
-    {
-        assert( asBoolean( x ) = false ) //@ ERROR( 1324 )
-    }
+    	assert( x as Boolean = false ) //@ ERROR( 1324 )
 }
