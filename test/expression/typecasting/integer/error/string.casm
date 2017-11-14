@@ -44,10 +44,6 @@ CASM init foo
 
 rule foo =
 {
-    let x : Rational = 0r1/10 in
-    {
-        assert( asInteger( x ) = 0 ) //@ ERROR(?)
-    }
-
+    let x : String = "test" in
+        assert( x as Integer = 0 ) //@ ERROR( 1324 )
 }
-

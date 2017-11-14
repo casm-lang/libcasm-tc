@@ -46,10 +46,6 @@ enumeration myEnum = { one, two, three }
 
 rule foo =
 {
-    let x : myEnum = two in
-    {
-        assert( asInteger( x ) = 2) 
-    }
-
+    let x : myEnum = myEnum.two in
+        assert( x as Integer = 2 ) //@ ERROR( 1324 )
 }
-

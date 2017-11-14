@@ -44,10 +44,10 @@ CASM init foo
 
 rule foo =
 {
-    let x : Decimal = 42.42 in
-    {
-        assert( asInteger( x ) = 42) 
-    }
-
+    let x : Decimal = undef  in assert( x as Integer = undef )
+    let x : Decimal = -24.24 in assert( x as Integer = -24   )
+    let x : Decimal = -1.1   in assert( x as Integer = -1    )
+    let x : Decimal = 0.0    in assert( x as Integer = 0     )
+    let x : Decimal = 1.1    in assert( x as Integer = 1     )
+    let x : Decimal = 42.42  in assert( x as Integer = 42    )
 }
-

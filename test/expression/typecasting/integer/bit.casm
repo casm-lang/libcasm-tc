@@ -45,10 +45,19 @@ CASM init foo
 
 rule foo = 
 {
-    let x : Bit'8 = 5 in 
-    {
-        assert( asInteger( x ) = 5) 
-    }
+    let x : Bit = undef in assert( x as Integer = undef )
+    let x : Bit = 0     in assert( x as Integer = 0     )
+    let x : Bit = 1     in assert( x as Integer = 1     )
 
+    let x : Bit'1 = undef in assert( x as Integer = undef )
+    let x : Bit'1 = 0     in assert( x as Integer = 0     )
+    let x : Bit'1 = 1     in assert( x as Integer = 1     )
+
+    let x : Bit'8 = undef in assert( x as Integer = undef )
+    let x : Bit'8 = 5     in assert( x as Integer = 5     )
+    let x : Bit'8 = 123   in assert( x as Integer = 123   )
+
+    let x : Bit'23 = undef in assert( x as Integer = undef )
+    let x : Bit'23 = 321   in assert( x as Integer = 321   )
+    let x : Bit'23 = 54321 in assert( x as Integer = 54321 )
 }
-

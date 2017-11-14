@@ -44,12 +44,6 @@ CASM init foo
 
 rule foo =
 {
-    let x : RuleRef< -> Void > = @bar in
-    {
-        assert( asInteger( x ) = 0 ) //@ ERROR(?)
-    }
-
+    let x : Tuple< Integer, Integer > = [ 1, 10 ] in
+        assert( x as Boolean = 0 ) //@ ERROR( 1324 )
 }
-
-rule bar = skip
-

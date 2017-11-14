@@ -44,6 +44,8 @@ CASM init foo
 
 rule foo =
 {
-    assert( asInteger( undef ) = undef) 
+    let x = bar in
+        assert( x as Integer = 0 ) //@ ERROR( 1324 )
 }
 
+function bar : -> Port< String >

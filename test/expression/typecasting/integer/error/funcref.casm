@@ -44,10 +44,8 @@ CASM init foo
 
 rule foo =
 {
-    let x : String = "test" in
-    {
-        assert( asInteger( x ) = 0 ) //@ ERROR(?)
-    }
-
+    let x : FuncRef< -> Integer > = @bar in
+        assert( x as Integer = 0 ) //@ ERROR( 1324 )
 }
 
+function bar : -> Integer
