@@ -44,10 +44,21 @@ CASM init foo
 
 rule foo =
 {
-    let x : Bit'1 = 0 in
-    {
-        assert( asString( x ) = "" ) //@ ERROR(?)
-    }
+    let x : Bit = undef in assert( x as String = undef )
+    let x : Bit = 0     in assert( x as String = "0b0" )
+    let x : Bit = 1     in assert( x as String = "0b1" )
 
+    let x : Bit'1 = undef in assert( x as String = undef )
+    let x : Bit'1 = 0     in assert( x as String = "0b0" )
+    let x : Bit'1 = 1     in assert( x as String = "0b1" )
+
+    let x : Bit'8 = undef in assert( x as String = undef )
+    let x : Bit'8 = 0     in assert( x as String = "0b0" )
+    let x : Bit'8 = 1     in assert( x as String = "0b1" )
+    let x : Bit'8 = 123   in assert( x as String = "0b1111011" )
+
+    let x : Bit'23 = undef in assert( x as String = undef )
+    let x : Bit'23 = 0     in assert( x as String = "0b0" )
+    let x : Bit'23 = 1     in assert( x as String = "0b1" )
+    let x : Bit'23 = 123   in assert( x as String = "0b1111011" )
 }
-

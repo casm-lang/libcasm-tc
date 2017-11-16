@@ -42,8 +42,12 @@
 
 CASM init foo
 
+enumeration myEnum = { one, two, three }
+
 rule foo =
 {
-    assert( asString( undef ) = undef) 
+    let x : myEnum = undef        in assert( x as String = undef )
+    let x : myEnum = myEnum.one   in assert( x as String = "one" )
+    let x : myEnum = myEnum.two   in assert( x as String = "two" )
+    let x : myEnum = myEnum.three in assert( x as String = "three" )
 }
-

@@ -42,14 +42,13 @@
 
 CASM init foo
 
-enumeration myEnum = { one, two, three }
-
 rule foo =
 {
-    let x : myEnum = one in
-    {
-        assert( asString( x ) = "one") 
-    }
+    let x : FuncRef< -> Void > = undef in
+    	assert( x as String = undef )
 
+    let x : FuncRef< -> Void > = @bar in
+    	assert( x as String = "@bar" )
 }
 
+function bar : -> Integer

@@ -44,10 +44,8 @@ CASM init foo
 
 rule foo =
 {
-    let x : String = "test" in
-    {
-        assert( asString( x ) = "test") 
-    }
-
+    let x : String = undef         in assert( x as String = undef ) 
+    let x : String = ""            in assert( x as String = "" ) 
+    let x : String = "foo"         in assert( x as String = "foo" ) 
+    let x : String = "bar baz qux" in assert( x as String = "bar baz qux" ) 
 }
-
