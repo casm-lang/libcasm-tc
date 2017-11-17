@@ -45,7 +45,7 @@ CASM init foo
 rule foo =
 {
     let x : RuleRef< -> Void > = @bar in
-        assert( x as Integer = 0 ) //@ ERROR( 1324 )
+        assert( x as Integer = 0 ) //@ ERROR( 1700 )
 }
 
 rule bar = skip

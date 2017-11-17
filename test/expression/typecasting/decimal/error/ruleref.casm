@@ -46,7 +46,7 @@ rule foo =
 {
     let x : RuleRef< -> Void > = @bar in
     {
-        assert( asDecimal( x ) = undef ) //@ ERROR( 1324 )
+        assert( asDecimal( x ) = undef ) //@ ERROR( 1700 )
     }
 
 }

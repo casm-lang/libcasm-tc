@@ -45,14 +45,14 @@ CASM init foo
 rule foo =
 {
     let x : Rational = 0r1/10 in
-        assert( x as Bit = 0b0 ) //@ ERROR( 1324 )
+        assert( x as Bit = 0b0 ) //@ ERROR( 1700 )
 
     let x : Rational = 0r1/10 in
-        assert( x as Bit'1 = 0b0 ) //@ ERROR( 1324 )
+        assert( x as Bit'1 = 0b0 ) //@ ERROR( 1700 )
 
     let x : Rational = 0r1/10 in
-        assert( x as Bit'8 = 0b0 ) //@ ERROR( 1324 )
+        assert( x as Bit'8 = 0b0 ) //@ ERROR( 1700 )
 
     let x : Rational = 0r1/10 in
-        assert( x as Bit'23 = 0b0 ) //@ ERROR( 1324 )
+        assert( x as Bit'23 = 0b0 ) //@ ERROR( 1700 )
 }

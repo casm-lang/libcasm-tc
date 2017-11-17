@@ -45,5 +45,5 @@ CASM init foo
 rule foo =
 {
     let x : Range< Integer > = [ 1 .. 10 ] in
-        assert( x as Integer = 0 ) //@ ERROR( 1324 )
+        assert( x as Integer = 0 ) //@ ERROR( 1700 )
 }

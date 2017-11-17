@@ -46,6 +46,6 @@ rule foo =
 {
     let x : Rational = 0r1/10 in
     {
-        assert( asDecimal( x ) = 0.1 ) //@ ERROR( 1324 )
+        assert( asDecimal( x ) = 0.1 ) //@ ERROR( 1700 )
     }
 }

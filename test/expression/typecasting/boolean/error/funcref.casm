@@ -48,7 +48,7 @@ CASM init foo
 rule foo =
 {
     let x : FuncRef< -> Integer > = @bar in
-        assert( x as Boolean = false ) //@ ERROR( 1324 )
+        assert( x as Boolean = false ) //@ ERROR( 1700 )
 }
 
 function bar : -> Integer

@@ -46,6 +46,6 @@ rule foo =
 {
     let x : String = "test" in
     {
-        assert( asDecimal( x ) = undef ) //@ ERROR( 1324 )
+        assert( asDecimal( x ) = undef ) //@ ERROR( 1700 )
     }
 }

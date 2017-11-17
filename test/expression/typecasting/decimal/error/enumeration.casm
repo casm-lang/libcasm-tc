@@ -48,6 +48,6 @@ rule foo =
 {
     let x = myEnum.two in
     {
-        assert( asDecimal( x ) = 2.0 ) //@ ERROR( 1324 )
+        assert( asDecimal( x ) = 2.0 ) //@ ERROR( 1700 )
     }
 }
