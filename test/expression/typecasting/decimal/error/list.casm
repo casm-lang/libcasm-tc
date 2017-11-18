@@ -44,18 +44,6 @@ CASM init foo
 
 rule foo =
 {
-    let x : Decimal = undef in
-    {
-        assert( asDecimal( x ) = undef ) 
-    }
-
-    let x : Decimal = 42.42 in
-    {
-        assert( asDecimal( x ) = 42.42 ) 
-    }
-
-    let x : Decimal = -24.24 in
-    {
-        assert( asDecimal( x ) = -24.24 )
-    }
+    let x : List< Integer > = [ 1, 10, 2, 20 ] in
+        assert( x as Decimal = 0.0 ) //@ ERROR( 1700 )
 }

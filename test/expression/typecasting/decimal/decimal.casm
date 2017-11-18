@@ -42,10 +42,12 @@
 
 CASM init foo
 
-enumeration myEnum = { one, two, three }
-
 rule foo =
 {
-    let x : myEnum = myEnum.two in
-        assert( x as Decimal = 0.0 ) //@ ERROR( 1700 )
+    let x : Decimal =  undef in assert( x as Decimal = undef )
+    let x : Decimal = -24.24 in assert( x as Decimal = -24.24 )
+    let x : Decimal =  -1.0  in assert( x as Decimal =  -1.0 )
+    let x : Decimal =   0.0  in assert( x as Decimal =   0.0 )
+    let x : Decimal =   1.0  in assert( x as Decimal =   1.0 )
+    let x : Decimal =  42.42 in assert( x as Decimal =  42.42 )
 }

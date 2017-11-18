@@ -45,7 +45,5 @@ CASM init foo
 rule foo =
 {
     let x : Rational = 0r1/10 in
-    {
-        assert( asDecimal( x ) = 0.1 ) //@ ERROR( 1700 )
-    }
+        assert( x as Decimal = 0.0 ) //@ ERROR( 1700 )
 }
