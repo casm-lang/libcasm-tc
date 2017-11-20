@@ -45,7 +45,7 @@ CASM init foo
 
 rule bar( qux : Integer ) =
 {
-    println( asString( qux ) )
+    println( qux as String )
 }
 
 rule foo =

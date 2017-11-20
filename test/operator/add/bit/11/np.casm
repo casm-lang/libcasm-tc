@@ -55,8 +55,8 @@ rule foo =
     let b : Bit'16 =  20 in
     let c = a + b in
     {
-        assert( c  = asBit( 60, 16 )) 
-        
+        assert( c  = 60 as Bit'16 )
+
         assert( c != undef) 
         assert( isSymbolic( c ) = false) 
     }

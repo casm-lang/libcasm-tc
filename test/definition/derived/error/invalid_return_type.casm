@@ -44,7 +44,7 @@
 
 CASM init foo
 
-derived bar -> Abstract< Integer > = //@ERROR( 0100 )
+derived bar -> Abstract< Integer > = //@ERROR( 0102 )
     undef
 
 rule foo =

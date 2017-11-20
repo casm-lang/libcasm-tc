@@ -44,7 +44,8 @@ CASM init foo
 
 rule foo =
 {
-    print( "string" )
-    print( "two words" )
+    print( undef )
+    print( "" )
+    print( "foo" )
     print( "foo bar baz etc." )
 }

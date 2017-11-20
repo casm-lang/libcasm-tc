@@ -45,6 +45,5 @@ CASM init foo
 
 rule foo =
 {
-    println( undef + asBit( 0, 10 ) )
-    
+    println( undef + 0 as Bit'10 )
 }
