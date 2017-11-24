@@ -45,4 +45,4 @@ CASM init foo
 rule foo =
     let universe : List<Integer> = [] in
         let result = forall x in universe holds false in
-            assert(result = true, "should hold because universe is empty")
+            assert( result = true ) // "should hold because universe is empty"
