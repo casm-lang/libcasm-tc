@@ -45,10 +45,10 @@ CASM init foo
 
 rule foo = 
 {
-    let a : Bit'30 = 0b0011'1010'1110'0000 in
-    let b : Bit'30 = 0b0000'0111'0101'1100 in
-    let c = a.shr( 3 ) in
+    let a : Bit'16 = 0b0010'1011'1000'0000 in
+    let b : Bit'16 = 0b0000'0001'0101'1100 in
+    let c = a.shr( 5 ) in
     {
-        assert( c = b ) 
+        assert( c = b )
     }
 }
