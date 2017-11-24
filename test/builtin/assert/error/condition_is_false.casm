@@ -40,25 +40,9 @@
 //  statement from your version.
 //
 
-
 CASM init foo
 
-function a: -> Integer
-
-rule foo = 
-{
-    // 1a
-    assert( a = undef) 
-
-    // 1b
-    assert( 1 + undef = undef) 
-    assert( undef + 1 = undef) 
-
-    // 1c
-    assert( (undef = undef) = true) 
-    assert( (undef != undef) = false) 
-    assert( (undef = 1) = false) 
-    assert( (undef != 1 ) = true) 
-
+rule foo =
+{ 
+    assert( false ) //@ ERROR( 5a00 )
 }
-
