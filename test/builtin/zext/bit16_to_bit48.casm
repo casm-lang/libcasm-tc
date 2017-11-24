@@ -43,16 +43,12 @@
 
 CASM init foo
 
-function a : -> Bit'16 initially { 0 }
-
 rule foo = 
 {
-    let b : Bit' 32   = 0    in
-    let c = zext( a, 32 ) in
+    let a : Bit'16 =           0x1234 in
+    let b : Bit'48 = 0x0000'0000'1234 in
+    let c = a.zext( 48 ) in
     {
         assert( c = b )
-        println( bin( a ) )
-        println( bin( b ) )
-        println( bin( c ) )
     }
 }
