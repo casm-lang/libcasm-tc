@@ -47,11 +47,8 @@ rule foo =
 {
     let a : Bit'48 = 0xdead'feed'1234 in
     let b : Bit'16 =           0x1234 in
-    let c = trunc( a, 16 ) in
+    let c = a.trunc( 16 ) in
     {
         assert( c = b )
-        println( bin( a ) )
-        println( bin( b ) )
-        println( bin( c ) )
     }
 }
