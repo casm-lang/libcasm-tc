@@ -45,13 +45,10 @@ CASM init foo
 
 rule foo = 
 {
-    let a : Bit'64 = 0xdead'feed'1234'00 in
-    let b : Bit'64 = 0xdead'feed'1234 in
-    let c = shr( a, 8 ) in
+    let a : Bit'30 = 0b0011'1010'1110'0000 in
+    let b : Bit'30 = 0b0000'0111'0101'1100 in
+    let c = a.shr( 3 ) in
     {
-        assert( c = b )
-        println( bin( a ) )
-        println( bin( b ) )
-        println( bin( c ) )
+        assert( c = b ) 
     }
 }
