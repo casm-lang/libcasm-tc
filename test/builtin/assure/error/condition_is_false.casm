@@ -40,17 +40,9 @@
 //  statement from your version.
 //
 
-
 CASM init foo
 
-function f : -> Integer
-
-rule foo = 
-{|
-    assure( 2 >= 1 )
-    f := -1
-    assure( f < 0 )
-
-    program( self ) := undef
-|}
-
+rule foo =
+{ 
+    assure( false ) //@ ERROR( ? )
+}
