@@ -53,10 +53,10 @@ rule foo =
     let x : Boolean = true  in assert( x as Bit'1 = 0b1 )
 
     let x : Boolean = undef in assert( x as Bit'8 = undef )
-    let x : Boolean = false in assert( x as Bit'8 = 0b0 )
-    let x : Boolean = true  in assert( x as Bit'8 = 0b1 )
+    let x : Boolean = false in assert( x as Bit'8 = 0b0000'0000 )
+    let x : Boolean = true  in assert( x as Bit'8 = 0b0000'0001 )
 
     let x : Boolean = undef in assert( x as Bit'23 = undef )
-    let x : Boolean = false in assert( x as Bit'23 = 0b0 )
-    let x : Boolean = true  in assert( x as Bit'23 = 0b1 )
+    let x : Boolean = false in assert( x as Bit'23 = 0b000'0000'0000'0000'0000'0000 )
+    let x : Boolean = true  in assert( x as Bit'23 = 0b000'0000'0000'0000'0000'0001 )
 }
