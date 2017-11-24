@@ -48,5 +48,5 @@ CASM init foo
 function x : Integer * Integer -> Integer
 
 rule foo =
-    let y = x( 1, 2, 3 ) in //@ ERROR( 1312 )
+    let y = x( 1, 2, 3 ) in //@ ERROR( 0503 )
         skip
