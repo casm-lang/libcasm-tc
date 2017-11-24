@@ -56,10 +56,10 @@ rule foo =
 {
     let c = a = b in
     {
-        assert( isSymbolic( c ) = isSymbolic( a )) 
-        assert( isSymbolic( c ) = isSymbolic( b )) 
+        assert( c.isSymbolic() = a.isSymbolic() )
+        assert( c.isSymbolic() = b.isSymbolic() )
         
         assert( c != undef) 
-        assert( c != false) 
+        assert( c != false)
     }
 }

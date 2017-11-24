@@ -56,6 +56,6 @@ rule foo =
     let b : Integer = undef in
     let c = a >= b in
     {
-        assert( isSymbolic( c ) = isSymbolic( a )) 
+        assert( c.isSymbolic() = a.isSymbolic() )
     }
 }

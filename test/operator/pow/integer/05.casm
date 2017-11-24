@@ -68,6 +68,6 @@ rule foo =
         
         assert( c != 0 )
         assert( c != 1 )
-        assert( isSymbolic( c ) = false )
+        assert( c.isSymbolic() = false )
     }
 }

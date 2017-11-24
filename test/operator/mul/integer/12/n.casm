@@ -56,6 +56,6 @@ rule foo =
     let a : Integer = -321 in
     let c = a * b in
     {
-        assert( isSymbolic( c ) = isSymbolic( b )) 
+        assert( c.isSymbolic() = b.isSymbolic() )
     }
 }

@@ -49,6 +49,6 @@ CASM init foo
 function b : Integer -> Integer initially { 1 -> 1, 2 -> 2 }
 
 rule foo = {
-    assert( isSymbolic( b(1) ) = false) 
+    assert( isSymbolic( b(1) ) = false)
 }
 

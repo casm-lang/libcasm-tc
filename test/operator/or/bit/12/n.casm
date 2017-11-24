@@ -56,6 +56,6 @@ rule foo =
     let a : Bit'16 = 0b1111'0000 in
     let c = a or b in
     {
-        assert( isSymbolic( c ) = isSymbolic( b )) 
+        assert( c.isSymbolic() = b.isSymbolic() )
     }
 }

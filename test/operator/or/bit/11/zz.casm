@@ -58,6 +58,6 @@ rule foo =
         assert( c  = 0 as Bit'16 ) 
 
         assert( c != undef) 
-        assert( isSymbolic( c ) = false) 
+        assert( c.isSymbolic() = false )
     }
 }

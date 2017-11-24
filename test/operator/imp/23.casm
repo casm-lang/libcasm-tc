@@ -57,7 +57,7 @@ rule foo =
     let a = true in
     let c = a implies b in
     {
-        assert( isSymbolic( c ) = isSymbolic( b ) )
+        assert( c.isSymbolic() = b.isSymbolic() )
         
         assert( c != false )
         assert( c != true )

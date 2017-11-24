@@ -64,7 +64,7 @@ rule foo =
     let a : Integer = 0 in
     let c = a ^ b in
     {
-        assert( isSymbolic( c ) = isSymbolic( b ) )
+        assert( c.isSymbolic() = b.isSymbolic() )
 
         assert( c != 0 )
         assert( c != 1 )

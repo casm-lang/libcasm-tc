@@ -60,7 +60,7 @@ rule foo =
         
         assert( c != true )
         assert( c != false )
-        assert( isSymbolic( c ) = false )
+        assert( c.isSymbolic() = false )
 
         assert( c = a => b )
     }

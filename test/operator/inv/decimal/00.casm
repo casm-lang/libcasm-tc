@@ -57,6 +57,6 @@ rule foo =
         assert( c != 0.0 - 1.0 )
         assert( c != 0.0     )
         assert( c != 0.0 + 1.0 )
-        assert( isSymbolic( c ) = false )
+        assert( c.isSymbolic() = false )
     }
 }

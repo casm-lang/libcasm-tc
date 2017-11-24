@@ -55,6 +55,6 @@ rule foo =
         assert( c  = 5.6 )
         
         assert( c != undef )
-        assert( isSymbolic( c ) = false )
+        assert( c.isSymbolic() = false )
     }
 }

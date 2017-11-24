@@ -53,9 +53,9 @@ rule foo =
 {
     let c = not a in
     {
-        assert( isSymbolic( c ) = isSymbolic( a )) 
+        assert( c.isSymbolic() = a.isSymbolic() )
         
-        assert( c != false) 
+        assert( c != false)
         assert( c != true) 
     }
 }

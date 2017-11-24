@@ -53,7 +53,7 @@ rule foo =
 {
     let c = -a in
     {
-        assert( isSymbolic( c ) = isSymbolic( a ) )
+        assert( c.isSymbolic() = a.isSymbolic() )
         
         assert( c != 0.0 - 1.0 )
         assert( c != 0.0       )
