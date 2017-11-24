@@ -45,5 +45,5 @@ CASM init foo
 
 rule foo = skip
 
-[static, symbolic, static] //@ ERROR( fa01 )
+[static, symbolic, static] //@ ERROR( 0401 )
 function a : -> Integer
