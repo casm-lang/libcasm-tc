@@ -42,4 +42,10 @@
 
 TARGET = libcasm-tc
 
+FORMAT  = etc
+FORMAT += etc/*
+FORMAT += etc/*/*
+
+UPDATE_ROOT = ../stdhl
+
 include .cmake/config.mk
