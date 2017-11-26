@@ -51,8 +51,8 @@ using namespace libcasm_tc;
 
 int main( int argc, const char* argv[] )
 {
-    const auto source = libstdhl::Memory::make< libstdhl::Log::Source >(
-        argv[ 0 ], "Test Case Generator Tool" );
+    const auto source =
+        libstdhl::Memory::make< libstdhl::Log::Source >( argv[ 0 ], "Test Case Generator Tool" );
 
     libstdhl::Log::defaultSource( source );
 
@@ -90,44 +90,47 @@ int main( int argc, const char* argv[] )
 
     std::vector< ErrorInfo > error;
 
-    libstdhl::File::readLines( file_name, [mode, file_name, dest_name,
-                                              &no_cmd_found, &error]( u32 cnt,
-                                              const std::string& line ) {
-        std::string c = "";
-        std::regex expr( "//@[ ]*([\\S]+)[ ]*\\([ ]*([\\S]*)[ ]*\\)" );
-        std::sregex_iterator start( line.begin(), line.end(), expr );
-        std::sregex_iterator end;
+    libstdhl::File::readLines(
+        file_name,
+        [mode, file_name, dest_name, &no_cmd_found, &error]( u32 cnt, const std::string& line ) {
+            std::string c = "";
+            std::regex expr( "//@[ ]*([\\S]+)[ ]*\\([ ]*([\\S]*)[ ]*\\)" );
+            std::sregex_iterator start( line.begin(), line.end(), expr );
+            std::sregex_iterator end;
 
-        for( std::sregex_iterator i = start; i != end; i++ )
-        {
-            std::smatch match = *i;
-            std::string mstr = match.str();
-            assert( match.size() == 3 );
-
-            std::string func = match[ 1 ].str();
-            std::string args = match[ 2 ].str();
-            // printf( "'%s' ( '%s' )\n", func.c_str(), args.c_str() );
-
-            args = std::regex_replace( args, std::regex( "\"" ), "\\\"" );
-
-            if( func.compare( "ERROR" ) == 0 )
+            for( std::sregex_iterator i = start; i != end; i++ )
             {
-                error.push_back( ErrorInfo{ std::to_string( cnt + 1 ), args } );
-                continue;
-            }
-            else
-            {
-                fprintf( stderr,
-                    "%s:%i: error: unknown/invalid 'casm-tc' command found: '%s'\n",
-                    file_name, cnt, mstr.c_str() );
+                std::smatch match = *i;
+                std::string mstr = match.str();
+                assert( match.size() == 3 );
 
-                exit( -1 );
-            }
+                std::string func = match[ 1 ].str();
+                std::string args = match[ 2 ].str();
+                // printf( "'%s' ( '%s' )\n", func.c_str(), args.c_str() );
 
-            no_cmd_found = false;
-            break;
-        }
-    } );
+                args = std::regex_replace( args, std::regex( "\"" ), "\\\"" );
+
+                if( func.compare( "ERROR" ) == 0 )
+                {
+                    error.push_back( ErrorInfo{ std::to_string( cnt + 1 ), args } );
+                    continue;
+                }
+                else
+                {
+                    fprintf(
+                        stderr,
+                        "%s:%i: error: unknown/invalid 'casm-tc' command found: '%s'\n",
+                        file_name,
+                        cnt,
+                        mstr.c_str() );
+
+                    exit( -1 );
+                }
+
+                no_cmd_found = false;
+                break;
+            }
+        } );
 
     std::string fn( file_name );
     std::replace( fn.begin(), fn.end(), '/', '_' );
@@ -142,7 +145,8 @@ int main( int argc, const char* argv[] )
         fd = fopen( dest_name, "w+" );
         assert( fd );
 
-        fprintf( fd,
+        fprintf(
+            fd,
             "\n"
             "#ifndef _LIBCASM_TC_TESTS_\n"
             "#define _LIBCASM_TC_TESTS_\n"
@@ -158,21 +162,27 @@ int main( int argc, const char* argv[] )
             "    { \"%s\"\n"
             "    , \"%s\"\n"
             "    , {",
-            fn.c_str(), file_name, dest_name );
+            fn.c_str(),
+            file_name,
+            dest_name );
 
         u1 first_error = true;
         for( auto& e : error )
         {
             // printf( "::: '%s' '%s'\n", e.line.c_str(), e.code.c_str() );
 
-            fprintf( fd,
+            fprintf(
+                fd,
                 "%s { \"%s\", \"%s\" }\n"
                 "      ",
-                first_error ? "" : ",", e.line.c_str(), e.code.c_str() );
+                first_error ? "" : ",",
+                e.line.c_str(),
+                e.code.c_str() );
             first_error = false;
         }
 
-        fprintf( fd,
+        fprintf(
+            fd,
             "}\n"
             "    }\n"
             "  )\n"
@@ -187,7 +197,8 @@ int main( int argc, const char* argv[] )
         fd = fopen( dest_name, "w+" );
         assert( fd );
 
-        fprintf( fd,
+        fprintf(
+            fd,
             "\n"
             "#ifndef _LIBCASM_TC_BENCHMARKS_\n"
             "#define _LIBCASM_TC_BENCHMARKS_\n"
@@ -199,7 +210,8 @@ int main( int argc, const char* argv[] )
             ", \"%s\"\n"
             ");\n"
             "\n",
-            fn.c_str(), file_name );
+            fn.c_str(),
+            file_name );
 
         assert( fclose( fd ) == 0 );
     }
