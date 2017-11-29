@@ -49,4 +49,4 @@ rule testConditionalRule( condition : Boolean ) -> String =
         result := "ELSE"
 
 rule foo =
-    assert(testConditionalRule(true) = "THEN", "should take the then branch")
+    assert( testConditionalRule( true ) = "THEN" ) // "should take the then branch"
