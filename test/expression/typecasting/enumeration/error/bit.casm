@@ -46,6 +46,6 @@ enumeration myEnum = { one, two, three }
 
 rule foo =
 {
-    let x : Bit = 0b1 in
+    let x : Binary'1 = 0b1 in
     	assert( x as myEnum = myEnum.one ) //@ ERROR( 1700 )
 }

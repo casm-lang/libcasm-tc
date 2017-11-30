@@ -45,4 +45,4 @@ CASM init foo
 
 rule foo = skip
 
-function f : -> Bit'32
+function f : -> Binary'32

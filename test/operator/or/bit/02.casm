@@ -41,19 +41,19 @@
 //
 
 
-// | OP          | undef | x : Bit'16 | sym   |
+// | OP          | undef | x : Binary'16 | sym   |
 // |-------------+-------+-------------+-------|
 // | undef       | undef | undef       | undef |
-// | y : Bit'16 | undef | x OP y      | sym'  |
+// | y : Binary'16 | undef | x OP y      | sym'  |
 // | sym         | undef | sym'        | sym'  |
 
 CASM init foo
 
-[symbolic] function b : -> Bit'16
+[symbolic] function b : -> Binary'16
 
 rule foo =
 {
-    let a : Bit'16 = undef in
+    let a : Binary'16 = undef in
     let c = a or b in
     {
         assert( c  = undef) 

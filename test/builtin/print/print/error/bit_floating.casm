@@ -43,11 +43,11 @@
 
 CASM init foo
 
-function bar0 : -> Bit'1
-function bar1 : -> Bit'8
-function bar2 : -> Bit'16
-function bar3 : -> Bit'32
-function bar4 : -> Bit'55
+function bar0 : -> Binary'1
+function bar1 : -> Binary'8
+function bar2 : -> Binary'16
+function bar3 : -> Binary'32
+function bar4 : -> Binary'55
 
 rule foo =
 {

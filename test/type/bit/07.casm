@@ -40,13 +40,13 @@
 //  statement from your version.
 //
 
-// value 5 does fit into Bit'8
+// value 5 does fit into Binary'8
 
 
 CASM init foo
 
 rule foo = 
 {
-    let x : Bit'8 = 5 in skip
+    let x : Binary'8 = 5 in skip
 }
 

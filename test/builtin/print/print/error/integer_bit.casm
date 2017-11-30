@@ -43,7 +43,7 @@
 
 CASM init foo
 
-function bar : -> Bit'4
+function bar : -> Binary'4
 
 rule foo =
 {

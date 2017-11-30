@@ -45,8 +45,8 @@ CASM init foo
 
 rule foo = 
 {
-    let a : Bit'48 = 0xdead'feed'1234 in
-    let b : Bit'16 =           0x1234 in
+    let a : Binary'48 = 0xdead'feed'1234 in
+    let b : Binary'16 =           0x1234 in
     let c = trunc( a, 16 ) in
     {
         assert( c = b )

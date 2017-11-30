@@ -48,5 +48,5 @@ CASM init foo
 
 rule foo = skip
 
-function f : -> Bit'8 initially { 1230 } //@ ERROR( 1205 )
+function f : -> Binary'8 initially { 1230 } //@ ERROR( 1205 )
 
