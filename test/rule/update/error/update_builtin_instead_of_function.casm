@@ -40,13 +40,13 @@
 //  statement from your version.
 //
 
-// symbol resolver should say that builtin dec is not allowed in update
+// symbol resolver should say that builtin asert is not allowed in update
 
 CASM init foo
 
 rule foo =
 {
-    dec( 21 ) := "42" //@ ERROR( 0501 )
+    assert( true ) := "42" //@ ERROR( 0501 )
 
     program( self ) := undef
 }
