@@ -45,8 +45,8 @@ CASM init foo
 
 rule foo = 
 {
-    let a : Bit'5  =       0b1'0111 in
-    let b : Bit'10 = 0b00'0001'0111 in
+    let a : Binary'5  =       0b1'0111 in
+    let b : Binary'10 = 0b00'0001'0111 in
     let c = zext( a, 10 ) in
     {
         assert( c = b )
