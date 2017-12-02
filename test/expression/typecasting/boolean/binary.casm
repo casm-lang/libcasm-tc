@@ -40,15 +40,19 @@
 //  statement from your version.
 //
 
-
 CASM init foo
 
-rule foo = 
+rule foo =
 {
-    let a : Binary'16 =           0x1234 in
-    let b : Binary'48 = 0x0000'0000'1234 in
-    let c = a.zext( 48 ) in
-    {
-        assert( c = b )
-    }
+    let x : Binary'1 = undef in assert( x as Boolean = undef )
+    let x : Binary'1 = 0     in assert( x as Boolean = false )
+    let x : Binary'1 = 1     in assert( x as Boolean = true  )
+
+    let x : Binary'8 = undef in assert( x as Boolean = undef )
+    let x : Binary'8 = 0     in assert( x as Boolean = false )
+    let x : Binary'8 = 1     in assert( x as Boolean = true  )
+
+    let x : Binary'23 = undef in assert( x as Boolean = undef )
+    let x : Binary'23 = 0     in assert( x as Boolean = false )
+    let x : Binary'23 = 1     in assert( x as Boolean = true  )
 }

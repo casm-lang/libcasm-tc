@@ -40,15 +40,14 @@
 //  statement from your version.
 //
 
+// bit-size of rhs does not fit into bit-size of lhs
+// shall throw a type mismatch
+
 
 CASM init foo
 
 rule foo = 
 {
-    let a : Binary'16 =           0x1234 in
-    let b : Binary'48 = 0x0000'0000'1234 in
-    let c = a.zext( 48 ) in
-    {
-        assert( c = b )
-    }
+    let x : Binary'8 = 0b1111'0000'1111'0000 in skip //@ ERROR( 1202 )
 }
+
