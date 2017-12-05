@@ -60,6 +60,6 @@ rule foo =
         println( dec(c) )
         assert( c  = undef )
 
-        assert( isSymbolic( c ) = false) 
+        assert( c.isSymbolic() = false )
     }
 }

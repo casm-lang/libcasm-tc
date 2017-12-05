@@ -78,8 +78,7 @@ void benchmark::SetUp()
 
     if( strcmp( env[ "CASM" ], "" ) == 0 )
     {
-        printf(
-            "\nenvironment variable CASM not set, omitting test case!\n\n" );
+        printf( "\nenvironment variable CASM not set, omitting test case!\n\n" );
         return;
     }
 
@@ -102,8 +101,13 @@ void benchmark::SetUp()
     {
         case libcasm_tc::Profile::INTERPRETER:
         {
-            sprintf( m_cmd, "%s %s %s %s 2>&1 > obj/.bm", env[ "CASM" ],
-                env[ "CASM_ARG_PRE" ], "%s", env[ "CASM_ARG_POST" ] );
+            sprintf(
+                m_cmd,
+                "%s %s %s %s 2>&1 > obj/.bm",
+                env[ "CASM" ],
+                env[ "CASM_ARG_PRE" ],
+                "%s",
+                env[ "CASM_ARG_POST" ] );
             break;
         }
         default:

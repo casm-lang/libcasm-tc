@@ -46,7 +46,7 @@
 CASM init foo
 
 function x : -> Integer defined {
-    "string" //@ ERROR( fb02 )
+    "string" //@ ERROR( 1332 )
 }
 
 rule foo =

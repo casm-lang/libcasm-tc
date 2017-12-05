@@ -56,6 +56,6 @@ rule foo =
     let a : Binary'16 = 0 in
     let c = a + b in
     {
-        assert( isSymbolic( c ) = isSymbolic( b )) 
+        assert( c.isSymbolic() = b.isSymbolic() )
     }
 }

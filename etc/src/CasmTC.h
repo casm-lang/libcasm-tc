@@ -71,7 +71,7 @@ namespace libcasm_tc
     };
 }
 
-#endif // _LIBCASM_TC_CASMTC_H_
+#endif  // _LIBCASM_TC_CASMTC_H_
 
 //
 //  Local variables:

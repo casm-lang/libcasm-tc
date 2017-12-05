@@ -58,8 +58,8 @@ rule foo =
     {
         assert( c  = undef) 
         
-        assert( c != false) 
+        assert( c != false)
         assert( c != true) 
-        assert( isSymbolic( c ) = false) 
+        assert( c.isSymbolic() = false )
     }
 }

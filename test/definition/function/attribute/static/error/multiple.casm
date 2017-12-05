@@ -43,10 +43,7 @@
 
 CASM init foo
 
-rule foo =
-{
-}
+rule foo = skip
 
-[static, static] //@ ERROR( fa01 )
+[static, static] //@ ERROR( 0401 )
 function a : -> Integer
-

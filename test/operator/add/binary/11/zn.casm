@@ -58,6 +58,6 @@ rule foo =
         assert( c  = 0xff00 as Binary'16 )
 
         assert( c != undef )
-        assert( isSymbolic( c ) = false )
+        assert( c.isSymbolic() = false )
     }
 }

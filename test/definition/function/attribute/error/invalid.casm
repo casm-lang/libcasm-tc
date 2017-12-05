@@ -43,8 +43,7 @@
 
 CASM init foo
 
-[ XXX_not_supported_attribute ] //@ ERROR( fa00 )
+[ XXX_not_supported_attribute ] //@ ERROR( 0400 )
 function bar : -> Integer
 
 rule foo = skip
-

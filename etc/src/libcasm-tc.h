@@ -53,7 +53,7 @@ namespace libcasm_tc
 {
 }
 
-#endif // _LIB_CASMTC_H_
+#endif  // _LIB_CASMTC_H_
 
 //
 //  Local variables:

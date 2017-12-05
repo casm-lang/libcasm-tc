@@ -53,8 +53,7 @@ using namespace libcasm_tc;
 
 TEST_P( RunnerTest, case )
 {
-    libcasm_tc::RunnerTestParam& param
-        = (libcasm_tc::RunnerTestParam&)GetParam();
+    libcasm_tc::RunnerTestParam& param = (libcasm_tc::RunnerTestParam&)GetParam();
 
     EXPECT_NE( (u64)param.specification, 0 );
     EXPECT_TRUE( libstdhl::File::exists( param.specification ) );
@@ -91,8 +90,7 @@ TEST_P( RunnerTest, case )
 
     if( strcmp( env[ "CASM" ], "" ) == 0 )
     {
-        printf(
-            "\nenvironment variable CASM not set, omitting test case!\n\n" );
+        printf( "\nenvironment variable CASM not set, omitting test case!\n\n" );
         SUCCEED();
         return;
     }
@@ -121,9 +119,15 @@ TEST_P( RunnerTest, case )
     {
         case libcasm_tc::Profile::INTERPRETER:
         {
-            sprintf( cmd, "\"%s\" %s \"%s\" %s > \"%s\" 2> \"%s\"",
-                env[ "CASM" ], env[ "CASM_ARG_PRE" ], param.specification,
-                env[ "CASM_ARG_POST" ], fout.c_str(), ferr.c_str() );
+            sprintf(
+                cmd,
+                "\"%s\" %s \"%s\" %s > \"%s\" 2> \"%s\"",
+                env[ "CASM" ],
+                env[ "CASM_ARG_PRE" ],
+                param.specification,
+                env[ "CASM_ARG_POST" ],
+                fout.c_str(),
+                ferr.c_str() );
             break;
         }
         default:
@@ -135,14 +139,13 @@ TEST_P( RunnerTest, case )
     // printf( "exec: '%s'\n", cmd );
     exec_result = system( cmd );
 
-    sprintf( cmd, "%s \"%s\"; %s \"%s\"", env[ "CAT" ], fout.c_str(),
-        env[ "CAT" ], ferr.c_str() );
+    sprintf( cmd, "%s \"%s\"; %s \"%s\"", env[ "CAT" ], fout.c_str(), env[ "CAT" ], ferr.c_str() );
 
     u64 error_cnt = 0;
     u64 warning_cnt = 0;
 
-    libstdhl::File::readLines( ferr.c_str(),
-        [&error_cnt, &warning_cnt]( u32 cnt, const std::string& line ) {
+    libstdhl::File::readLines(
+        ferr.c_str(), [&error_cnt, &warning_cnt]( u32 cnt, const std::string& line ) {
             std::regex e( "error:" );
             std::sregex_iterator start( line.begin(), line.end(), e );
             std::sregex_iterator end;
@@ -153,8 +156,7 @@ TEST_P( RunnerTest, case )
                 std::string mstr = match.str();
 
                 std::regex expr( "@([\\S]+)\\{([\\S]+)\\}" );
-                std::sregex_iterator expr_start(
-                    line.begin(), line.end(), expr );
+                std::sregex_iterator expr_start( line.begin(), line.end(), expr );
                 std::sregex_iterator expr_end;
 
                 for( std::sregex_iterator i = expr_start; i != expr_end; i++ )
@@ -202,8 +204,8 @@ TEST_P( RunnerTest, case )
         std::unordered_map< std::string, libcasm_tc::ParamError > checked;
 
         libstdhl::File::readLines(
-            ferr.c_str(), [&param, &checked, &failure_cnt, &error_cnt](
-                              u32 cnt, const std::string& line ) {
+            ferr.c_str(),
+            [&param, &checked, &failure_cnt, &error_cnt]( u32 cnt, const std::string& line ) {
                 std::string c = "";
                 std::regex expr( "@([\\S]+)\\{([\\S]+)\\}" );
 
@@ -223,8 +225,7 @@ TEST_P( RunnerTest, case )
 
                     for( auto& e : param.error )
                     {
-                        if( e.line.compare( match[ 1 ].str() )
-                            == 0 ) // found line!
+                        if( e.line.compare( match[ 1 ].str() ) == 0 )  // found line!
                         {
                             errorCodes.emplace_back( e );
                             line_not_found = false;
@@ -237,8 +238,7 @@ TEST_P( RunnerTest, case )
                         {
                             code_not_valid = false;
 
-                            auto result
-                                = checked.emplace( e.line + ":" + e.code, e );
+                            auto result = checked.emplace( e.line + ":" + e.code, e );
 
                             if( not result.second )
                             {
@@ -262,9 +262,8 @@ TEST_P( RunnerTest, case )
         EXPECT_EQ( param.error.size(), checked.size() );
         EXPECT_EQ( param.error.size(), error_cnt );
 
-        if( exec_result == 0 or param.error.size() != checked.size()
-            or param.error.size() != error_cnt
-            or failure_cnt > 0 )
+        if( exec_result == 0 or param.error.size() != checked.size() or
+            param.error.size() != error_cnt or failure_cnt > 0 )
         {
             printf( "%lu, %lu\n", param.error.size(), error_cnt );
 

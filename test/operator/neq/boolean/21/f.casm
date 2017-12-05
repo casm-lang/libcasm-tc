@@ -56,9 +56,9 @@ rule foo =
     let b : Boolean = false in
     let c = a != b in
     {
-        assert( isSymbolic( c ) = isSymbolic( a )) 
+        assert( c.isSymbolic() = a.isSymbolic() )
         
         assert( c != undef) 
-        assert( c != false) 
+        assert( c != false)
     }
 }

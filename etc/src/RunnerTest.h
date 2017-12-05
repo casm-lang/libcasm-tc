@@ -65,12 +65,11 @@ namespace libcasm_tc
     inline void PrintTo( const RunnerTestParam& obj, ::std::ostream* os ){};
 }
 
-class RunnerTest
-    : public ::testing::TestWithParam< libcasm_tc::RunnerTestParam >
+class RunnerTest : public ::testing::TestWithParam< libcasm_tc::RunnerTestParam >
 {
 };
 
-#endif // _LIB_CASMTC_RUNNER_TEST_H_
+#endif  // _LIB_CASMTC_RUNNER_TEST_H_
 
 //
 //  Local variables:
