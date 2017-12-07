@@ -44,10 +44,10 @@ CASM init foo
 
 rule foo =
 {
-    let x : FuncRef< -> Void > = undef in
+    let x : FuncRef< -> Integer > = undef in
     	assert( x as String = undef )
 
-    let x : FuncRef< -> Void > = @bar in
+    let x : FuncRef< -> Integer > = @bar in
     	assert( x as String = "@bar" )
 }
 
