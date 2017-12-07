@@ -54,9 +54,9 @@ rule foo =
     choose i in Color do
         case i of
         {
-            .Red: skip
-            .Green: skip
-            .Blue: skip
+            ::Red: skip
+            ::Green: skip
+            ::Blue: skip
             _: assert( false )
         }
 

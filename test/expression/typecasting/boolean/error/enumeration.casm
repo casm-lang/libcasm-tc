@@ -49,6 +49,6 @@ enumeration myEnum = { one, two, three }
 
 rule foo =
 {
-    let x : myEnum = myEnum.one in
+    let x : myEnum = myEnum::one in
     	assert( x as Boolean = false ) //@ ERROR( 1700 )
 }

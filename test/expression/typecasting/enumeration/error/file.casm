@@ -47,7 +47,7 @@ enumeration myEnum = { one, two, three }
 rule foo =
 {
     let x = bar in
-    	assert( x as myEnum = myEnum.one ) //@ ERROR( 1700 )
+    	assert( x as myEnum = myEnum::one ) //@ ERROR( 1700 )
 }
 
 function bar : -> File< String >

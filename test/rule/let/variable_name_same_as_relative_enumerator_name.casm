@@ -45,6 +45,6 @@ CASM init foo
 enumeration Color = { Blue, Red, Green }
 
 rule foo =
-    let Red = Color.Red in
-        let c = .Red in  // uses variable Red if buggy
+    let Red = Color::Red in
+        let c = ::Red in  // uses variable Red if buggy
             skip
