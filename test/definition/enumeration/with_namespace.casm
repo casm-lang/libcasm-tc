@@ -46,10 +46,10 @@ enumeration Color = { Red, Green, Blue }
 
 rule foo =
 {
-    let c = Color.Red in
+    let c = Color::Red in
         skip
 
-    let c : Color = Color.Red in
+    let c : Color = Color::Red in
         skip
 
 }

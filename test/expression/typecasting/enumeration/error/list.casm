@@ -47,5 +47,5 @@ enumeration myEnum = { one, two, three }
 rule foo =
 {
     let x : List< Integer > = [ 1, 10, 2, 20 ] in
-    	assert( x as myEnum = myEnum.one ) //@ ERROR( 1700 )
+    	assert( x as myEnum = myEnum::one ) //@ ERROR( 1700 )
 }

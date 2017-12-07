@@ -46,18 +46,18 @@ enumeration Color = { Red, Green, Blue }
 
 rule foo =
 {
-    let c : Color = .Red in // Color namespace from type of c
+    let c : Color = ::Red in // Color namespace from type of c
         skip
 
-    let c = Color.Green in
+    let c = Color::Green in
         case c of // cases should use Color namespace of c
         {
-            .Red: assert(false)
-            .Green: assert(true)
-            .Blue: assert(false)
+            ::Red: assert(false)
+            ::Green: assert(true)
+            ::Blue: assert(false)
         }
 
-    let c = Color.Blue in
-        if c != .Blue then
+    let c = Color::Blue in
+        if c != ::Blue then
             assert(false)
 }
