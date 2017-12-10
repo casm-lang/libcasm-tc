@@ -44,5 +44,5 @@ CASM init foo
 
 rule foo =
 { 
-    assure( false ) //@ ERROR( ? )
+    assure( false ) //@ ERROR( 5a00 )
 }
