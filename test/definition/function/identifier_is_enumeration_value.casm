@@ -42,10 +42,12 @@
 
 CASM init foo
 
-function a : -> Integer //@ ERROR( 0010 )
+function a : -> Integer
 
-enumeration bar = { a } //@ ERROR( 0010 )
+enumeration bar = { a, b }  // usage of 'a' and 'b' here is OK, because they
+                            // reside in their own namespace 'bar::'
+
+function b : -> Integer
 
 rule foo =
     skip
-
