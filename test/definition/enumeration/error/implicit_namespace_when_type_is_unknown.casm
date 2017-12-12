@@ -48,6 +48,10 @@ enumeration Color = { Red, Green, Blue }
 
 rule foo =
 {
-    let c = ::Red in //@ERROR( ? )
+    let
+    c     //@ERROR( 1200 )
+    =
+    ::Red //@ERROR( 1201 )
+    in
         skip
 }
