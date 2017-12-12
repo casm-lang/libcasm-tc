@@ -59,4 +59,6 @@ rule foo =
         assert(false)
 
     colorFunction := ::Red // Color namespace from type of colorFunction
+
+    program( self ) := undef // terminate after one step!
 }
