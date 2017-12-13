@@ -41,11 +41,11 @@
 //
 
 
-// | OP          | undef | x : Binary'16 | sym   |
-// |-------------+-------+-------------+-------|
-// | undef       | undef | undef       | undef |
-// | y : Binary'16  | undef | x OP y      | sym'  |
-// | sym         | undef | sym'        | sym'  |
+// | OP            | undef | x : Binary'16 | sym   |
+// |---------------+-------+---------------+-------|
+// | undef         | undef | undef         | undef |
+// | y : Binary'16 | undef | x OP y        | sym'  |
+// | sym           | undef | sym'          | sym'  |
 
 CASM init foo
 
@@ -55,8 +55,7 @@ rule foo =
     let b : Binary'16 =    0 in
     let c = a + b in
     {
-        assert( c  = 123 as Binary'16 )
-
+        assert( c = a )
         assert( c != undef) 
         assert( c.isSymbolic() = false )
     }

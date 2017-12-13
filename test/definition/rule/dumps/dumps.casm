@@ -60,8 +60,8 @@ rule foo =
     a := 3
     b(2) := 4
     c(2,3) := 5
-    bb(two) := 1
-    bbb(2) := three
+    bb(myEnum::two) := 1
+    bbb(2) := myEnum::three
 
     program( self ) := undef
 |}
