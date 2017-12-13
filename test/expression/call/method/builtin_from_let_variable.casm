@@ -48,5 +48,5 @@ rule foo =
         assert( x.dec() = undef )
 
     let x : Integer = 123 in
-        assert( x.dec() = 123 )
+        assert( x.dec() = "123" )
 }
