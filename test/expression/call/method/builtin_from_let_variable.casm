@@ -45,5 +45,8 @@ CASM init foo
 rule foo =
 {
     let x : Integer = undef in
-        println( x.dec() ) //@ ERROR( 9100 )
+        assert( x.dec() = undef )
+
+    let x : Integer = 123 in
+        assert( x.dec() = 123 )
 }
