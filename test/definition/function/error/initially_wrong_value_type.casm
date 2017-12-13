@@ -45,9 +45,12 @@
 
 CASM init foo
 
-function x : Integer -> Integer initially {
-    1 ->
-         "string" //@ ERROR( 1205 )
+function x : Integer ->
+    Integer  //@ ERROR( 1205 )
+initially {
+    1
+->
+    "string" //@ ERROR( 1205 )
 }
 
 rule foo =
