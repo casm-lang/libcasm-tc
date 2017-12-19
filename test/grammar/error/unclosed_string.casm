@@ -49,7 +49,7 @@ function s : -> String
 
 rule bar =
 {
-    s := "asdf  //@ ERROR( 0002 )
+    s := "asdf  //@ ERROR( 0002 ) //@ ERROR( 0000 ) 
 
     program( self ) := undef
 }
