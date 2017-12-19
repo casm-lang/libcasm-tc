@@ -50,10 +50,10 @@ rule foo =
     let x : Binary'1 = 1     in assert( x as Binary'1 = 0b1 )
 
     let x : Binary'8 = undef in assert( x as Binary'8 = undef )
-    let x : Binary'8 = 5     in assert( x as Binary'8 = 0b101 )
-    let x : Binary'8 = 123   in assert( x as Binary'8 = 0b1111011 )
+    let x : Binary'8 = 5     in assert( x as Binary'8 = 0b0000'0101 )
+    let x : Binary'8 = 123   in assert( x as Binary'8 = 0b0111'1011 )
 
     let x : Binary'23 = undef in assert( x as Binary'23 = undef )
-    let x : Binary'23 = 321   in assert( x as Binary'23 = 0b101000001 )
-    let x : Binary'23 = 54321 in assert( x as Binary'23 = 0b1101010000110001 )
+    let x : Binary'23 = 321   in assert( x as Binary'23 = 0b000'0000'0000'0001'0100'0001 )
+    let x : Binary'23 = 54321 in assert( x as Binary'23 = 0b000'0000'1101'0100'0011'0001 )
 }
