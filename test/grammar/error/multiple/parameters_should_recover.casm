@@ -44,5 +44,5 @@ CASM init foo
 
 rule foo( arg : skip ) = //@ERROR( 0000 ) primary error
 {
-    1 //@ERROR( 0000 )
-}
+    1
+} //@ ERROR( 0000 )
