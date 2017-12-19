@@ -53,6 +53,6 @@ rule foo =
 
     {|
         skip
-        1 //@ERROR( 0000 )
-    |}
+        1
+    |} //@ ERROR( 0000 )
 }

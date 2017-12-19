@@ -40,13 +40,13 @@
 //  statement from your version.
 //
 
-// the parser tried to apply the attributes to bar, which a nullptr because
-// of the error, and thus crashed
+// the parser tried to apply the attributes to bar, which is a nullptr,
+// because of the error, and thus crashed
 // (fixed in commit casm/casm-fe@9c5ea1d7c1b2658bde4728d983a8f902622ce99f)
 
 CASM init foo
 
-[static] bar : -> Integer // @ERROR( 0000 )
+[static] bar : -> Integer //@ ERROR( 0000 )
 
 rule foo = 
     skip
