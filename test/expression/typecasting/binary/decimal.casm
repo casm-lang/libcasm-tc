@@ -46,7 +46,7 @@ rule foo =
 {
     let x : Decimal = undef  in assert( x as Binary'1 = undef )
     let x : Decimal = -24.24 in assert( x as Binary'1 = undef )
-    let x : Decimal = -1.1   in assert( x as Binary'1 = undef )
+    let x : Decimal = -1.1   in assert( x as Binary'1 = 0b1 )
     let x : Decimal = 0.0    in assert( x as Binary'1 = 0b0 )
     let x : Decimal = 1.1    in assert( x as Binary'1 = 0b1 )
     let x : Decimal = 42.42  in assert( x as Binary'1 = undef )
