@@ -49,9 +49,9 @@ enumeration Color = { Red, Green, Blue }
 rule foo =
 {
     let
-    c     //@ERROR( 1200 )
+    c     //@ ERROR( 1200 )
     =
-    ::Red //@ERROR( 1201 )
+    ::Red //@ ERROR( 1201 ) //@ ERROR( cc11 )
     in
         skip
 }
