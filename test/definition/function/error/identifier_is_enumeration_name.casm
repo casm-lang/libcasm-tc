@@ -42,9 +42,9 @@
 
 CASM init foo
 
-function a : -> Integer //@ ERROR( 0010 )
+function a : -> Integer //@ ERROR( e000 )
 
-enumeration a = { bar, baz } //@ ERROR( 0010 )
+enumeration a = { bar, baz } //@ ERROR( e000 )
 
 rule foo =
     skip

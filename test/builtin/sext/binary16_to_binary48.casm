@@ -40,12 +40,15 @@
 //  statement from your version.
 //
 
+
 CASM init foo
 
-function a : -> Integer //@ ERROR( 0010 )
-
-enumeration bar = { a } //@ ERROR( 0010 )
-
-rule foo =
-    skip
-
+rule foo = 
+{
+    let a : Binary'16 =           0x1234 in
+    let b : Binary'48 = 0x0000'0000'1234 in
+    let c = a.sext( 48 ) in
+    {
+        assert( c = b )
+    }
+}

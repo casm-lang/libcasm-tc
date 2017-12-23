@@ -41,22 +41,10 @@
 //
 
 
-// | OP            | undef | x : Binary'16 | sym   |
-// |---------------+-------+---------------+-------|
-// | undef         | undef | undef         | undef |
-// | y : Binary'16 | undef | x OP y        | sym'  |
-// | sym           | undef | sym'          | sym'  |
-
 CASM init foo
-
-[symbolic] function a : -> Binary'16
-[symbolic] function b : -> Binary'16
 
 rule foo =
 {
-    let c = a + b in
-    {
-        assert( c.isSymbolic() = a.isSymbolic() )
-        assert( c.isSymbolic() = b.isSymbolic() )
-    }
+    let x : List< Integer > = [ 1, 5, 2, 6, 3, 7, 4, 8] in
+    	skip
 }

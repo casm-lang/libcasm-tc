@@ -42,7 +42,7 @@
 
 CASM init foo
 
-function pow: Integer -> Integer //@ ERROR( f100 )
+derived assert( arg : Integer ) -> Integer = 0 //@ ERROR( d100 )
 
 rule foo =
     skip

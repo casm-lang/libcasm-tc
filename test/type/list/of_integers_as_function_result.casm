@@ -40,16 +40,9 @@
 //  statement from your version.
 //
 
-// type checker should say that the update expression type doesn't match
-// the function type (String instead of Integer)
 
 CASM init foo
 
-function y : Integer -> Integer
+rule foo = skip
 
-rule foo =
-{
-    y( 1 ) := "42" //@ ERROR( 1205 )
-
-    program( self ) := undef
-}
+function f : -> List< Integer >

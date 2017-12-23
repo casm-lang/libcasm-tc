@@ -40,23 +40,20 @@
 //  statement from your version.
 //
 
-
-// | OP            | undef | x : Binary'16 | sym   |
-// |---------------+-------+---------------+-------|
-// | undef         | undef | undef         | undef |
-// | y : Binary'16 | undef | x OP y        | sym'  |
-// | sym           | undef | sym'          | sym'  |
+// c has no known type and thus no namespace
 
 CASM init foo
 
-[symbolic] function a : -> Binary'16
-[symbolic] function b : -> Binary'16
+enumeration Color = { Red, Green, Blue }
+
+enumeration Other = { One, Two, Three }
 
 rule foo =
 {
-    let c = a + b in
-    {
-        assert( c.isSymbolic() = a.isSymbolic() )
-        assert( c.isSymbolic() = b.isSymbolic() )
-    }
+    let
+    c : Other
+    =
+    ::Red //@ERROR( cc11 )
+    in
+        skip
 }

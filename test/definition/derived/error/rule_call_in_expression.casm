@@ -40,8 +40,8 @@
 //  statement from your version.
 //
 
-// consistency check should say that a rule call with side effects isn't
-// possible in derived
+// property resolver detects that the resulting derived expression is a
+// not constant expression due to the non-constant rule call
 
 CASM init foo
 
@@ -53,7 +53,7 @@ rule someRule -> Integer =
 }
 
 derived bar -> Integer =
-    someRule() //@ ERROR( 5100 )
+    someRule() //@ ERROR( de00 ) // derived has not constant expression
 
 rule foo =
     skip

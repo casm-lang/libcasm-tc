@@ -44,10 +44,11 @@
 
 CASM init foo
 
-derived bar -> Integer =
+derived bar -> String =
     let x = 42 in
         x
+	as String
 
 rule foo =
-    assert( bar = 42 )
+    assert( bar = "42" )
 

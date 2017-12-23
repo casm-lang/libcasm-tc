@@ -40,10 +40,17 @@
 //  statement from your version.
 //
 
+
 CASM init foo
 
 rule foo =
 {
-    let x : Integer = undef in
-        println( x.dec() ) //@ ERROR( 9100 )
+    let a : Binary'20 = undef in
+    let b : Binary'20 = 0b0000'0000'0000'0000'0000 in
+    let c = a and b in
+    {
+        assert( c  = undef )
+
+	assert( c.isSymbolic() = false )
+    }
 }

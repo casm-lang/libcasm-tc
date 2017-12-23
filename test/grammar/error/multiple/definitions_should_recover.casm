@@ -43,13 +43,17 @@
 CASM init foo
 
 rule foo1 =
-    1 //@ERROR( 0000 )
+    {
+        1
+    } //@ ERROR( 0000 )
 
 rule foo2 =
-    2 //@ERROR( 0000 )
+    {
+        2
+    } //@ ERROR( 0000 )
 
 derived x -> Integer =
-    skip //@ERROR( 0000 )
+    skip //@ ERROR( 0000 )
 
 function y: Integer -> Integer initially
     skip //@ERROR( 0000 )

@@ -45,11 +45,14 @@
 
 CASM init foo
 
-function y : Integer * Integer -> Integer
+function y : Integer ->
+    Integer //@ ERROR( 1205 )
 
 rule foo =
 {
-    y( 1, 2 ) := "42" //@ ERROR( 1205 )
+    y( 1 )
+    :=
+    "42" //@ ERROR( 1205 )
 
     program( self ) := undef
 }

@@ -40,29 +40,9 @@
 //  statement from your version.
 //
 
-
 CASM init foo
 
-// TODO: FIXME: PPA: check if the dumps is really correct!!!
+enumeration assert = { bar, baz, qux } //@ ERROR( e100 )
 
-enumeration myEnum = { one, two, three }
-
-function a : -> Integer
-function b : Integer -> Integer
-function c : Integer * Integer -> Integer
-
-function bb: myEnum -> Integer
-function bbb: Integer -> myEnum
-
-[dumps [a,b,c,bb,bbb]]
 rule foo =
-{|
-    a := 3
-    b(2) := 4
-    c(2,3) := 5
-    bb(two) := 1
-    bbb(2) := three
-
-    program( self ) := undef
-|}
-
+    skip

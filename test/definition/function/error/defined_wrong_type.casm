@@ -45,7 +45,9 @@
 
 CASM init foo
 
-function x : -> Integer defined {
+function x : -> 
+    Integer  //@ ERROR( 1332 )
+defined {
     "string" //@ ERROR( 1332 )
 }
 

@@ -41,22 +41,19 @@
 //
 
 
-// | OP            | undef | x : Binary'16 | sym   |
-// |---------------+-------+---------------+-------|
-// | undef         | undef | undef         | undef |
-// | y : Binary'16 | undef | x OP y        | sym'  |
-// | sym           | undef | sym'          | sym'  |
-
 CASM init foo
 
-[symbolic] function a : -> Binary'16
-[symbolic] function b : -> Binary'16
-
-rule foo =
+rule foo = 
 {
-    let c = a + b in
-    {
-        assert( c.isSymbolic() = a.isSymbolic() )
-        assert( c.isSymbolic() = b.isSymbolic() )
-    }
+    let x : Binary'1 = undef in assert( x as Binary'1 = undef )
+    let x : Binary'1 = 0     in assert( x as Binary'1 = 0b0 )
+    let x : Binary'1 = 1     in assert( x as Binary'1 = 0b1 )
+
+    let x : Binary'8 = undef in assert( x as Binary'8 = undef )
+    let x : Binary'8 = 5     in assert( x as Binary'8 = 0b0000'0101 )
+    let x : Binary'8 = 123   in assert( x as Binary'8 = 0b0111'1011 )
+
+    let x : Binary'23 = undef in assert( x as Binary'23 = undef )
+    let x : Binary'23 = 321   in assert( x as Binary'23 = 0b000'0000'0000'0001'0100'0001 )
+    let x : Binary'23 = 54321 in assert( x as Binary'23 = 0b000'0000'1101'0100'0011'0001 )
 }

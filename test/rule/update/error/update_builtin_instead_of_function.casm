@@ -46,7 +46,9 @@ CASM init foo
 
 rule foo =
 {
-    assert( true ) := "42" //@ ERROR( 0501 )
+    assert( true ) //@ ERROR( 1206 )
+    :=
+    "42"
 
     program( self ) := undef
 }
