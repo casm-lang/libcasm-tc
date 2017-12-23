@@ -40,6 +40,10 @@
 //  statement from your version.
 //
 
+// this test case checks that only increasing ranges are valid and
+// constructed in range statements and therefore the function 'bar'
+// will never be updated at all because the resulting range for the
+// forall is [ 1..-1 ] which leads to an empty set [] !!!
 
 CASM init foo
 
@@ -59,8 +63,8 @@ rule foo =
 rule baz =
 {
     assert( bar( -2 ) = undef )
-    assert( bar( -1 ) = -1 )
-    assert( bar(  0 ) = +0 )
-    assert( bar(  1 ) = +1 )
+    assert( bar( -1 ) = undef )
+    assert( bar(  0 ) = undef )
+    assert( bar(  1 ) = undef )
     assert( bar(  2 ) = undef )
 }
