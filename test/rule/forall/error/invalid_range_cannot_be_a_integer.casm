@@ -48,9 +48,9 @@ rule foo =
     forall
     i
     in
-    5   //@ERROR( 1114 )
+    5   //@ERROR( 1026 )
     do
         skip
-    
+
     program( self ) := undef
 }
