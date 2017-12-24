@@ -33,7 +33,7 @@ enumeration Color = {
     Blue
 }
 
-using MyType = Color::Red //@ ERROR( ? )
+using MyType = Color::Red //@ ERROR( 0100 )
 
 rule foo =
     skip
