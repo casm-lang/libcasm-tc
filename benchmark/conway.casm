@@ -57,6 +57,7 @@ CASM init GameOfLife
  *
  * from https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
  */
+
 function alive : Integer * Integer -> Boolean defined { false } initially {
     (50, 45) -> true, (51, 45) -> true, (52, 45) -> true,
     (50, 46) -> true,                   (52, 46) -> true,
@@ -68,14 +69,14 @@ function alive : Integer * Integer -> Boolean defined { false } initially {
 }
 
 derived aliveNeighbours( x : Integer, y : Integer ) -> Integer
-    = asInteger(alive(x - 1, y - 1))
-    + asInteger(alive(x, y - 1))
-    + asInteger(alive(x + 1, y - 1))
-    + asInteger(alive(x - 1, y))
-    + asInteger(alive(x + 1, y))
-    + asInteger(alive(x - 1, y + 1))
-    + asInteger(alive(x, y + 1))
-    + asInteger(alive(x + 1, y + 1))
+    = (alive(x - 1, y - 1) as Integer)
+    + (alive(x    , y - 1) as Integer)
+    + (alive(x + 1, y - 1) as Integer)
+    + (alive(x - 1, y    ) as Integer)
+    + (alive(x + 1, y    ) as Integer)
+    + (alive(x - 1, y + 1) as Integer)
+    + (alive(x    , y + 1) as Integer)
+    + (alive(x + 1, y + 1) as Integer)
 
 rule updateCell( x : Integer, y : Integer ) =
     let c = aliveNeighbours(x, y) in {
