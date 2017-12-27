@@ -789,12 +789,12 @@ derived applyStencil(x : Integer, y : Integer, z : Integer, a : Integer, b : Int
 
 rule updateCells =
 {
-    forall x in 5 do
-        forall y in 5 do
-            forall z in 5 do
-                forall a in 5 do
-                    forall b in 5 do
-                        forall c in 5 do
+    forall x in [1..5] do
+        forall y in [1..5] do
+            forall z in [1..5] do
+                forall a in [1..5] do
+                    forall b in [1..5] do
+                        forall c in [1..5] do
                             data(x, y, z, a, b, c) := applyStencil(x, y, z, a, b, c)
 
     program(self) := undef

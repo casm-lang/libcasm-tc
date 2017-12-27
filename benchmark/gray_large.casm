@@ -89,7 +89,7 @@ rule main2 = {
     if inputnr < 2^nrbits then
     {|
         forall i in [0..15] do    {
-            input(i) := asBoolean((inputnr / 2^i) % 2)
+            input(i) := ((inputnr / 2^i) % 2 as Boolean)
         }
         forall i in [0..15] do    {
             call gray1(i)
