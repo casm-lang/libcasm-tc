@@ -1,10 +1,10 @@
 # 
-#   Copyright (c) 2014-2017 CASM Organization
+#   Copyright (c) 2014-2018 CASM Organization <https://casm-lang.org>
 #   All rights reserved.
 # 
 #   Developed by: Philipp Paulweber
 #                 Emmanuel Pescosta
-#                 https://github.com/casm-lang/libcasm-tc
+#                 <https://github.com/casm-lang/libcasm-tc>
 # 
 #   This file is part of libcasm-tc.
 # 
@@ -54,20 +54,22 @@ CASM test cases for test applications, unit tests, integration tests etc.
 
 ** Copyright and License
 
-The copyright holder of libcasm-tc is the CASM organization (@casm-lang) 
-and the used license of libcasm-tc is a [[https://www.gnu.org/licenses/gpl-3.0.html][GNU GPLv3+]]
+The copyright holder of 
+=libcasm-tc= is the [[https://casm-lang.org][CASM organization]] ([[https://github.com/casm-lang][@casm-lang]]) 
+and the used license of 
+=libcasm-tc= is the [[https://www.gnu.org/licenses/gpl-3.0.html][GNU GPLv3+]]
 with an additional permission ("GPL Linking Exception").
 
 *** Notice
 
 #+begin_src
 
-Copyright (c) 2014-2017 CASM Organization
+Copyright (c) 2014-2018 CASM Organization <https://casm-lang.org>
 All rights reserved.
 
 Developed by: Philipp Paulweber
               Emmanuel Pescosta
-              https://github.com/casm-lang/libcasm-tc
+              <https://github.com/casm-lang/libcasm-tc>
 
 This file is part of libcasm-tc.
 
