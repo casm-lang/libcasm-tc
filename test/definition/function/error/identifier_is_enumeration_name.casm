@@ -42,7 +42,7 @@
 
 CASM init foo
 
-function a : -> Integer //@ ERROR( e000 )
+function a : -> Integer
 
 enumeration a = { bar, baz } //@ ERROR( e000 )
 
