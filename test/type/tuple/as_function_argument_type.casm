@@ -45,4 +45,4 @@ CASM init foo
 
 rule foo = skip
 
-function f : -> Tuple< Integer >
+function f : ( Integer, Integer ) -> Integer

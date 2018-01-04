@@ -40,9 +40,11 @@
 //  statement from your version.
 //
 
-
 CASM init foo
 
-rule foo = skip
+rule foo =
+{
+    let x : Integer = ( 1 ) in skip // not a tuple, is just a integer literal with a surrounded parenses 
 
-function f : Tuple< Integer > -> Integer
+    let x : ( Integer ) = ( 1 ) in skip //@ ERROR( ? )
+}
