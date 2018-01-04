@@ -44,6 +44,6 @@ CASM init foo
 
 rule foo =
 {
-    let x : Tuple< Integer, Integer > = [ 1, 10 ] in
+    let x : ( Integer, Integer ) = ( 1, 10 ) in
         assert( x as Rational = 0r0/1 ) //@ ERROR( 1700 )
 }
