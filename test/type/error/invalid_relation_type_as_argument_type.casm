@@ -46,5 +46,5 @@ CASM init foo
 
 rule foo = skip
 
-function f : Abstract< Integer -> Integer > -> Integer //@ ERROR( 0103 )
+function f : Abstract< Integer -> Integer > -> Integer //@ ERROR( 0104 )
 

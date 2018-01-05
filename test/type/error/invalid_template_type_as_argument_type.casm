@@ -40,10 +40,10 @@
 //  statement from your version.
 //
 
-// composed type 'Abstract' is invalid
+// template type 'Abstract' is invalid
 
 CASM init foo
 
 rule foo = skip
 
-function f : -> Abstract< Integer > //@ ERROR( 0102 )
+function f : Abstract< Integer > -> Integer //@ ERROR( 0103 )
