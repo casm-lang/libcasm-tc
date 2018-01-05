@@ -46,4 +46,5 @@ CASM init foo
 
 rule foo = skip
 
-function f : -> ( Integer ) //@ ERROR( ? )
+function f : ->
+		( Integer ) //@ ERROR( 0000 )

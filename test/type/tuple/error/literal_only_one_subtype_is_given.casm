@@ -46,5 +46,7 @@ rule foo =
 {
     let x : Integer = ( 1 ) in skip // not a tuple, is just a integer literal with a surrounded parenses 
 
-    let x : ( Integer ) = ( 1 ) in skip //@ ERROR( ? )
+    let x : ( Integer ) //@ ERROR( 0000 )
+    = ( 1 )
+	in skip
 }
