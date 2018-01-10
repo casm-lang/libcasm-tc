@@ -44,5 +44,10 @@ CASM init foo
 
 rule foo =
 {
-    let x : ( Integer, String, Decimal ) = ( 1, "2", 3.4 ) in skip
+    let
+    x : ( Integer, String, Decimal )
+    =
+    ( 1, "2", 3.4 )
+    in
+	skip
 }
