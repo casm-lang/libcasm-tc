@@ -40,9 +40,11 @@
 //  statement from your version.
 //
 
+// tuple types must be constructed with at least two subtupes
 
 CASM init foo
 
 rule foo = skip
 
-function f : -> Tuple< Tuple< Integer, Integer >, Tuple< Integer, Integer, Integer > >
+function f : ->
+		( Integer ) //@ ERROR( 0000 )

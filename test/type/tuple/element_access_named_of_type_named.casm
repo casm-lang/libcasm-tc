@@ -40,9 +40,30 @@
 //  statement from your version.
 //
 
-
 CASM init foo
 
-rule foo = skip
+function bar : -> ( a : Integer, b : String, c : Decimal )
 
-function f : -> Tuple< Integer, Tuple< Integer, Integer > >
+rule foo =
+{
+    let a : Integer = bar.a in
+    let x : Integer = bar.1 in
+    {
+    	assert( a = undef )
+    	assert( a = x )
+    }
+
+    let b : String = bar.b in
+    let y : String = bar.2 in
+    {
+	assert( b = undef )
+	assert( b = y )
+    }
+
+    let c : Decimal = bar.c in
+    let z : Decimal = bar.3 in
+    {
+    	assert( c = undef )
+    	assert( c = z )
+    }
+}

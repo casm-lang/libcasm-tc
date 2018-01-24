@@ -44,6 +44,10 @@ CASM init foo
 
 rule foo =
 {
-    let x : ( Integer, Integer ) = ( 1, 10 ) in
-        assert( x as Rational = 0r0/1 ) //@ ERROR( 1700 )
+    let
+    x : ( a : Integer, b : String, c : Decimal )
+    =
+    ( 1, "2", 3.4 ) // shall be OK, because the tuple type signature matches!
+    in
+	skip
 }

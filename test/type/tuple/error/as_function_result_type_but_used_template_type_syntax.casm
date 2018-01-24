@@ -40,9 +40,11 @@
 //  statement from your version.
 //
 
+// tuple types canno be constructed with a template type syntax
 
 CASM init foo
 
 rule foo = skip
 
-function f : Tuple< Integer > -> Integer
+function f : ->
+		Tuple< Integer, Boolean > //@ ERROR( 0103 )

@@ -40,10 +40,13 @@
 //  statement from your version.
 //
 
-// composed type 'Abstract' is invalid
-
 CASM init foo
 
-rule foo = skip
+rule foo =
+{
+    let x : Integer = ( 1 ) in skip // not a tuple, is just a integer literal with a surrounded parenses 
 
-function f : Abstract< Integer > -> Integer //@ ERROR( 0102 )
+    let x : ( Integer ) //@ ERROR( 0000 )
+    = ( 1 )
+	in skip
+}

@@ -40,9 +40,14 @@
 //  statement from your version.
 //
 
-
 CASM init foo
 
-rule foo = skip
-
-function f : -> Tuple< Tuple< Integer, Integer >, Integer >
+rule foo =
+{
+    let
+    x : ( Integer, String, Decimal )
+    =
+    ( 1, "2", 3.4 )
+    in
+	skip
+}

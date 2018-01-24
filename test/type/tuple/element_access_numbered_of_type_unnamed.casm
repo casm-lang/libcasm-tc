@@ -42,8 +42,16 @@
 
 CASM init foo
 
+function bar : -> ( Integer, String, Decimal )
+
 rule foo =
 {
-    let x : ( Integer, Integer ) = ( 1, 10 ) in
-        assert( x as Rational = 0r0/1 ) //@ ERROR( 1700 )
+    let a : Integer = bar.1 in
+    	assert( a = undef )
+
+    let b : String = bar.2 in
+    	assert( b = undef )
+
+    let c : Decimal = bar.3 in
+    	assert( c = undef )
 }

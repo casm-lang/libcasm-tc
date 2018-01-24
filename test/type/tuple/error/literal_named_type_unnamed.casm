@@ -40,9 +40,30 @@
 //  statement from your version.
 //
 
+// unable to infer a record literal type from a tuple type!
 
 CASM init foo
 
-rule foo = skip
+rule foo =
+{
+    let
+    x : ( Integer, String, Decimal )
+    =
+    ( a : 1, b : "2", c : 3.4 )      //@ ERROR( 1201 )
+    in
+	skip
 
-function f : -> Tuple< Integer >
+    let
+    x : ( Integer, String, Decimal )
+    =
+    ( b : "2" )                      //@ ERROR( 1201 )
+    in
+	skip
+
+    let
+    x : ( Integer, String, Decimal )
+    =
+    ( c : 3.4, a : 1, b : "2" )      //@ ERROR( 1201 )
+    in
+	skip
+}

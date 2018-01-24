@@ -40,10 +40,32 @@
 //  statement from your version.
 //
 
+// a tuple type has no named element access
+
 CASM init foo
+
+function bar : -> ( Integer, String, Decimal )
 
 rule foo =
 {
-    let x : ( Integer, Integer ) = ( 1, 10 ) in
-        assert( x as Rational = 0r0/1 ) //@ ERROR( 1700 )
+    let
+    a : Integer
+    =
+    bar.a //@ ERROR( ? )
+    in
+    	skip
+
+    let
+    a : String
+    =
+    bar.b //@ ERROR( ? )
+    in
+    	skip
+
+    let
+    a : Decimal
+    =
+    bar.c //@ ERROR( ? )
+    in
+    	skip
 }
