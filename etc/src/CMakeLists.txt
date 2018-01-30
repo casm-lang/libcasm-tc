@@ -59,8 +59,19 @@ add_library( ${PROJECT}-generator-cpp OBJECT
 
 configure_file(
   Version.in.h
+  ${PROJECT}/Version.h
+  )
+configure_file(
+  Version.in
   ${PROJECT}/Version
-)
+  )
+install(
+  FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT}/Version.h
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT}/Version
+  DESTINATION
+    "include/${PROJECT}"
+  )
 
 
 ecm_generate_headers( ${PROJECT}_HEADERS_CPP
@@ -81,7 +92,6 @@ install(
   FILES
     ${${PROJECT}_HEADERS}
     ${${PROJECT}_HEADERS_CPP}
-    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT}/Version
   DESTINATION
     "include/${PROJECT}"
   )

@@ -42,16 +42,13 @@
 
 #include "main.h"
 
-void libcasm_ir_main_dummy( void )
+TEST( libcasm_tc_main, empty )
 {
-    const auto source =
-        libstdhl::Memory::make< libstdhl::Log::Source >( "libcasm-ir", "CASM IR Library" );
-
-    libstdhl::Log::defaultSource( source );
-}
-
-TEST( libcasm_ir_main, empty )
-{
+    std::cout << libcasm_tc::REVTAG << "\n";
+    std::cout << libcasm_tc::COMMIT << "\n";
+    std::cout << libcasm_tc::BRANCH << "\n";
+    std::cout << libcasm_tc::LICENSE << "\n";
+    std::cout << libcasm_tc::NOTICE << "\n";
 }
 
 //
