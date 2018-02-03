@@ -69,14 +69,14 @@ function alive : Integer * Integer -> Boolean defined { false } initially {
 }
 
 derived aliveNeighbours( x : Integer, y : Integer ) -> Integer
-    = (alive(x - 1, y - 1) as Integer)
-    + (alive(x    , y - 1) as Integer)
-    + (alive(x + 1, y - 1) as Integer)
-    + (alive(x - 1, y    ) as Integer)
-    + (alive(x + 1, y    ) as Integer)
-    + (alive(x - 1, y + 1) as Integer)
-    + (alive(x    , y + 1) as Integer)
-    + (alive(x + 1, y + 1) as Integer)
+    = alive(x - 1, y - 1) as Integer
+    + alive(x    , y - 1) as Integer
+    + alive(x + 1, y - 1) as Integer
+    + alive(x - 1, y    ) as Integer
+    + alive(x + 1, y    ) as Integer
+    + alive(x - 1, y + 1) as Integer
+    + alive(x    , y + 1) as Integer
+    + alive(x + 1, y + 1) as Integer
 
 rule updateCell( x : Integer, y : Integer ) =
     let c = aliveNeighbours(x, y) in {
