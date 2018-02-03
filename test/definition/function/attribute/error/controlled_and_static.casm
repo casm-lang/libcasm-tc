@@ -43,7 +43,8 @@
 
 CASM init foo
 
-[controlled, static] //@ ERROR( f011 )
+[controlled] //@ ERROR( f011 )
+[static]
 function bar : -> Integer
 
 rule foo = skip
