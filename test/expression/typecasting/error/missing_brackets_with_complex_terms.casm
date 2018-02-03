@@ -40,55 +40,16 @@
 //  statement from your version.
 //
 
-CASM init GameOfLife
+// Casting of 1 + 1 is ambiguous because it can either be `1 + (1 as Boolean)`
+// or `(1 + 1) as Boolean` depending on the precendence of the operator.
+// Better avoid this and force brackets if the second one was intended.
+// E.g. `assert( c = 0b1111'0000 as Binary'16 )` is such an real-world example
+//       where the result of = was mistakenly casted to Binary'16.
 
-/*
- * Start pattern:
- *
- * X X X
- * X   X
- * X   X
- *
- * X   X
- * X   X
- * X X X
- *
- * should terminate after 54 steps
- *
- * from https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
- */
+// The type inference should say that the + operator is not defined for
+// {Integer, Boolean} because the as operator will cast the number literal.
 
-function alive : Integer * Integer -> Boolean defined { false } initially {
-    (50, 45) -> true, (51, 45) -> true, (52, 45) -> true,
-    (50, 46) -> true,                   (52, 46) -> true,
-    (50, 47) -> true,                   (52, 47) -> true,
+CASM init foo
 
-    (50, 49) -> true,                   (52, 49) -> true,
-    (50, 50) -> true,                   (52, 50) -> true,
-    (50, 51) -> true, (51, 51) -> true, (52, 51) -> true
-}
-
-derived aliveNeighbours( x : Integer, y : Integer ) -> Integer
-    = alive(x - 1, y - 1) as Integer
-    + alive(x    , y - 1) as Integer
-    + alive(x + 1, y - 1) as Integer
-    + alive(x - 1, y    ) as Integer
-    + alive(x + 1, y    ) as Integer
-    + alive(x - 1, y + 1) as Integer
-    + alive(x    , y + 1) as Integer
-    + alive(x + 1, y + 1) as Integer
-
-rule updateCell( x : Integer, y : Integer ) =
-    let c = aliveNeighbours(x, y) in {
-        if c = 3 then {
-            if not alive(x, y) then alive(x, y) := true
-        }
-        if (c < 2) or (c > 3) then {
-            if alive(x, y) then alive(x, y) := false
-        }
-    }
-
-rule GameOfLife =
-    forall x in [1..100] do
-        forall y in [1..100] do
-            call updateCell(x, y)
+rule foo =
+    let x = 1 + 1 as Boolean in skip //@ ERROR( 1307 )
