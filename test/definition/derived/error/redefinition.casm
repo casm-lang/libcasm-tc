@@ -42,7 +42,7 @@
 
 CASM init foo
 
-derived bar -> Integer = //@ ERROR( d000 )
+derived bar -> Integer =
     42
 
 derived bar -> Integer = //@ ERROR( d000 )

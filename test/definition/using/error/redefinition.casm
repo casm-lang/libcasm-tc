@@ -44,8 +44,8 @@
 
 CASM init foo
 
-using MyType = Boolean //@ ERROR( 0502 )
-using MyType = Integer //@ ERROR( 0502 )
+using MyType = Boolean
+using MyType = Integer //@ ERROR( 6000 )
 
 rule foo =
     skip
