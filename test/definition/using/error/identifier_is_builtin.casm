@@ -40,12 +40,11 @@
 //  statement from your version.
 //
 
-// symbol registration should say that symbol 'MyType' is already defined
+// symbol registration should say that symbol 'assert' is a built-in
 
 CASM init foo
 
-using MyType = Boolean
-using MyType = Integer //@ ERROR( 6000 )
+using assert = Integer //@ ERROR( 6001 )
 
 rule foo =
     skip

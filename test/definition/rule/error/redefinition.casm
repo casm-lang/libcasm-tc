@@ -42,7 +42,7 @@
 
 CASM init foo
 
-rule foo = //@ ERROR( 5000 )
+rule foo =
     skip
 
 rule foo = //@ ERROR( 5000 )

@@ -40,12 +40,12 @@
 //  statement from your version.
 //
 
-// symbol registration should say that symbol 'MyType' is already defined
+// symbol registration should say that symbol 'Integer' is a already defined type
 
 CASM init foo
 
-using MyType = Boolean
-using MyType = Integer //@ ERROR( 6000 )
+using Integer = Integer //@ ERROR( 6002 )
+using String = Integer  //@ ERROR( 6002 )
 
 rule foo =
     skip
