@@ -53,7 +53,7 @@ rule someRule -> Integer =
 }
 
 derived bar -> Integer =
-    someRule() //@ ERROR( de00 ) // derived has not constant expression
+    someRule() //@ ERROR( dede ) // derived has not constant expression
 
 rule foo =
     skip
