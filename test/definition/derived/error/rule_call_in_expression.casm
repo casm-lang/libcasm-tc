@@ -52,7 +52,7 @@ rule someRule -> Integer =
     someFunction := 42 // side effect
 }
 
-derived bar -> Integer = //@ ERROR( 10de ) // derived has not constant expression
+derived bar -> Integer = //@ ERROR( dede ) // derived has not constant expression
     someRule() // here is a non 'side-effect free' call
 
 rule foo =
