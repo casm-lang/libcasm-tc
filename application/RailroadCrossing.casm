@@ -37,10 +37,10 @@ rule run =
 {
     // "multi agent" ASM
     forall agent in Agent do
-        call (*agentProgram(agent))()
+        (*agentProgram(agent))()
 
-    call TimeTick
-    call Randomize
+    TimeTick
+    Randomize
 
     if now >= 60 then
         program(self) := undef
@@ -81,12 +81,12 @@ rule TrackControl =
 {
     forall t in Track do
     {
-        call SetDeadline(t)
-        call SignalClose(t)
-        call ClearDeadline(t)
+        SetDeadline(t)
+        SignalClose(t)
+        ClearDeadline(t)
     }
 
-    call SignalOpen
+    SignalOpen
 }
 
 rule SetDeadline(x : Track) =

@@ -48,5 +48,5 @@ rule targetRule(x : Integer) =
 rule foo =
 {
     let r : RuleRef< Integer -> Void > = @targetRule in
-        call (*r)(42)
+        (*r)(42)
 }

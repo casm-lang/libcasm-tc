@@ -46,8 +46,8 @@ rule bar( x : Integer, y : List< Boolean > ) = skip
 
 rule foo =
 {
-    call bar( 0, [] )
-    call bar( 1, [ true ] )
-    call bar( 3, [ true, false, true ] )
-    call bar( undef, undef )
+    bar( 0, [] )
+    bar( 1, [ true ] )
+    bar( 3, [ true, false, true ] )
+    bar( undef, undef )
 }

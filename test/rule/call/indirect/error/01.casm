@@ -47,7 +47,7 @@ CASM init foo
 
 rule foo =
     let rr = @bar in
-        call (*rr)("bar") //@ ERROR( 5e05 )
+        (*rr)("bar") //@ ERROR( 5e05 )
 
 rule bar( a:Integer ) = skip
 

@@ -49,5 +49,5 @@ rule bar(a : Integer'[2..4]) = skip
 
 rule foo = {|
     let rr = @bar in
-        call (*rr)(3)
+        (*rr)(3)
 |}

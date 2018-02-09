@@ -47,7 +47,7 @@ rule bar = skip
 
 rule foo =
 {
-    call bar
+    bar
 
-    call (*@bar)()
+    (*@bar)()
 }

@@ -70,7 +70,7 @@ rule updateCell(x : Integer, y : Integer) =
 rule GameOfLife =
     forall x in 100 do
         forall y in 100 do
-            call updateCell(x, y)
+            updateCell(x, y)
 
 rule setup =
 {|

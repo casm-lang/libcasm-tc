@@ -46,8 +46,8 @@ CASM init foo
 
 rule foo =
 {
-    call bar() //@ ERROR( cc02 )
-    call print("a") //@ ERROR( cc02 )
+    bar() //@ ERROR( cc02 )
+    print("a") //@ ERROR( cc02 )
 }
 
 derived bar -> Boolean =

@@ -79,8 +79,8 @@ rule foo =
 
 rule main =
 {|
-    call gray1(0)
-    call gray2(0)
+    gray1(0)
+    gray2(0)
     program(self) := undef
 |}
 
@@ -92,8 +92,8 @@ rule main2 = {
             input(i) := ((inputnr / 2^i) % 2 as Boolean)
         }
         forall i in [0..7] do    {
-            call gray1(i)
-            call gray2(i)
+            gray1(i)
+            gray2(i)
         }
         inputnr := inputnr + 1
         println( dec(inputnr) + "=" + dec(output1(0)) + dec(output1(1)) + dec(output1(2)) + dec(output1(3)) + dec(output1(4)) + dec(output1(5))+ dec(output1(6)) + dec(output1(7)) + ", "

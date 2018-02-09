@@ -45,7 +45,7 @@
 CASM init foo
 
 rule foo =
-    call (*@bar)() //@ ERROR( cc02 )
+    (*@bar)() //@ ERROR( cc02 )
 
 derived bar -> Boolean =
     undef
