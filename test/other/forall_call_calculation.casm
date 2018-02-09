@@ -61,8 +61,8 @@ rule foo =
  par
  forall i in [1..2] do
     seq
-        call (*a)(1,i,undef)
-        call (*a)(2,i,1)
+        (*a)(1,i,undef)
+        (*a)(2,i,1)
     endseq
  endpar
  println( b(1) + b(2) )

@@ -175,8 +175,8 @@ rule bf =
         '-': mem(mp) := mem(mp) - 1
         '.': print(char(mem(mp)))
         ',': impossible // cannot read user input
-        '[': if mem(mp) = 0 then call jump_right
-        ']': if mem(mp) != 0 then call jump_left
+        '[': if mem(mp) = 0 then jump_right
+        ']': if mem(mp) != 0 then jump_left
         undef: program(self) := undef
         _: skip
     }
@@ -184,8 +184,8 @@ rule bf =
     ip := ip + 1
 |}
 
-rule jump_right = call jump(+1)
-rule jump_left = call jump(-1)
+rule jump_right = jump(+1)
+rule jump_left = jump(-1)
 
 rule jump(dir : Integer'[-1..1]) =
 {|

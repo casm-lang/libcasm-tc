@@ -48,5 +48,5 @@ CASM init foo
 rule bar(a : Integer'[2..4]) = skip
 
 rule foo = {|
-    call bar(3)
+    bar(3)
 |}

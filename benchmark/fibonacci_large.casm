@@ -46,7 +46,7 @@ rule main =
     let n = 7'500 in
     {|
         print("Fibonacci(" + dec(n) + ") using dynamic programming = ")
-        call fibonacci(n)
+        fibonacci(n)
         println(dec(f(n)))
         program(self) := undef
     |}
@@ -60,7 +60,7 @@ function f : Integer -> Integer initially
 rule fibonacci( x : Integer ) =
     if f(x) = undef then
     {|
-        call fibonacci(x - 2)
-        call fibonacci(x - 1)
+        fibonacci(x - 2)
+        fibonacci(x - 1)
         f(x) := f(x - 2) + f(x - 1)
     |}

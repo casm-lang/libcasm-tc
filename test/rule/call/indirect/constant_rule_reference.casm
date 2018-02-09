@@ -48,7 +48,7 @@ function barCalled : -> Boolean initially { false }
 
 rule foo =
 {|
-    call (*@bar)( 42 )
+    (*@bar)( 42 )
     assert( barCalled )
 
     program( self ) := undef

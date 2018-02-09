@@ -78,7 +78,7 @@ if pivot = undef then {
     need_partition := true
 } else
     if need_partition then
-        call partition_one_step
+        partition_one_step
     else {
         p := ll
         if pivot != ll then {
@@ -89,7 +89,7 @@ if pivot = undef then {
 
 rule quicksort_once =
     if p = undef then
-        call partition
+        partition
     else    
     {|
         if l < p-1 then
@@ -133,7 +133,7 @@ rule quicksort =
             }
     }
     else
-        call quicksort_once
+        quicksort_once
 
 
 rule foo = {

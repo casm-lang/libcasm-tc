@@ -46,7 +46,7 @@ CASM init foo
 // tests direct rule call with wrong argument type
 
 rule foo =
-    call bar("bar") //@ ERROR( 5e02 )
+    bar("bar") //@ ERROR( 5e02 )
 
 rule bar( a:Integer ) = skip
 

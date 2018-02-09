@@ -49,7 +49,7 @@ rule foo =
 
     qux      //@ERROR( 0500 )
 
-    call bar //@ERROR( 0500 )
+    bar //@ERROR( 0500 )
 
-    call qux //@ERROR( 0500 )
+    qux //@ERROR( 0500 )
 }

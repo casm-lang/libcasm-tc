@@ -60,7 +60,7 @@ rule ThrowTheDart =
 
 rule MonteCarloPi =
     if iterations > 0 then {
-        call ThrowTheDart
+        ThrowTheDart
         iterations := iterations - 1
     } else {
         let estimatedPi = (hits * 4.0) / (hits + misses) in

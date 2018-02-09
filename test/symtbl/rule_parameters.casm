@@ -50,7 +50,7 @@ rule bar( qux : Integer ) =
 
 rule foo =
 {
-    call bar( 1 )
+    bar( 1 )
 
-    call (*@bar)( 2 )
+    (*@bar)( 2 )
 }
