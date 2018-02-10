@@ -46,7 +46,7 @@ CASM init foo
 
 rule foo =
     let ref = @bar in
-        assert( (*ref)() = 42 )
+        assert( ref() = 42 )
 
 derived bar -> Integer =
     42

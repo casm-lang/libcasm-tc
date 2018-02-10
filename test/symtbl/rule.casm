@@ -49,5 +49,6 @@ rule foo =
 {
     bar
 
-    (*@bar)()
+    let r = @bar in
+        r()
 }
