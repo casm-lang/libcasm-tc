@@ -46,7 +46,7 @@ CASM init foo
 // cmdline "-s"
 
 [symbolic]
-function b : Integer -> Integer initially { 1 -> 1, 2 -> 2 }
+function b : Integer -> Integer initially { (1) -> 1, (2) -> 2 }
 
 rule foo =
 {

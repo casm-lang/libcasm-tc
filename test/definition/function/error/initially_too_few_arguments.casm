@@ -46,7 +46,7 @@
 CASM init foo
 
 function x : Integer * Integer -> Integer initially {
-    1 -> 42 //@ ERROR( 0503 )
+    (1) -> 42 //@ ERROR( 0503 )
 }
 
 rule foo =

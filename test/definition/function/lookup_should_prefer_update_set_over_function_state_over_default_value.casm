@@ -42,7 +42,7 @@
 
 CASM init foo
 
-function x : Integer -> Integer defined { 0 } initially { 1 -> 10, 2 -> 20 }
+function x : Integer -> Integer defined { 0 } initially { (1) -> 10, (2) -> 20 }
 
 rule foo =
 {|

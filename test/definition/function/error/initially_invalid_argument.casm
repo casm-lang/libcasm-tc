@@ -45,7 +45,7 @@
 CASM init foo
 
 function x : Integer'[0..10] -> Integer initially {
-    42 //@ ERROR( fe01 )
+    (42) //@ ERROR( fe01 )
        -> 1
 }
 
