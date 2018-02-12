@@ -45,8 +45,8 @@
 
 CASM init foo
 
-function f : Integer -> Integer initially { 2 -> 4,  //@ ERROR( 7000 )
-                                            2 -> 9 } //@ ERROR( 7000 )
+function f : Integer -> Integer initially { (2) -> 4,  //@ ERROR( 7000 )
+                                            (2) -> 9 } //@ ERROR( 7000 )
 
 rule foo =
     skip

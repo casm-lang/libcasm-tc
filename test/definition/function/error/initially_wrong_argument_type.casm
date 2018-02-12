@@ -46,7 +46,7 @@
 CASM init foo
 
 function x : Integer -> Integer initially {
-    "string" //@ ERROR( 1302 )
+    ("string") //@ ERROR( 1302 )
              -> 1
 }
 

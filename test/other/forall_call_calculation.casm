@@ -44,7 +44,7 @@
 CASM init foo
 
 function a : -> RuleRef< Integer * Integer * Integer -> Void >
-function b : Integer -> Integer initially {1->0, 2->0}
+function b : Integer -> Integer initially { (1) -> 0, (2) -> 0 }
 
 rule bar( m:Integer, x:Integer, y:Integer ) =
 {|

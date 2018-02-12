@@ -44,8 +44,8 @@
 
 CASM init foo
 
-function squared : Integer -> Integer initially { 2 -> 4,
-                                                  3 -> 9 }
+function squared : Integer -> Integer initially { (2) -> 4,
+                                                  (3) -> 9 }
 
 rule foo =
 {
