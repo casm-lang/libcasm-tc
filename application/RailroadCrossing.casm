@@ -49,7 +49,7 @@ enumeration GateState = {
 [static] function dclose : -> Integer initially { 2 }
 [static] function waitTime : -> Integer initially { 3 }
 
-function deadline : Track -> Integer defined { 999999999 } // FIXME use infinity
+function deadline : Track -> Integer defined { infinity }
 function trackStatus : Track -> TrackStatus defined { ::Empty }
 function dir : -> Direction
 function gateState : -> GateState initially { ::Opened }
