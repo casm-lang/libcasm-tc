@@ -1,17 +1,46 @@
 // Railroad crossing example
 // Adopted from https://github.com/CoreASM/coreasm.core/blob/master/org.coreasm.engine/test-rsc/without_test_class/RailroadCrossing.coreasm
 
-CASM init run
+CASM
 
-// @require "Track track1 is empty"
-// @require "Track track2 is empty"
-// @require "Gate is opened"
+enumeration Agent = {
+    TrackController,
+    GateController,
+    Observer,
+    Environment,
+    Clock
+}
 
-enumeration Track = {track1, track2}
-enumeration TrackStatus = {empty, coming, crossing}
-enumeration Direction = {open, close}
-enumeration GateState = {opened, closed}
-enumeration Agent = {trackController, gateController, observer, environment}
+init {
+    ::TrackController -> @TrackControl,
+    ::GateController -> @GateControl,
+    ::Observer -> @ObserverProgram,
+    ::Environment -> @EnvironmentProgram,
+    ::Clock -> @TimeTick
+}
+
+enumeration Track = {
+    Track1,
+    Track2
+}
+
+enumeration TrackStatus = {
+    Empty,
+    Coming,
+    Crossing
+}
+
+enumeration Direction = {
+    Open,
+    Close
+}
+
+enumeration GateState = {
+    Opened,
+    Closed
+}
+
+[static] function infinity : -> Integer initially { 999999999 } // FIXME Integer should provide it
 
 // parameters
 [static] function dmin : -> Integer initially { 5 }
@@ -20,62 +49,37 @@ enumeration Agent = {trackController, gateController, observer, environment}
 [static] function dclose : -> Integer initially { 2 }
 [static] function waitTime : -> Integer initially { 3 }
 
-function deadline : Track -> Integer defined { infinity }
-function trackStatus : Track -> TrackStatus defined { empty }
+function deadline : Track -> Integer defined { 999999999 } // FIXME use infinity
+function trackStatus : Track -> TrackStatus defined { ::Empty }
 function dir : -> Direction
-function gateState : -> GateState initially { opened }
+function gateState : -> GateState initially { ::Opened }
 
-function agentProgram : Agent -> RuleRef< -> Void > initially
-{
-    trackController -> @TrackControl,
-    gateController -> @GateControl,
-    observer -> @ObserverProgram,
-    environment -> @EnvironmentProgram
-}
+derived randomProbability -> Decimal =
+    choose x in [0.0 .. 1.0] do x
 
-rule run =
-{
-    // "multi agent" ASM
-    forall agent in Agent do
-        (*agentProgram(agent))()
+// ---------------------------------------------------------------------------
 
-    TimeTick
-    Randomize
-
-    if now >= 60 then
-        program(self) := undef
-}
-
-// fake time builtins
-[static] function infinity : -> Integer initially { 999999999 }
 function now : -> Integer initially { 1 }
 
 rule TimeTick =
     now := now + 1
 
-// fake random builtin (random number between 0.0 and 1.0)
-function random : -> Decimal initially { 0.0 }
-
-rule Randomize =
-{|
-    random := random + 0.3
-    if random >= 1.0 then
-        random := 0.0
-|}
-
 // ---------------------------------------------------------------------------
 
 rule GateControl =
 {
-    if dir = open and gateState = closed then gateState := opened
-    if dir = close and gateState = opened then gateState := closed
+    if dir = ::Open and gateState = ::Closed then
+        gateState := ::Opened
+
+    if dir = ::Close and gateState = ::Opened then
+        gateState := ::Closed
 }
 
 // ---------------------------------------------------------------------------
 
 // Is it safe to open the guard?
 derived safeToOpen -> Boolean =
-    forall t in Track holds trackStatus(t) = empty or (now + dopen) < deadline(t)
+    forall t in Track holds trackStatus(t) = ::Empty or (now + dopen) < deadline(t)
 
 rule TrackControl =
 {
@@ -90,30 +94,33 @@ rule TrackControl =
 }
 
 rule SetDeadline(x : Track) =
-    if trackStatus(x) = coming and deadline(x) = infinity then
+    if trackStatus(x) = ::Coming and deadline(x) = infinity then
         deadline(x) := now + waitTime
 
 rule SignalClose(x : Track) =
     if now >= deadline(x) and now <= deadline(x) + 1 then
-        dir := close
+        dir := ::Close
 
 rule ClearDeadline(x : Track) =
-    if trackStatus(x) = empty and deadline(x) < infinity then
+    if trackStatus(x) = ::Empty and deadline(x) < infinity then
         deadline(x) := infinity
 
-rule SignalOpen = 
-    if dir = close and safeToOpen then
-        dir := open
+rule SignalOpen =
+    if dir = ::Close and safeToOpen then
+        dir := ::Open
 
 // ---------------------------------------------------------------------------
 
 rule ObserverProgram =
 {
-    println("Time: " + dec(now) + " seconds")
+    println("Time: " + now as String + " seconds")
     forall t in Track do
-        println("Track " + asString(t) + " is " + asString(trackStatus(t)))
-    println("Gate is " + asString(gateState))
-    println("")
+        println("Track " + t as String + " is " + trackStatus(t) as String)
+    println("Gate is " + gateState as String + "\n")
+
+    if now >= 60 then
+        forall a in Agent do
+            program(a) := undef
 }
 
 // ---------------------------------------------------------------------------
@@ -123,21 +130,21 @@ function passingTime : Track -> Integer
 rule EnvironmentProgram =
     choose t in Track do
     {
-        if trackStatus(t) = empty then
-            if random < 0.05 then
+        if trackStatus(t) = ::Empty then
+            if randomProbability < 0.05 then
             {
-                trackStatus(t) := coming
+                trackStatus(t) := ::Coming
                 passingTime(t) := now + dmin
             }
 
-        if trackStatus(t) = coming then
+        if trackStatus(t) = ::Coming then
             if passingTime(t) < now then
             {
-                trackStatus(t) := crossing
+                trackStatus(t) := ::Crossing
                 passingTime(t) := now + 3
             }
 
-        if trackStatus(t) = crossing then
+        if trackStatus(t) = ::Crossing then
             if passingTime(t) < now then
-                trackStatus(t) := empty
+                trackStatus(t) := ::Empty
     }
