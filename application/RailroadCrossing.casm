@@ -12,11 +12,11 @@ enumeration Agent = {
 }
 
 init {
-    ::TrackController -> @TrackControl,
-    ::GateController -> @GateControl,
-    ::Observer -> @ObserverProgram,
-    ::Environment -> @EnvironmentProgram,
-    ::Clock -> @TimeTick
+    (::TrackController) -> @TrackControl,
+    (::GateController) -> @GateControl,
+    (::Observer) -> @ObserverProgram,
+    (::Environment) -> @EnvironmentProgram,
+    (::Clock) -> @TimeTick
 }
 
 enumeration Track = {
