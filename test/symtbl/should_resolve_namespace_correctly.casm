@@ -40,11 +40,17 @@
 //  statement from your version.
 //
 
+// tests if the namespace is correctly used during symbol resolving
+
 CASM init foo
 
-enumeration Color = { Blue, Red, Green }
+enumeration Enum = { Var, println }
 
 rule foo =
-    let Red = Color::Red in
-        let c = ::Red in  // uses variable Red if buggy
-            skip
+{
+    let Var = 42 in
+        let c = Enum::Var in  // uses variable Var if buggy
+            assert( c as String = "Var" )
+
+    assert( Enum::println as String = "println") // calls println if buggy
+}
