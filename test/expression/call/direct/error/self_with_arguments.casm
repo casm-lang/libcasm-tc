@@ -40,13 +40,9 @@
 //  statement from your version.
 //
 
+// tests self call with wrong number of arguments
 
 CASM init foo
 
-// tests direct rule call with wrong number of arguments
-
 rule foo =
-    bar(1,2,3,4,"bar",6) //@ ERROR( 5e01 )
-
-rule bar( a:Integer, b:Integer ) = skip
-
+    self(1) //@ ERROR( 0503 )
