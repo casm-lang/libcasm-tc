@@ -40,13 +40,10 @@
 //  statement from your version.
 //
 
+// tests variable call with wrong number of arguments
 
 CASM init foo
 
-// tests direct rule call with wrong argument type
-
 rule foo =
-    bar("bar") //@ ERROR( 5e02 )
-
-rule bar( a:Integer ) = skip
-
+    let x = 42 in
+        x(1) //@ ERROR( 0503 )
