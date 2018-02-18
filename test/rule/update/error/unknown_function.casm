@@ -47,7 +47,7 @@ CASM init foo
 
 rule foo =
 {
-    undeclaredFunction := 42 //@ ERROR( f000 )
+    undeclaredFunction := 42 //@ ERROR( 0500 )
 
     program( self ) := undef
 }
