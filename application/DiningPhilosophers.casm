@@ -1,0 +1,81 @@
+// Dining Philosphers example
+//
+// Adopted from https://github.com/CoreASM/coreasm.core/blob/master/org.coreasm.engine/test-rsc/without_test_class/DiningPhilosophers.casm
+//
+// Original Authors:
+// George Ma, Roozbeh Farahbod (CoreASM)
+
+CASM
+
+enumeration Chopstick = { c1, c2, c3, c4, c5 }
+enumeration Person = { Juan, Sina, Herbert, Albert, Fredrich }
+
+using Agent = Person
+
+init {
+    (::Juan) -> @Philosopher,
+    (::Sina) -> @Philosopher,
+    (::Herbert) -> @Philosopher,
+    (::Albert) -> @Philosopher,
+    (::Fredrich) -> @Philosopher
+}
+
+// TABLE:  c1  Herbert  c2  Fredrich  c3  Sina  c4  Juan  c5  Albert  c1
+[static] function chops : Person -> (Chopstick, Chopstick) initially {
+    (::Juan) -> (::c5, ::c4),
+    (::Sina) -> (::c4, ::c3),
+    (::Herbert) -> (::c2, ::c1),
+    (::Albert) -> (::c1, ::c5),
+    (::Fredrich) -> (::c3, ::c2)
+}
+
+derived leftChop(person : Person) -> Chopstick =
+    chops(person).1
+
+derived rightChop(person : Person) -> Chopstick =
+    chops(person).2
+
+function eating : Person -> Boolean defined { false }
+function chopOwner: Chopstick -> Person
+
+function hungry : Person -> Boolean initially {
+    (::Juan) -> flipCoin,
+    (::Sina) -> flipCoin,
+    (::Herbert) -> flipCoin,
+    (::Albert) -> flipCoin,
+    (::Fredrich) -> flipCoin
+}
+
+derived canPickBothChopsticks -> Boolean =
+    chopOwner(leftChop(self)) = undef and chopOwner(rightChop(self)) = undef
+
+[pure]
+derived flipCoin -> Boolean =
+    choose c in Boolean do c
+
+rule StartEating = {
+    chopOwner(leftChop(self)) := self
+    chopOwner(rightChop(self)) := self
+    eating(self) := true
+    println(self as String + " starts eating.")
+}
+
+rule StopEating = {
+    chopOwner(leftChop(self)) := undef
+    chopOwner(rightChop(self)) := undef
+    eating(self) := false
+    println(self as String + " stops eating.")
+}
+
+rule Philosopher = {
+    if hungry(self) and not eating(self) then
+        if canPickBothChopsticks then
+            StartEating
+        else
+            println(self as String + " is hungry but can't eat.")
+
+    if not hungry(self) and eating(self) then
+        StopEating
+
+    hungry(self) := flipCoin
+}
