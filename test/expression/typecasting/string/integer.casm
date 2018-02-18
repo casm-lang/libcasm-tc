@@ -46,8 +46,10 @@ rule foo =
 {
     let x : Integer = undef in assert( x as String = undef )
     let x : Integer = -24   in assert( x as String = "-24" )
+    let x : Integer = 24    in assert( -x as String = "-24" )
     let x : Integer = -1    in assert( x as String = "-1" )
     let x : Integer = 0     in assert( x as String = "0" )
     let x : Integer = 1     in assert( x as String = "1" )
+    let x : Integer = +24   in assert( x as String = "24" )
     let x : Integer = 42    in assert( x as String = "42" )
 }
