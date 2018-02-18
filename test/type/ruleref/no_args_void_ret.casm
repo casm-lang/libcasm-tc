@@ -48,5 +48,5 @@ rule targetRule =
 rule foo =
 {
     let r : RuleRef< -> Void > = @targetRule in
-        (*r)()
+        r()
 }

@@ -52,5 +52,6 @@ rule foo =
 {
     bar( 1 )
 
-    (*@bar)( 2 )
+    let r = @bar in
+        r( 2 )
 }

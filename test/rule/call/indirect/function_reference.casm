@@ -50,4 +50,4 @@ rule foo =
     assert( double( @halfTruth ) = 42 )
 
 derived double( ref : FuncRef< -> Integer > ) -> Integer =
-    2 * (*ref)()
+    2 * ref()

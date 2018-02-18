@@ -48,7 +48,8 @@ function barCalled : -> Boolean initially { false }
 
 rule foo =
 {|
-    (*@bar)( 42 )
+    let f = @bar in
+        f( 42 )
     assert( barCalled )
 
     program( self ) := undef

@@ -48,4 +48,4 @@ rule foo =
     assert( convert( 42, @dec ) = "42" )
 
 derived convert( i : Integer, c : FuncRef< Integer -> String >) -> String =
-    (*c)(i)
+    c(i)
