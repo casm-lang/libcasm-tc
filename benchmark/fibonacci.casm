@@ -53,8 +53,8 @@ rule main =
 
 function f : Integer -> Integer initially
 {
-    0 -> 0,
-    1 -> 1
+    (0) -> 0,
+    (1) -> 1
 }
 
 rule fibonacci( x : Integer ) =

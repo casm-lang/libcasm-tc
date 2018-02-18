@@ -64,5 +64,5 @@ rule MonteCarloPi =
         iterations := iterations - 1
     } else {
         let estimatedPi = (hits * 4.0) / (hits + misses) in
-            println("Estimation of PI: " + asString(estimatedPi))
+            println("Estimation of PI: " + estimatedPi as String)
     }
