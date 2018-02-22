@@ -275,7 +275,7 @@ enumeration Token =
 
 [monitored] function userInput: -> Integer'[0..255]
 
-function mem: Integer -> Integer defined { 0 } // FIXME return type should be Integer'[0..255] but type inference breaks
+function mem: Integer -> Integer'[0..255] defined { 0 }
 
 function ip: -> Integer initially { 0 } // instruction pointer
 function mp: -> Integer initially { 0 } // memory pointer
