@@ -324,7 +324,7 @@ rule Jump(step: RuleRef<-> Void>, initialBracketCount: Integer) =
             {
                 ::LeftParen:  bc := bc + 1
                 ::RightParen: bc := bc - 1
-                undef:        assert(false) // bf syntax error: branch mismatch
+                undef:        abort // bf syntax error: branch mismatch
             }
         |}
     }
