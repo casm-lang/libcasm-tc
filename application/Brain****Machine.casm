@@ -290,34 +290,44 @@ rule BrainFuckMachine =
         ::Minus:      mem(mp) := mem(mp) - 1
         ::Dot:        print(ASCII(mem(mp)))
         ::Comma:      mem(mp) := userInput
-        ::LeftParen:  if mem(mp) = 0 then Jump(::Left)
-        ::RightParen: if mem(mp) != 0 then Jump(::Right)
+        ::LeftParen:  if mem(mp) = 0 then JumpForward
+        ::RightParen: if mem(mp) != 0 then JumpBack
         undef:        program(self) := undef
         _:            skip
     }
 
-    ip := ip + 1
+    AdvanceInstructionPointer
 |}
 
-enumeration Direction = { Left, Right }
+rule AdvanceInstructionPointer =
+    ip := ip + 1
 
-rule Jump(dir : Direction) =
-    let step = if dir = ::Right then -1 else +1 in {|
-        bc := step
+rule RetreatInstructionPointer =
+    ip := ip - 1
 
-        iterate {
-            if bc = 0 then
-                skip
-            else {|
-                ip := ip + step
-                case prog(ip) of
-                {
-                    ::LeftParen:  bc := bc + 1
-                    ::RightParen: bc := bc - 1
-                    undef:        assert(false) // bf syntax error: branch mismatch
-                }
-            |}
-        }
+rule JumpForward =
+    Jump(@AdvanceInstructionPointer, +1)
 
-        assert(bc = 0)
-    |}
+rule JumpBack =
+    Jump(@RetreatInstructionPointer, -1)
+
+rule Jump(step: RuleRef<-> Void>, initialBracketCount: Integer) =
+{|
+    bc := initialBracketCount // TODO make bc a local function
+
+    iterate { // TODO replace by while bc != 0
+        if bc = 0 then
+            skip
+        else {|
+            step()()
+            case prog(ip) of
+            {
+                ::LeftParen:  bc := bc + 1
+                ::RightParen: bc := bc - 1
+                undef:        assert(false) // bf syntax error: branch mismatch
+            }
+        |}
+    }
+
+    assert(bc = 0)
+|}
