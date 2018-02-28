@@ -315,19 +315,13 @@ rule Jump(step: RuleRef<-> Void>, initialBracketCount: Integer) =
 {|
     bc := initialBracketCount // TODO make bc a local function
 
-    iterate { // TODO replace by while bc != 0
-        if bc = 0 then
-            skip
-        else {|
-            step()()
-            case prog(ip) of
-            {
-                ::LeftParen:  bc := bc + 1
-                ::RightParen: bc := bc - 1
-                undef:        abort // bf syntax error: branch mismatch
-            }
-        |}
-    }
-
-    assert(bc = 0)
+    while bc != 0 do {|
+        step()()
+        case prog(ip) of
+        {
+            ::LeftParen:  bc := bc + 1
+            ::RightParen: bc := bc - 1
+            undef:        abort // bf syntax error: branch mismatch
+        }
+    |}
 |}
