@@ -53,7 +53,7 @@ CASM init foo
 
 rule foo =
 {
-    let b : Binary'16 = 123 in
+    let b = 123 as Binary'16 in
     let c = a + b in
     {
         assert( c.isSymbolic() = a.isSymbolic() )

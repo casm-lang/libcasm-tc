@@ -53,7 +53,7 @@ CASM init foo
 
 rule foo =
 {
-    let b : Binary'16 = undef in
+    let b = undef as Binary'16 in
     let c = a + b in
     {
         assert( c = undef )
