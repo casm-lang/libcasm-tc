@@ -50,13 +50,12 @@ derived inUnitCircle( x : Decimal, y : Decimal ) -> Boolean =
     sqrt(x^2 + y^2) <= 1.0
 
 rule ThrowTheDart =
-    choose x in [-1.0 .. 1.0] do
-        choose y in [-1.0 .. 1.0] do
-            if inUnitCircle(x, y) then {
-                hits := hits + 1
-            } else {
-                misses := misses + 1
-            }
+    choose x, y in [-1.0 .. 1.0] do
+        if inUnitCircle(x, y) then {
+            hits := hits + 1
+        } else {
+            misses := misses + 1
+        }
 
 rule MonteCarloPi =
     if iterations > 0 then {
