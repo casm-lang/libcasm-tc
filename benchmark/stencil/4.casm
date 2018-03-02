@@ -137,11 +137,8 @@ derived applyStencil(x : Integer, y : Integer, z : Integer, a : Integer) -> Deci
 
 rule updateCells =
 {
-    forall x in [1..5] do
-        forall y in [1..5] do
-            forall z in [1..5] do
-                forall a in [1..5] do
-                    data(x, y, z, a) := applyStencil(x, y, z, a)
+    forall x, y, z, a in [1..5] do
+        data(x, y, z, a) := applyStencil(x, y, z, a)
 
     program(self) := undef
 }
