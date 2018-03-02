@@ -40,28 +40,11 @@
 //  statement from your version.
 //
 
-CASM init MonteCarloPi
+CASM init foo
 
-function hits : -> Integer initially { 0 }
-function misses : -> Integer initially { 0 }
-function iterations : -> Integer initially { 1'000'000 }
-
-derived inUnitCircle( x : Decimal, y : Decimal ) -> Boolean =
-    sqrt(x^2 + y^2) <= 1.0
-
-rule ThrowTheDart =
-    choose x, y in [-1.0 .. 1.0] do
-        if inUnitCircle(x, y) then {
-            hits := hits + 1
-        } else {
-            misses := misses + 1
-        }
-
-rule MonteCarloPi =
-    if iterations > 0 then {
-        ThrowTheDart
-        iterations := iterations - 1
-    } else {
-        let estimatedPi = (hits * 4.0) / (hits + misses) in
-            println("Estimation of PI: " + estimatedPi as String)
-    }
+rule foo =
+    let result = exists x : String,   //@ ERROR( 1411 )
+                        y : Boolean   //@ ERROR( 1411 )
+                            in [1..3] //@ ERROR( 1411 )
+                            with true in
+        skip

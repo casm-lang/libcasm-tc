@@ -40,28 +40,13 @@
 //  statement from your version.
 //
 
-CASM init MonteCarloPi
+// type checker should say that the choose universe has wrong type (Integer
+// instead of Boolean)
 
-function hits : -> Integer initially { 0 }
-function misses : -> Integer initially { 0 }
-function iterations : -> Integer initially { 1'000'000 }
+CASM init foo
 
-derived inUnitCircle( x : Decimal, y : Decimal ) -> Boolean =
-    sqrt(x^2 + y^2) <= 1.0
-
-rule ThrowTheDart =
-    choose x, y in [-1.0 .. 1.0] do
-        if inUnitCircle(x, y) then {
-            hits := hits + 1
-        } else {
-            misses := misses + 1
-        }
-
-rule MonteCarloPi =
-    if iterations > 0 then {
-        ThrowTheDart
-        iterations := iterations - 1
-    } else {
-        let estimatedPi = (hits * 4.0) / (hits + misses) in
-            println("Estimation of PI: " + estimatedPi as String)
-    }
+rule foo =
+    choose x : Boolean,  //@ ERROR( 1009 )
+           y : String    //@ ERROR( 1009 )
+                in 42 do //@ ERROR( 1009 )
+        skip

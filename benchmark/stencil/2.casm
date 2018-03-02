@@ -61,9 +61,8 @@ derived applyStencil(x : Integer, y : Integer) -> Decimal =
 
 rule updateCells =
 {
-    forall x in [1..5] do
-        forall y in [1..5] do
-                data(x, y) := applyStencil(x, y)
+    forall x, y in [1..5] do
+        data(x, y) := applyStencil(x, y)
 
     program(self) := undef
 }
