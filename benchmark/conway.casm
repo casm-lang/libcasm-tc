@@ -89,6 +89,5 @@ rule updateCell( x : Integer, y : Integer ) =
     }
 
 rule GameOfLife =
-    forall x in [1..100] do
-        forall y in [1..100] do
-            updateCell(x, y)
+    forall x, y in [1..100] do
+        updateCell(x, y)
