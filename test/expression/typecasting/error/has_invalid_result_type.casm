@@ -44,5 +44,7 @@ CASM init foo
 
 rule foo =
 {
-    let x : Void = true as Void in skip //@ ERROR( 1702 )
+    let x : Void =
+        true as Void //@ ERROR( 1702 ) //@ ERROR( 1201 )
+    in skip
 }
