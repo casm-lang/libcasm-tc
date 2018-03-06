@@ -47,5 +47,5 @@ CASM init foo
 
 rule foo = 
 {
-    let x : Binary'8 = 0x5 in skip
+    let x = 0x5 as Binary'8 in skip
 }
