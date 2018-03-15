@@ -46,5 +46,5 @@
 CASM init foo
 
 rule foo =
-    let x : Integer = "42" in //@ ERROR( 1202 )
+    let x : Integer = "42" in //@ ERROR( 1012 )
         skip
