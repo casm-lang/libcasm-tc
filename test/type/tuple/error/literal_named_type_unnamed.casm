@@ -49,21 +49,21 @@ rule foo =
     let
     x : ( Integer, String, Decimal )
     =
-    ( a : 1, b : "2", c : 3.4 )      //@ ERROR( 1201 )
+    ( a : 1, b : "2", c : 3.4 )      //@ ERROR( 1011 )
     in
 	skip
 
     let
     x : ( Integer, String, Decimal )
     =
-    ( b : "2" )                      //@ ERROR( 1201 )
+    ( b : "2" )                      //@ ERROR( 1011 )
     in
 	skip
 
     let
     x : ( Integer, String, Decimal )
     =
-    ( c : 3.4, a : 1, b : "2" )      //@ ERROR( 1201 )
+    ( c : 3.4, a : 1, b : "2" )      //@ ERROR( 1011 )
     in
 	skip
 }

@@ -40,16 +40,11 @@
 //  statement from your version.
 //
 
-// Type inference should complain that the types of the then and else
-// expressions differ.
+// Defining multiple variables in a single let rule should work.
+// Previously defined variables should be accessible in later definitions.
 
 CASM init foo
 
 rule foo =
-    let condition : Boolean = undef in
-        let result =
-        ( if condition
-            then "String" //@ ERROR( 1006 )
-            else 42 )     //@ ERROR( 1006 )
-        in
-            skip
+    let x = 3, y = x * 2, z = x * y in
+        assert( z = 18 )

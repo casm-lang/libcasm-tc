@@ -48,6 +48,6 @@ CASM init foo
 
 rule foo = 
 {
-    let x : Binary'8 = 0b1111'0000'1111'0000 in skip //@ ERROR( 1202 )
+    let x : Binary'8 = 0b1111'0000'1111'0000 in skip //@ ERROR( 1012 )
 }
 

@@ -40,16 +40,15 @@
 //  statement from your version.
 //
 
-// Type inference should complain that the types of the then and else
-// expressions differ.
+// The variable y is not yet defined when evaluating the expression of the x
+// variable.
 
 CASM init foo
 
+derived bar -> Integer =
+    let x = y, //@ ERROR( 0500 )
+        y = 42
+        in undef
+
 rule foo =
-    let condition : Boolean = undef in
-        let result =
-        ( if condition
-            then "String" //@ ERROR( 1006 )
-            else 42 )     //@ ERROR( 1006 )
-        in
-            skip
+    skip
