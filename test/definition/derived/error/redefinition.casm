@@ -45,7 +45,7 @@ CASM init foo
 derived bar -> Integer =
     42
 
-derived bar -> Integer = //@ ERROR( d000 )
+derived bar -> Integer = //@ ERROR( 0506 )
     42
 
 rule foo =

@@ -45,5 +45,5 @@ CASM init foo
 rule foo =
     skip
 
-rule foo = //@ ERROR( 5000 )
+rule foo = //@ ERROR( 0506 )
     skip
