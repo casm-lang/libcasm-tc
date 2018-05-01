@@ -42,7 +42,7 @@
 
 CASM init foo
 
-enumeration assert = { bar, baz, qux } //@ ERROR( e100 )
+enumeration assert = { bar, baz, qux } //@ ERROR( 0504 )
 
 rule foo =
     skip

@@ -44,8 +44,8 @@
 
 CASM init foo
 
-using Integer = Integer //@ ERROR( 6002 )
-using String = Integer  //@ ERROR( 6002 )
+using Integer = Integer //@ ERROR( 0505 )
+using String = Integer  //@ ERROR( 0505 )
 
 rule foo =
     skip

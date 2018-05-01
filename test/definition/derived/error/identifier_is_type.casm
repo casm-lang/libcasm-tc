@@ -42,7 +42,7 @@
 
 CASM init foo
 
-derived Integer -> Integer = //@ ERROR( d200 )
+derived Integer -> Integer = //@ ERROR( 0505 )
     42
 
 rule foo =

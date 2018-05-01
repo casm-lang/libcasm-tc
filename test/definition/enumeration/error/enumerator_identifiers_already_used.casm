@@ -45,7 +45,7 @@ CASM init foo
 enumeration bar =
 { a
 , b
-, b //@ ERROR( e001 )
+, b //@ ERROR( 0506 )
 , c
 }
 

@@ -42,7 +42,7 @@
 
 CASM init foo
 
-function assert: Integer -> Integer //@ ERROR( f100 )
+function assert: Integer -> Integer //@ ERROR( 0504 )
 
 rule foo =
     skip

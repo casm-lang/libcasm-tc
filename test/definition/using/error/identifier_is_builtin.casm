@@ -44,7 +44,7 @@
 
 CASM init foo
 
-using assert = Integer //@ ERROR( 6001 )
+using assert = Integer //@ ERROR( 0504 )
 
 rule foo =
     skip

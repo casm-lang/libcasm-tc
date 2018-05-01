@@ -44,7 +44,7 @@ CASM init foo
 
 enumeration bar = { x, y, z }
 
-enumeration bar = { a, b, c } //@ ERROR( e000 )
+enumeration bar = { a, b, c } //@ ERROR( 0506 )
 
 rule foo =
     skip
