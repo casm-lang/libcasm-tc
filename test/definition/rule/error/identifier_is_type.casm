@@ -42,5 +42,5 @@
 
 CASM init foo
 
-rule Integer = //@ ERROR( 5002 )
+rule Integer = //@ ERROR( 0505 )
     skip
