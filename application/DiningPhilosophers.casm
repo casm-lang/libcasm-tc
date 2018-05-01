@@ -13,20 +13,20 @@ enumeration Person = { Juan, Sina, Herbert, Albert, Fredrich }
 using Agent = Person
 
 init {
-    (::Juan) -> @Philosopher,
-    (::Sina) -> @Philosopher,
-    (::Herbert) -> @Philosopher,
-    (::Albert) -> @Philosopher,
-    (::Fredrich) -> @Philosopher
+    (Juan) -> @Philosopher,
+    (Sina) -> @Philosopher,
+    (Herbert) -> @Philosopher,
+    (Albert) -> @Philosopher,
+    (Fredrich) -> @Philosopher
 }
 
 // TABLE:  c1  Herbert  c2  Fredrich  c3  Sina  c4  Juan  c5  Albert  c1
 [static] function chops : Person -> (Chopstick, Chopstick) initially {
-    (::Juan) -> (::c5, ::c4),
-    (::Sina) -> (::c4, ::c3),
-    (::Herbert) -> (::c2, ::c1),
-    (::Albert) -> (::c1, ::c5),
-    (::Fredrich) -> (::c3, ::c2)
+    (Juan) -> (c5, c4),
+    (Sina) -> (c4, c3),
+    (Herbert) -> (c2, c1),
+    (Albert) -> (c1, c5),
+    (Fredrich) -> (c3, c2)
 }
 
 derived leftChop(person : Person) -> Chopstick =
@@ -39,11 +39,11 @@ function eating : Person -> Boolean defined { false }
 function chopOwner: Chopstick -> Person
 
 function hungry : Person -> Boolean initially {
-    (::Juan) -> flipCoin,
-    (::Sina) -> flipCoin,
-    (::Herbert) -> flipCoin,
-    (::Albert) -> flipCoin,
-    (::Fredrich) -> flipCoin
+    (Juan) -> flipCoin,
+    (Sina) -> flipCoin,
+    (Herbert) -> flipCoin,
+    (Albert) -> flipCoin,
+    (Fredrich) -> flipCoin
 }
 
 derived canPickBothChopsticks -> Boolean =

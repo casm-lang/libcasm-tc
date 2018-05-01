@@ -62,7 +62,7 @@ using Prisoner = Integer'[1..100]
 
 enumeration BulbState = { On, Off }
 
-function lightBulb : -> BulbState initially { ::Off }
+function lightBulb : -> BulbState initially { Off }
 function lightToggleCounter : Prisoner -> Integer defined { 0 }
 function leadingPrisoner : -> Prisoner
 
@@ -85,8 +85,8 @@ rule DiscussPlan =
 rule VisitLivingRoom =
 {
     choose prisoner in Prisoner do {
-        if prisoner = leadingPrisoner and lightBulb = ::On then {
-            lightBulb := ::Off
+        if prisoner = leadingPrisoner and lightBulb = On then {
+            lightBulb := Off
 
             {|
                 lightToggleCounter( prisoner ) := lightToggleCounter( prisoner ) + 1
@@ -95,8 +95,8 @@ rule VisitLivingRoom =
             |}
         }
 
-        if prisoner != leadingPrisoner and lightBulb = ::Off and not visitedLivingRoom( prisoner ) then {
-            lightBulb := ::On
+        if prisoner != leadingPrisoner and lightBulb = Off and not visitedLivingRoom( prisoner ) then {
+            lightBulb := On
 
             assert( lightToggleCounter( prisoner ) = 0 )
             lightToggleCounter( prisoner ) := 1

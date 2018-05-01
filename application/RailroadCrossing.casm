@@ -12,11 +12,11 @@ enumeration Agent = {
 }
 
 init {
-    (::TrackController) -> @TrackControl,
-    (::GateController) -> @GateControl,
-    (::Observer) -> @ObserverProgram,
-    (::Environment) -> @EnvironmentProgram,
-    (::Clock) -> @TimeTick
+    (TrackController) -> @TrackControl,
+    (GateController) -> @GateControl,
+    (Observer) -> @ObserverProgram,
+    (Environment) -> @EnvironmentProgram,
+    (Clock) -> @TimeTick
 }
 
 enumeration Track = {
@@ -50,9 +50,9 @@ enumeration GateState = {
 [static] function waitTime : -> Integer initially { 3 }
 
 function deadline : Track -> Integer defined { infinity }
-function trackStatus : Track -> TrackStatus defined { ::Empty }
+function trackStatus : Track -> TrackStatus defined { Empty }
 function dir : -> Direction
-function gateState : -> GateState initially { ::Opened }
+function gateState : -> GateState initially { Opened }
 
 derived randomProbability -> Decimal =
     choose x in [0.0 .. 1.0] do x
@@ -68,18 +68,18 @@ rule TimeTick =
 
 rule GateControl =
 {
-    if dir = ::Open and gateState = ::Closed then
-        gateState := ::Opened
+    if dir = Open and gateState = Closed then
+        gateState := Opened
 
-    if dir = ::Close and gateState = ::Opened then
-        gateState := ::Closed
+    if dir = Close and gateState = Opened then
+        gateState := Closed
 }
 
 // ---------------------------------------------------------------------------
 
 // Is it safe to open the guard?
 derived safeToOpen -> Boolean =
-    forall t in Track holds trackStatus(t) = ::Empty or (now + dopen) < deadline(t)
+    forall t in Track holds trackStatus(t) = Empty or (now + dopen) < deadline(t)
 
 rule TrackControl =
 {
@@ -94,20 +94,20 @@ rule TrackControl =
 }
 
 rule SetDeadline(x : Track) =
-    if trackStatus(x) = ::Coming and deadline(x) = infinity then
+    if trackStatus(x) = Coming and deadline(x) = infinity then
         deadline(x) := now + waitTime
 
 rule SignalClose(x : Track) =
     if now >= deadline(x) and now <= deadline(x) + 1 then
-        dir := ::Close
+        dir := Close
 
 rule ClearDeadline(x : Track) =
-    if trackStatus(x) = ::Empty and deadline(x) < infinity then
+    if trackStatus(x) = Empty and deadline(x) < infinity then
         deadline(x) := infinity
 
 rule SignalOpen =
-    if dir = ::Close and safeToOpen then
-        dir := ::Open
+    if dir = Close and safeToOpen then
+        dir := Open
 
 // ---------------------------------------------------------------------------
 
@@ -130,21 +130,21 @@ function passingTime : Track -> Integer
 rule EnvironmentProgram =
     choose t in Track do
     {
-        if trackStatus(t) = ::Empty then
+        if trackStatus(t) = Empty then
             if randomProbability < 0.05 then
             {
-                trackStatus(t) := ::Coming
+                trackStatus(t) := Coming
                 passingTime(t) := now + dmin
             }
 
-        if trackStatus(t) = ::Coming then
+        if trackStatus(t) = Coming then
             if passingTime(t) < now then
             {
-                trackStatus(t) := ::Crossing
+                trackStatus(t) := Crossing
                 passingTime(t) := now + 3
             }
 
-        if trackStatus(t) = ::Crossing then
+        if trackStatus(t) = Crossing then
             if passingTime(t) < now then
-                trackStatus(t) := ::Empty
+                trackStatus(t) := Empty
     }
