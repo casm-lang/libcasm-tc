@@ -44,21 +44,21 @@ CASM init foo
 
 enumeration Color = { Red, Green, Blue }
 
-function colorFunction : -> Color initially { ::Blue } // Color namespace from type of colorFunction
+function colorFunction : -> Color initially { Blue } // Color namespace from type of colorFunction
 
 rule foo =
 {
     case colorFunction of // cases should use Color namespace of colorFunction
     {
-        ::Red: assert(false)
-        ::Green: assert(false)
-        ::Blue: assert(true)
+        Red: assert(false)
+        Green: assert(false)
+        Blue: assert(true)
     }
 
-    if colorFunction != ::Blue then
+    if colorFunction != Blue then
         assert(false)
 
-    colorFunction := ::Red // Color namespace from type of colorFunction
+    colorFunction := Red // Color namespace from type of colorFunction
 
     program( self ) := undef // terminate after one step!
 }
