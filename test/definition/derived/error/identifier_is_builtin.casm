@@ -42,7 +42,7 @@
 
 CASM init foo
 
-derived assert( arg : Integer ) -> Integer = 0 //@ ERROR( d100 )
+derived assert( arg : Integer ) -> Integer = 0 //@ ERROR( 0504 )
 
 rule foo =
     skip

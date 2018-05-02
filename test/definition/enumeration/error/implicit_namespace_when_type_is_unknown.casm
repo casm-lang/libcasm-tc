@@ -49,7 +49,7 @@ enumeration Color = { Red, Green, Blue }
 rule foo =
 {
     let c =
-        ::Red //@ ERROR( cc11 )
+        Red //@ ERROR( 0500 )
     in
         skip
 }

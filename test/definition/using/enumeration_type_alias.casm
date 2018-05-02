@@ -51,5 +51,5 @@ enumeration Color = {
 using MyType = Color
 
 rule foo =
-    let x : MyType = ::Red in
+    let x : MyType = Red in
         skip
