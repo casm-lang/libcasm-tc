@@ -53,7 +53,7 @@ rule foo =
     let
     c : Other
     =
-    ::Red //@ERROR( cc11 )
+    Red //@ERROR( 0500 )
     in
         skip
 }
