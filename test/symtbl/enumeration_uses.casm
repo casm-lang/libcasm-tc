@@ -51,5 +51,5 @@ rule foo =
 
     let x : ABC = ABC::B in skip
 
-    let x : ABC = ::C in skip
+    let x : ABC = C in skip
 }

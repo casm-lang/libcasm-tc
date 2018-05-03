@@ -56,9 +56,9 @@ rule foo =
     forall c in Color do
         visitedColors( c ) := true
 
-    assert( visitedColors( ::Red ) and
-            visitedColors( ::Green ) and
-            visitedColors( ::Blue ) )
+    assert( visitedColors( Red ) and
+            visitedColors( Green ) and
+            visitedColors( Blue ) )
 
     program( self ) := undef
 |}
