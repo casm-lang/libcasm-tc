@@ -51,11 +51,11 @@ CASM init foo
 
 rule foo =
 {
-    let a : Binary'16 = 0b1111'0000 in
-    let b : Binary'16 = 0b1111'0000 in
+    let a : Binary'16 = 0b1111'0000'1111'0000 in
+    let b : Binary'16 = 0b1111'0000'1111'0000 in
     let c = a or b in
     {
-        assert( c  = 0b1111'0000 as Binary'16 )
+        assert( c  = 0b1111'0000'1111'0000 )
 
         assert( c != undef) 
         assert( c.isSymbolic() = false )
