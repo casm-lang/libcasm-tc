@@ -56,13 +56,14 @@ int main( int argc, const char* argv[] )
 
     libstdhl::Log::defaultSource( source );
 
-    assert( argc == 4 );
+    assert( argc == 5 );
 
     assert( argv[ 1 ] );
     std::string mode( argv[ 1 ] );
 
     const char* file_name = argv[ 2 ];
     const char* dest_name = argv[ 3 ];
+    const char* path_name = argv[ 4 ];
 
     // if( ( mode.compare( "tc" ) != 0 ) or ( mode.compare( "bm" ) != 0 ) )
     // {
@@ -133,6 +134,14 @@ int main( int argc, const char* argv[] )
         } );
 
     std::string fn( file_name );
+    std::string pn( path_name );
+
+    size_t pos = fn.find( pn );
+    if( pos != std::string::npos )
+    {
+        fn.erase( pos, pn.length() );
+    }
+
     std::replace( fn.begin(), fn.end(), '/', '_' );
     std::replace( fn.begin(), fn.end(), '.', '_' );
     std::replace( fn.begin(), fn.end(), '-', '_' );
