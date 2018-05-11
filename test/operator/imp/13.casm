@@ -63,6 +63,6 @@ rule foo =
         assert( c != false )
         assert( c.isSymbolic() = false )
 
-        assert( c = a => b )
+        assert( c = (a => b) )
     }
 }
