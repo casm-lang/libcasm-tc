@@ -55,7 +55,7 @@ foreach( CASM_BENCHMARK_FILE
   add_custom_command(
     OUTPUT  ${CXX_BENCHMARK_FILE}
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CXX_BENCHMARK_DIR}
-    COMMAND ${PROJECT}-generator benchmark ${CASM_BENCHMARK_FILE} ${CXX_BENCHMARK_FILE}
+    COMMAND ${PROJECT}-generator benchmark ${CASM_BENCHMARK_FILE} ${CXX_BENCHMARK_FILE} ${CMAKE_SOURCE_DIR}/
     DEPENDS ${PROJECT}-generator ${CASM_BENCHMARK_FILE}
     COMMENT "Generating benchmark case ${BENCHMARK_FILE}"
     )
