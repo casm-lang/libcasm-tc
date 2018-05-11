@@ -40,12 +40,12 @@
 //  statement from your version.
 //
 
-// value 0x16 does fit into Binary'16
+// value 0x3216 does fit into Binary'16
 
 
 CASM init foo
 
 rule foo = skip
 
-function f : -> Binary'16 initially { 0x16 }
+function f : -> Binary'16 initially { 0x3216 }
 

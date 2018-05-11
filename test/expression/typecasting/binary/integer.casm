@@ -46,9 +46,9 @@ rule foo =
 {
     let x : Integer = undef in assert( x as Binary'1 = undef )
     let x : Integer = -24   in assert( x as Binary'1 = undef )
-    let x : Integer = -1    in assert( x as Binary'1 = 0b1 )
-    let x : Integer = 0     in assert( x as Binary'1 = 0b0 )
-    let x : Integer = 1     in assert( x as Binary'1 = 0b1 )
+    let x : Integer = -1    in assert( x as Binary'1 = 0b1   )
+    let x : Integer = 0     in assert( x as Binary'1 = 0b0   )
+    let x : Integer = 1     in assert( x as Binary'1 = undef )
     let x : Integer = 42    in assert( x as Binary'1 = undef )
 
     let x : Integer = undef in assert( x as Binary'2 = undef )
@@ -57,8 +57,8 @@ rule foo =
     let x : Integer = -1    in assert( x as Binary'2 = 0b11 )
     let x : Integer = 0     in assert( x as Binary'2 = 0b00 )
     let x : Integer = 1     in assert( x as Binary'2 = 0b01 )
-    let x : Integer = 2     in assert( x as Binary'2 = 0b10 )
-    let x : Integer = 3     in assert( x as Binary'2 = 0b11 )
+    let x : Integer = 2     in assert( x as Binary'2 = undef )
+    let x : Integer = 3     in assert( x as Binary'2 = undef )
     let x : Integer = 42    in assert( x as Binary'2 = undef )
 
     let x : Integer = undef in assert( x as Binary'8 = undef )

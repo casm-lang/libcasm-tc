@@ -1,0 +1,156 @@
+//
+//  Copyright (C) 2014-2018 CASM Organization <https://casm-lang.org>
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                <https://github.com/casm-lang/libcasm-tc>
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+//  Additional permission under GNU GPL version 3 section 7
+//
+//  libcasm-tc is distributed under the terms of the GNU General Public License
+//  with the following clarification and special exception: Linking libcasm-tc
+//  statically or dynamically with other modules is making a combined work
+//  based on libcasm-tc. Thus, the terms and conditions of the GNU General
+//  Public License cover the whole combination. As a special exception,
+//  the copyright holders of libcasm-tc give you permission to link libcasm-tc
+//  with independent modules to produce an executable, regardless of the
+//  license terms of these independent modules, and to copy and distribute
+//  the resulting executable under terms of your choice, provided that you
+//  also meet, for each linked independent module, the terms and conditions
+//  of the license of that module. An independent module is a module which
+//  is not derived from or based on libcasm-tc. If you modify libcasm-tc, you
+//  may extend this exception to your version of the library, but you are
+//  not obliged to do so. If you do not wish to do so, delete this exception
+//  statement from your version.
+//
+
+CASM
+
+init SSEM
+
+using Line = Integer // FIXME '[0..31]
+
+enumeration Instruction = {
+    JMP, // Copy content of Store line to CI
+    JRP, // Add content of Store line to CI
+    LDN, // Copy content of Store line, negated, to accumulator.
+    STO, // Copy content of acc. to Store line.
+    SUB, // Subtract content of Store line from Accumulator
+    CMP, // Skip next instruction if content of Accumulator is negative
+    STOP // Light "Stop" neon and halt the machine.
+}
+
+/**
+ * sum = 0
+ * i = 10
+ * while (i > 0) {
+ *    sum = sum + i;
+ *    i = i - 1;
+ * }
+ */
+
+function store : Line -> Binary'32 initially {
+    (0) -> 0b010'0000'0000'0001'1110 as Binary'32, // LDN 30 "-i"
+    (1) -> 0b110'0000'0000'0000'0000 as Binary'32, // CMP "<0"
+    (2) -> 0b111'0000'0000'0000'0000 as Binary'32, // STOP
+    (3) -> 0b010'0000'0000'0001'1111 as Binary'32, // LDN 31 "-sum"
+    (4) -> 0b101'0000'0000'0001'1110 as Binary'32, // SUB 30 "i"
+    (5) -> 0b011'0000'0000'0001'1111 as Binary'32, // STO 31 "-sum"
+    (6) -> 0b010'0000'0000'0001'1111 as Binary'32, // LDN 31 "sum"
+    (7) -> 0b011'0000'0000'0001'1111 as Binary'32, // STO 31 "sum"
+    (8) -> 0b010'0000'0000'0001'1110 as Binary'32, // LDN 30 "-i"
+    (9) -> 0b101'0000'0000'0001'1101 as Binary'32, // SUB 29 "-1"
+    (10) -> 0b011'0000'0000'0001'1110 as Binary'32, // STO 30 "-i"
+    (11) -> 0b010'0000'0000'0001'1110 as Binary'32, // LDN 30 "i"
+    (12) -> 0b011'0000'0000'0001'1110 as Binary'32, // STO 30 "i"
+    (13) -> 0b000'0000'0000'0001'1100 as Binary'32, // JMP 28 -> 0
+
+    (28) -> 0 as Binary'32, // constant 0
+    (29) -> -1 as Binary'32, // constant -1
+    (30) -> 1000 as Binary'32, // i
+    (31) -> 0 as Binary'32 // sum
+}
+function accumulator : -> Integer initially { 0 } // FIXME Binary'32
+function controlInstruction : -> Line initially { 0 }
+function stopped : -> Boolean initially { false }
+
+rule IncrementControlInstruction =
+    controlInstruction := controlInstruction + 1
+
+function presentInstruction : -> Binary'32
+
+rule Fetch =
+{
+    presentInstruction := store(controlInstruction)
+    IncrementControlInstruction
+}
+
+function decodedLine : -> Line
+function decodedInstruction : -> Instruction
+
+rule Decode =
+{
+    decodedLine := (presentInstruction and 0b11111 as Binary'32) as Line
+
+    let inst = presentInstruction.shr(16) as Binary'3 in
+        decodedInstruction := if inst = 0b000 then JMP
+                              else if inst = 0b001 then JRP
+                              else if inst = 0b010 then LDN
+                              else if inst = 0b011 then STO
+                              else if inst = 0b100 or inst = 0b101 then SUB
+                              else if inst = 0b110 then CMP
+                              else if inst = 0b111 then STOP
+                              else undef
+}
+
+rule Execute =
+    case decodedInstruction of {
+        JMP: controlInstruction := store(decodedLine) as Line
+        JRP: controlInstruction := controlInstruction + store(decodedLine) as Line
+        LDN: accumulator := -(store(decodedLine) as Integer)
+        STO: store(decodedLine) := accumulator as Binary'32
+        SUB: accumulator := accumulator - store(decodedLine) as Integer
+        CMP: if accumulator < 0 then IncrementControlInstruction
+        STOP: stopped := true
+        _: abort
+    }
+
+rule Debug =
+{|
+    println("----------------------------------------------------")
+    println("accumulator: " + accumulator as String)
+    println("controlInstruction: " + controlInstruction as String)
+    println("presentInstruction: " + presentInstruction as String)
+    println("decodedInstruction: " + decodedInstruction as String)
+    println("stopped: " + stopped as String)
+
+    println("$28: " + store(28) as String)
+    println("$29: " + store(29) as String)
+    println("i: " + store(30) as String)
+    println("sum: " + store(31) as String)
+|}
+
+rule SSEM =
+    if not stopped then {|
+        Fetch
+        Decode
+        Execute
+        // Debug
+    |} else println("sum: " + store(31) as String)
+

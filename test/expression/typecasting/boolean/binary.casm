@@ -45,14 +45,18 @@ CASM init foo
 rule foo =
 {
     let x : Binary'1 = undef in assert( x as Boolean = undef )
-    let x : Binary'1 = 0     in assert( x as Boolean = false )
-    let x : Binary'1 = 1     in assert( x as Boolean = true  )
+    let x : Binary'1 = 0b0   in assert( x as Boolean = false )
+    let x : Binary'1 = 0b1   in assert( x as Boolean = true  )
 
-    let x : Binary'8 = undef in assert( x as Boolean = undef )
-    let x : Binary'8 = 0     in assert( x as Boolean = false )
-    let x : Binary'8 = 1     in assert( x as Boolean = true  )
+    let x : Binary'8 = undef       in assert( x as Boolean = undef )
+    let x : Binary'8 = 0b0000'0000 in assert( x as Boolean = false )
+    let x : Binary'8 = 0b0000'0001 in assert( x as Boolean = true  )
+    let x : Binary'8 = 0b1000'0001 in assert( x as Boolean = true  )
+    let x : Binary'8 = 0b1111'1111 in assert( x as Boolean = true  )
 
-    let x : Binary'23 = undef in assert( x as Boolean = undef )
-    let x : Binary'23 = 0     in assert( x as Boolean = false )
-    let x : Binary'23 = 1     in assert( x as Boolean = true  )
+    let x : Binary'23 = undef       in assert( x as Boolean = undef )
+    let x : Binary'23 = 0b000'0000'0000'0000'0000'0000 in assert( x as Boolean = false )
+    let x : Binary'23 = 0b000'0000'0000'0000'0000'0001 in assert( x as Boolean = true  )
+    let x : Binary'23 = 0b100'0000'0000'0000'0000'0000 in assert( x as Boolean = true  )
+    let x : Binary'23 = 0b111'1111'1111'1111'1111'1111 in assert( x as Boolean = true  )
 }

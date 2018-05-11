@@ -1,0 +1,334 @@
+//
+//  Copyright (C) 2014-2018 CASM Organization <https://casm-lang.org>
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                <https://github.com/casm-lang/libcasm-tc>
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+//  Additional permission under GNU GPL version 3 section 7
+//
+//  libcasm-tc is distributed under the terms of the GNU General Public License
+//  with the following clarification and special exception: Linking libcasm-tc
+//  statically or dynamically with other modules is making a combined work
+//  based on libcasm-tc. Thus, the terms and conditions of the GNU General
+//  Public License cover the whole combination. As a special exception,
+//  the copyright holders of libcasm-tc give you permission to link libcasm-tc
+//  with independent modules to produce an executable, regardless of the
+//  license terms of these independent modules, and to copy and distribute
+//  the resulting executable under terms of your choice, provided that you
+//  also meet, for each linked independent module, the terms and conditions
+//  of the license of that module. An independent module is a module which
+//  is not derived from or based on libcasm-tc. If you modify libcasm-tc, you
+//  may extend this exception to your version of the library, but you are
+//  not obliged to do so. If you do not wish to do so, delete this exception
+//  statement from your version.
+//
+
+/*
+SSEM https://en.wikipedia.org/wiki/Manchester_Small-Scale_Experimental_Machine
+
+|-----+-------------+-----------+------------------------------------------------------------------|
+| Bin | Instruction | Mnemonic  | Description                                                      |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 000 | S, Cl       |   (JMP S) | Jump to the instruction at the address obtained from the         |
+|     |             |           | specified memory address S[a] (absolute unconditional jump)      |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 100 | Add S, Cl   |   (JRP S) | Jump to the instruction at the program counter plus the          |
+|     |             |           | relative value obtained from the specified memory address        |
+|     |             |           | S[a] (relative unconditional jump)                               |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 010 | -S, C       |   (LDN S) | Take the number from the specified memory address S, negate it,  |
+|     |             |           | and load it into the accumulator                                 |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 110 | c, S        |   (STO S) | Store the number in the accumulator to the specified memory      |
+|     |             |           | address S                                                        |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 001 | SUB S       |   (SUB S) | Subtract the number at the specified memory address S from the   |
+|     | or 101[b]   |           | value in accumulator, and store the result in the accumulator    |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 011 | Test        |   (CMP)   | Skip next instruction if the accumulator contains a negative     |
+|     |             |           | value                                                            |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 111 | Stop        |   (STP)   | Stop                                                             |
+|-----+-------------+-----------+------------------------------------------------------------------|
+*/
+
+
+CASM init setup
+
+enumeration Instruction =
+{ JMP
+, JRP
+, LDN
+, STO
+, SUB
+, CMP
+, STP
+}
+
+using Address = Binary'16
+using Word = Binary'32
+using Opcode = Binary'3
+
+function accumulator : -> Word
+function memory : Address -> Word
+function pc : -> Integer
+function instruction : -> RuleRef< Address -> Void >
+function next : -> Address
+
+function address : -> Address
+function opcode : -> Opcode
+
+
+[ static ]
+function toInstruction : Opcode -> Instruction initially
+{ ( 0b000 ) -> JMP
+, ( 0b100 ) -> JRP
+, ( 0b010 ) -> LDN
+, ( 0b110 ) -> STO
+, ( 0b001 ) -> SUB
+, ( 0b101 ) -> SUB // alternative encoding
+, ( 0b011 ) -> CMP
+, ( 0b111 ) -> STP
+}
+
+[ static ]
+function toOpcode : Instruction -> Opcode initially
+{ ( JMP ) -> 0b000
+, ( JRP ) -> 0b100
+, ( LDN ) -> 0b010
+, ( STO ) -> 0b110
+, ( SUB ) -> 0b001
+, ( CMP ) -> 0b011
+, ( STP ) -> 0b111
+}
+
+rule fetch =
+    let data = memory( pc as Address ) in
+    {
+        address := data.trunc( 16 )
+        opcode := data.shr( 16 ).trunc( 3 )
+    }
+
+rule decode =
+    case toInstruction( opcode ) of
+    {
+        JMP : instruction := @jmp
+        JRP : instruction := @jrp
+        LDN : instruction := @ldn
+        STO : instruction := @sto
+        SUB : instruction := @sub
+        CMP : instruction := @cmp
+        STP : instruction := @stp
+    }
+
+rule execute =
+    instruction()( address )
+
+rule ssem =
+{
+    {|
+        fetch
+        decode
+        execute
+
+        // next step logic
+        if next = undef then
+            pc := pc + 1
+        else
+            pc := next as Integer
+        next := undef
+    |}
+}
+
+rule jmp( s : Address ) =
+    next := memory( s ).trunc( 16 )
+
+rule jrp( s : Address ) =
+    next := (pc + memory( s ) as Integer) as Address
+
+rule ldn( s : Address ) =
+    accumulator := (-(memory( s ) as Integer)) as Word
+
+rule sto( s : Address ) =
+    memory( s ) := accumulator
+
+rule sub( s : Address ) =
+    accumulator := (accumulator as Integer - memory( s ) as Integer) as Word
+
+rule cmp( s : Address ) =
+{
+    if (accumulator as Integer) < 0 then
+        next := (pc + 2) as Address
+}
+rule stp( s : Address ) =
+{
+    program( self ) := @halt
+    dump
+}
+
+
+rule dump =
+{|
+    print( "program-cnt: " )
+    println( pc.hex )
+
+    print( "accumulator: ")
+    println( accumulator.hex )
+    
+    print( "       next: ")
+    println( next.hex )
+
+    print( "instruction: " )
+    println( instruction as String )
+
+    println( "memory:" )
+     forall x in [0 .. 3] do
+     {|
+	  print( x.hex + ": " )
+          forall y in [0 .. 7] do
+	  	 let word = memory( (x*8+y) as Address ) in
+		 if word != undef then
+		    print( word.hex + "  " )
+		 else
+		    print( ".....  " )
+          println("")
+     |}
+|}
+
+
+function example : -> Integer initially { 0 }
+
+rule setup =
+{|
+    // load example program
+    case example of
+    {
+        0 : progAdd
+        1 : progCnt
+        2 : progSum
+    }
+
+    // execute the machine
+    pc := 0
+    program( self ) := @ssem
+|}
+
+rule halt =
+{
+    // check the example program result
+    case example of
+    {
+        0 : assert( memory( 18 as Address ) = 579 as Word )
+        1 : assert( memory( 22 as Address ) = -1 as Word )
+        2 : assert( memory( 31 as Address ) = 500500 as Word )
+    }
+
+    if example = 2 then
+    {
+        program( self ) := undef
+    }
+    else
+    {
+        example := example + 1
+        program( self ) := @setup
+    }
+}
+
+rule code( i : Instruction, a : Address ) -> Void =
+    let inst = toOpcode( i ) as Word  in
+    let addr = a as Word in
+    let word = inst.shl( 16 ) or addr in
+    {
+        memory( pc as Address ) := word
+        pc := pc + 1
+    }
+
+
+rule progAdd =
+let x = 16 as Address in
+let y = 17 as Address in
+let z = 18 as Address in
+{|
+    // data constants
+    memory( 0x0010 ) := 123 as Word
+    memory( 0x0011 ) := 456 as Word
+
+    // instructions
+    pc := 0
+    code( LDN, x )
+    code( SUB, y )
+    code( STO, z )
+    code( LDN, z )
+    code( STO, z )
+
+    code( STP, 0xffff )
+|}
+
+rule progCnt =
+let zero = 20 as Address in
+let neg1 = 21 as Address in
+let val = 22 as Address in
+{|
+    // data constants
+    memory( zero ) := 0 as Word
+    memory( neg1 ) := -1 as Word
+    memory( val ) := 1000 as Word
+
+    // instructions
+    pc := 0
+    code( LDN, val )    
+    code( CMP, 0xffff )
+    code( STP, 0xffff )
+    code( SUB, neg1 )
+    code( STO, val )
+    code( LDN, val )
+    code( STO, val )
+    code( JMP, zero )
+|}
+
+rule progSum =
+let zero = 28 as Address in
+let neg1 = 29 as Address in
+let i = 30 as Address in
+let sum = 31 as Address in
+{|
+    // data constants
+    memory( zero ) := 0 as Word
+    memory( neg1 ) := -1 as Word
+    memory( i ) := 1000 as Word
+    memory( sum ) := 0 as Word
+
+    // instructions
+    pc := 0
+    code( LDN, i )
+    code( CMP, 0xffff )
+    code( STP, 0xffff )
+    code( LDN, sum )
+    code( SUB, i )
+    code( STO, sum )
+    code( LDN, sum )
+    code( STO, sum )
+    code( LDN, i )
+    code( SUB, neg1 )
+    code( STO, i )
+    code( LDN, i )
+    code( STO, i )
+    code( JMP, zero )
+|}

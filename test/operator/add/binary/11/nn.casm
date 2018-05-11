@@ -51,9 +51,9 @@ CASM init foo
 
 rule foo =
 {
-    let a : Binary'16 = -40 in
-    let b : Binary'16 = -40 in
-    let r : Binary'16 = -80 in
+    let a = -40 as Binary'16 in
+    let b = -40 as Binary'16 in
+    let r = -80 as Binary'16 in
     let c = a + b in
     {
         assert( c = r )

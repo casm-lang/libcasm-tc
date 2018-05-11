@@ -51,8 +51,8 @@ CASM init foo
 
 rule foo =
 {
-    let a : Binary'16 = undef in
-    let b : Binary'16 = 0 in
+    let a = undef as Binary'16 in
+    let b =     0 as Binary'16 in
     let c = a + b in
     {
         assert( c = undef )        
