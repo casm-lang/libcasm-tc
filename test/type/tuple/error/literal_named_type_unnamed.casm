@@ -40,30 +40,30 @@
 //  statement from your version.
 //
 
-// unable to infer a record literal type from a tuple type!
+// type mismatch: record types are not equal to tuple types
 
 CASM init foo
 
 rule foo =
 {
     let
-    x : ( Integer, String, Decimal )
+    x : ( Integer, String, Decimal ) //@ ERROR( 1012 )
     =
-    ( a : 1, b : "2", c : 3.4 )      //@ ERROR( 1eee )
+    ( a : 1, b : "2", c : 3.4 )      //@ ERROR( 1012 )
     in
 	skip
 
     let
-    x : ( Integer, String, Decimal )
+    x : ( Integer, String, Decimal ) //@ ERROR( 1012 )
     =
-    ( b : "2" )                      //@ ERROR( 1eee )
+    ( b : "2" )                      //@ ERROR( 1012 )
     in
 	skip
 
     let
-    x : ( Integer, String, Decimal )
+    x : ( Integer, String, Decimal ) //@ ERROR( 1012 )
     =
-    ( c : 3.4, a : 1, b : "2" )      //@ ERROR( 1eee )
+    ( c : 3.4, a : 1, b : "2" )      //@ ERROR( 1012 )
     in
 	skip
 }
