@@ -42,6 +42,11 @@
 
 // https://github.com/casm-lang/casm/issues/70
 
+// type mismatch: rule argument type at position 1 was '( x : Integer, y : Integer )',
+// rule definition expects '( Integer, Integer )'
+
+// a record type cannot be assigned to a tuple type
+
 CASM init test
 
 using Point = ( Integer, Integer )
@@ -52,5 +57,3 @@ rule foo( p : Point ) =
 rule test =
     foo( ( x : 10, y : 20 ) ) //@ ERROR( 1305 )
 
-// type mismatch: rule argument type at position 1 was '( x : Integer, y : Integer )',
-// rule definition expects '( Integer, Integer )'
