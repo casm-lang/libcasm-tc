@@ -236,7 +236,7 @@ rule halt =
     case example of
     {
         0 : assert( memory( 18 as Address ) = 579 as Word )
-        1 : assert( memory( 22 as Address ) = -1 as Word )
+        1 : assert( memory( 22 as Address ) = 0 as Word )
         2 : assert( memory( 31 as Address ) = 500500 as Word )
     }
 
