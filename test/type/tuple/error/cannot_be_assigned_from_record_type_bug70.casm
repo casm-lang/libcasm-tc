@@ -40,30 +40,20 @@
 //  statement from your version.
 //
 
-// type mismatch: record types are not equal to tuple types
+// https://github.com/casm-lang/casm/issues/70
 
-CASM init foo
+// type mismatch: rule argument type at position 1 was '( x : Integer, y : Integer )',
+// rule definition expects '( Integer, Integer )'
 
-rule foo =
-{
-    let
-    x : ( Integer, String, Decimal ) //@ ERROR( 1012 )
-    =
-    ( a : 1, b : "2", c : 3.4 )      //@ ERROR( 1012 )
-    in
-	skip
+// a record type cannot be assigned to a tuple type
 
-    let
-    x : ( Integer, String, Decimal ) //@ ERROR( 1012 )
-    =
-    ( b : "2" )                      //@ ERROR( 1012 )
-    in
-	skip
+CASM init test
 
-    let
-    x : ( Integer, String, Decimal ) //@ ERROR( 1012 )
-    =
-    ( c : 3.4, a : 1, b : "2" )      //@ ERROR( 1012 )
-    in
-	skip
-}
+using Point = ( Integer, Integer )
+
+rule foo( p : Point ) =
+    skip
+
+rule test =
+    foo( ( x : 10, y : 20 ) ) //@ ERROR( 1305 )
+
