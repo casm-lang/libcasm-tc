@@ -51,21 +51,21 @@ rule foo =
     let
     a : Integer
     =
-    bar.a //@ ERROR( ? )
+    bar.a //@ ERROR( 0507 )
     in
     	skip
 
     let
     a : String
     =
-    bar.b //@ ERROR( ? )
+    bar.b //@ ERROR( 0507 )
     in
     	skip
 
     let
     a : Decimal
     =
-    bar.c //@ ERROR( ? )
+    bar.c //@ ERROR( 0507 )
     in
     	skip
 }
