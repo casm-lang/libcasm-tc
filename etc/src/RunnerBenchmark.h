@@ -57,10 +57,10 @@ class benchmark : public ::hayai::Fixture
     virtual void TearDown();
 };
 
-#define INSTANTIATE_BENCHMARK_CASE( FN, SPEC )       \
-    BENCHMARK_F( benchmark, libcasm_tc__##FN, 5, 5 ) \
-    {                                                \
-        run( SPEC );                                 \
+#define INSTANTIATE_BENCHMARK_CASE( DISABLED, FN, SPEC )       \
+    BENCHMARK_F( benchmark, DISABLED##libcasm_tc__##FN, 5, 5 ) \
+    {                                                          \
+        run( SPEC );                                           \
     }
 
 #endif  // _LIBCASM_TC_RUNNER_BENCHMARK_H_

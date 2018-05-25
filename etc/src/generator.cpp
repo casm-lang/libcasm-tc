@@ -90,10 +90,12 @@ int main( int argc, const char* argv[] )
     };
 
     std::vector< ErrorInfo > error;
+    u1 disabled = false;
 
     libstdhl::File::readLines(
         file_name,
-        [mode, file_name, dest_name, &no_cmd_found, &error]( u32 cnt, const std::string& line ) {
+        [mode, file_name, dest_name, &no_cmd_found, &error, &disabled](
+            u32 cnt, const std::string& line ) {
             std::string c = "";
             std::regex expr( "//@[ ]*([\\S]+)[ ]*\\([ ]*([\\S]*)[ ]*\\)" );
             std::sregex_iterator start( line.begin(), line.end(), expr );
@@ -114,6 +116,11 @@ int main( int argc, const char* argv[] )
                 if( func.compare( "ERROR" ) == 0 )
                 {
                     error.push_back( ErrorInfo{ std::to_string( cnt + 1 ), args } );
+                    continue;
+                }
+                else if( func.compare( "DISABLED" ) == 0 )
+                {
+                    disabled = true;
                     continue;
                 }
                 else
@@ -164,13 +171,14 @@ int main( int argc, const char* argv[] )
             "#endif // _LIBCASM_TC_TESTS_\n"
             "\n"
             "INSTANTIATE_TEST_CASE_P\n"
-            "( libcasm_tc__%s\n"
+            "( %slibcasm_tc__%s\n"
             ", RunnerTest\n"
             ", ::testing::Values\n"
             "  ( libcasm_tc::RunnerTestParam\n"
             "    { \"%s\"\n"
             "    , \"%s\"\n"
             "    , {",
+            ( disabled ? "DISABLED_" : "" ),
             fn.c_str(),
             file_name,
             dest_name );
@@ -216,9 +224,11 @@ int main( int argc, const char* argv[] )
             "\n"
             "INSTANTIATE_BENCHMARK_CASE\n"
             "( %s\n"
+            ", %s\n"
             ", \"%s\"\n"
             ");\n"
             "\n",
+            ( disabled ? "DISABLED_" : "" ),
             fn.c_str(),
             file_name );
 
