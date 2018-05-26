@@ -5,7 +5,7 @@
 // Original Authors:
 // George Ma, Roozbeh Farahbod (CoreASM)
 
-CASM
+[asynchronous] CASM
 
 enumeration Chopstick = { c1, c2, c3, c4, c5 }
 enumeration Person = { Juan, Sina, Herbert, Albert, Fredrich }
