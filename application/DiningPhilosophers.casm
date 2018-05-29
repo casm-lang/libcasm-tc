@@ -49,7 +49,6 @@ function hungry : Person -> Boolean initially {
 derived canPickBothChopsticks -> Boolean =
     chopOwner(leftChop(self)) = undef and chopOwner(rightChop(self)) = undef
 
-[pure]
 derived flipCoin -> Boolean =
     choose c in Boolean do c
 
