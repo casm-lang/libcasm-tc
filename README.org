@@ -41,15 +41,27 @@
 # 
 [[https://github.com/casm-lang/casm-lang.logo/raw/master/etc/headline.png]]
 
-* libcasm-tc
+#+options: toc:nil
 
-CASM test cases for test applications, unit tests, integration tests etc.
+
+* libcasm-tc: CASM Example Application and Test Case Library
+
+[[https://gitter.im/casm-lang/libcasm-tc][https://badges.gitter.im/casm-lang/libcasm-tc.png]]
+[[https://ci.casm-lang.org/teams/main/pipelines/development/jobs/libcasm-tc-master][ @@html:<img src="https://ci.casm-lang.org/api/v1/teams/main/pipelines/development/jobs/libcasm-tc-master/badge">@@ ]]
+[[https://cirrus-ci.com/github/casm-lang/libcasm-tc][https://api.cirrus-ci.com/github/casm-lang/libcasm-tc.svg]]
+[[https://codecov.io/gh/casm-lang/libcasm-tc][https://codecov.io/gh/casm-lang/libcasm-tc/badge.svg]]
+[[https://github.com/casm-lang/libcasm-tc/tags][https://img.shields.io/github/tag/casm-lang/libcasm-tc.svg]]
+[[https://github.com/casm-lang/libcasm-tc/blob/master/LICENSE.txt][https://img.shields.io/badge/license-GPLv3%2BLE-blue.svg]]
+
+
+This repository contains CASM specifications for example test applications, unit tests, and integration tests.
+
 
 ** File Structure
 
 - =application= :: contains various applications
-- =test= :: contains unit test-cases/integration tests etc.
 - =benchmark= :: contains benchmarks etc.
+- =test= :: contains unit test-cases/integration tests etc.
 
 
 ** Copyright and License
