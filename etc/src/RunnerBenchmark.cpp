@@ -44,6 +44,8 @@
 
 #include "Profile.h"
 
+#include <libstdhl/Environment>
+
 #include <cassert>
 #include <unordered_map>
 
@@ -54,48 +56,43 @@ void benchmark::SetUp()
     libstdhl::u32 exec_result = 0;
     assert( exec_result == 0 );
 
-    std::unordered_map< std::string, const char* > env;
+    std::unordered_map< std::string, std::string > env;
     env[ "EXPORT" ] = "export";
     env[ "ECHO" ] = "echo";
     env[ "CAT" ] = "cat";
-    env[ "CASM" ];
-    env[ "CASM_BM" ];
-    env[ "CASM_ARG_PRE" ];
-    env[ "CASM_ARG_POST" ];
+    env[ "CASM" ] = "";
+    env[ "CASM_BM" ] = "";
+    env[ "CASM_ARG_PRE" ] = "";
+    env[ "CASM_ARG_POST" ] = "";
 
-    for( auto& e : env )
+    if( not libstdhl::Environment::Variable::has( "CASM" ) or
+        libstdhl::Environment::Variable::get( "CASM" ).length() == 0 )
     {
-        if( e.second == 0 )
-        {
-            const char* env_data = getenv( e.first.c_str() );
-            if( not env_data )
-            {
-                env_data = "";
-            }
-            env[ e.first ] = env_data;
-        }
-    }
-
-    if( strcmp( env[ "CASM" ], "" ) == 0 )
-    {
-        printf( "\nenvironment variable CASM not set, omitting test case!\n\n" );
+        printf( "\nenvironment variable 'CASM' not set, omitting benchmark!\n\n" );
         return;
     }
 
+    for( auto& e : env )
+    {
+        if( libstdhl::Environment::Variable::has( e.first ) )
+        {
+            env[ e.first ] = libstdhl::Environment::Variable::get( e.first );
+        }
+    }
+
     std::string bm = "obj/.bm";
-    sprintf( m_cmd, "%s -t > %s", env[ "CASM" ], bm.c_str() );
+    sprintf( m_cmd, "%s -t > %s", env[ "CASM" ].c_str(), bm.c_str() );
     exec_result = system( m_cmd );
     assert( exec_result == 0 );
 
     FILE* BM = fopen( bm.c_str(), "r" );
     fgets( m_cmd, 4096, BM );
-    setenv( "CASM_BM", m_cmd, 1 );
+    libstdhl::Environment::Variable::set( "CASM_BM", m_cmd );
 
-    env[ "CASM_BM" ] = getenv( "CASM_BM" );
-    assert( (libstdhl::u64)env[ "CASM_BM" ] );
-    assert( strcmp( env[ "CASM_BM" ], "" ) != 0 );
+    env[ "CASM_BM" ] = libstdhl::Environment::Variable::get( "CASM_BM" );
+    assert( env[ "CASM_BM" ].length() > 0 );
 
-    const char* uid = libcasm_tc::Profile::get( env[ "CASM_BM" ] );
+    const char* uid = libcasm_tc::Profile::get( env[ "CASM_BM" ].c_str() );
 
     switch( (libstdhl::u64)uid )
     {
@@ -104,10 +101,10 @@ void benchmark::SetUp()
             sprintf(
                 m_cmd,
                 "%s %s %s %s 2>&1 > obj/.bm",
-                env[ "CASM" ],
-                env[ "CASM_ARG_PRE" ],
+                env[ "CASM" ].c_str(),
+                env[ "CASM_ARG_PRE" ].c_str(),
                 "%s",
-                env[ "CASM_ARG_POST" ] );
+                env[ "CASM_ARG_POST" ].c_str() );
             break;
         }
         default:
