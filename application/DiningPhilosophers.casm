@@ -78,3 +78,7 @@ rule Philosopher = {
 
     hungry(self) := flipCoin
 }
+
+invariant philisopherOwnsBothChopsIfEating =
+    forall p in Person holds
+        eating(p) implies (chopOwner(leftChop(p)) = p and chopOwner(rightChop(p)) = p)
