@@ -49,6 +49,7 @@ include_directories(
 
 
 add_library( ${PROJECT}-cpp OBJECT
+  Profile.cpp
   RunnerBenchmark.cpp
   RunnerTest.cpp
   )

@@ -40,14 +40,57 @@
 //  statement from your version.
 //
 
-#ifndef _LIBCASM_TC_TEST_MAIN_H_
-#define _LIBCASM_TC_TEST_MAIN_H_
+#include "Profile.h"
 
-#include <libcasm-tc/libcasm-tc>
+#include <cassert>
+#include <cstring>
 
-#include <libstdhl/Test>
+using namespace libcasm_tc;
 
-#endif  // _LIBCASM_TC_TEST_MAIN_H_
+static const char* uid[] = { "interpreter", "compiler", "format", "language-server" };
+
+const char* Profile::get( const char* id )
+{
+    for( i64 i = 0; i < Identifier::_SIZE_; i++ )
+    {
+        if( strcmp( id, get( (const Identifier)i ) ) == 0 )
+        {
+            return (const char*)i;
+        }
+    }
+
+    return nullptr;
+}
+
+const char* Profile::get( const Identifier id )
+{
+    switch( id )
+    {
+        case Identifier::INTERPRETER:
+        {
+            return "interpreter";
+        }
+        case Identifier::COMPILER:
+        {
+            return "interpreter";
+        }
+
+        case Identifier::FORMAT:
+        {
+            return "interpreter";
+        }
+
+        case Identifier::LANGUAGE_SERVER:
+        {
+            return "interpreter";
+        }
+        case Identifier::_SIZE_:
+        {
+            assert( false and "internal error!" );
+            return "";
+        }
+    }
+}
 
 //
 //  Local variables:

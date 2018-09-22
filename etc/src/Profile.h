@@ -51,47 +51,20 @@ namespace libcasm_tc
        @extends CasmTC
 
      */
-    class Profile
+    namespace Profile
     {
-      public:
         enum Identifier
         {
             INTERPRETER = 0,
             COMPILER,
             FORMAT,
             LANGUAGE_SERVER,
-            IDENTIFIER_MAX
+            _SIZE_
         };
 
-        static const char* get( const char* id )
-        {
-            static const char* uid[] = { "interpreter", "compiler", "format", "language-server" };
+        const char* get( const char* id );
 
-            if( (i64)id == -1 )
-            {
-                return (const char*)0;
-            }
-            else if( (i64)id >= 0 and ( i64 ) id < IDENTIFIER_MAX )
-            {
-                return uid[ (i64)id ];
-            }
-            else
-            {
-                for( i64 i = 0; i < IDENTIFIER_MAX; i++ )
-                {
-                    if( strcmp( uid[ i ], id ) == 0 )
-                    {
-                        return (const char*)i;
-                    }
-                }
-            }
-            return 0;
-        }
-
-        static const char* get( Identifier id )
-        {
-            return get( (const char*)id );
-        }
+        const char* get( Identifier id );
     };
 }
 
