@@ -40,7 +40,7 @@
 //  statement from your version.
 //
 
-CASM init foo
+CASM init foo //@DISABLED()
 
 rule bar( x : Integer, y : List< Boolean > ) = skip
 

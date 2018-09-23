@@ -55,7 +55,7 @@
 // |    5 | a > 1  | undef | undef         |     1 | a     | a ^ b    | sym'  |
 // |    6 | sym    | sym'  | sym'          |  sym' | sym'  | sym'     | sym'  |
 
-CASM init foo
+CASM init foo //@DISABLED()
 
 rule foo =
 {

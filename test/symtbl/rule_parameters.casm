@@ -41,7 +41,7 @@
 //
 
 
-CASM init foo
+CASM init foo //@DISABLED()
 
 rule bar( qux : Integer ) =
 {

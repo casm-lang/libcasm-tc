@@ -48,7 +48,7 @@ rule foo =
     forall
     i
     in
-    5   //@ERROR( 1026 )
+    5   //@ERROR( 1026 ) //@DISABLED()
     do
         skip
 

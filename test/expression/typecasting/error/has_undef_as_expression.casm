@@ -44,5 +44,5 @@ CASM init foo
 
 rule foo =
 {
-    print( undef as String ) //@ ERROR( 1701 )
+    print( undef as String ) //@ ERROR( 1701 ) //@DISABLED()
 }

@@ -45,7 +45,7 @@
 CASM init foo
 
 function x : -> Integer'[0..10] defined {
-    42 //@ ERROR( fb01 )
+    42 //@ ERROR( fb01 ) //@DISABLED()
 }
 
 rule foo =

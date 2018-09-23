@@ -45,7 +45,7 @@
 // |-----+-------+--------------+------|
 // | -   | undef | -x	        | sym' |
 
-CASM init foo
+CASM init foo //@DISABLED()
 
 [symbolic] function a : -> Rational
 

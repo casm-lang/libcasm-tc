@@ -49,5 +49,5 @@ rule bar(a : Integer'[2..4]) = skip
 
 rule foo = {|
     let rr = @bar in
-        rr(42) //@ ERROR( 5e00 )
+        rr(42) //@ ERROR( 5e00 ) //@DISABLED()
 |}

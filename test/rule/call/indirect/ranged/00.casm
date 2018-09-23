@@ -41,7 +41,7 @@
 //
 
 
-CASM init foo
+CASM init foo //@DISABLED()
 
 // tests if "call" handles ranged integers correctly
 

@@ -42,7 +42,7 @@
 
 // foo calls rule 'bar' by reference
 
-CASM init foo
+CASM init foo //@DISABLED()
 
 function barCalled : -> Boolean initially { false }
 

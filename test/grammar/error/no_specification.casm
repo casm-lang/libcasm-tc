@@ -40,4 +40,4 @@
 //  statement from your version.
 //
 
-//@ ERROR( 0000 )
+//@ ERROR( 0000 ) //@DISABLED()

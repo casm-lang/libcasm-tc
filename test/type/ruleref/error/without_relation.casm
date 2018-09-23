@@ -47,6 +47,6 @@ rule targetRule(x : Integer, y : Integer) =
 
 rule foo =
 {
-    let r : RuleRef = @targetRule in //@ERROR( 0114 )
+    let r : RuleRef = @targetRule in //@ERROR( 0114 ) //@DISABLED()
         r(21, 42)
 }

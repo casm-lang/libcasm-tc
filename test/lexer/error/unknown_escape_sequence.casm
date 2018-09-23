@@ -47,5 +47,5 @@ CASM init test
 
 rule test =
     let unknown =
-        "\&" //@ ERROR( 0002 ) //@ ERROR( 0000 )
+        "\&" //@ ERROR( 0002 ) //@ ERROR( 0000 ) //@DISABLED()
         in skip

@@ -42,7 +42,7 @@
 
 // tests if the namespace is correctly used during symbol resolving
 
-CASM init foo
+CASM init foo //@DISABLED()
 
 enumeration Enum = { Var, println }
 

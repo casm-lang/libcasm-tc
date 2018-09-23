@@ -45,4 +45,4 @@ CASM init foo
 
 rule foo = skip
 
-function f : -> Integer'[7..-7] //@ ERROR( 2000 )
+function f : -> Integer'[7..-7] //@ ERROR( 2000 ) //@DISABLED()

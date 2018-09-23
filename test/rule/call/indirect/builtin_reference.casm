@@ -42,7 +42,7 @@
 
 // convert calls builtin 'dec' by reference
 
-CASM init foo
+CASM init foo //@DISABLED()
 
 rule foo =
     assert( convert( 42, @dec ) = "42" )

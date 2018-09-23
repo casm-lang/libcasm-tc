@@ -42,7 +42,7 @@
 
 // double calls function 'halfTruth' by reference
 
-CASM init foo
+CASM init foo //@DISABLED()
 
 function halfTruth : -> Integer initially { 21 }
 

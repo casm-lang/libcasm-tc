@@ -43,7 +43,7 @@
 
 CASM
 
-init foo //@ERROR( a001 )
+init foo //@ERROR( a001 ) //@DISABLED()
 
 rule foo = skip
 

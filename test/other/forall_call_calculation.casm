@@ -41,7 +41,7 @@
 //
 
 
-CASM init foo
+CASM init foo //@DISABLED()
 
 function a : -> RuleRef< Integer * Integer * Integer -> Void >
 function b : Integer -> Integer initially { (1) -> 0, (2) -> 0 }

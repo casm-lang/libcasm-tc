@@ -49,5 +49,5 @@ rule foo =
     case 3 of
     {
         1: skip
-        "2": skip //@ ERROR( ? )
+        "2": skip //@ ERROR( ? ) //@DISABLED()
     }

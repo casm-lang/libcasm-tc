@@ -45,4 +45,4 @@ CASM init foo
 
 rule foo = skip
 
-function f : Integer'[-100..100] -> Integer
+function f : Integer'[-100..100] -> Integer //@DISABLED()

@@ -50,7 +50,7 @@ rule foo =
     forall
     i
     in
-    pos  //@ ERROR( 1114 )
+    pos  //@ ERROR( 1114 ) //@DISABLED()
     do
         skip
     

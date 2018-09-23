@@ -52,4 +52,4 @@
 CASM init foo
 
 rule foo =
-    let x = 1 + 1 as Boolean in skip //@ ERROR( 1307 )
+    let x = 1 + 1 as Boolean in skip //@ ERROR( 1307 ) //@DISABLED()

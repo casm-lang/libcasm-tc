@@ -42,7 +42,7 @@
 
 CASM init foo
 
-function x : -> Integer  //@ ERROR( 0506 )
+function x : -> Integer  //@ ERROR( 0506 ) //@DISABLED()
 
 function x : -> Integer  //@ ERROR( 0506 )
 

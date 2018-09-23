@@ -49,4 +49,4 @@ rule foo =
     skip
 
 invariant bar =
-    undef //@ ERROR( 4e00 )
+    undef //@ ERROR( 4e00 ) //@DISABLED()
