@@ -88,13 +88,14 @@ TEST_P( RunnerTest, case )
         }
     }
 
-    std::string tc = std::string( param.output_path ) + ".tc";
-    std::string fout = std::string( param.output_path ) + ".stdout";
-    std::string ferr = std::string( param.output_path ) + ".stderr";
+    const std::string spec( param.specification );
+    const std::string path( param.output_path );
+    const std::string tc = path + ".tc";
+    const std::string fout = path + ".stdout";
+    const std::string ferr = path + ".stderr";
 
     char cmd[ 4096 ];
-
-    sprintf( cmd, "%s -t > \"%s\"", env[ "CASM" ].c_str(), tc.c_str() );
+    sprintf( cmd, "%s -t > %s", env[ "CASM" ].c_str(), tc.c_str() );
     // printf( "exec: '%s'\n", cmd );
     exec_result = system( cmd );
     ASSERT_EQ( exec_result, 0 );
@@ -115,10 +116,10 @@ TEST_P( RunnerTest, case )
         {
             sprintf(
                 cmd,
-                "\"%s\" %s \"%s\" %s > \"%s\" 2> \"%s\"",
+                "%s %s %s %s > %s 2> %s",
                 env[ "CASM" ].c_str(),
                 env[ "CASM_ARG_PRE" ].c_str(),
-                param.specification,
+                spec.c_str(),
                 env[ "CASM_ARG_POST" ].c_str(),
                 fout.c_str(),
                 ferr.c_str() );
@@ -135,7 +136,7 @@ TEST_P( RunnerTest, case )
 
     sprintf(
         cmd,
-        "%s \"%s\"; %s \"%s\"",
+        "%s %s; %s %s",
         env[ "CAT" ].c_str(),
         fout.c_str(),
         env[ "CAT" ].c_str(),
@@ -191,8 +192,7 @@ TEST_P( RunnerTest, case )
         }
         else if( error_cnt or warning_cnt )
         {
-            sprintf( cmd, "%s \"%s\"", env[ "CAT" ].c_str(), ferr.c_str() );
-
+            sprintf( cmd, "%s %s", env[ "CAT" ].c_str(), ferr.c_str() );
             system( cmd );
         }
     }
