@@ -55,6 +55,8 @@ linux_task:
       CODECOV_TOKEN: ENCRYPTED[123e2ceb6599005f2adfcaebdbf7951a655b11aa3f1f88d6c1e610782de4d4310211821e31fe3196e036a06656be0315]
   fetch_script:
     - make ci-fetch
+  deps_script:
+    - make ci-deps
   build_script:
     - make ci-build
   test_script:
@@ -85,6 +87,8 @@ darwin_task:
     - brew install bison && brew link --force bison
   fetch_script:
     - make ci-fetch
+  deps_script:
+    - make ci-deps
   build_script:
     - make ci-build
   test_script:
@@ -109,6 +113,9 @@ windows_task:
   fetch_script:
     - set PATH=C:\msys2\%V%\bin;%PATH%
     - make ci-fetch
+  deps_script:
+    - set PATH=C:\msys2\%V%\bin;%PATH%
+    - make ci-deps
   build_script:
     - set PATH=C:\msys2\%V%\bin;%PATH%
     - make ci-build

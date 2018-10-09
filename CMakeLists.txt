@@ -103,7 +103,6 @@ add_executable( ${PROJECT}-generator
 
 if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}-generator
-    ${PROJECT}
     ${LIBSTDHL_LIBRARY}
     )
 endif()
