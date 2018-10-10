@@ -117,6 +117,10 @@ add_library( ${PROJECT}-test STATIC
   $<TARGET_OBJECTS:${PROJECT}-test-cases>
   )
 
+add_dependencies( ${PROJECT}-test
+  ${PROJECT}
+  )
+
 set_property( TARGET ${PROJECT}-test PROPERTY VERSION ${${PROJECT}_VERSION} )
 set_property( TARGET ${PROJECT}-test PROPERTY PREFIX  "" )
 
@@ -145,6 +149,10 @@ endif()
 add_library( ${PROJECT}-benchmark STATIC
   $<TARGET_OBJECTS:${PROJECT}-cpp>
   $<TARGET_OBJECTS:${PROJECT}-benchmark-cases>
+  )
+
+add_dependencies( ${PROJECT}-benchmark
+  ${PROJECT}
   )
 
 set_property( TARGET ${PROJECT}-benchmark PROPERTY VERSION ${${PROJECT}_VERSION} )
