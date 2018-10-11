@@ -41,7 +41,7 @@
 #
 
 # LIBCASM_TC_FOUND        - system has found the package
-# LIBCASM_TC_INCLUDE_DIRS - the package include directories
+# LIBCASM_TC_INCLUDE_DIR  - the package include directory
 # LIBCASM_TC_LIBRARY      - the package library
 # LIBCASM_TC_TEST         - the test case library
 # LIBCASM_TC_BENCHMARK    - the benchmark library
@@ -77,15 +77,9 @@ set( LIBCASM_TC_BENCHMARK        ${LIBCASM_TC_BENCHMARK} PARENT_SCOPE )
 
 libfind_process( LIBCASM_TC )
 
-if( EXISTS "${LIBCASM_TC_INCLUDE_DIR}" AND
-    EXISTS "${LIBCASM_TC_LIBRARY}" AND
-    EXISTS "${LIBCASM_TC_TEST}" AND
-    EXISTS "${LIBCASM_TC_BENCHMARK}" AND
-    ${LIBCASM_TC_INCLUDE_DIR} AND
-    ${LIBCASM_TC_LIBRARY} AND
-    ${LIBCASM_TC_TEST} AND
-    ${LIBCASM_TC_BENCHMARK}
-    )
+if( EXISTS "${LIBCASM_TC_LIBRARY}"   AND ${LIBCASM_TC_LIBRARY} AND
+    EXISTS "${LIBCASM_TC_TEST}"      AND ${LIBCASM_TC_TEST}    AND
+    EXISTS "${LIBCASM_TC_BENCHMARK}" AND ${LIBCASM_TC_BENCHMARK} )
   set( LIBCASM_TC_FOUND TRUE PARENT_SCOPE )
 else()
   set( LIBCASM_TC_FOUND FALSE PARENT_SCOPE )
