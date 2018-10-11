@@ -41,6 +41,7 @@
 #
 
 include_directories(
+  ${PROJECT_BINARY_DIR}/etc/src
   ${LIBGTEST_INCLUDE_DIR}
   ${LIBHAYAI_INCLUDE_DIR}
   ${LIBSTDHL_INCLUDE_DIR}
@@ -48,6 +49,7 @@ include_directories(
 
 
 add_library( ${PROJECT}-cpp OBJECT
+  Profile.cpp
   RunnerBenchmark.cpp
   RunnerTest.cpp
   )

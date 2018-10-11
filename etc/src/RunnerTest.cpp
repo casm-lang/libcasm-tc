@@ -44,6 +44,7 @@
 
 #include "Profile.h"
 
+#include <libstdhl/Environment>
 #include <libstdhl/File>
 
 #include <regex>
@@ -61,58 +62,52 @@ TEST_P( RunnerTest, case )
     u32 exec_result = 0;
     ASSERT_EQ( exec_result, 0 );
 
-    std::unordered_map< std::string, const char* > env;
+    std::unordered_map< std::string, std::string > env;
 
     env[ "EXPORT" ] = "export";
     env[ "ECHO" ] = "echo";
     env[ "CAT" ] = "cat";
-    env[ "CASM" ];
-    env[ "CASM_TC" ];
-    env[ "CASM_ARG_PRE" ];
-    env[ "CASM_ARG_POST" ];
+    env[ "CASM" ] = "";
+    env[ "CASM_TC" ] = "";
+    env[ "CASM_ARG_PRE" ] = "";
+    env[ "CASM_ARG_POST" ] = "";
 
-    for( auto& e : env )
+    if( not libstdhl::Environment::Variable::has( "CASM" ) or
+        libstdhl::Environment::Variable::get( "CASM" ).length() == 0 )
     {
-        if( e.second == 0 )
-        {
-            const char* env_data = getenv( e.first.c_str() );
-            if( not env_data )
-            {
-                env_data = "";
-            }
-            env[ e.first ] = env_data;
-        }
-
-        // printf( "%s='%s'\n", e.first.c_str(), e.second );
-    }
-
-    char cmd[ 4096 ];
-
-    if( strcmp( env[ "CASM" ], "" ) == 0 )
-    {
-        printf( "\nenvironment variable CASM not set, omitting test case!\n\n" );
+        printf( "\nenvironment variable 'CASM' not set, omitting test case!\n\n" );
         SUCCEED();
         return;
     }
 
-    std::string tc = std::string( param.output_path ) + ".tc";
-    std::string fout = std::string( param.output_path ) + ".stdout";
-    std::string ferr = std::string( param.output_path ) + ".stderr";
+    for( auto& e : env )
+    {
+        if( libstdhl::Environment::Variable::has( e.first ) )
+        {
+            env[ e.first ] = libstdhl::Environment::Variable::get( e.first );
+        }
+    }
 
-    sprintf( cmd, "%s -t > \"%s\"", env[ "CASM" ], tc.c_str() );
+    const std::string spec( param.specification );
+    const std::string path( param.output_path );
+    const std::string tc = path + ".tc";
+    const std::string fout = path + ".stdout";
+    const std::string ferr = path + ".stderr";
+
+    char cmd[ 4096 ];
+    sprintf( cmd, "%s -t > %s", env[ "CASM" ].c_str(), tc.c_str() );
     // printf( "exec: '%s'\n", cmd );
     exec_result = system( cmd );
     ASSERT_EQ( exec_result, 0 );
 
     FILE* TC = fopen( tc.c_str(), "r" );
     fgets( cmd, 4096, TC );
-    setenv( "CASM_TC", cmd, 1 );
+    libstdhl::Environment::Variable::set( "CASM_TC", cmd );
 
-    env[ "CASM_TC" ] = getenv( "CASM_TC" );
-    EXPECT_NE( (u64)env[ "CASM_TC" ], 0 );
-    EXPECT_STRNE( env[ "CASM_TC" ], "" );
+    env[ "CASM_TC" ] = libstdhl::Environment::Variable::get( "CASM_TC" );
+    EXPECT_STRNE( env[ "CASM_TC" ].c_str(), "" );
 
-    const char* uid = libcasm_tc::Profile::get( env[ "CASM_TC" ] );
+    const char* uid = libcasm_tc::Profile::get( env[ "CASM_TC" ].c_str() );
     fclose( TC );
 
     switch( (u64)uid )
@@ -121,11 +116,11 @@ TEST_P( RunnerTest, case )
         {
             sprintf(
                 cmd,
-                "\"%s\" %s \"%s\" %s > \"%s\" 2> \"%s\"",
-                env[ "CASM" ],
-                env[ "CASM_ARG_PRE" ],
-                param.specification,
-                env[ "CASM_ARG_POST" ],
+                "%s %s %s %s > %s 2> %s",
+                env[ "CASM" ].c_str(),
+                env[ "CASM_ARG_PRE" ].c_str(),
+                spec.c_str(),
+                env[ "CASM_ARG_POST" ].c_str(),
                 fout.c_str(),
                 ferr.c_str() );
             break;
@@ -139,7 +134,13 @@ TEST_P( RunnerTest, case )
     // printf( "exec: '%s'\n", cmd );
     exec_result = system( cmd );
 
-    sprintf( cmd, "%s \"%s\"; %s \"%s\"", env[ "CAT" ], fout.c_str(), env[ "CAT" ], ferr.c_str() );
+    sprintf(
+        cmd,
+        "%s %s; %s %s",
+        env[ "CAT" ].c_str(),
+        fout.c_str(),
+        env[ "CAT" ].c_str(),
+        ferr.c_str() );
 
     u64 error_cnt = 0;
     u64 warning_cnt = 0;
@@ -191,8 +192,7 @@ TEST_P( RunnerTest, case )
         }
         else if( error_cnt or warning_cnt )
         {
-            sprintf( cmd, "%s \"%s\"", env[ "CAT" ], ferr.c_str() );
-
+            sprintf( cmd, "%s %s", env[ "CAT" ].c_str(), ferr.c_str() );
             system( cmd );
         }
     }

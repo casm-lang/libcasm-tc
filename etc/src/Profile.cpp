@@ -40,90 +40,64 @@
 //  statement from your version.
 //
 
-#include "RunnerBenchmark.h"
-
 #include "Profile.h"
 
-#include <libstdhl/Environment>
-
 #include <cassert>
-#include <unordered_map>
+#include <cstring>
 
-void benchmark::SetUp()
+using namespace libcasm_tc;
+
+static const char* uid[] = { "interpreter", "compiler", "format", "language-server" };
+
+const char* Profile::get( const char* id )
 {
-    m_cmd[ 0 ] = '\0';
-
-    libstdhl::u32 exec_result = 0;
-    assert( exec_result == 0 );
-
-    std::unordered_map< std::string, std::string > env;
-    env[ "EXPORT" ] = "export";
-    env[ "ECHO" ] = "echo";
-    env[ "CAT" ] = "cat";
-    env[ "CASM" ] = "";
-    env[ "CASM_BM" ] = "";
-    env[ "CASM_ARG_PRE" ] = "";
-    env[ "CASM_ARG_POST" ] = "";
-
-    if( not libstdhl::Environment::Variable::has( "CASM" ) or
-        libstdhl::Environment::Variable::get( "CASM" ).length() == 0 )
+    for( i64 i = 0; i < Identifier::_SIZE_; i++ )
     {
-        printf( "\nenvironment variable 'CASM' not set, omitting benchmark!\n\n" );
-        return;
-    }
-
-    for( auto& e : env )
-    {
-        if( libstdhl::Environment::Variable::has( e.first ) )
+        if( strcmp( id, get( (const Identifier)i ) ) == 0 )
         {
-            env[ e.first ] = libstdhl::Environment::Variable::get( e.first );
+            return (const char*)i;
         }
     }
 
-    std::string bm = "obj/.bm";
-    sprintf( m_cmd, "%s -t > %s", env[ "CASM" ].c_str(), bm.c_str() );
-    exec_result = system( m_cmd );
-    assert( exec_result == 0 );
+    return nullptr;
+}
 
-    FILE* BM = fopen( bm.c_str(), "r" );
-    fgets( m_cmd, 4096, BM );
-    libstdhl::Environment::Variable::set( "CASM_BM", m_cmd );
-
-    env[ "CASM_BM" ] = libstdhl::Environment::Variable::get( "CASM_BM" );
-    assert( env[ "CASM_BM" ].length() > 0 );
-
-    const char* uid = libcasm_tc::Profile::get( env[ "CASM_BM" ].c_str() );
-
-    switch( (libstdhl::u64)uid )
+const char* Profile::get( const Identifier id )
+{
+    switch( id )
     {
-        case libcasm_tc::Profile::INTERPRETER:
+        case Identifier::INTERPRETER:
         {
-            sprintf(
-                m_cmd,
-                "%s %s %s %s 2>&1 > obj/.bm",
-                env[ "CASM" ].c_str(),
-                env[ "CASM_ARG_PRE" ].c_str(),
-                "%s",
-                env[ "CASM_ARG_POST" ].c_str() );
-            break;
+            return "interpreter";
         }
-        default:
+        case Identifier::COMPILER:
         {
-            assert( 0 );
+            return "interpreter";
+        }
+
+        case Identifier::FORMAT:
+        {
+            return "interpreter";
+        }
+
+        case Identifier::LANGUAGE_SERVER:
+        {
+            return "interpreter";
+        }
+        case Identifier::_SIZE_:
+        {
+            assert( false and "internal error!" );
+            return "";
         }
     }
 }
 
-void benchmark::run( const char* spec )
-{
-    char cmd[ 4096 ];
-    sprintf( cmd, m_cmd, spec );
-    assert( system( cmd ) == 0 );
-}
-
-void benchmark::TearDown()
-{
-}
-
-// BENCHMARK_P_INSTANCE( benchmark, benchmark_name, ( "todo/benchmark/bubblesort.casm"
-// ) );
+//
+//  Local variables:
+//  mode: c++
+//  indent-tabs-mode: nil
+//  c-basic-offset: 4
+//  tab-width: 4
+//  End:
+//  vim:noexpandtab:sw=4:ts=4:
+//

@@ -40,14 +40,14 @@
 //  statement from your version.
 //
 
-#ifndef _LIBCASMIR_UTS_MAIN_H_
-#define _LIBCASMIR_UTS_MAIN_H_
-
-#include <libstdhl/Test>
+#ifndef _LIBCASM_TC_TEST_MAIN_H_
+#define _LIBCASM_TC_TEST_MAIN_H_
 
 #include <libcasm-tc/libcasm-tc>
 
-#endif  // _LIBCASMIR_UTS_MAIN_H_
+#include <libstdhl/Test>
+
+#endif  // _LIBCASM_TC_TEST_MAIN_H_
 
 //
 //  Local variables:

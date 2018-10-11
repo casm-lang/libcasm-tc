@@ -44,10 +44,10 @@ set( PROJECT libcasm-tc )
 
 cmake_minimum_required( VERSION ${CMAKE_VERSION} )
 
-project( ${PROJECT} LANGUAGES C CXX )
-set( CMAKE_CXX_STANDARD 11 )
+project( ${PROJECT} LANGUAGES CXX )
+set( CMAKE_CXX_STANDARD 14 )
+set( CMAKE_CXX_EXTENSIONS OFF )
 set( CMAKE_VERSION 3.2 )
-set( CMAKE_INCLUDE_CURRENT_DIR ON )
 set( CMAKE_MODULE_PATH ${${PROJECT}_SOURCE_DIR}/.cmake )
 
 include( LibPackage )
@@ -56,6 +56,7 @@ package_git( ${PROJECT} )
 package_git_submodule( libstdhl master REQUIRED obj   ../stdhl lib/stdhl )
 package_git_submodule( libgtest master REQUIRED build ../gtest lib/gtest )
 package_git_submodule( libhayai master REQUIRED build ../hayai lib/hayai )
+package_git_deps()
 
 find_package( Threads REQUIRED )
 
@@ -70,21 +71,6 @@ add_subdirectory( test
   )
 add_subdirectory( benchmark
   EXCLUDE_FROM_ALL
-  )
-
-add_custom_target( ${PROJECT}-sync
-  COMMAND
-    make sync > ${PROJECT_BINARY_DIR}/CMakeSync 2>&1
-  DEPENDS
-    libgtest
-    libhayai
-    libstdhl
-  WORKING_DIRECTORY
-    ${PROJECT_SOURCE_DIR}
-  )
-
-add_dependencies( ${PROJECT}-cpp
-  ${PROJECT}-sync
   )
 
 
@@ -117,7 +103,6 @@ add_executable( ${PROJECT}-generator
 
 if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}-generator
-    ${PROJECT}
     ${LIBSTDHL_LIBRARY}
     )
 endif()
@@ -130,6 +115,10 @@ endif()
 add_library( ${PROJECT}-test STATIC
   $<TARGET_OBJECTS:${PROJECT}-cpp>
   $<TARGET_OBJECTS:${PROJECT}-test-cases>
+  )
+
+add_dependencies( ${PROJECT}-test
+  ${PROJECT}
   )
 
 set_property( TARGET ${PROJECT}-test PROPERTY VERSION ${${PROJECT}_VERSION} )
@@ -160,6 +149,10 @@ endif()
 add_library( ${PROJECT}-benchmark STATIC
   $<TARGET_OBJECTS:${PROJECT}-cpp>
   $<TARGET_OBJECTS:${PROJECT}-benchmark-cases>
+  )
+
+add_dependencies( ${PROJECT}-benchmark
+  ${PROJECT}
   )
 
 set_property( TARGET ${PROJECT}-benchmark PROPERTY VERSION ${${PROJECT}_VERSION} )

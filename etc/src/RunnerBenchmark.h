@@ -43,6 +43,10 @@
 #ifndef _LIBCASM_TC_RUNNER_BENCHMARK_H_
 #define _LIBCASM_TC_RUNNER_BENCHMARK_H_
 
+#if defined( _WIN32 ) or defined( WIN32 )
+#include <windows.h>
+#endif
+
 #include <hayai/hayai.hpp>
 #include <libcasm-tc/CasmTC>
 
