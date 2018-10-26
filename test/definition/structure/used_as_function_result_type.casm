@@ -52,14 +52,5 @@ function bar : -> Data
 
 rule foo =
 {|
-    bar.name := "asdf"
-    bar.uid( 321 ) := 123
-
-    bar := < { "asdf" }, { 321 -> 123 } >
-
-    bar := < uid = { 321 -> 123 }, name = { "asdf" } >
-
-    bar := undef
-
     program( self ) := undef
 |}
