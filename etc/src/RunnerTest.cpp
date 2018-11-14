@@ -67,6 +67,7 @@ TEST_P( RunnerTest, case )
     env[ "EXPORT" ] = "export";
     env[ "ECHO" ] = "echo";
     env[ "CAT" ] = "cat";
+    env[ "DIFF" ] = "diff";
     env[ "CASM" ] = "";
     env[ "CASM_TC" ] = "";
     env[ "CASM_ARG_PRE" ] = "";
@@ -93,6 +94,7 @@ TEST_P( RunnerTest, case )
     const std::string tc = path + ".tc";
     const std::string fout = path + ".stdout";
     const std::string ferr = path + ".stderr";
+    const std::string diff = path + ".diff";
 
     char cmd[ 4096 ];
     sprintf( cmd, "%s -t > %s", env[ "CASM" ].c_str(), tc.c_str() );
@@ -103,16 +105,16 @@ TEST_P( RunnerTest, case )
     FILE* TC = fopen( tc.c_str(), "r" );
     fgets( cmd, 4096, TC );
     libstdhl::Environment::Variable::set( "CASM_TC", cmd );
+    fclose( TC );
 
     env[ "CASM_TC" ] = libstdhl::Environment::Variable::get( "CASM_TC" );
     EXPECT_STRNE( env[ "CASM_TC" ].c_str(), "" );
 
-    const char* uid = libcasm_tc::Profile::get( env[ "CASM_TC" ].c_str() );
-    fclose( TC );
-
-    switch( (u64)uid )
+    const auto testCaseProfile = libcasm_tc::Profile::fromString( env[ "CASM_TC" ] );
+    switch( testCaseProfile )
     {
-        case libcasm_tc::Profile::INTERPRETER:
+        case libcasm_tc::Profile::INTERPRETER:  // [[fallthrough]]
+        case libcasm_tc::Profile::FORMAT:
         {
             sprintf(
                 cmd,
@@ -182,6 +184,36 @@ TEST_P( RunnerTest, case )
                 warning_cnt++;
             }
         } );
+
+    if( testCaseProfile == libcasm_tc::Profile::FORMAT )
+    {
+        if( param.error.size() != 0 )
+        {
+            // if there are errors in the specification, it does not relate to formatting problems
+            // therefore just return in this case a success to continue
+            SUCCEED();
+        }
+        else
+        {
+            sprintf(
+                cmd,
+                "%s %s %s > %s",
+                env[ "DIFF" ].c_str(),
+                spec.c_str(),
+                fout.c_str(),
+                diff.c_str() );
+            exec_result = system( cmd );
+
+            EXPECT_EQ( exec_result, 0 );
+            if( exec_result != 0 )
+            {
+                sprintf( cmd, "%s %s", env[ "CAT" ].c_str(), diff.c_str() );
+                system( cmd );
+                FAIL();
+            }
+        }
+        return;
+    }
 
     if( param.error.size() == 0 )
     {

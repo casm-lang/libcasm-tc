@@ -42,27 +42,31 @@
 
 #include "Profile.h"
 
+#include <libstdhl/String>
+
 #include <cassert>
 #include <cstring>
 
 using namespace libcasm_tc;
 
-static const char* uid[] = { "interpreter", "compiler", "format", "language-server" };
-
-const char* Profile::get( const char* id )
+Profile::Identifier Profile::fromString( const std::string& str )
 {
-    for( i64 i = 0; i < Identifier::_SIZE_; i++ )
+    const auto tmp = libstdhl::String::replaceAll( str, "\n", "" );
+
+    for( std::size_t c = 0; c < Identifier::_SIZE_; c++ )
     {
-        if( strcmp( id, get( (const Identifier)i ) ) == 0 )
+        const auto id = static_cast< Identifier >( c );
+        if( toString( id ) == tmp )
         {
-            return (const char*)i;
+            return id;
         }
     }
 
-    return nullptr;
+    throw std::invalid_argument( "unsupported profile '" + tmp + "'" );
+    return Identifier::_SIZE_;
 }
 
-const char* Profile::get( const Identifier id )
+std::string Profile::toString( const Identifier id )
 {
     switch( id )
     {
@@ -72,21 +76,19 @@ const char* Profile::get( const Identifier id )
         }
         case Identifier::COMPILER:
         {
-            return "interpreter";
+            return "compiler";
         }
-
         case Identifier::FORMAT:
         {
-            return "interpreter";
+            return "format";
         }
-
         case Identifier::LANGUAGE_SERVER:
         {
-            return "interpreter";
+            return "language-server";
         }
         case Identifier::_SIZE_:
         {
-            assert( false and "internal error!" );
+            throw std::invalid_argument( "unsupported profile id" );
             return "";
         }
     }

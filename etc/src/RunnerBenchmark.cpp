@@ -88,15 +88,16 @@ void benchmark::SetUp()
     FILE* BM = fopen( bm.c_str(), "r" );
     fgets( m_cmd, 4096, BM );
     libstdhl::Environment::Variable::set( "CASM_BM", m_cmd );
+    fclose( BM );
 
     env[ "CASM_BM" ] = libstdhl::Environment::Variable::get( "CASM_BM" );
     assert( env[ "CASM_BM" ].length() > 0 );
 
-    const char* uid = libcasm_tc::Profile::get( env[ "CASM_BM" ].c_str() );
-
-    switch( (libstdhl::u64)uid )
+    const auto testCaseProfile = libcasm_tc::Profile::fromString( env[ "CASM_BM" ] );
+    switch( testCaseProfile )
     {
-        case libcasm_tc::Profile::INTERPRETER:
+        case libcasm_tc::Profile::INTERPRETER:  // [[fallthrough]]
+        case libcasm_tc::Profile::FORMAT:
         {
             sprintf(
                 m_cmd,
@@ -109,7 +110,7 @@ void benchmark::SetUp()
         }
         default:
         {
-            assert( 0 );
+            assert( !" unsupported test case profile to benchmark! " );
         }
     }
 }

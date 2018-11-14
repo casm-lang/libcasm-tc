@@ -62,9 +62,9 @@ namespace libcasm_tc
             _SIZE_
         };
 
-        const char* get( const char* id );
+        Identifier fromString( const std::string& id );
 
-        const char* get( Identifier id );
+        std::string toString( const Identifier id );
     };
 }
 
