@@ -197,7 +197,7 @@ TEST_P( RunnerTest, case )
         {
             sprintf(
                 cmd,
-                "%s %s %s > %s",
+                "%s --strip-trailing-cr %s %s > %s",
                 env[ "DIFF" ].c_str(),
                 spec.c_str(),
                 fout.c_str(),
@@ -207,6 +207,8 @@ TEST_P( RunnerTest, case )
             EXPECT_EQ( exec_result, 0 );
             if( exec_result != 0 )
             {
+                sprintf( cmd, "%s %s", env[ "CAT" ].c_str(), ferr.c_str() );
+                system( cmd );
                 sprintf( cmd, "%s %s", env[ "CAT" ].c_str(), diff.c_str() );
                 system( cmd );
                 FAIL();
