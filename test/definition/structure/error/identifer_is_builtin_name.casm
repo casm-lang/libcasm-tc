@@ -40,7 +40,7 @@
 //  statement from your version.
 //
 
-// a structure needs at least one function definition
+// structure identifier is a builtin symbol name
 
 CASM init foo
 
