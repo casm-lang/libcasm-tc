@@ -138,7 +138,7 @@ TEST_P( RunnerTest, case )
 
     sprintf(
         cmd,
-        "%s %s; %s %s",
+        "%s %s & %s %s",
         env[ "CAT" ].c_str(),
         fout.c_str(),
         env[ "CAT" ].c_str(),
