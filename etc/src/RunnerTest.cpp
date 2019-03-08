@@ -46,8 +46,9 @@
 
 #include <libstdhl/Environment>
 #include <libstdhl/File>
+#include <libstdhl/String>
 
-#include <regex>
+#include <algorithm>
 #include <unordered_map>
 
 using namespace libcasm_tc;
@@ -149,38 +150,33 @@ TEST_P( RunnerTest, case )
 
     libstdhl::File::readLines(
         ferr.c_str(), [&error_cnt, &warning_cnt]( u32 cnt, const std::string& line ) {
-            std::regex e( "error:" );
-            std::sregex_iterator start( line.begin(), line.end(), e );
-            std::sregex_iterator end;
+            const std::string error_code_delimiter( "@" );
+            const std::string error_delimiter( "error:" );
+            std::string::const_iterator error_iterator =
+                search( line.begin(), line.end(), error_delimiter.begin(), error_delimiter.end() );
 
-            for( std::sregex_iterator i = start; i != end; i++ )
+            while( error_iterator != line.end() )
             {
-                std::smatch match = *i;
-                std::string mstr = match.str();
-
-                std::regex expr( "@([\\S]+)\\{([\\S]+)\\}" );
-                std::sregex_iterator expr_start( line.begin(), line.end(), expr );
-                std::sregex_iterator expr_end;
-
-                for( std::sregex_iterator i = expr_start; i != expr_end; i++ )
+                std::string::const_iterator error_code_iterator = search(
+                    error_iterator,
+                    line.end(),
+                    error_code_delimiter.begin(),
+                    error_code_delimiter.end() );
+                if( error_code_iterator == line.end() )
                 {
-                    std::smatch match = *i;
-                    assert( match.size() == 3 );
-                    std::string mstr = match.str();
-                    // printf( "'%s'\n", mstr.c_str() );
-                    error_cnt++;
+                    break;
                 }
+                error_cnt++;
+                error_code_iterator++;
+                error_iterator = error_code_iterator;
             }
 
-            std::regex w( "warning:" );
-            start = std::sregex_iterator( line.begin(), line.end(), w );
-            std::sregex_iterator we;
+            const std::string warning_delimiter( "warning:" );
+            std::string::const_iterator warning_iterator = search(
+                line.begin(), line.end(), warning_delimiter.begin(), warning_delimiter.end() );
 
-            for( std::sregex_iterator i = start; i != we; i++ )
+            if( warning_iterator != line.end() )
             {
-                std::smatch match = *i;
-                std::string mstr = match.str();
-                // printf( "'%s'\n", mstr.c_str() );
                 warning_cnt++;
             }
         } );
@@ -240,17 +236,46 @@ TEST_P( RunnerTest, case )
         libstdhl::File::readLines(
             ferr.c_str(),
             [&param, &checked, &failure_cnt, &error_cnt]( u32 cnt, const std::string& line ) {
-                std::string c = "";
-                std::regex expr( "@([\\S]+)\\{([\\S]+)\\}" );
+                const std::string error_delimiter( "@" );
+                std::string::const_iterator error_iterator = line.begin();
 
-                std::sregex_iterator start( line.begin(), line.end(), expr );
-                std::sregex_iterator end;
-
-                for( std::sregex_iterator i = start; i != end; i++ )
+                while( error_iterator != line.end() )
                 {
-                    std::smatch match = *i;
-                    assert( match.size() == 3 );
-                    std::string mstr = match.str();
+                    std::string error_line;
+                    std::string error_code;
+
+                    error_iterator = search(
+                        error_iterator,
+                        line.end(),
+                        error_delimiter.begin(),
+                        error_delimiter.end() );
+                    if( error_iterator == line.end() )
+                    {
+                        continue;
+                    }
+                    advance( error_iterator, error_delimiter.length() );
+
+                    std::string::const_iterator line_iterator =
+                        find( error_iterator, line.end(), '{' );
+                    error_line.assign( error_iterator, line_iterator );
+                    if( line_iterator == line.end() )
+                    {
+                        continue;
+                    }
+                    line_iterator++;
+
+                    std::string::const_iterator code_iterator =
+                        find( line_iterator, line.end(), '}' );
+                    error_code.assign( line_iterator, code_iterator );
+                    if( code_iterator == line.end() )
+                    {
+                        continue;
+                    }
+                    code_iterator++;
+                    error_iterator = code_iterator;
+
+                    // fprintf( stderr, ">>> '%s' <<< '%s' '%s'\n", line.c_str(),
+                    // error_line.c_str(), error_code.c_str() );
 
                     u1 line_not_found = true;
                     u1 code_not_valid = true;
@@ -259,7 +284,7 @@ TEST_P( RunnerTest, case )
 
                     for( auto& e : param.error )
                     {
-                        if( e.line.compare( match[ 1 ].str() ) == 0 )  // found line!
+                        if( e.line.compare( error_line ) == 0 )  // found line!
                         {
                             errorCodes.emplace_back( e );
                             line_not_found = false;
@@ -268,7 +293,7 @@ TEST_P( RunnerTest, case )
 
                     for( auto& e : errorCodes )
                     {
-                        if( e.code.compare( match[ 2 ].str() ) == 0 )
+                        if( e.code.compare( error_code ) == 0 )
                         {
                             code_not_valid = false;
 
