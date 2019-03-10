@@ -41,11 +41,13 @@
 //
 
 #include <libcasm-tc/CasmTC>
+
 #include <libstdhl/File>
 #include <libstdhl/Log>
 #include <libstdhl/Memory>
+#include <libstdhl/String>
 
-#include <regex>
+#include <algorithm>
 
 using namespace libcasm_tc;
 
@@ -97,21 +99,45 @@ int main( int argc, const char* argv[] )
         [mode, file_name, dest_name, &no_cmd_found, &error, &disabled](
             u32 cnt, const std::string& line ) {
             std::string c = "";
-            std::regex expr( "//@[ ]*([\\S]+)[ ]*\\([ ]*([\\S]*)[ ]*\\)" );
-            std::sregex_iterator start( line.begin(), line.end(), expr );
-            std::sregex_iterator end;
 
-            for( std::sregex_iterator i = start; i != end; i++ )
+            const std::string delimiter( "//@" );
+            std::string::const_iterator line_iterator = line.begin();
+
+            while( line_iterator != line.end() )
             {
-                std::smatch match = *i;
-                std::string mstr = match.str();
-                assert( match.size() == 3 );
+                std::string func;
+                std::string args;
 
-                std::string func = match[ 1 ].str();
-                std::string args = match[ 2 ].str();
+                line_iterator =
+                    search( line_iterator, line.end(), delimiter.begin(), delimiter.end() );
+
+                if( line_iterator == line.end() )
+                {
+                    continue;
+                }
+
+                advance( line_iterator, delimiter.length() );
+
+                std::string::const_iterator func_iterator = find( line_iterator, line.end(), '(' );
+                func.assign( line_iterator, func_iterator );
+                if( func_iterator != line.end() )
+                {
+                    func_iterator++;
+                }
+
+                std::string::const_iterator args_iterator = find( func_iterator, line.end(), ')' );
+                args.assign( func_iterator, args_iterator );
+                if( args_iterator != line.end() )
+                {
+                    args_iterator++;
+                }
+
+                line_iterator = args_iterator;
                 // printf( "'%s' ( '%s' )\n", func.c_str(), args.c_str() );
 
-                args = std::regex_replace( args, std::regex( "\"" ), "\\\"" );
+                func = libstdhl::String::replaceAll( func, " ", "" );
+                args = libstdhl::String::replaceAll( args, " ", "" );
+                args = libstdhl::String::replaceAll( args, "\"", "\\\"" );
 
                 if( func.compare( "ERROR" ) == 0 )
                 {
@@ -127,16 +153,14 @@ int main( int argc, const char* argv[] )
                 {
                     fprintf(
                         stderr,
-                        "%s:%i: error: unknown/invalid 'casm-tc' command found: '%s'\n",
+                        "%s:%i: error: unknown/invalid 'casm-tc' command found: '%s' ( '%s' )\n",
                         file_name,
                         cnt,
-                        mstr.c_str() );
+                        func.c_str(),
+                        args.c_str() );
 
                     exit( -1 );
                 }
-
-                no_cmd_found = false;
-                break;
             }
         } );
 
