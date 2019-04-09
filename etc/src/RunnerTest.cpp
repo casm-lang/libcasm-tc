@@ -150,7 +150,7 @@ TEST_P( RunnerTest, case )
 
     libstdhl::File::readLines(
         ferr.c_str(), [&error_cnt, &warning_cnt]( u32 cnt, const std::string& line ) {
-            const std::string error_code_delimiter( "@" );
+            const std::string error_code_delimiter( " @" );
             const std::string error_delimiter( "error:" );
             std::string::const_iterator error_iterator =
                 search( line.begin(), line.end(), error_delimiter.begin(), error_delimiter.end() );
@@ -236,7 +236,7 @@ TEST_P( RunnerTest, case )
         libstdhl::File::readLines(
             ferr.c_str(),
             [&param, &checked, &failure_cnt, &error_cnt]( u32 cnt, const std::string& line ) {
-                const std::string error_delimiter( "@" );
+                const std::string error_delimiter( " @" );
                 std::string::const_iterator error_iterator = line.begin();
 
                 while( error_iterator != line.end() )
