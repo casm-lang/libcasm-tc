@@ -42,9 +42,9 @@
 
 // Should import definitions from lib.casm and provide them under namespace `lib`
 
-CASM init foo
+CASM init test //@DISABLED() TODO: FIXME: @ppaulweber: the 'DISABLED' will be removed during the casm-lang/casm#14 by @emmanuel099
 
 import lib
 
-rule foo =
+rule test =
     lib.bar
