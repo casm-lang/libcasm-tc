@@ -42,7 +42,7 @@
 
 // Should import definitions from lib.casm and provide them under namespace `l`
 
-CASM init test //@DISABLED() TODO: FIXME: @ppaulweber: the 'DISABLED' will be removed during the casm-lang/casm#14 by @emmanuel099
+CASM init test
 
 import lib as l
 
