@@ -42,9 +42,9 @@
 
 // NonExistingFile.casm does not exist, so the import should fail.
 
-CASM init foo
+CASM init test //@DISABLED() TODO: FIXME: @ppaulweber: the 'DISABLED' will be removed during the casm-lang/casm#14 by @emmanuel099
 
 import NonExistingFile //@ ERROR( 0508 )
 
-rule foo =
+rule test =
     skip
