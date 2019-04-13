@@ -40,9 +40,13 @@
 //  statement from your version.
 //
 
-
 CASM
 
-init foo
+using Agent = Boolean
 
-rule foo = skip
+init
+{ ( false ) -> @test
+, ( true  ) -> @test
+}
+
+rule test = skip

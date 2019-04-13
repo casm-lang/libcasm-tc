@@ -40,7 +40,8 @@
 //  statement from your version.
 //
 
+// executing this specification shall result into a warning that no init definition is present
 
-CASM //@ ERROR( a002 )
+CASM
 
-rule foo = skip
+rule test = skip
