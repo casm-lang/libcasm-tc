@@ -48,7 +48,7 @@ CASM init foo
 import LibC as C
 
 derived id -> String =
-    "Module Lib B -> " + C.id
+    "Module Lib B -> " + C::id
 
 rule foo =
     skip

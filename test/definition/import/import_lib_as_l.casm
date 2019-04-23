@@ -47,4 +47,4 @@ CASM init test
 import lib as l
 
 rule test =
-    l.bar
+    l::bar

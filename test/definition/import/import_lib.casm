@@ -47,4 +47,4 @@ CASM init test
 import lib
 
 rule test =
-    lib.bar
+    lib::bar

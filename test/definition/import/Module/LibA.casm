@@ -45,10 +45,10 @@
 
 CASM init foo
 
-import .LibB as B
+import ::LibB as B
 
 derived id -> String =
-    "Module Lib A -> " + B.id
+    "Module Lib A -> " + B::id
 
 rule foo =
     skip
