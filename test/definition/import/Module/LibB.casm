@@ -40,6 +40,8 @@
 //  statement from your version.
 //
 
+//@HELPER()
+
 // imports LibC using an absolute path -> casmi should search LibC in the
 // project path (which is the directory of Spec.casm)
 

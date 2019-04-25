@@ -40,6 +40,8 @@
 //  statement from your version.
 //
 
+//@HELPER()
+
 CASM init foo
 
 import Module::LibD as D

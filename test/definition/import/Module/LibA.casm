@@ -41,7 +41,7 @@
 //
 
 // imports LibB using a relative path -> casmi should search LibB in the
-// Module folder
+// Module folder, and will be executed on its own during the test suite run
 
 CASM init foo
 
