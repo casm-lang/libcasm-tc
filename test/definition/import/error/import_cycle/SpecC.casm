@@ -42,7 +42,7 @@
 
 CASM init foo
 
-import SpecA
+import SpecA //@ERROR( 0508 )
 
 rule foo =
     skip

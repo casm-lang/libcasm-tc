@@ -44,7 +44,7 @@
 
 CASM init test
 
-import NonExistingFile //@ ERROR( 0503 )
+import NonExistingFile //@ ERROR( 0508 )
 
 rule test =
     skip
