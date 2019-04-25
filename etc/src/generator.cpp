@@ -93,10 +93,11 @@ int main( int argc, const char* argv[] )
 
     std::vector< ErrorInfo > error;
     u1 disabled = false;
+    u1 helper = false;
 
     libstdhl::File::readLines(
         file_name,
-        [mode, file_name, dest_name, &no_cmd_found, &error, &disabled](
+        [mode, file_name, dest_name, &no_cmd_found, &error, &disabled, &helper](
             u32 cnt, const std::string& line ) {
             std::string c = "";
 
@@ -149,6 +150,11 @@ int main( int argc, const char* argv[] )
                     disabled = true;
                     continue;
                 }
+                else if( func.compare( "HELPER" ) == 0 )
+                {
+                    helper = true;
+                    continue;
+                }
                 else
                 {
                     fprintf(
@@ -185,50 +191,53 @@ int main( int argc, const char* argv[] )
         fd = fopen( dest_name, "w+" );
         assert( fd );
 
-        fprintf(
-            fd,
-            "\n"
-            "#ifndef _LIBCASM_TC_TESTS_\n"
-            "#define _LIBCASM_TC_TESTS_\n"
-            "#include <gtest/gtest.h>\n"
-            "#include <libcasm-tc/RunnerTest>\n"
-            "#endif // _LIBCASM_TC_TESTS_\n"
-            "\n"
-            "INSTANTIATE_TEST_CASE_P\n"
-            "( %slibcasm_tc__%s\n"
-            ", RunnerTest\n"
-            ", ::testing::Values\n"
-            "  ( libcasm_tc::RunnerTestParam\n"
-            "    { \"%s\"\n"
-            "    , \"%s\"\n"
-            "    , {",
-            ( disabled ? "DISABLED_" : "" ),
-            fn.c_str(),
-            file_name,
-            dest_name );
-
-        u1 first_error = true;
-        for( auto& e : error )
+        if( not helper )
         {
-            // printf( "::: '%s' '%s'\n", e.line.c_str(), e.code.c_str() );
+            fprintf(
+                fd,
+                "\n"
+                "#ifndef _LIBCASM_TC_TESTS_\n"
+                "#define _LIBCASM_TC_TESTS_\n"
+                "#include <gtest/gtest.h>\n"
+                "#include <libcasm-tc/RunnerTest>\n"
+                "#endif // _LIBCASM_TC_TESTS_\n"
+                "\n"
+                "INSTANTIATE_TEST_CASE_P\n"
+                "( %slibcasm_tc__%s\n"
+                ", RunnerTest\n"
+                ", ::testing::Values\n"
+                "  ( libcasm_tc::RunnerTestParam\n"
+                "    { \"%s\"\n"
+                "    , \"%s\"\n"
+                "    , {",
+                ( disabled ? "DISABLED_" : "" ),
+                fn.c_str(),
+                file_name,
+                dest_name );
+
+            u1 first_error = true;
+            for( auto& e : error )
+            {
+                // printf( "::: '%s' '%s'\n", e.line.c_str(), e.code.c_str() );
+
+                fprintf(
+                    fd,
+                    "%s { \"%s\", \"%s\" }\n"
+                    "      ",
+                    first_error ? "" : ",",
+                    e.line.c_str(),
+                    e.code.c_str() );
+                first_error = false;
+            }
 
             fprintf(
                 fd,
-                "%s { \"%s\", \"%s\" }\n"
-                "      ",
-                first_error ? "" : ",",
-                e.line.c_str(),
-                e.code.c_str() );
-            first_error = false;
+                "}\n"
+                "    }\n"
+                "  )\n"
+                ");\n"
+                "\n" );
         }
-
-        fprintf(
-            fd,
-            "}\n"
-            "    }\n"
-            "  )\n"
-            ");\n"
-            "\n" );
 
         assert( fclose( fd ) == 0 );
     }
@@ -238,24 +247,26 @@ int main( int argc, const char* argv[] )
         fd = fopen( dest_name, "w+" );
         assert( fd );
 
-        fprintf(
-            fd,
-            "\n"
-            "#ifndef _LIBCASM_TC_BENCHMARKS_\n"
-            "#define _LIBCASM_TC_BENCHMARKS_\n"
-            "#include <libcasm-tc/RunnerBenchmark>\n"
-            "#endif // _LIBCASM_TC_BENCHMARKS_\n"
-            "\n"
-            "INSTANTIATE_BENCHMARK_CASE\n"
-            "( %s\n"
-            ", %s\n"
-            ", \"%s\"\n"
-            ");\n"
-            "\n",
-            ( disabled ? "DISABLED_" : "" ),
-            fn.c_str(),
-            file_name );
-
+        if( not helper )
+        {
+            fprintf(
+                fd,
+                "\n"
+                "#ifndef _LIBCASM_TC_BENCHMARKS_\n"
+                "#define _LIBCASM_TC_BENCHMARKS_\n"
+                "#include <libcasm-tc/RunnerBenchmark>\n"
+                "#endif // _LIBCASM_TC_BENCHMARKS_\n"
+                "\n"
+                "INSTANTIATE_BENCHMARK_CASE\n"
+                "( %s\n"
+                ", %s\n"
+                ", \"%s\"\n"
+                ");\n"
+                "\n",
+                ( disabled ? "DISABLED_" : "" ),
+                fn.c_str(),
+                file_name );
+        }
         assert( fclose( fd ) == 0 );
     }
 
