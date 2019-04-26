@@ -40,12 +40,13 @@
 //  statement from your version.
 //
 
-// imports LibB using a relative path -> casmi should search LibB in the
-// Module folder, and will be executed on its own during the test suite run
+// imports LibB which resides in the directory of this specification path
+
+//@HELPER()
 
 CASM init foo
 
-import ::LibB as B
+import LibB as B
 
 derived id -> String =
     "Module Lib A -> " + B::id

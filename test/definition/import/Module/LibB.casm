@@ -42,12 +42,12 @@
 
 //@HELPER()
 
-// imports LibC using an absolute path -> casmi should search LibC in the
+// imports LibC using an relative path -> casmi should search LibC in the
 // project path (which is the directory of Spec.casm)
 
 CASM init foo
 
-import LibC as C
+import ::LibC as C
 
 derived id -> String =
     "Module Lib B -> " + C::id
