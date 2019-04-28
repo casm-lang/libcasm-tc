@@ -40,9 +40,9 @@
 //  statement from your version.
 //
 
-// Should import definitions from lib.casm and provide them under namespace `lib`
-
 CASM init test
+
+// Shall import the exported definitions from lib.casm and provide them under namespace `lib`
 
 import lib
 

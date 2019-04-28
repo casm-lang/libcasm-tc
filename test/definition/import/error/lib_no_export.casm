@@ -40,13 +40,9 @@
 //  statement from your version.
 //
 
-CASM init foo
+//@HELPER()
 
-import Module::LibA
-import Module::LibA as A
+CASM
 
 rule foo =
-{
-    assert( Module::LibA::id = "Module Lib A -> Module Lib B -> Lib C -> Module Lib D" )
-    assert( A::id = "Module Lib A -> Module Lib B -> Lib C -> Module Lib D" )
-}
+    skip

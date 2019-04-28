@@ -40,9 +40,13 @@
 //  statement from your version.
 //
 
-CASM init foo
+CASM init test
 
-import SpecA //@ERROR( 0508 )
+import SpecB
 
-rule foo =
-    skip
+rule test =
+{
+    assert( SpecB::foo = "SpecB SpecC SpecA" )
+}
+
+[ export ] derived foo -> String = "SpecA"

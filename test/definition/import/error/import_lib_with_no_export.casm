@@ -40,12 +40,11 @@
 //  statement from your version.
 //
 
-//@HELPER()
+CASM init test
 
-CASM init foo
+// rule 'foo' from 'lib' has no export, so the imported rule call should fail.
 
-derived id -> String =
-    "Module Lib D"
+import lib_no_export
 
-rule foo =
-    skip
+rule test =
+    lib_no_export::foo //@ERROR( 0509 )

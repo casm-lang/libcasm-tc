@@ -40,16 +40,11 @@
 //  statement from your version.
 //
 
-// imports LibB which resides in the directory of this specification path
+CASM init test
 
-//@HELPER()
+// NonExistingFile.casm does not exist, so the import should fail.
 
-CASM init foo
+import NonExistingFile as l //@ ERROR( 0508 )
 
-import LibB as B
-
-derived id -> String =
-    "Module Lib A -> " + B::id
-
-rule foo =
+rule test =
     skip

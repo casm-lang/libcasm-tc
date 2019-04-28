@@ -40,17 +40,13 @@
 //  statement from your version.
 //
 
-//@HELPER()
-
-// imports LibC using an relative path -> casmi should search LibC in the
-// project path (which is the directory of Spec.casm)
-
 CASM init foo
 
-import ::LibC as C
-
-derived id -> String =
-    "Module Lib B -> " + C::id
+import Module::LibA
+import Module::LibA as A
 
 rule foo =
-    skip
+{
+    assert( LibA::id = "Module Lib A -> Module Lib B -> Lib C -> Module Lib D" )
+    assert( LibA::id = A::id )
+}

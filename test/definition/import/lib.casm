@@ -47,5 +47,6 @@
 
 CASM
 
-rule bar =
-    skip
+[ export ] function foo : -> Boolean
+
+[ export ] rule bar = skip

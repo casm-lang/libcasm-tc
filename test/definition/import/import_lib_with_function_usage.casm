@@ -40,9 +40,19 @@
 //  statement from your version.
 //
 
-CASM init foo
+CASM init test
 
-import SpecC //@ERROR( 0508 )
+import lib
+import lib as foo
+import lib as bar
+import lib as qux
 
-rule foo =
-    skip
+rule test =
+{|
+    lib::foo := true
+    assert( lib::foo = true )
+    assert( foo::foo = true )
+    assert( bar::foo = true )
+    assert( qux::foo = true )
+    program( self ) := undef
+|}

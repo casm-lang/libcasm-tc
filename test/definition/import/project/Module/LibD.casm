@@ -42,12 +42,8 @@
 
 //@HELPER()
 
-CASM init foo
+CASM
 
-import Module::LibD as D
-
+[ export ]
 derived id -> String =
-    "Lib C -> " + D::id
-
-rule foo =
-    skip
+    "Module Lib D"

@@ -40,9 +40,14 @@
 //  statement from your version.
 //
 
-CASM init foo
+// imports LibB which resides in the directory of this specification path
 
-import SpecB //@ERROR( 0508 )
+//@HELPER()
 
-rule foo =
-    skip
+CASM
+
+import Module::LibB as B
+
+[ export ]
+derived id -> String =
+    "Module Lib A -> " + B::id
