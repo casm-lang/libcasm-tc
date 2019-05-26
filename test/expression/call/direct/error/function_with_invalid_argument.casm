@@ -40,8 +40,9 @@
 //  statement from your version.
 //
 
+// shall throw an error that 'Self' identifier does not exist!
+
 CASM init test
 
 rule test =
-    program( Self ) := undef
-
+    program( Self ) := undef //@ ERROR( 0500 )
