@@ -40,13 +40,9 @@
 //  statement from your version.
 //
 
+// shall throw an error that 'Self' identifier does not exist!
 
-CASM
+CASM init test
 
-init foo
-
-rule foo = skip
-
-init bar //@ERROR( a001 )
-
-init baz //@ERROR( a001 )
+rule test =
+    program( Self ) := undef //@ ERROR( 0500 )
