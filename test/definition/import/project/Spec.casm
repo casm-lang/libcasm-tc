@@ -40,11 +40,13 @@
 //  statement from your version.
 //
 
-CASM init test
+CASM init foo
 
-// NonExistingFile.casm does not exist, so the import should fail.
+import Module::LibA
+import Module::LibA as A
 
-import NonExistingFile //@ ERROR( 0508 )
-
-rule test =
-    skip
+rule foo =
+{
+    assert( LibA::id = "Module Lib A -> Module Lib B -> Lib C -> Module Lib D" )
+    assert( LibA::id = A::id )
+}

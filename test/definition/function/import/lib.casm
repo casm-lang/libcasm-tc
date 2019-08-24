@@ -40,11 +40,11 @@
 //  statement from your version.
 //
 
-CASM init test
+//@HELPER()
 
-// NonExistingFile.casm does not exist, so the import should fail.
+// This test case is disabled by default, because it will only be imported and
+// shall never be executed on its own during the test suite runs
 
-import NonExistingFile //@ ERROR( 0508 )
+CASM
 
-rule test =
-    skip
+[ export ] function foo : -> Boolean initially { true }

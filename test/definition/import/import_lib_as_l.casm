@@ -40,11 +40,11 @@
 //  statement from your version.
 //
 
-// Should import definitions from lib.casm and provide them under namespace `l`
+CASM init test
 
-CASM init test //@DISABLED() TODO: FIXME: @ppaulweber: the 'DISABLED' will be removed during the casm-lang/casm#14 by @emmanuel099
+// Shall import the exported definitions from lib.casm and provide them under namespace `l`
 
 import lib as l
 
 rule test =
-    l.bar
+    l::bar

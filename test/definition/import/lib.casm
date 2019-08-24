@@ -40,12 +40,13 @@
 //  statement from your version.
 //
 
+//@HELPER()
+
 // This test case is disabled by default, because it will only be imported and
 // shall never be executed on its own during the test suite runs
 
-//@DISABLED()
-
 CASM
 
-rule bar =
-    skip
+[ export ] function foo : -> Boolean
+
+[ export ] rule bar = skip

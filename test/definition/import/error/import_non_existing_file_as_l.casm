@@ -44,7 +44,7 @@ CASM init test
 
 // NonExistingFile.casm does not exist, so the import should fail.
 
-import NonExistingFile //@ ERROR( 0508 )
+import NonExistingFile as l //@ ERROR( 0508 )
 
 rule test =
     skip

@@ -42,9 +42,9 @@
 
 CASM init test
 
-// NonExistingFile.casm does not exist, so the import should fail.
+// rule 'foo' from 'lib' has no export, so the imported rule call should fail.
 
-import NonExistingFile //@ ERROR( 0508 )
+import lib_no_export
 
 rule test =
-    skip
+    lib_no_export::foo //@ERROR( 0509 )

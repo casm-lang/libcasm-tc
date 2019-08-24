@@ -42,9 +42,17 @@
 
 CASM init test
 
-// NonExistingFile.casm does not exist, so the import should fail.
-
-import NonExistingFile //@ ERROR( 0508 )
+import lib
+import lib as foo
+import lib as bar
+import lib as qux
 
 rule test =
-    skip
+{|
+    lib::foo := true
+    assert( lib::foo = true )
+    assert( foo::foo = true )
+    assert( bar::foo = true )
+    assert( qux::foo = true )
+    program( self ) := undef
+|}

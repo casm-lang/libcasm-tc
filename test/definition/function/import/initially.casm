@@ -42,9 +42,10 @@
 
 CASM init test
 
-// NonExistingFile.casm does not exist, so the import should fail.
+// Shall import the exported definitions from lib.casm and provide them under namespace `lib`
 
-import NonExistingFile //@ ERROR( 0508 )
+import lib
 
 rule test =
-    skip
+    assert( lib::foo = true )
+
