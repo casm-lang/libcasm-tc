@@ -1,0 +1,121 @@
+//
+//  Copyright (C) 2014-2019 CASM Organization <https://casm-lang.org>
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                <https://github.com/casm-lang/libcasm-tc>
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+//  Additional permission under GNU GPL version 3 section 7
+//
+//  libcasm-tc is distributed under the terms of the GNU General Public License
+//  with the following clarification and special exception: Linking libcasm-tc
+//  statically or dynamically with other modules is making a combined work
+//  based on libcasm-tc. Thus, the terms and conditions of the GNU General
+//  Public License cover the whole combination. As a special exception,
+//  the copyright holders of libcasm-tc give you permission to link libcasm-tc
+//  with independent modules to produce an executable, regardless of the
+//  license terms of these independent modules, and to copy and distribute
+//  the resulting executable under terms of your choice, provided that you
+//  also meet, for each linked independent module, the terms and conditions
+//  of the license of that module. An independent module is a module which
+//  is not derived from or based on libcasm-tc. If you modify libcasm-tc, you
+//  may extend this exception to your version of the library, but you are
+//  not obliged to do so. If you do not wish to do so, delete this exception
+//  statement from your version.
+//
+
+// Simple Traffic Simulation:
+//  - Each car has a pre-defined start and end position
+//  - The skip time defines the initial delay before the car starts driving
+//  - The safety distances defines the minimum distance between all cars
+//  - The road is divided in segments, each segment can be occupied by at most one driving car
+//  - All cars drive in the same direction
+//  - The simulation ends as soon as all cars reached their end position
+
+CASM init Main
+
+// vehicle
+[static] function cars: -> List<Integer> initially { [0, 1, 2, 3, 4] }
+[static] function startPosition: Integer -> Integer initially { (0) -> 2, (1) -> 3, (2) -> 1, (3) -> 5, (4) -> 4 }
+[static] function endPosition: Integer -> Integer initially { (0) -> 20, (1) -> 14, (2) -> 15, (3) -> 13, (4) -> 9 }
+function currentPosition: Integer -> Integer defined { 0 }
+function driveTime: Integer -> Integer
+function skipTime: Integer -> Integer
+[static] function vehicleSpeed: Integer -> Integer defined { 1 }
+[static] function safetyDistance: -> Integer initially { 2 }
+
+// environment
+function time: -> Integer initially { 1 }
+
+derived carIsActive(car: Integer) -> Boolean =
+    not carReachedEndPosition(car) and skipTime(car) < time
+
+derived carCanBeMoved(car: Integer, speed: Integer) -> Boolean =
+    let startPosition = currentPosition(car) + 1,
+        endPosition = currentPosition(car) + speed + safetyDistance in
+    forall c in cars holds
+        carIsActive(c) implies currentPosition(c) < startPosition or currentPosition(c) > endPosition
+
+derived carReachedEndPosition(car: Integer) -> Boolean =
+    currentPosition(car) = endPosition(car)
+
+[pure] derived min(a: Integer, b: Integer) -> Integer =
+    if a < b then a else b
+
+rule MoveCar(car: Integer, speed: Integer) =
+    let newPosition = currentPosition(car) + speed in {
+        assert(newPosition <= endPosition(car))
+        currentPosition(car) := newPosition
+        println("Move car " + car as String + " from " + currentPosition(car) as String + " to " + newPosition as String)
+    }
+
+rule Main =
+{
+    forall car in cars do {
+        currentPosition(car) := startPosition(car)
+        skipTime(car) := choose t in [0..3] do t
+    }
+
+    program(self) := @Simulate
+}
+
+rule Simulate =
+{|
+    forall car in cars with carIsActive(car) do
+        let speed = min(vehicleSpeed(car), endPosition(car) - currentPosition(car)) in {
+            if carCanBeMoved(car, speed) then
+                MoveCar(car, speed)
+            else
+                println("Car " + car as String + " is currently blocked")
+
+            driveTime(car) := time
+        }
+
+    if forall car in cars holds carReachedEndPosition(car) then
+        program(self) := @Finish
+    else
+        time := time + 1
+|}
+
+rule Finish =
+{|
+    println("Iterations: " + time as String)
+    forall car in cars do
+        println("Car " + car as String + " reached end position after " + driveTime(car) as String + " iterations")
+|}
