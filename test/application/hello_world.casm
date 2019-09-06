@@ -40,7 +40,6 @@
 //  statement from your version.
 //
 
-
 CASM init main
 
 rule main =
