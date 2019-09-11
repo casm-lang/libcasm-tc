@@ -40,10 +40,9 @@
 //  statement from your version.
 //
 
-CASM init main
+CASM init 😀
 
-rule main =
+rule 😀 =
 {
-    println( "Hello World!" )
-
+    println( "Hello 😀 World!" )
 }

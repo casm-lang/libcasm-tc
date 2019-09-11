@@ -40,10 +40,19 @@
 //  statement from your version.
 //
 
-CASM init main
+// inline comment with UTF-8 😀😀 characters
 
-rule main =
+/*
+    block comment with UTF-8 😀😀😀 characters
+*/
+
+CASM init 😀 // init definition with UTF-8 😀 character
+
+rule /* definition with UTF-8 😀 character */ 😀 =
 {
-    println( "Hello World!" )
-
+    println( "Hello 😀 World!" ) // string literal with UTF-8 😀 character
 }
+
+enumeration 😀😀 = { prefix😀, 😀infix😀, suffix😀😀 }
+
+function 😀😀😀 : 😀😀 -> Integer

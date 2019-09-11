@@ -40,10 +40,8 @@
 //  statement from your version.
 //
 
-CASM init main
+// Tests if the lexer properly marks invalid UTF-8 byte sequences in identifiers
 
-rule main =
-{
-    println( "Hello World!" )
+CASM init ࠀ  //@ ERROR( 0000 )
 
-}
+rule ࠀ  = skip //@ ERROR( 0000 )
