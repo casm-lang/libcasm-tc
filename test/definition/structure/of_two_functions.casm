@@ -40,12 +40,10 @@
 //  statement from your version.
 //
 
-CASM init foo
+CASM init test rule test = skip
 
 structure Data =
 {
     function name : -> String
     function uid  : -> Integer
 }
-
-rule foo = skip

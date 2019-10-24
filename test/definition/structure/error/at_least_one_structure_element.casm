@@ -42,10 +42,8 @@
 
 // a structure needs at least one function definition
 
-CASM init foo
+CASM init test rule test = skip
 
 structure Data =
 {
 } //@ ERROR( 0000 )
-
-rule foo = skip
