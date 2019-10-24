@@ -42,11 +42,9 @@
 
 // structure identifier is a builtin symbol name
 
-CASM init foo
+CASM init test rule test = skip
 
 structure assert = //@ ERROR( 5510 )
 {
     function data : -> Integer
 }
-
-rule foo = skip

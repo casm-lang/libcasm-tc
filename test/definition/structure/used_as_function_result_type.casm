@@ -40,7 +40,7 @@
 //  statement from your version.
 //
 
-CASM init foo
+CASM init test rule test = skip
 
 structure Data =
 {
@@ -49,8 +49,3 @@ structure Data =
 }
 
 function bar : -> Data
-
-rule foo =
-{|
-    program( self ) := undef
-|}
