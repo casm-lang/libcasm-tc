@@ -42,11 +42,12 @@
 
 CASM init test
 
-// Shall import the exported definitions from lib.casm and provide them under namespace `lib`
+// Failes, because the symbol 'qux' already exists in the current specification namespace
 
 import lib
 
-rule test = {
-    lib::bar
-    assert( lib::Color::Red != lib::Color::Blue )
-}
+using lib::foo //@ ERROR( 0506 )
+
+rule foo = skip
+
+rule test = skip

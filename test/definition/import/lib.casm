@@ -50,3 +50,5 @@ CASM
 [ export ] function foo : -> Boolean
 
 [ export ] rule bar = skip
+
+[ export ] enumeration Color = { Red, Green, Blue }

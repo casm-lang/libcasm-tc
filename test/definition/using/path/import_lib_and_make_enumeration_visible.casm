@@ -42,11 +42,15 @@
 
 CASM init test
 
-// Shall import the exported definitions from lib.casm and provide them under namespace `lib`
+// Shall import the exported definitions from lib.casm and provide them under
+// namespace `lib` additionally provide the enumeration 'Color' and its sub-
+// namespace enumerators under the specification namespace due to the explicit
+// symbol using path definition
 
 import lib
 
+using lib::Color
+
 rule test = {
-    lib::bar
-    assert( lib::Color::Red != lib::Color::Blue )
+     assert( lib::Color::Red = Color::Red )
 }

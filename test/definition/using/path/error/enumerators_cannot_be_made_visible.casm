@@ -42,11 +42,11 @@
 
 CASM init test
 
-// Shall import the exported definitions from lib.casm and provide them under namespace `lib`
+// Failes, because the symbol 'Red' is a enumerator symbol of enumeration 'Color'
+// enumerators cannot be made visible, only the enumeration itself
 
 import lib
 
-rule test = {
-    lib::bar
-    assert( lib::Color::Red != lib::Color::Blue )
-}
+using lib::Color::Red //@ ERROR( 0509 )
+
+rule test = skip

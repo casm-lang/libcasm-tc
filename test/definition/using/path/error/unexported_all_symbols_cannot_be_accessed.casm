@@ -42,11 +42,14 @@
 
 CASM init test
 
-// Shall import the exported definitions from lib.casm and provide them under namespace `lib`
+// Failes, because the symbol 'qux' was not exported in lib and therefore it does not get included inside the current namespace after the all-use using path definition and the call of qux shall be reported to be unknown
 
 import lib
 
+using lib::*
+
 rule test = {
-    lib::bar
-    assert( lib::Color::Red != lib::Color::Blue )
+    assert( lib::foo = foo )
+    bar
+    qux  //@ ERROR( 0500 )
 }

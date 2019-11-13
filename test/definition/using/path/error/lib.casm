@@ -40,13 +40,17 @@
 //  statement from your version.
 //
 
-CASM init test
+//@HELPER()
 
-// Shall import the exported definitions from lib.casm and provide them under namespace `lib`
+// This test case is disabled by default, because it will only be imported and
+// shall never be executed on its own during the test suite runs
 
-import lib
+CASM
 
-rule test = {
-    lib::bar
-    assert( lib::Color::Red != lib::Color::Blue )
-}
+[ export ] function foo : -> Boolean
+
+[ export ] rule bar = skip
+
+derived qux -> Integer = 123
+
+[ export ] enumeration Color = { Red, Blue, Green }
