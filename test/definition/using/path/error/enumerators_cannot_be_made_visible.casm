@@ -47,6 +47,6 @@ CASM init test
 
 import lib
 
-using lib::Color::Red //@ ERROR( ? )
+using lib::Color::Red //@ ERROR( 0509 )
 
 rule test = skip
