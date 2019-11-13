@@ -42,16 +42,12 @@
 
 CASM init test
 
-// Failes, because the symbol 'Blue' already exists in the current specification namespace
+// Failes, because the symbol 'foo' already exists in the current specification namespace
 
-enumeration Color =
-{ Red
-, Blue
-, Green
-}
+import lib
 
-using Color::* //@ ERROR( 0506 )
+using lib::* //@ ERROR( 0506 )
 
-rule Blue = skip
+rule foo = skip
 
 rule test = skip

@@ -52,4 +52,5 @@ rule test = {
     lib::bar
     bar
     assert( lib::foo = foo )
+    assert( lib::Color::Red = Color::Red )
 }

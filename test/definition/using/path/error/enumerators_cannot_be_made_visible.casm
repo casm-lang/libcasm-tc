@@ -42,10 +42,11 @@
 
 CASM init test
 
-enumeration Color = { Red, Blue, Green }
+// Failes, because the symbol 'Red' is a enumerator symbol of enumeration 'Color'
+// enumerators cannot be made visible, only the enumeration itself
 
-using Color::Red
+import lib
 
-rule test = {
-    assert( Color::Red = Red )
-}
+using lib::Color::Red //@ ERROR( ? )
+
+rule test = skip

@@ -52,3 +52,5 @@ CASM
 [ export ] rule bar = skip
 
 derived qux -> Integer = 123
+
+[ export ] enumeration Color = { Red, Blue, Green }
