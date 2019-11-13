@@ -42,12 +42,14 @@
 
 CASM init test
 
-// Failes, because the symbol 'qux' was not exported and therefore it cannot be used inside the using path definition
+// Failes, because the symbol 'qux' was not exported in lib and therefore it does not get included inside the current namespace after the all-use using path definition and the call of qux shall be reported to be unknown
 
 import lib
 
-using lib::qux //@ ERROR( 0509 )
+using lib::*
 
 rule test = {
-    qux
+    assert( lib::foo = foo )
+    bar
+    qux  //@ ERROR( 0500 )
 }

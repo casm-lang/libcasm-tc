@@ -42,12 +42,10 @@
 
 CASM init test
 
-// Failes, because the symbol 'qux' was not exported and therefore it cannot be used inside the using path definition
+enumeration Color = { Red, Blue, Green }
 
-import lib
-
-using lib::qux //@ ERROR( 0509 )
+using Color::Red
 
 rule test = {
-    qux
+    assert( Color::Red = Red )
 }

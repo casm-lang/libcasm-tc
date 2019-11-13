@@ -42,12 +42,16 @@
 
 CASM init test
 
-// Failes, because the symbol 'qux' was not exported and therefore it cannot be used inside the using path definition
+// Failes, because the symbol 'Red' already exists in the current specification namespace
 
-import lib
-
-using lib::qux //@ ERROR( 0509 )
-
-rule test = {
-    qux
+enumeration Color =
+{ Red
+, Blue
+, Green
 }
+
+using Color::Red //@ ERROR( 0506 )
+
+rule Red = skip
+
+rule test = skip
