@@ -46,5 +46,7 @@ CASM init test
 
 import lib
 
-rule test =
+rule test = {
     lib::bar
+    assert( lib::Color::Red != lib::Color::Blue )
+}
