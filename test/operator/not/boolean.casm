@@ -39,22 +39,32 @@
 //  statement from your version.
 //
 
-
 // | NOT | undef | false | true  | sym  |
 // |-----+-------+-------+-------+------|
 // | -   | undef | true  | false | sym' |
 
-CASM init foo
+CASM init testSuite
 
-[symbolic] function a : -> Boolean
+using T = Boolean
 
-rule foo =
-{
-    let c = not a in
+[ symbolic ] function a : -> T
+[ symbolic ] function c : -> T
+
+rule testSuite = {
+    testCase( undef, undef, false )
+    testCase( false,  true, false )
+    testCase(  true, false, false )
+    testCase(     a,     c, true  )
+}
+
+rule testCase( a : T, expected : T, symbolic : Boolean ) = {
+    testCaseCheck( a, not a, expected, symbolic )
+}
+
+rule testCaseCheck( a : T, result : T, expected : T, symbolic : Boolean ) = {
+    assert( result = expected )
+    if result != undef then
     {
-        assert( c.isSymbolic() = a.isSymbolic() )
-        
-        assert( c != false)
-        assert( c != true) 
+        assert( result.isSymbolic() = symbolic )
     }
 }
