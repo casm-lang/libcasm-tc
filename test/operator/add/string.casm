@@ -39,23 +39,40 @@
 //  statement from your version.
 //
 
+// | OP         | undef | x : String | sym   |
+// |------------+-------+------------+-------|
+// | undef      | undef | undef      | undef |
+// | y : String | undef | x OP y     | sym'  |
+// | sym        | undef | sym'       | sym'  |
 
-// | OP          | undef | x : String  | sym   |
-// |-------------+-------+-------------+-------|
-// | undef       | undef | undef       | undef |
-// | y : String  | undef | x OP y      | sym'  |
-// | sym         | undef | sym'        | sym'  |
+CASM init testSuite
 
-CASM init foo
+using T = String
 
-rule foo =
-{
-    let a : String = "test" in
-    let b : String = undef in
-    let c = a + b in
+[ symbolic ] function a : -> T
+[ symbolic ] function b : -> T
+[ symbolic ] function c : -> T
+
+rule testSuite = {
+    testCase( undef, undef,    undef, false )
+    testCase( undef, "bar",    undef, false )
+    testCase( undef,     b,    undef, false )
+    testCase( "foo", undef,    undef, false )
+    testCase( "foo", "bar", "foobar", false )
+    testCase( "foo",     b,        c,  true )
+    testCase(     a, undef,    undef, false )
+    testCase(     a, "bar",        c,  true )
+    testCase(     a,     b,        c,  true )
+}
+
+rule testCase( a : T, b : T, expected : T, symbolic : Boolean ) = {
+    testCaseCheck( a, b, a + b + "asdf", expected, symbolic )
+}
+
+rule testCaseCheck( a : T, b : T, result : T, expected : T, symbolic : Boolean ) = {
+    assert( result = expected )
+    if result != undef then
     {
-        assert( c  = undef) 
-        
-        assert( c.isSymbolic() = false )
+        assert( result.isSymbolic() = symbolic )
     }
 }
