@@ -39,25 +39,54 @@
 //  statement from your version.
 //
 
-
 // | EQU      | undef | x : Type | sym  |
 // |----------+-------+----------+------|
 // | undef    | true  | false    | sym' |
 // | y : Type | false | x == y   | sym' |
 // | sym      | sym'  | sym'     | sym' |
 
-CASM init foo
+CASM init testSuite
 
-rule foo =
-{
-    let a : Boolean = true  in
-    let b : Boolean = true  in
-    let c = a = b in
+using T = RuleRef< -> Void >
+using R = Boolean
+
+[ symbolic ] function a : -> T
+[ symbolic ] function b : -> T
+[ symbolic ] function c : -> T
+
+rule A = skip
+rule B = skip
+
+rule testSuite = {
+    testCase( undef, undef,  true, false )
+    testCase(    @A, undef, false, false )
+    testCase(    @B, undef, false, false )
+//  testCase(     a, undef,     c,  true )
+
+    testCase( undef,    @A, false, false )
+    testCase(    @A,    @A,  true, false )
+    testCase(    @B,    @A, false, false )
+//  testCase(     a,    @A,     c,  true )
+
+    testCase( undef,    @B, false, false )
+    testCase(    @A,    @B, false, false )
+    testCase(    @B,    @B, false, false )
+//  testCase(     a,    @B,     c,  true )
+
+//  testCase( undef,     b,     c,  true )
+//  testCase(    @A,     b,     c,  true )
+//  testCase(    @B,     b,     c,  true )
+//  testCase(     a,     b,     c,  true )
+}
+
+rule testCase( a : T, b : T, expected : R, symbolic : Boolean ) = {
+    testCaseCheck( a, b, a = b, expected, symbolic )
+}
+
+rule testCaseCheck( a : T, b : T, result : R, expected : R, symbolic : Boolean ) = {
+    assert( result = expected )
+    if result != undef then
     {
-        assert( c) 
-        
-        assert( c != undef) 
-        assert( c != false)
-        assert( c.isSymbolic() = false )
+        assert( result.isSymbolic() = symbolic )
     }
 }
