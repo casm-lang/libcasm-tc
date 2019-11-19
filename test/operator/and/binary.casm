@@ -54,9 +54,9 @@ using T = Binary'16
 [ symbolic ] function c : -> T
 
 rule testSuite = {
-    testCase(  undef, undef, undef, false )
-    testCase( 0xaaaa, undef, undef, false )
-    testCase(      a, undef,     c,  true )
+    testCase(  undef,  undef,  undef, false )
+    testCase( 0xaaaa,  undef,  undef, false )
+    testCase(      a,  undef,      c,  true )
 
     testCase(  undef, 0xbbbb,  undef, false )
     testCase( 0xaaaa, 0xbbbb, 0xaaaa, false )

@@ -56,23 +56,23 @@ using T = Boolean
 
 rule testSuite = {
     testCase( undef, undef, undef, false )
-    testCase( undef, false, false, false )
-    testCase( undef,  true, undef, false )
-    testCase( undef,     b,     c, true  )
-
     testCase( false, undef, false, false )
-    testCase( false, false, false, false )
-    testCase( false,  true, false, false )
-    testCase( false,     b, false, false )
-
     testCase(  true, undef, undef, false )
-    testCase(  true, false, false, false )
-    testCase(  true,  true,  true, false )
-    testCase(  true,     b,     c, true  )
-
     testCase(     a, undef,     c, true  )
+
+    testCase( undef, false, false, false )
+    testCase( false, false, false, false )
+    testCase(  true, false, false, false )
     testCase(     a, false, false, false )
+
+    testCase( undef,  true, undef, false )
+    testCase( false,  true, false, false )
+    testCase(  true,  true,  true, false )
     testCase(     a,  true,     c, true  )
+
+    testCase( undef,     b,     c, true  )
+    testCase( false,     b, false, false )
+    testCase(  true,     b,     c, true  )
     testCase(     a,     b,     c, true  )
 }
 
