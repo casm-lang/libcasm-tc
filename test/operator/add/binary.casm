@@ -1,9 +1,10 @@
 //
-//  Copyright (C) 2014-2022 CASM Organization <https://casm-lang.org>
+//  Copyright (C) 2014-2019 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
-//  Developed by: Philipp Paulweber et al.
-//                <https://github.com/casm-lang/libcasm-tc/graphs/contributors>
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                <https://github.com/casm-lang/libcasm-tc>
 //
 //  This file is part of libcasm-tc.
 //
@@ -39,15 +40,15 @@
 //  statement from your version.
 //
 
-// | ADD         | undef | x : Integer | sym   |
+// | OP          | undef | x : Integer | sym   |
 // |-------------+-------+-------------+-------|
 // | undef       | undef | undef       | undef |
-// | y : Integer | undef | x - y       | sym'  |
+// | y : Integer | undef | x OP y      | sym'  |
 // | sym         | undef | sym'        | sym'  |
 
 CASM init testSuite
 
-using T = Integer
+using T = Binary'16
 
 [ symbolic ] function a : -> T
 [ symbolic ] function b : -> T
@@ -55,59 +56,23 @@ using T = Integer
 
 rule testSuite = {
     testCase( undef, undef, undef, false )
-    testCase(  -123, undef, undef, false )
-    testCase(    -1, undef, undef, false )
-    testCase(     0, undef, undef, false )
-    testCase(     1, undef, undef, false )
+    testCase( undef,   321, undef, false )
+    testCase( undef,     b, undef, false )
     testCase(   123, undef, undef, false )
-    testCase(     a, undef, undef, false )
-
-    testCase( undef,  -123, undef, false )
-    testCase(  -123,  -123,  -246, false )
-    testCase(    -1,  -123,  -124, false )
-    testCase(     0,  -123,  -123, false )
-    testCase(     1,  -123,  -122, false )
-    testCase(   123,  -123,     0, false )
-    testCase(     a,  -123,     c,  true )
-
-    testCase( undef,    -1, undef, false )
-    testCase(  -123,    -1,  -124, false )
-    testCase(    -1,    -1,    -2, false )
-    testCase(     0,    -1,    -1, false )
-    testCase(     1,    -1,     0, false )
-    testCase(   123,    -1,   122, false )
-    testCase(     a,    -1,     c,  true )
-
-    testCase( undef,     0, undef, false )
-    testCase(  -123,     0,  -123, false )
-    testCase(    -1,     0,    -1, false )
+    testCase(   123,   321,   444, false )
+    testCase(  -123,   321,   198, false )
+    testCase(   123,  -321,  -198, false )
+    testCase(  -123,  -321,  -444, false )
     testCase(     0,     0,     0, false )
     testCase(     1,     0,     1, false )
-    testCase(   123,     0,   123, false )
-    testCase(     a,     0,     c,  true )
-
-    testCase( undef,     1, undef, false )
-    testCase(  -123,     1,  -122, false )
-    testCase(    -1,     1,     0, false )
     testCase(     0,     1,     1, false )
     testCase(     1,     1,     2, false )
-    testCase(   123,     1,   124, false )
-    testCase(     a,     1,     c,  true )
-
-    testCase( undef,   123, undef, false )
-    testCase(  -123,   123,     0, false )
-    testCase(    -1,   123,   122, false )
-    testCase(     0,   123,   123, false )
-    testCase(     1,   123,   124, false )
-    testCase(   123,   123,   246, false )
-    testCase(     a,   123,     c,  true )
-
-    testCase( undef,     b, undef, false )
-    testCase(  -123,     b,     c,  true )
-    testCase(    -1,     b,     c,  true )
-    testCase(     0,     b,     c,  true )
-    testCase(     1,     b,     c,  true )
+    testCase(    -1,     0,    -1, false )
+    testCase(     0,    -1,    -1, false )
+    testCase(    -1,    -1,    -2, false )
     testCase(   123,     b,     c,  true )
+    testCase(     a, undef, undef, false )
+    testCase(     a,   321,     c,  true )
     testCase(     a,     b,     c,  true )
 }
 
