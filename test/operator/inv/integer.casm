@@ -39,23 +39,35 @@
 //  statement from your version.
 //
 
-
-// | NOT | undef | x : Decimal | sym  |
+// | INV | undef | x : Integer  | sym  |
 // |-----+-------+--------------+------|
 // | -   | undef | -x	        | sym' |
 
-CASM init foo //@DISABLED()
+CASM init testSuite
 
-[symbolic] function a : -> Decimal
+using T = Integer
 
-rule foo =
-{
-    let c = -a in
+[ symbolic ] function a : -> T
+[ symbolic ] function c : -> T
+
+rule testSuite = {
+    testCase( undef, undef, false )
+    testCase(  -123,   123, false )
+    testCase(    -1,     1, false )
+    testCase(     0,     0, false )
+    testCase(     1,    -1, false )
+    testCase(   123,  -123, false )
+    testCase(     a,     c, true  )
+}
+
+rule testCase( a : T, expected : T, symbolic : Boolean ) = {
+    testCaseCheck( a, -a, expected, symbolic )
+}
+
+rule testCaseCheck( a : T, result : T, expected : T, symbolic : Boolean ) = {
+    assert( result = expected )
+    if result != undef then
     {
-        assert( c.isSymbolic() = a.isSymbolic() )
-        
-        assert( c != 0.0 - 1.0 )
-        assert( c != 0.0       )
-        assert( c != 0.0 + 1.0 )
+        assert( result.isSymbolic() = symbolic )
     }
 }
