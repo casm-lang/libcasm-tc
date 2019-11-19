@@ -40,7 +40,6 @@
 //  statement from your version.
 //
 
-
 // | XOR   | undef | false | true  | sym  |
 // |-------+-------+-------+-------+------|
 // | undef | undef | undef | undef | sym' |
@@ -48,18 +47,44 @@
 // | true  | undef | true  | false | sym' |
 // | sym   | sym'  | sym'  | sym'  | sym' |
 
-CASM init foo
+CASM init testSuite
 
-rule foo =
-{
-    let a = undef in
-    let b = false in
-    let c = a xor b in
+using T = Boolean
+
+[ symbolic ] function a : -> T
+[ symbolic ] function b : -> T
+[ symbolic ] function c : -> T
+
+rule testSuite = {
+    testCase( undef, undef, undef, false )
+    testCase( undef, false, undef, false )
+    testCase( undef,  true, undef, false )
+    testCase( undef,     b,     c, true  )
+
+    testCase( false, undef, undef, false )
+    testCase( false, false, false, false )
+    testCase( false,  true,  true, false )
+    testCase( false,     b,     c, true  )
+
+    testCase(  true, undef, undef, false )
+    testCase(  true, false,  true, false )
+    testCase(  true,  true, false, false )
+    testCase(  true,     b,     c, true  )
+
+    testCase(     a, undef,     c, true )
+    testCase(     a, false,     c, true )
+    testCase(     a,  true,     c, true )
+    testCase(     a,     b,     c, true )
+}
+
+rule testCase( a : T, b : T, expected : T, symbolic : Boolean ) = {
+    testCaseCheck( a, b, a xor b, expected, symbolic )
+}
+
+rule testCaseCheck( a : T, b : T, result : T, expected : T, symbolic : Boolean ) = {
+    assert( result = expected )
+    if result != undef then
     {
-        assert( c  = undef) 
-        
-        assert( c != false)
-        assert( c != true) 
-        assert( c.isSymbolic() = false )
+        assert( result.isSymbolic() = symbolic )
     }
 }
