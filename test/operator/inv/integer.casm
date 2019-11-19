@@ -40,21 +40,35 @@
 //  statement from your version.
 //
 
-
-// | NOT | undef | x : Rational | sym  |
+// | INV | undef | x : Integer  | sym  |
 // |-----+-------+--------------+------|
 // | -   | undef | -x	        | sym' |
 
-CASM init foo //@DISABLED()
+CASM init testSuite
 
-rule foo =
-{
-    let a = 0r12/3 in
-    let c = -a in
+using T = Integer
+
+[ symbolic ] function a : -> T
+[ symbolic ] function c : -> T
+
+rule testSuite = {
+    testCase( undef, undef, false )
+    testCase(  -123,   123, false )
+    testCase(    -1,     1, false )
+    testCase(     0,     0, false )
+    testCase(     1,    -1, false )
+    testCase(   123,  -123, false )
+    testCase(     a,     c, true  )
+}
+
+rule testCase( a : T, expected : T, symbolic : Boolean ) = {
+    testCaseCheck( a, -a, expected, symbolic )
+}
+
+rule testCaseCheck( a : T, result : T, expected : T, symbolic : Boolean ) = {
+    assert( result = expected )
+    if result != undef then
     {
-        assert( c  = 0r0/1 - 0r12/3 )
-        
-        assert( c != undef )
-        assert( c.isSymbolic() = false )
+        assert( result.isSymbolic() = symbolic )
     }
 }
