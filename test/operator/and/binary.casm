@@ -39,17 +39,42 @@
 //  statement from your version.
 //
 
+// | AND   | undef | b : T   | sym   |
+// |-------+-------+---------+-------|
+// | undef | undef | undef   | sym'  |
+// | a : T | undef | a and b | sym'  |
+// | sym   | sym'  | sym'    | sym'  |
 
-CASM init foo
+CASM init testSuite
 
-rule foo =
-{
-    let a : Binary'20 = undef in
-    let b : Binary'20 = 0b0000'0000'0000'0000'0000 in
-    let c = a and b in
+using T = Binary'16
+
+[ symbolic ] function a : -> T
+[ symbolic ] function b : -> T
+[ symbolic ] function c : -> T
+
+rule testSuite = {
+    testCase(  undef, undef, undef, false )
+    testCase( 0xaaaa, undef, undef, false )
+    testCase(      a, undef,     c,  true )
+
+    testCase(  undef, 0xbbbb,  undef, false )
+    testCase( 0xaaaa, 0xbbbb, 0xaaaa, false )
+    testCase(      a, 0xbbbb,      c,  true )
+
+    testCase(  undef,      b,      c,  true )
+    testCase( 0xaaaa,      b,      c,  true )
+    testCase(      a,      b,      c,  true )
+}
+
+rule testCase( a : T, b : T, expected : T, symbolic : Boolean ) = {
+    testCaseCheck( a, b, a and b, expected, symbolic )
+}
+
+rule testCaseCheck( a : T, b : T, result : T, expected : T, symbolic : Boolean ) = {
+    assert( result = expected )
+    if result != undef then
     {
-        assert( c  = undef )
-
-	assert( c.isSymbolic() = false )
+        assert( result.isSymbolic() = symbolic )
     }
 }
