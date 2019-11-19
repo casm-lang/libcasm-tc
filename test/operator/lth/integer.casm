@@ -39,22 +39,61 @@
 //  statement from your version.
 //
 
+// | LTH         | undef | x : Integer | sym  |
+// |-------------+-------+-------------+------|
+// | undef       | undef | undef       | sym' |
+// | y : Integer | undef | x < y       | sym' |
+// | sym         | sym'  | sym'        | sym' |
 
-// | OP          | undef | x : Integer | sym   |
-// |-------------+-------+-------------+-------|
-// | undef       | undef | undef       | undef |
-// | y : Integer | undef | x OP y      | sym'  |
-// | sym         | undef | sym'        | sym'  |
+CASM init testSuite
 
-CASM init foo
+using T = Integer
+using R = Boolean
 
-[symbolic] function b : -> Integer
+[ symbolic ] function a : -> T
+[ symbolic ] function b : -> T
+[ symbolic ] function c : -> T
 
-rule foo =
-{
-    let a : Integer = 123 in
-    let c = a < b in
+rule testSuite = {
+    testCase( undef, undef, undef, false )
+    testCase(  -123, undef, undef, false )
+    testCase(     0, undef, undef, false )
+    testCase(   123, undef, undef, false )
+//  testCase(     a, undef,     c,  true )
+
+    testCase( undef,  -123, undef, false )
+    testCase(  -123,  -123, false, false )
+    testCase(     0,  -123, false, false )
+    testCase(   123,  -123, false, false )
+//  testCase(     a,  -123,     c,  true )
+
+    testCase( undef,     0, undef, false )
+    testCase(  -123,     0,  true, false )
+    testCase(     0,     0, false, false )
+    testCase(   123,     0, false, false )
+//  testCase(     a,     0,     c,  true )
+
+    testCase( undef,   123, undef, false )
+    testCase(  -123,   123,  true, false )
+    testCase(     0,   123,  true, false )
+    testCase(   123,   123, false, false )
+//  testCase(     a,   123,     c,  true )
+
+//  testCase( undef,     b,     c,  true )
+//  testCase(  -123,     b,     c,  true )
+//  testCase(     0,     b,     c,  true )
+//  testCase(   123,     b,     c,  true )
+//  testCase(     a,     b,     c,  true )
+}
+
+rule testCase( a : T, b : T, expected : R, symbolic : Boolean ) = {
+    testCaseCheck( a, b, a < b, expected, symbolic )
+}
+
+rule testCaseCheck( a : T, b : T, result : R, expected : R, symbolic : Boolean ) = {
+    assert( result = expected )
+    if result != undef then
     {
-        assert( c.isSymbolic() = b.isSymbolic() )
+        assert( result.isSymbolic() = symbolic )
     }
 }
