@@ -39,7 +39,6 @@
 //  statement from your version.
 //
 
-
 // | AND   | undef | false | true  | sym   |
 // |-------+-------+-------+-------+-------|
 // | undef | undef | false | undef | sym'  |
@@ -47,18 +46,44 @@
 // | true  | undef | false | true  | sym'  |
 // | sym   | sym'  | false | sym'  | sym'  |
 
-CASM init foo
+CASM init testSuite
 
-rule foo =
-{
-    let a = false in
-    let b = undef in
-    let c = a and b in
+using T = Boolean
+
+[ symbolic ] function a : -> T
+[ symbolic ] function b : -> T
+[ symbolic ] function c : -> T
+
+rule testSuite = {
+    testCase( undef, undef, undef, false )
+    testCase( undef, false, false, false )
+    testCase( undef,  true, undef, false )
+    testCase( undef,     b,     c, true  )
+
+    testCase( false, undef, false, false )
+    testCase( false, false, false, false )
+    testCase( false,  true, false, false )
+    testCase( false,     b, false, false )
+
+    testCase(  true, undef, undef, false )
+    testCase(  true, false, false, false )
+    testCase(  true,  true,  true, false )
+    testCase(  true,     b,     c, true  )
+
+    testCase(     a, undef,     c, true  )
+    testCase(     a, false, false, false )
+    testCase(     a,  true,     c, true  )
+    testCase(     a,     b,     c, true  )
+}
+
+rule testCase( a : T, b : T, expected : T, symbolic : Boolean ) = {
+    testCaseCheck( a, b, a and b, expected, symbolic )
+}
+
+rule testCaseCheck( a : T, b : T, result : T, expected : T, symbolic : Boolean ) = {
+    assert( result = expected )
+    if result != undef then
     {
-        assert( c  = false)
-        
-        assert( c != undef) 
-        assert( c != true) 
-        assert( c.isSymbolic() = false )
+        assert( result.isSymbolic() = symbolic )
     }
 }
