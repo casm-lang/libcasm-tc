@@ -39,10 +39,32 @@
 //  statement from your version.
 //
 
+CASM init test
 
-CASM init foo
-
-rule foo =
+rule test =
 {
-    assert( -(-1) = 1) 
+    assert( -1 = 0 - 1)
+    assert( -(-2) = 1 + 1)
+    assert( -(-(-3)) = 6 - 9)
+
+    let a = 1 - 2 in
+        assert( -(a) = 1)
+
+    assert( -(-0.3) = 0.3)
+    assert( -(-1) = 1)
+
+    assert( 10 > 0 and true = 0 < 10 = true or false and true or 20 >= 3 * 9 = not false)
+    assert( 1 + undef + 2 = undef)
+
+    assert( 1 + 8 / 2  =  5)
+    assert( 1 - 3 % 6  = -2)
+    assert( 2 * 3 / 2  =  3)
+    assert( 2 / 3 - 1  = -1)
+
+    assert( 1 + 2 * 3  = 7)
+    assert( 1 + 2 * 3 != 9)
+    assert( 2 * 3 + 1  = 7)
+    assert( 2 * 3 + 1 != 9)
+
+    assert( 1 + 4 - 5 - 8 + 10 = 2)
 }
