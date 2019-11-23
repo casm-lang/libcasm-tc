@@ -40,13 +40,12 @@
 //  statement from your version.
 //
 
-// Defining multiple variables in a single let expression should work as long as they
-// don't reference each other in the binding terms.
+// Defining multiple variables in a single let rule should not allow to reference
+// each other, as the binding terms are evaluated in parallel. Therefore the
+// following example doesn't make sense.
 
 CASM init foo
 
-derived bar -> Integer =
-    let x = 3, y = 2, z = 4 in x + y + z
-
 rule foo =
-    assert( bar = 9 )
+    let x = 3, y = x * 2, z = x * y in //@ ERROR( 0500 )
+        skip

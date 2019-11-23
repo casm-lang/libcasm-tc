@@ -40,11 +40,11 @@
 //  statement from your version.
 //
 
-// Defining multiple variables in a single let rule should work.
-// Previously defined variables should be accessible in later definitions.
+// Defining multiple variables in a single let rule should work as long as they
+// don't reference each other in the binding terms.
 
 CASM init foo
 
 rule foo =
-    let x = 3, y = x * 2, z = x * y in
-        assert( z = 18 )
+    let x = 3, y = 2, z = 4 in
+        assert( x + y + z = 9 )
