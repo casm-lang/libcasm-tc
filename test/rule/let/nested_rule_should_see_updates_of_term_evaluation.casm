@@ -40,13 +40,17 @@
 //  statement from your version.
 //
 
-// Defining multiple variables in a single let expression should work as long as they
-// don't reference each other in the binding terms.
+// tests if "let" variable bindings and nested rule are evaluated under sequential semantics
 
-CASM init foo
+CASM init test
 
-derived bar -> Integer =
-    let x = 3, y = 2, z = 4 in x + y + z
+function x: -> Integer initially { 1 }
 
-rule foo =
-    assert( bar = 9 )
+rule bar -> Integer =
+    x := 42
+
+rule test =
+    let y = bar() in {
+        assert( x = 42 ) // update by bar() during evaluation of variable binding
+        program( self ) := undef
+    }

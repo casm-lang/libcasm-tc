@@ -40,13 +40,20 @@
 //  statement from your version.
 //
 
-// Defining multiple variables in a single let expression should work as long as they
-// don't reference each other in the binding terms.
+// tests if "let" variable bindings are evaluated under parallel semantics
 
-CASM init foo
+CASM init test
 
-derived bar -> Integer =
-    let x = 3, y = 2, z = 4 in x + y + z
+function x: -> Integer
 
-rule foo =
-    assert( bar = 9 )
+rule bar1 -> Integer =
+    x := 1
+
+rule bar2 -> Integer =
+    x := 2
+
+rule test =
+{|
+    let y = bar1(), z = bar2() in //@ ERROR( 7000 )
+        skip
+|}
