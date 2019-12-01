@@ -44,7 +44,7 @@
 
 CASM init foo
 
-[static] function x : -> Integer initially { 3 }
+[static] function x : -> Integer = { 3 }
 
 rule foo =
     assert( x = 3 )

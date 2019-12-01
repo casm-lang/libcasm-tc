@@ -47,4 +47,4 @@
 
 CASM
 
-[ export ] function foo : -> Boolean initially { true }
+[ export ] function foo : -> Boolean = { true }

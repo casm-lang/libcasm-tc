@@ -42,10 +42,10 @@
 
 CASM init filter_ma2_long
 
-function x : -> Integer initially { 10 }
-function m : -> Integer initially { 0 }
+function x : -> Integer = { 10 }
+function m : -> Integer = { 0 }
 function y : -> Integer
-function c : -> Integer initially { 0 }
+function c : -> Integer = { 0 }
 
 rule filter_ma2_long =
     if c < 1234567 then {

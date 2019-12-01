@@ -44,8 +44,8 @@
 
 CASM init foo
 
-function x : -> Integer initially { y }  //@ ERROR( c000 ) //@DISABLED()
-function y : -> Integer initially { 3 }
+function x : -> Integer = { y }  //@ ERROR( c000 ) //@DISABLED()
+function y : -> Integer = { 3 }
 
 rule foo =
     skip

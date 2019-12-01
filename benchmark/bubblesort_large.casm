@@ -44,7 +44,7 @@
 CASM init foo
 
 function array   : Integer -> Integer
-function i       :         -> Integer initially { -1 }
+function i       :         -> Integer = { -1 }
 function changes :         -> Boolean
 
 rule bubblesort = 

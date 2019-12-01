@@ -40,11 +40,11 @@
 //  statement from your version.
 //
 
-// simple initially test should work
+// simple = test should work
 
 CASM init foo
 
-function bar : Integer * String * Boolean -> Integer initially {
+function bar : Integer * String * Boolean -> Integer = {
     (21, "21", false) -> 1,
     (42, "42", true) -> 2
 }

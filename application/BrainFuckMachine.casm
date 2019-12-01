@@ -58,7 +58,7 @@ enumeration Token =
     Comma
 }
 
-[static] function prog: Integer -> Token initially // TODO load it from file and operate on string directly
+[static] function prog: Integer -> Token = // TODO load it from file and operate on string directly
 {
     (0) -> Plus,
     (1) -> Plus,
@@ -173,7 +173,7 @@ enumeration Token =
     (110) -> Dot
 }
 
-[static] function ASCII: Integer'[0..255] -> String initially // TODO remove when CASM supports characters
+[static] function ASCII: Integer'[0..255] -> String = // TODO remove when CASM supports characters
 {
     (10) -> "\n",
     (32) -> " ",
@@ -277,9 +277,9 @@ enumeration Token =
 
 function mem: Integer -> Integer'[0..255] defined { 0 }
 
-function ip: -> Integer initially { 0 } // instruction pointer
-function mp: -> Integer initially { 0 } // memory pointer
-function bc: -> Integer initially { 0 } // bracket counter
+function ip: -> Integer = { 0 } // instruction pointer
+function mp: -> Integer = { 0 } // memory pointer
+function bc: -> Integer = { 0 } // bracket counter
 
 rule BrainFuckMachine =
 {|

@@ -42,9 +42,9 @@
 
 CASM init MonteCarloPi
 
-function hits : -> Integer initially { 0 }
-function misses : -> Integer initially { 0 }
-function iterations : -> Integer initially { 1'000'000 }
+function hits : -> Integer = { 0 }
+function misses : -> Integer = { 0 }
+function iterations : -> Integer = { 1'000'000 }
 
 [pure]
 derived inUnitCircle( x : Decimal, y : Decimal ) -> Boolean =

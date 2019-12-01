@@ -45,7 +45,7 @@
 
 CASM init foo
 
-function x : Integer * Integer -> Integer initially {
+function x : Integer * Integer -> Integer = {
     (1) -> 42 //@ ERROR( 0503 )
 }
 

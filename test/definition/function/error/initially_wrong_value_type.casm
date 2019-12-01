@@ -40,14 +40,14 @@
 //  statement from your version.
 //
 
-// type checker should say that the initially value of location 1 has wrong
+// type checker should say that the = value of location 1 has wrong
 // type (String instead of Integer)
 
 CASM init foo
 
 function x : Integer ->
     Integer  //@ ERROR( 1205 )
-initially {
+= {
     (1)
 ->
     "string" //@ ERROR( 1205 )

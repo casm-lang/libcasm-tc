@@ -40,11 +40,11 @@
 //  statement from your version.
 //
 
-// tests if "initially" handles ranged integers correctly => value out of range
+// tests if "=" handles ranged integers correctly => value out of range
 
 CASM init foo
 
-function x : Integer -> Integer'[0..10] initially {
+function x : Integer -> Integer'[0..10] = {
     (1) ->
          42 //@ ERROR( fd00 )
 }

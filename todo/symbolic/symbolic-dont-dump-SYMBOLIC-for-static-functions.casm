@@ -1,8 +1,8 @@
 // static, symbolic functions are ignored when generating SYMBOLIC output 
 // after each step
 
-function(symbolic) a : Int -> Int initially { 1 -> 1 , 0 -> 0 }
-function(static, symbolic) b : Int -> Int initially { 1 -> 1, 0 -> 0 }
+function(symbolic) a : Int -> Int = { 1 -> 1 , 0 -> 0 }
+function(static, symbolic) b : Int -> Int = { 1 -> 1, 0 -> 0 }
 
 init main
 

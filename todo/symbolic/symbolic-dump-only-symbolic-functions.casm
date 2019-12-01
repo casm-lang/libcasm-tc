@@ -1,4 +1,4 @@
-function a : -> Int initially { 2 }
+function a : -> Int = { 2 }
 function(symbolic) b : -> Int
 
 init main

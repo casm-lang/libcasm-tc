@@ -2,7 +2,7 @@
 
 CASM test
 
-function (symbolic) a: -> List(Int) initially { [1, 2] }
+function (symbolic) a: -> List(Int) = { [1, 2] }
 
 rule main = {
   

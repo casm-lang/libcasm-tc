@@ -97,7 +97,7 @@ function opcode : -> Opcode
 
 
 [ static ]
-function toInstruction : Opcode -> Instruction initially
+function toInstruction : Opcode -> Instruction =
 { ( 0b000 ) -> JMP
 , ( 0b100 ) -> JRP
 , ( 0b010 ) -> LDN
@@ -109,7 +109,7 @@ function toInstruction : Opcode -> Instruction initially
 }
 
 [ static ]
-function toOpcode : Instruction -> Opcode initially
+function toOpcode : Instruction -> Opcode =
 { ( JMP ) -> 0b000
 , ( JRP ) -> 0b100
 , ( LDN ) -> 0b010
@@ -213,7 +213,7 @@ rule dump =
 |}
 
 
-function example : -> Integer initially { 0 }
+function example : -> Integer = { 0 }
 
 rule setup =
 {|

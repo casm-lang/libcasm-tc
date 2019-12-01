@@ -40,26 +40,26 @@ enumeration GateState = {
     Closed
 }
 
-[static] function infinity : -> Integer initially { 999999999 } // FIXME Integer should provide it
+[static] function infinity : -> Integer = { 999999999 } // FIXME Integer should provide it
 
 // parameters
-[static] function dmin : -> Integer initially { 5 }
-[static] function dmax : -> Integer initially { 10 }
-[static] function dopen : -> Integer initially { 2 }
-[static] function dclose : -> Integer initially { 2 }
-[static] function waitTime : -> Integer initially { 3 }
+[static] function dmin : -> Integer = { 5 }
+[static] function dmax : -> Integer = { 10 }
+[static] function dopen : -> Integer = { 2 }
+[static] function dclose : -> Integer = { 2 }
+[static] function waitTime : -> Integer = { 3 }
 
 function deadline : Track -> Integer defined { infinity }
 function trackStatus : Track -> TrackStatus defined { Empty }
 function dir : -> Direction
-function gateState : -> GateState initially { Opened }
+function gateState : -> GateState = { Opened }
 
 derived randomProbability -> Decimal =
     choose x in [0.0 .. 1.0] do x
 
 // ---------------------------------------------------------------------------
 
-function now : -> Integer initially { 1 }
+function now : -> Integer = { 1 }
 
 rule TimeTick =
     now := now + 1

@@ -49,7 +49,7 @@ init {
     (2) -> @main2
 }
 
-function sharedVar : -> Integer initially { 0 }
+function sharedVar : -> Integer = { 0 }
 
 rule main1 =
     if sharedVar < 20 then

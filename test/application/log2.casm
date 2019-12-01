@@ -45,7 +45,7 @@
 
 CASM init main
 
-function N : -> Integer initially { 9 }
+function N : -> Integer = { 9 }
 
 rule main =
 {

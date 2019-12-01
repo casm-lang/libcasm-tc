@@ -43,8 +43,8 @@
 
 CASM init foo
 
-function bottom : -> String initially { "-1" }
-function top : -> Integer initially { 1 }
+function bottom : -> String = { "-1" }
+function top : -> Integer = { 1 }
 
 rule foo = 
 {

@@ -65,7 +65,7 @@ enumeration Instruction = {
  * }
  */
 
-function store : Line -> Binary'32 initially {
+function store : Line -> Binary'32 = {
     (0) -> 0b010'0000'0000'0001'1110 as Binary'32, // LDN 30 "-i"
     (1) -> 0b110'0000'0000'0000'0000 as Binary'32, // CMP "<0"
     (2) -> 0b111'0000'0000'0000'0000 as Binary'32, // STOP
@@ -86,9 +86,9 @@ function store : Line -> Binary'32 initially {
     (30) -> 1000 as Binary'32, // i
     (31) -> 0 as Binary'32 // sum
 }
-function accumulator : -> Integer initially { 0 } // FIXME Binary'32
-function controlInstruction : -> Line initially { 0 }
-function stopped : -> Boolean initially { false }
+function accumulator : -> Integer = { 0 } // FIXME Binary'32
+function controlInstruction : -> Line = { 0 }
+function stopped : -> Boolean = { false }
 
 rule IncrementControlInstruction =
     controlInstruction := controlInstruction + 1

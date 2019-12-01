@@ -44,7 +44,7 @@
 
 CASM init foo
 
-function y : Integer -> Integer initially {
+function y : Integer -> Integer = {
     (bar()) -> 42 //@ ERROR( 5f05 )
 }
 

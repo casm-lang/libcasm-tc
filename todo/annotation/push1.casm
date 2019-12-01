@@ -44,7 +44,7 @@
 
 CASM init foo
 
-function a: -> List(Integer) initially { [] }
+function a: -> List(Integer) = { [] }
 
 rule foo =  {|
   let x = undef in

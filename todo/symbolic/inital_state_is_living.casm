@@ -1,5 +1,5 @@
 function (symbolic) foo : Int -> Int
-function bar: Int -> Int initially { 1 -> foo(1), 2-> foo(2), 3-> foo(1) }
+function bar: Int -> Int = { 1 -> foo(1), 2-> foo(2), 3-> foo(1) }
 
 init initR
 

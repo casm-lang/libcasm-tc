@@ -51,7 +51,7 @@ rule main =
         program(self) := undef
     |}
 
-function f : Integer -> Integer initially
+function f : Integer -> Integer =
 {
     (0) -> 0,
     (1) -> 1
