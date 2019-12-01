@@ -51,17 +51,17 @@
 CASM init Main
 
 // vehicle
-[static] function cars: -> List<Integer> initially { [0, 1, 2, 3, 4] }
-[static] function startPosition: Integer -> Integer initially { (0) -> 2, (1) -> 3, (2) -> 1, (3) -> 5, (4) -> 4 }
-[static] function endPosition: Integer -> Integer initially { (0) -> 20, (1) -> 14, (2) -> 15, (3) -> 13, (4) -> 9 }
+[static] function cars: -> List<Integer> = { [0, 1, 2, 3, 4] }
+[static] function startPosition: Integer -> Integer = { (0) -> 2, (1) -> 3, (2) -> 1, (3) -> 5, (4) -> 4 }
+[static] function endPosition: Integer -> Integer = { (0) -> 20, (1) -> 14, (2) -> 15, (3) -> 13, (4) -> 9 }
 function currentPosition: Integer -> Integer defined { 0 }
 function driveTime: Integer -> Integer
 function skipTime: Integer -> Integer
 [static] function vehicleSpeed: Integer -> Integer defined { 1 }
-[static] function safetyDistance: -> Integer initially { 2 }
+[static] function safetyDistance: -> Integer = { 2 }
 
 // environment
-function time: -> Integer initially { 1 }
+function time: -> Integer = { 1 }
 
 derived carIsActive(car: Integer) -> Boolean =
     not carReachedEndPosition(car) and skipTime(car) < time

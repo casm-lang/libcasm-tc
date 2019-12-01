@@ -1,4 +1,4 @@
-function (symbolic,static) cs : Int -> Int initially {1->2, 3->4}
+function (symbolic,static) cs : Int -> Int = {1->2, 3->4}
 function (symbolic) st : Int -> Int
 
 init initR

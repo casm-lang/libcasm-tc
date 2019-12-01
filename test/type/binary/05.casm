@@ -47,5 +47,5 @@ CASM init foo
 
 rule foo = skip
 
-function f : -> Binary'16 initially { 0x3216 }
+function f : -> Binary'16 = { 0x3216 }
 

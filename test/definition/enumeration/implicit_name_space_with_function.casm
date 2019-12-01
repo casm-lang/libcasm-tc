@@ -44,7 +44,7 @@ CASM init foo
 
 enumeration Color = { Red, Green, Blue }
 
-function colorFunction : -> Color initially { Blue } // Color namespace from type of colorFunction
+function colorFunction : -> Color = { Blue } // Color namespace from type of colorFunction
 
 rule foo =
 {

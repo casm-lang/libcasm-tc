@@ -55,5 +55,5 @@ rule foo2 =
 derived x -> Integer =
     skip //@ ERROR( 0000 )
 
-function y: Integer -> Integer initially
+function y: Integer -> Integer =
     skip //@ERROR( 0000 )

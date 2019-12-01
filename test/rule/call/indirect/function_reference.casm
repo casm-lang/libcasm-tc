@@ -44,7 +44,7 @@
 
 CASM init foo //@DISABLED()
 
-function halfTruth : -> Integer initially { 21 }
+function halfTruth : -> Integer = { 21 }
 
 rule foo =
     assert( double( @halfTruth ) = 42 )

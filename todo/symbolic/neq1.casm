@@ -1,7 +1,7 @@
 // symbolic
 
 function (symbolic) a: -> Int
-function b: -> Int initially { 0 }
+function b: -> Int = { 0 }
 
 rule main = {
   

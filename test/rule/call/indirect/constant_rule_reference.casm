@@ -44,7 +44,7 @@
 
 CASM init foo //@DISABLED()
 
-function barCalled : -> Boolean initially { false }
+function barCalled : -> Boolean = { false }
 
 rule foo =
 {|

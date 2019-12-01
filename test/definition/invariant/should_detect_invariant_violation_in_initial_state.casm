@@ -42,7 +42,7 @@
 
 CASM init foo
 
-function property : -> Boolean initially { false }
+function property : -> Boolean = { false }
 
 rule foo =
     skip

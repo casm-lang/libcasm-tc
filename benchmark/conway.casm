@@ -58,7 +58,7 @@ CASM init GameOfLife
  * from https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens
  */
 
-function alive : Integer * Integer -> Boolean defined { false } initially {
+function alive : Integer * Integer -> Boolean defined { false } = {
     (50, 45) -> true, (51, 45) -> true, (52, 45) -> true,
     (50, 46) -> true,                   (52, 46) -> true,
     (50, 47) -> true,                   (52, 47) -> true,

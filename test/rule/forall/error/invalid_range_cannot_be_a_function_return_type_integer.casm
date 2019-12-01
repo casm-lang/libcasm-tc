@@ -43,7 +43,7 @@
 
 CASM init foo
 
-function pos : -> Integer initially { 3 }
+function pos : -> Integer = { 3 }
 
 rule foo = 
 {

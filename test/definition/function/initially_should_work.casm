@@ -40,11 +40,11 @@
 //  statement from your version.
 //
 
-// simple initially test should work
+// simple = test should work
 
 CASM init foo
 
-function squared : Integer -> Integer initially { (2) -> 4,
+function squared : Integer -> Integer = { (2) -> 4,
                                                   (3) -> 9 }
 
 rule foo =

@@ -44,7 +44,7 @@
 
 CASM init foo
 
-function a: -> List(Integer) initially { [ 1, 2 ] }
+function a: -> List(Integer) = { [ 1, 2 ] }
 
 rule foo = 
 {|

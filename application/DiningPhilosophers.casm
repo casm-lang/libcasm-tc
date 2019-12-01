@@ -21,7 +21,7 @@ init {
 }
 
 // TABLE:  c1  Herbert  c2  Fredrich  c3  Sina  c4  Juan  c5  Albert  c1
-[static] function chops : Person -> (Chopstick, Chopstick) initially {
+[static] function chops : Person -> (Chopstick, Chopstick) = {
     (Juan) -> (c5, c4),
     (Sina) -> (c4, c3),
     (Herbert) -> (c2, c1),
@@ -38,7 +38,7 @@ derived rightChop(person : Person) -> Chopstick =
 function eating : Person -> Boolean defined { false }
 function chopOwner: Chopstick -> Person
 
-function hungry : Person -> Boolean initially {
+function hungry : Person -> Boolean = {
     (Juan) -> flipCoin,
     (Sina) -> flipCoin,
     (Herbert) -> flipCoin,

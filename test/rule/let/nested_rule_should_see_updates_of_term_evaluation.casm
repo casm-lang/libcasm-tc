@@ -44,7 +44,7 @@
 
 CASM init test
 
-function x: -> Integer initially { 1 }
+function x: -> Integer = { 1 }
 
 rule bar -> Integer =
     x := 42

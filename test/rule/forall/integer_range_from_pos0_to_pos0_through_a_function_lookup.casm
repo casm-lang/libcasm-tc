@@ -44,7 +44,7 @@
 CASM init foo
 
 function bar : Integer -> Integer 
-function pos : -> Integer initially { 0 }
+function pos : -> Integer = { 0 }
 
 rule foo = 
 {

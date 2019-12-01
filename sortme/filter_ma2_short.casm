@@ -42,8 +42,8 @@
 
 CASM init setup
 
-function x : -> Integer // initially { 10 }
-function m : -> Integer // initially { 0 }
+function x : -> Integer // = { 10 }
+function m : -> Integer // = { 0 }
 function y : -> Integer
 function c : -> Integer
 

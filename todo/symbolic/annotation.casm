@@ -1,7 +1,7 @@
 // symbolic
 
-function (symbolic) a: Int -> Int initially { 2 -> 2 }
-function b : -> Int initially { 0 }
+function (symbolic) a: Int -> Int = { 2 -> 2 }
+function b : -> Int = { 0 }
 
 init main
 

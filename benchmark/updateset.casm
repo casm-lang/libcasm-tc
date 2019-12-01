@@ -52,11 +52,11 @@ CASM
 
 init foo
 
-function x : -> Integer initially { 0 }
-function y : -> Integer initially { 0 }
-function z : -> Integer initially { 0 }
+function x : -> Integer = { 0 }
+function y : -> Integer = { 0 }
+function z : -> Integer = { 0 }
 
-function cnt : -> Integer initially { 0 }
+function cnt : -> Integer = { 0 }
 
 rule foo = 
 {|

@@ -4,7 +4,7 @@
 // Intention: CREATE and UPDATE annotations shall be usable to detect if a value has been assigned or just read
 // to build def/use chains in compiler verification stuff ...
 function (symbolic) a : Int -> Int
-function b : -> Int  initially { 0 }
+function b : -> Int  = { 0 }
 
 init main
 

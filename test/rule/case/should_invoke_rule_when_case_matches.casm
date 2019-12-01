@@ -44,8 +44,8 @@
 
 CASM init foo
 
-function reachedRuleOfCase42 : -> Boolean initially { false }
-function reachedRuleOfDefaultCase : -> Boolean initially { false }
+function reachedRuleOfCase42 : -> Boolean = { false }
+function reachedRuleOfDefaultCase : -> Boolean = { false }
 
 rule foo =
 {|

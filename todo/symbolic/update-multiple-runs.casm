@@ -2,7 +2,7 @@ CASM test
 
 function (symbolic) a: -> Int
 function (symbolic) b: -> Int
-function cnt: -> Int initially { 1 }
+function cnt: -> Int = { 1 }
 
 init main
 

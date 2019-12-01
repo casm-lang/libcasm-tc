@@ -62,14 +62,14 @@ using Prisoner = Integer'[1..100]
 
 enumeration BulbState = { On, Off }
 
-function lightBulb : -> BulbState initially { Off }
+function lightBulb : -> BulbState = { Off }
 function lightToggleCounter : Prisoner -> Integer defined { 0 }
 function leadingPrisoner : -> Prisoner
 
 // FIXME: `days` is more or less a workaround to keep it running.
 // Problem: `VisitLivingRoom` requires a different abort-condition.
 // Fix: Make it possible to specify the required abort-condition.
-function days : -> Integer initially { 0 }
+function days : -> Integer = { 0 }
 
 derived visitedLivingRoom( prisoner : Prisoner ) -> Boolean =
     lightToggleCounter( prisoner ) > 0

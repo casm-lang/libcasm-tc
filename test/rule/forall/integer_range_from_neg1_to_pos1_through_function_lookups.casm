@@ -45,8 +45,8 @@ CASM init foo
 
 function bar : Integer -> Integer 
 
-function bottom : -> Integer initially { -1 }
-function top : -> Integer initially { 1 }
+function bottom : -> Integer = { -1 }
+function top : -> Integer = { 1 }
 
 rule foo = 
 {

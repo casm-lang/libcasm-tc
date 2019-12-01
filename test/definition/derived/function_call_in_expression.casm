@@ -44,7 +44,7 @@
 
 CASM init foo
 
-function x : -> Integer initially { 42 }
+function x : -> Integer = { 42 }
 
 derived bar -> Integer =
     x

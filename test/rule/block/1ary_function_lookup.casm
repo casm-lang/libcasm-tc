@@ -44,7 +44,7 @@
 
 CASM init foo
 
-function x: Integer -> Integer initially { (1) -> 1 }
+function x: Integer -> Integer = { (1) -> 1 }
 
 rule foo =
 {
