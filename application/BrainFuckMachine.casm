@@ -279,7 +279,6 @@ function mem: Integer -> Integer'[0..255] defined { 0 }
 
 function ip: -> Integer = { 0 } // instruction pointer
 function mp: -> Integer = { 0 } // memory pointer
-function bc: -> Integer = { 0 } // bracket counter
 
 rule BrainFuckMachine =
 {|
@@ -312,9 +311,7 @@ rule JumpBack =
     Jump(@RetreatInstructionPointer, -1)
 
 rule Jump(step: RuleRef<-> Void>, initialBracketCount: Integer) =
-{|
-    bc := initialBracketCount // TODO make bc a local function
-
+    local bc: -> Integer = { initialBracketCount } in
     while bc != 0 do {|
         step()()
         case prog(ip) of
@@ -324,4 +321,3 @@ rule Jump(step: RuleRef<-> Void>, initialBracketCount: Integer) =
             undef:      abort // bf syntax error: branch mismatch
         }
     |}
-|}
