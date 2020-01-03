@@ -43,6 +43,8 @@
 string( LENGTH "${CMAKE_CURRENT_SOURCE_DIR}/" CWD_LENGTH )
 file( GLOB_RECURSE CASM_TEST_FILES "*.casm" )
 set( CXX_TEST_FILES "" )
+set( CXX_TEST_CASES ${CMAKE_CURRENT_BINARY_DIR}/cases.txt )
+file( WRITE ${CXX_TEST_CASES} "" )
 foreach( CASM_TEST_FILE
     ${CASM_TEST_FILES}
     )
@@ -50,7 +52,10 @@ foreach( CASM_TEST_FILE
   string( SUBSTRING ${CASM_TEST_FILE} ${CWD_LENGTH} -1 TEST_FILE )
   set( CXX_TEST_NAME ${TEST_FILE}.test.cpp )
   set( CXX_TEST_FILE ${CMAKE_CURRENT_BINARY_DIR}/${CXX_TEST_NAME} )
+
   set( CXX_TEST_FILES "${CXX_TEST_FILES};${CXX_TEST_FILE}" )
+  file( APPEND ${CXX_TEST_CASES} "${CXX_TEST_FILE}\n")
+
   get_filename_component( CXX_TEST_DIR ${CXX_TEST_FILE} DIRECTORY )
   add_custom_command(
     OUTPUT  ${CXX_TEST_FILE}
@@ -64,7 +69,8 @@ endforeach()
 set( CXX_TEST ${CMAKE_CURRENT_BINARY_DIR}/cases.cpp )
 add_custom_command(
   OUTPUT  ${CXX_TEST}
-  COMMAND cat ${CXX_TEST_FILES} > ${CXX_TEST}
+  COMMAND make cases-test
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   DEPENDS ${CXX_TEST_FILES}
   COMMENT "Updating  test cases ${CXX_TEST}"
   )

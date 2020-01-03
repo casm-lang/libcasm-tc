@@ -49,3 +49,15 @@ FORMAT += etc/*/*
 UPDATE_ROOT = ../stdhl
 
 include .cmake/config.mk
+
+cases-test: obj/test/cases.cpp
+
+obj/test/cases.cpp: obj/test/cases.txt
+	echo "" > $@
+	cat $^ | while IFS="" read -r line; do cat $$line >> $@; done
+
+cases-benchmark: obj/benchmark/cases.cpp
+
+obj/benchmark/cases.cpp: obj/benchmark/cases.txt
+	echo "" > $@
+	cat $^ | while IFS="" read -r line; do cat $$line >> $@; done
