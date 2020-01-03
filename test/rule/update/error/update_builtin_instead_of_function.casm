@@ -45,7 +45,7 @@ CASM init foo
 
 rule foo =
 {
-    dec( 10 ) //@ ERROR( 0501 )
+    print( 10 ) //@ ERROR( 0501 )
         := "42"
 
     program( self ) := undef

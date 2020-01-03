@@ -47,7 +47,7 @@ function bar : Integer'[0..2] -> Integer'[2..4]
 
 rule foo =
 {|
-    bar( 42 ) := 3 //@ ERROR( fe01 )
+    bar( 42 ) := 3 //@ ERROR( 5a00 )
 
     program( self ) := undef
 |}
