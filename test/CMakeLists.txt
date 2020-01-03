@@ -54,7 +54,11 @@ foreach( CASM_TEST_FILE
   set( CXX_TEST_FILE ${CMAKE_CURRENT_BINARY_DIR}/${CXX_TEST_NAME} )
 
   set( CXX_TEST_FILES "${CXX_TEST_FILES};${CXX_TEST_FILE}" )
-  file( APPEND ${CXX_TEST_CASES} "${CXX_TEST_FILE}\n")
+  if(WIN32)
+    file( APPEND ${CXX_TEST_CASES} "${CXX_TEST_FILE}\n\r")
+  else()
+    file( APPEND ${CXX_TEST_CASES} "${CXX_TEST_FILE}\n")
+  endif()
 
   get_filename_component( CXX_TEST_DIR ${CXX_TEST_FILE} DIRECTORY )
   add_custom_command(
