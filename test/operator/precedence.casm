@@ -50,7 +50,6 @@ rule test =
     let a = 1 - 2 in
         assert( -(a) = 1)
 
-    assert( -(-0.3) = 0.3)
     assert( -(-1) = 1)
 
     assert( 10 > 0 and true = 0 < 10 = true or false and true or 20 >= 3 * 9 = not false)
