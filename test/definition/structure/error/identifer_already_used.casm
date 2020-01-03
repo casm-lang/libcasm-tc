@@ -44,9 +44,12 @@
 
 CASM init test rule test = skip
 
-structure Data = { function bar : -> Integer }
+structure Data =
+{
+    function bar : -> Integer
+}
 
-structure Data = //@ ERROR( 5500 )
+structure Data = //@ ERROR( 0506 )
 {
     function qux : -> Integer
 }

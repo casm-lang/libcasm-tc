@@ -44,7 +44,7 @@
 
 CASM init test rule test = skip
 
-structure assert = //@ ERROR( 5510 )
+structure assert = //@ ERROR( 0506 )
 {
     function data : -> Integer
 }
