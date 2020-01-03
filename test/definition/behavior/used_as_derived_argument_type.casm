@@ -40,12 +40,12 @@
 //  statement from your version.
 //
 
-CASM init foo
+CASM init test rule test = skip
 
-feature Data =
+behavior Data =
 {
     rule add : Integer -> Void
     derived getLatest : -> Integer
 }
 
-rule foo = skip
+derived processing( data : Data ) -> Integer = 0

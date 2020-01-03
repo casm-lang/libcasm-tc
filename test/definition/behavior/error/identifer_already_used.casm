@@ -40,12 +40,13 @@
 //  statement from your version.
 //
 
+// a multiple definitions of behavior 'Data'
+
 CASM init test rule test = skip
 
-feature Data =
+behavior Data = { derived getLatest : -> Integer }
+
+behavior Data = //@ ERROR( 0506 )
 {
     rule add : Integer -> Void
-    derived getLatest : -> Integer
 }
-
-derived processing( data : Data ) -> Integer = 0

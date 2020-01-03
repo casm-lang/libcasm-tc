@@ -40,12 +40,10 @@
 //  statement from your version.
 //
 
-// feature identifier is a builtin symbol name
+// a behavior needs at least one rule or derived declaration or (default definition)
 
 CASM init test rule test = skip
 
-feature assert = //@ ERROR( 5610 )
+behavior Data =
 {
-    rule add : Integer -> Void
-    derived getLatest : -> Integer
-}
+} //@ ERROR( 0000 )
