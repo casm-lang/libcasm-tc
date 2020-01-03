@@ -49,6 +49,4 @@ rule foo =
     let x = ABC::A in skip
 
     let x : ABC = ABC::B in skip
-
-    let x : ABC = C in skip
 }
