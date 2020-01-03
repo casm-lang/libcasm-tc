@@ -1,9 +1,10 @@
 //
-//  Copyright (C) 2014-2022 CASM Organization <https://casm-lang.org>
+//  Copyright (C) 2014-2019 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
-//  Developed by: Philipp Paulweber et al.
-//                <https://github.com/casm-lang/libcasm-tc/graphs/contributors>
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                <https://github.com/casm-lang/libcasm-tc>
 //
 //  This file is part of libcasm-tc.
 //
@@ -39,8 +40,26 @@
 //  statement from your version.
 //
 
-CASM init foo //@ DISABLED()
+CASM init test //@ DISABLED()
 
-rule foo = skip
+function f1 : -> Binary'1
+function f8 : -> Binary'8
+function f32 : -> Binary'32
 
-function f : -> Binary' 0  //@ ERROR( b001 )  // invalid bit size
+function f8x32m64 : Binary'8 * Binary'32 -> Binary'64
+
+// value 0x3216 does fit into Binary'16
+function f16 : -> Binary'16 initially { 0x3216 }
+
+function f16b : -> Binary'16 initially { 0b0000'0000'0001'0000 }
+
+rule test = 
+{
+    // value 5 does fit into Binary'8
+    let x = 5 as Binary'8 in skip
+
+    // value 0x5 does fit into Binary'8
+    let x = 0x5 as Binary'8 in skip
+
+    let x : Binary'8 = 0b0000'0101 in skip
+}
