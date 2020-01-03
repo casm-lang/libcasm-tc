@@ -39,14 +39,11 @@
 //  statement from your version.
 //
 
-// The tuple element types E1 and E2 should be used for type inference of the
-// tuple literal elements a and b.
-
 CASM init foo
 
 enumeration E1 = { a }
 enumeration E2 = { b }
 
 rule foo =
-    let x : (E1, E2) = (a, b) in
+    let x = (E1::a, E2::b) in
         skip

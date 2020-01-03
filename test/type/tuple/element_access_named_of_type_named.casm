@@ -41,7 +41,7 @@
 
 CASM init foo //@DISABLED()
 
-function bar : -> ( a : Integer, b : String, c : Decimal )
+function bar : -> { a : Integer, b : String, c : Decimal }
 
 rule foo =
 {

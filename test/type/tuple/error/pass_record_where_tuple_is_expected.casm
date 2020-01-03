@@ -49,4 +49,4 @@ rule foo( p : Point ) =
     skip
 
 rule test =
-    foo( { x: 10, y: 20 } ) //@ ERROR( 1305 )
+    foo( { x : 10, y : 20 } ) //@ ERROR( 1305 )
