@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2014-2020 CASM Organization <https://casm-lang.org>
+//  Copyright (C) 2014-2019 CASM Organization <https://casm-lang.org>
 //  All rights reserved.
 //
 //  Developed by: Philipp Paulweber
@@ -40,21 +40,20 @@
 //  statement from your version.
 //
 
-[asynchronous] CASM
+// 'Agent' is defined over domain type 'Integer',
+// therefore the init initializers with argument types 'Boolean' and 'String' do not match the domain type
+
+CASM
 
 using Agent = Integer
 
 init
-{ (1) -> @main1
-, (2) -> @main2
+{ (
+false //@ ERROR( 1302 )
+) -> @test
+, (
+"true" //@ ERROR( 1302 )
+) -> @test
 }
 
-function sharedVar : -> Integer = { 0 }
-
-rule main1 =
-    if sharedVar < 20 then
-        sharedVar := sharedVar + 2
-
-rule main2 =
-    if sharedVar < 20 then
-        sharedVar := sharedVar + 1
+rule test = skip
