@@ -39,7 +39,7 @@
 //  statement from your version.
 //
 
-CASM init foo
+CASM init foo //@ DISABLED()
 
 enumeration Color = { Red, Green, Blue }
 
