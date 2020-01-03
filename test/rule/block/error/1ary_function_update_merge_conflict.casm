@@ -50,11 +50,11 @@ rule foo =
 {
     {|
         x( 1 ) := 0
-        x( 1 ) := 1 //@ ERROR( 7001 )
+        x( 1 ) := 1
     |}
-    {|
+    {| //@ ERROR( 7001 )
         x( 1 ) := 0
-        x( 1 ) := 2 //@ ERROR( 7001 )
+        x( 1 ) := 2
     |}
 
     program( self ) := undef

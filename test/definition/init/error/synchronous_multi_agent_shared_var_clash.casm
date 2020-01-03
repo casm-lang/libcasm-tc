@@ -44,6 +44,12 @@
 // only the execution mode has been changed from asynchronous to synchronous.
 // This produces a clash on sharedVar when collecting updates from agent 1 and 2.
 
+//@DISABLED()
+// Disabled because testsuite cannot check for global errors
+
+// Error without location because scheduler throws it
+//@ ERROR( 7001 )
+
 [synchronous] CASM
 
 using Agent = Integer
@@ -57,8 +63,8 @@ function sharedVar : -> Integer = { 0 }
 
 rule main1 =
     if sharedVar < 20 then
-        sharedVar := sharedVar + 2 //@ ERROR( 7001 )
+        sharedVar := sharedVar + 2
 
 rule main2 =
     if sharedVar < 20 then
-        sharedVar := sharedVar + 1 //@ ERROR( 7001 )
+        sharedVar := sharedVar + 1

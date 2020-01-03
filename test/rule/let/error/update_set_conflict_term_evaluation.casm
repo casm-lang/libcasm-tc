@@ -54,6 +54,6 @@ rule bar2 -> Integer =
 
 rule test =
 {|
-    let y = bar1(), z = bar2() in //@ ERROR( 7000 )
+    let y = bar1(), z = bar2() in //@ ERROR( 7001 )
         skip
 |}

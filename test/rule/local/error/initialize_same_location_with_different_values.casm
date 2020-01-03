@@ -47,7 +47,7 @@ CASM init foo
 
 rule foo =
     local f : Integer -> Integer = {
-                (2) -> 4, //@ ERROR( 7000 )
+                (2) -> 4,
                 (2) -> 9  //@ ERROR( 7000 )
             } in
         skip
