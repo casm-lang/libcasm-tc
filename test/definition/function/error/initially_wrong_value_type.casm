@@ -44,11 +44,8 @@
 
 CASM init foo
 
-function x : Integer ->
-    Integer  //@ ERROR( 1205 )
-= {
-    (1)
-->
+function x : Integer -> Integer = {
+    (1) ->
     "string" //@ ERROR( 1205 )
 }
 

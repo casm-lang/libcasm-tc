@@ -47,7 +47,7 @@ CASM init foo
 derived baz -> Integer =
     42
 
-function bar : -> Integer defined { baz() }
+function bar : -> Integer defined { baz }
 
 rule foo =
     skip
