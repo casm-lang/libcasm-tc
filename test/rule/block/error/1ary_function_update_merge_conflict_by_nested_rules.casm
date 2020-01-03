@@ -40,13 +40,28 @@
 //  statement from your version.
 //
 
-// location 2 is initialized with two different values -> should give and update
-// set conflict
+// Same location has been updated in parallel using different update values
 
 CASM init foo
 
-function f : Integer -> Integer = { (2) -> 4,
-                                            (2) -> 9 } //@ ERROR( 7000 )
+function x: Integer -> Integer
+
+rule bar1 =
+{|
+    x( 1 ) := 0
+    x( 1 ) := 1
+|}
+
+rule bar2 =
+{|
+    x( 1 ) := 0
+    x( 1 ) := 2
+|}
 
 rule foo =
-    skip
+{
+    bar1
+    bar2 //@ ERROR( 7001 )
+
+    program( self ) := undef
+}
