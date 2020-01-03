@@ -97,25 +97,26 @@ function opcode : -> Opcode
 
 [ static ]
 function toInstruction : Opcode -> Instruction =
-{ ( 0b000 ) -> JMP
-, ( 0b100 ) -> JRP
-, ( 0b010 ) -> LDN
-, ( 0b110 ) -> STO
-, ( 0b001 ) -> SUB
-, ( 0b101 ) -> SUB // alternative encoding
-, ( 0b011 ) -> CMP
-, ( 0b111 ) -> STP
+{ ( 0b000 ) -> Instruction::JMP
+, ( 0b100 ) -> Instruction::JRP
+, ( 0b010 ) -> Instruction::LDN
+, ( 0b110 ) -> Instruction::STO
+, ( 0b001 ) -> Instruction::SUB
+, ( 0b101 ) -> Instruction::SUB // alternative encoding
+, ( 0b011 ) -> Instruction::CMP
+, ( 0b111 ) -> Instruction::STP
 }
 
 [ static ]
 function toOpcode : Instruction -> Opcode =
-{ ( JMP ) -> 0b000
-, ( JRP ) -> 0b100
-, ( LDN ) -> 0b010
-, ( STO ) -> 0b110
-, ( SUB ) -> 0b001
-, ( CMP ) -> 0b011
-, ( STP ) -> 0b111
+{ ( Instruction::JMP ) -> 0b000
+, ( Instruction::JRP ) -> 0b100
+, ( Instruction::LDN ) -> 0b010
+, ( Instruction::STO ) -> 0b110
+, ( Instruction::SUB ) -> 0b001
+, ( Instruction::CMP ) -> 0b011
+, ( Instruction::STP ) -> 0b111
+>>>>>>> SSEM: fixed enumerator names
 }
 
 rule fetch =
@@ -128,13 +129,13 @@ rule fetch =
 rule decode =
     case toInstruction( opcode ) of
     {
-        JMP : instruction := @jmp
-        JRP : instruction := @jrp
-        LDN : instruction := @ldn
-        STO : instruction := @sto
-        SUB : instruction := @sub
-        CMP : instruction := @cmp
-        STP : instruction := @stp
+        Instruction::JMP : instruction := @jmp
+        Instruction::JRP : instruction := @jrp
+        Instruction::LDN : instruction := @ldn
+        Instruction::STO : instruction := @sto
+        Instruction::SUB : instruction := @sub
+        Instruction::CMP : instruction := @cmp
+        Instruction::STP : instruction := @stp
     }
 
 rule execute =
