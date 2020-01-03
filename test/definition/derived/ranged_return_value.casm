@@ -41,7 +41,7 @@
 
 // tests if "derived" handles ranged integers as return value correctly
 
-CASM init foo
+CASM init foo 
 
 derived bar( a : Integer ) -> Integer'[2..4] =
     a

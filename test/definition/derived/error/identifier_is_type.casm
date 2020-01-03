@@ -41,8 +41,9 @@
 
 CASM init foo
 
-derived Integer -> Integer = //@ ERROR( 0505 )
-    42
+derived Integer //@ ERROR( 0506 )
+  -> Integer 
+    = 42
 
 rule foo =
     skip

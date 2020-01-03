@@ -39,12 +39,13 @@
 //  statement from your version.
 //
 
-// type inference should say that the return type of `bar` doesn't exist
+// symbol resolver should say that the return type of 'bar' is unknown
 
 CASM init foo
 
-derived bar -> Abstract< Integer > = //@ERROR( 0103 )
-    undef
+derived bar ->
+  Abstract< Integer > //@ERROR( 0500 )
+    = undef
 
 rule foo =
     skip

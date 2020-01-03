@@ -47,4 +47,5 @@ derived bar( a : Integer'[2..4] ) -> Integer =
     a
 
 rule foo =
-    assert( bar(3) = 3 )
+  let qux : Integer'[2..4] = 3 in
+    assert( bar( qux ) = 3 )

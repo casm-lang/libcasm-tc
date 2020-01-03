@@ -39,14 +39,13 @@
 //  statement from your version.
 //
 
-// tests if "derived" validates the return value correctly => return value out
-// of range
+// type mismatch, because unranged Integer passed to ranged Integer result type of derived  
 
-CASM init foo
+CASM init foo 
 
-derived bar( a : Integer ) -> Integer'[2..4] =
-    42 //@ ERROR( da01 )
+derived bar( a : Integer ) -> Integer'[2..4] = 42
 
 rule foo =
-    let x = bar( 3 ) in
-        skip
+    let x =
+      bar( 3 ) //@ ERROR( 5a00 )
+        in skip
