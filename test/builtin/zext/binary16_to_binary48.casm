@@ -40,7 +40,7 @@
 //
 
 
-CASM init foo
+CASM init foo //@ DISABLED()
 
 rule foo = 
 {
