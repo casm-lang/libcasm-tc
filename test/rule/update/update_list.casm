@@ -41,7 +41,7 @@
 //
 
 
-CASM init foo
+CASM init foo //@ DISABLED()
 
 function list: -> List<Integer>
 
