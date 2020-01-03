@@ -39,7 +39,7 @@
 //  statement from your version.
 //
 
-CASM init foo
+CASM init foo //@ DISABLED()
 
 rule foo =
     let result = forall x in [1..3] holds x >= 0 in
