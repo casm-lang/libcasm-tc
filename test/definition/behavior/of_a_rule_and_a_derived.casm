@@ -40,13 +40,12 @@
 //  statement from your version.
 //
 
-// a multiple definitions of feature 'Data'
+CASM init foo
 
-CASM init test rule test = skip
-
-feature Data = { derived getLatest : -> Integer }
-
-feature Data = //@ ERROR( 5600 )
+behavior Data =
 {
     rule add : Integer -> Void
+    derived getLatest : -> Integer
 }
+
+rule foo = skip
