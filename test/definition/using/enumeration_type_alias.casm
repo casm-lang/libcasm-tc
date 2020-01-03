@@ -50,5 +50,5 @@ enumeration Color = {
 using MyType = Color
 
 rule foo =
-    let x : MyType = Red in
-        skip
+    let x = MyType::Red in
+        assert( x = Color::Red )

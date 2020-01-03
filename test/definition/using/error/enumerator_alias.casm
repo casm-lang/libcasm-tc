@@ -40,7 +40,7 @@
 //
 
 // type check pass should say that the enumerator 'Color::Red' cannot be used
-// as a type
+// as a type because it is not a type
 
 CASM init foo
 
@@ -50,7 +50,7 @@ enumeration Color = {
     Blue
 }
 
-using MyType = Color::Red //@ ERROR( 0100 )
+using MyType = Color::Red //@ ERROR( 0500 )
 
 rule foo =
     skip
