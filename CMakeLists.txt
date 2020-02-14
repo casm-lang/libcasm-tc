@@ -73,14 +73,21 @@ add_subdirectory( benchmark
   EXCLUDE_FROM_ALL
   )
 
-
+#
 #
 # library
 #
 
-add_library( ${PROJECT} STATIC
+set( ${PROJECT}_VERSION ${GIT_REVTAG} )
+set_property( TARGET ${PROJECT}-cpp PROPERTY POSITION_INDEPENDENT_CODE 1 )
+
+add_library( ${PROJECT} SHARED
   $<TARGET_OBJECTS:${PROJECT}-cpp>
   )
+
+set_property( TARGET ${PROJECT} PROPERTY OUTPUT_NAME ${PROJECT} )
+set_property( TARGET ${PROJECT} PROPERTY VERSION ${${PROJECT}_VERSION} )
+set_property( TARGET ${PROJECT} PROPERTY PREFIX  "" )
 
 if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}
@@ -88,11 +95,25 @@ if( ${LIBSTDHL_FOUND} )
     )
 endif()
 
-set( ${PROJECT}_VERSION ${GIT_REVTAG} )
-set_property( TARGET ${PROJECT} PROPERTY VERSION ${${PROJECT}_VERSION} )
-set_property( TARGET ${PROJECT} PROPERTY PREFIX  "" )
+add_library( ${PROJECT}-ar STATIC
+  $<TARGET_OBJECTS:${PROJECT}-cpp>
+  )
 
+set_property( TARGET ${PROJECT}-ar PROPERTY OUTPUT_NAME ${PROJECT} )
+set_property( TARGET ${PROJECT}-ar PROPERTY VERSION ${${PROJECT}_VERSION} )
+set_property( TARGET ${PROJECT}-ar PROPERTY PREFIX  "" )
 
+if( ${LIBSTDHL_FOUND} )
+  target_link_libraries( ${PROJECT}-ar
+    ${LIBSTDHL_ARCHIVE}
+    )
+endif()
+
+add_dependencies( ${PROJECT}
+  ${PROJECT}-ar
+  )
+
+#
 #
 # application
 #
@@ -107,7 +128,7 @@ if( ${LIBSTDHL_FOUND} )
     )
 endif()
 
-
+#
 #
 # test
 # 
@@ -118,7 +139,7 @@ add_library( ${PROJECT}-test STATIC
   )
 
 add_dependencies( ${PROJECT}-test
-  ${PROJECT}
+  ${PROJECT}-ar
   )
 
 set_property( TARGET ${PROJECT}-test PROPERTY VERSION ${${PROJECT}_VERSION} )
@@ -141,7 +162,7 @@ if( ${LIBSTDHL_FOUND} )
     )
 endif()
 
-
+#
 #
 # benchmark
 #
@@ -152,7 +173,7 @@ add_library( ${PROJECT}-benchmark STATIC
   )
 
 add_dependencies( ${PROJECT}-benchmark
-  ${PROJECT}
+  ${PROJECT}-ar
   )
 
 set_property( TARGET ${PROJECT}-benchmark PROPERTY VERSION ${${PROJECT}_VERSION} )
@@ -175,7 +196,7 @@ if( ${LIBSTDHL_FOUND} )
     )
 endif()
 
-
+#
 #
 # install
 #
@@ -183,6 +204,7 @@ endif()
 install(
   TARGETS
     ${PROJECT}
+    ${PROJECT}-ar
     ${PROJECT}-test
     ${PROJECT}-benchmark    
   EXPORT   ${PROJECT}Targets
@@ -210,7 +232,7 @@ export(
     ${PROJECT}Config.cmake
   )
 
-
+#
 #
 # cmake
 #
@@ -222,7 +244,7 @@ install(
     "share/cmake/Module/${PROJECT}"
   )
 
-
+#
 #
 # build features and checks
 #
