@@ -81,7 +81,7 @@ add_subdirectory( benchmark
 set( ${PROJECT}_VERSION ${GIT_REVTAG} )
 set_property( TARGET ${PROJECT}-cpp PROPERTY POSITION_INDEPENDENT_CODE 1 )
 
-add_library( ${PROJECT} SHARED
+add_library( ${PROJECT} STATIC
   $<TARGET_OBJECTS:${PROJECT}-cpp>
   )
 
@@ -94,24 +94,6 @@ if( ${LIBSTDHL_FOUND} )
     ${LIBSTDHL_LIBRARY}
     )
 endif()
-
-add_library( ${PROJECT}-ar STATIC
-  $<TARGET_OBJECTS:${PROJECT}-cpp>
-  )
-
-set_property( TARGET ${PROJECT}-ar PROPERTY OUTPUT_NAME ${PROJECT} )
-set_property( TARGET ${PROJECT}-ar PROPERTY VERSION ${${PROJECT}_VERSION} )
-set_property( TARGET ${PROJECT}-ar PROPERTY PREFIX  "" )
-
-if( ${LIBSTDHL_FOUND} )
-  target_link_libraries( ${PROJECT}-ar
-    ${LIBSTDHL_ARCHIVE}
-    )
-endif()
-
-add_dependencies( ${PROJECT}
-  ${PROJECT}-ar
-  )
 
 #
 #
@@ -139,7 +121,7 @@ add_library( ${PROJECT}-test STATIC
   )
 
 add_dependencies( ${PROJECT}-test
-  ${PROJECT}-ar
+  ${PROJECT}
   )
 
 set_property( TARGET ${PROJECT}-test PROPERTY VERSION ${${PROJECT}_VERSION} )
@@ -173,7 +155,7 @@ add_library( ${PROJECT}-benchmark STATIC
   )
 
 add_dependencies( ${PROJECT}-benchmark
-  ${PROJECT}-ar
+  ${PROJECT}
   )
 
 set_property( TARGET ${PROJECT}-benchmark PROPERTY VERSION ${${PROJECT}_VERSION} )
@@ -204,7 +186,6 @@ endif()
 install(
   TARGETS
     ${PROJECT}
-    ${PROJECT}-ar
     ${PROJECT}-test
     ${PROJECT}-benchmark    
   EXPORT   ${PROJECT}Targets
