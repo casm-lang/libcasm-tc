@@ -91,7 +91,7 @@ set_property( TARGET ${PROJECT} PROPERTY PREFIX  "" )
 
 if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}
-    ${LIBSTDHL_LIBRARY}
+    ${LIBSTDHL_ARCHIVE}
     )
 endif()
 
@@ -106,7 +106,7 @@ add_executable( ${PROJECT}-generator
 
 if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}-generator
-    ${LIBSTDHL_LIBRARY}
+    ${LIBSTDHL_ARCHIVE}
     )
 endif()
 
@@ -137,7 +137,7 @@ add_executable( ${PROJECT}-check
 
 if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}-check
-    ${LIBSTDHL_LIBRARY}
+    ${LIBSTDHL_ARCHIVE}
     ${LIBGTEST_LIBRARY}
     ${LIBGTEST_MAIN}
     Threads::Threads
@@ -171,7 +171,7 @@ add_executable( ${PROJECT}-run
 
 if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}-run
-    ${LIBSTDHL_LIBRARY}
+    ${LIBSTDHL_ARCHIVE}
     ${LIBHAYAI_LIBRARY}
     ${LIBGTEST_LIBRARY}
     Threads::Threads
