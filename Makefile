@@ -46,15 +46,24 @@ FORMAT  = etc
 FORMAT += etc/*
 FORMAT += etc/*/*
 
-UPDATE_ROOT = ../stdhl
+CONFIG  = ../stdhl
+ifeq ($(wildcard $(CONFIG)/.cmake/.*),)
+  CONFIG = lib/stdhl
+  ifeq ($(wildcard $(CONFIG)/.cmake/.*),)
+    $(shell git submodule update --init $(CONFIG) && git -C $(CONFIG) checkout master)
+  endif
+endif
 
-include .cmake/config.mk
+INCLUDE = $(CONFIG)/.cmake/config.mk
+include $(INCLUDE)
+
 
 cases-test: obj/test/cases.cpp
 
 obj/test/cases.cpp: obj/test/cases.txt
 	echo "" > $@
 	cat $^ | while IFS=$$'\r' read -r line; do cat $$line >> $@; done
+
 
 cases-benchmark: obj/benchmark/cases.cpp
 
