@@ -1,0 +1,115 @@
+//
+//  Copyright (C) 2014-2020 CASM Organization <https://casm-lang.org>
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                <https://github.com/casm-lang/libcasm-tc>
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+//  Additional permission under GNU GPL version 3 section 7
+//
+//  libcasm-tc is distributed under the terms of the GNU General Public License
+//  with the following clarification and special exception: Linking libcasm-tc
+//  statically or dynamically with other modules is making a combined work
+//  based on libcasm-tc. Thus, the terms and conditions of the GNU General
+//  Public License cover the whole combination. As a special exception,
+//  the copyright holders of libcasm-tc give you permission to link libcasm-tc
+//  with independent modules to produce an executable, regardless of the
+//  license terms of these independent modules, and to copy and distribute
+//  the resulting executable under terms of your choice, provided that you
+//  also meet, for each linked independent module, the terms and conditions
+//  of the license of that module. An independent module is a module which
+//  is not derived from or based on libcasm-tc. If you modify libcasm-tc, you
+//  may extend this exception to your version of the library, but you are
+//  not obliged to do so. If you do not wish to do so, delete this exception
+//  statement from your version.
+//
+
+// adopted from https://github.com/uasm/uasm-language-examples/blob/master/UNIBG/coffeeVendingMachine.uasm
+
+/*
+    Coffee Vending Machine (CVM)
+    CVM-1: The machine distributes coffee, tea and milk.
+    CVM-2: The machine accepts only 50 cents and 1 euro.
+    CVM-3: If the user inserts 50 cents the machine distributes milk (if it's available).
+    CVM-4: If the user inserts 1 euro the machine distributs randomly coffee or tea (if they are available).
+    CVM-5: If a drink is distributed his availability is decremented and the money is
+	   preserved into the machine.
+    CVM-6: At the beginning the machine has 10 coffee, 10 tea and 10 milk.
+    CVM-7: The machine can contain 25 money maximum.
+    CVM-8: The user decides the money to be insert at each step.
+    CVM-9: Each step matches with the money insertion.
+*/
+
+CASM
+
+// CVM-1
+enumeration Product = { Coffee, Tea, Milk }
+
+// CVM-2
+enumeration Money = { FiftyCent, OneEuro }
+
+// CVM-6
+function available : Product -> Integer defined { 10 }
+
+// CVM-7
+invariant maximumMoney = coins >= 0 and coins <= 25
+
+// CVM-8
+// [ in ]
+function insertedCoin : -> Money
+
+function coins : -> Integer defined { 0 }
+
+// CVM-9
+rule processCoin =
+    // CVM-7
+    if coins < 25 then
+        case insertedCoin of {
+	    // CVM-3
+            Money::FiftyCent:
+                if available( Product::Milk ) > 0 then
+                    distribute( Product::Milk )
+	    // CVM-4
+            Money::OneEuro:
+                choose product in [ Product::Tea, Product::Coffee ] do
+	            if available( product ) > 0 then
+	                distribute( product )
+            default: println( "No Coin Inserted!" )
+        }
+    else
+        println( "Reached Money Maximum" )
+
+// CVM-5
+rule distribute( product : Product ) = {
+    available( product ) := available( product ) - 1
+    coins := coins + 1
+    println( "coins=" + coins as String + ", product=" + product as String + ", insertedCoin=" + insertedCoin as String )
+}
+
+init TestCVM rule TestCVM = {|
+    processCoin
+
+    while coins < 25 do {|
+        choose coin in Money do
+            insertedCoin := coin
+        processCoin
+    |}
+
+    program( self ) := undef
+|}
