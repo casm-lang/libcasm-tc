@@ -116,7 +116,6 @@ function toOpcode : Instruction -> Opcode =
 , ( Instruction::SUB ) -> 0b001
 , ( Instruction::CMP ) -> 0b011
 , ( Instruction::STP ) -> 0b111
->>>>>>> SSEM: fixed enumerator names
 }
 
 rule fetch =
@@ -272,13 +271,12 @@ let z = 18 as Address in
 
     // instructions
     pc := 0
-    code( LDN, x )
-    code( SUB, y )
-    code( STO, z )
-    code( LDN, z )
-    code( STO, z )
-
-    code( STP, 0xffff )
+    code( Instruction::LDN, x )
+    code( Instruction::SUB, y )
+    code( Instruction::STO, z )
+    code( Instruction::LDN, z )
+    code( Instruction::STO, z )
+    code( Instruction::STP, 0xffff )
 |}
 
 rule progCnt =
@@ -293,14 +291,14 @@ let val = 22 as Address in
 
     // instructions
     pc := 0
-    code( LDN, val )    
-    code( CMP, 0xffff )
-    code( STP, 0xffff )
-    code( SUB, neg1 )
-    code( STO, val )
-    code( LDN, val )
-    code( STO, val )
-    code( JMP, zero )
+    code( Instruction::LDN, val )    
+    code( Instruction::CMP, 0xffff )
+    code( Instruction::STP, 0xffff )
+    code( Instruction::SUB, neg1 )
+    code( Instruction::STO, val )
+    code( Instruction::LDN, val )
+    code( Instruction::STO, val )
+    code( Instruction::JMP, zero )
 |}
 
 rule progSum =
@@ -317,18 +315,18 @@ let sum = 31 as Address in
 
     // instructions
     pc := 0
-    code( LDN, i )
-    code( CMP, 0xffff )
-    code( STP, 0xffff )
-    code( LDN, sum )
-    code( SUB, i )
-    code( STO, sum )
-    code( LDN, sum )
-    code( STO, sum )
-    code( LDN, i )
-    code( SUB, neg1 )
-    code( STO, i )
-    code( LDN, i )
-    code( STO, i )
-    code( JMP, zero )
+    code( Instruction::LDN, i )
+    code( Instruction::CMP, 0xffff )
+    code( Instruction::STP, 0xffff )
+    code( Instruction::LDN, sum )
+    code( Instruction::SUB, i )
+    code( Instruction::STO, sum )
+    code( Instruction::LDN, sum )
+    code( Instruction::STO, sum )
+    code( Instruction::LDN, i )
+    code( Instruction::SUB, neg1 )
+    code( Instruction::STO, i )
+    code( Instruction::LDN, i )
+    code( Instruction::STO, i )
+    code( Instruction::JMP, zero )
 |}

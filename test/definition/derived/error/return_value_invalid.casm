@@ -39,7 +39,8 @@
 //  statement from your version.
 //
 
-// type mismatch, because unranged Integer passed to ranged Integer result type of derived  
+// type mismatch, because unranged Integer passed to ranged Integer result type of derived
+//@ DISABLED()
 
 CASM init foo 
 
