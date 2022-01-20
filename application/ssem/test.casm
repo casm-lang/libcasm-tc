@@ -1,0 +1,112 @@
+CASM
+
+import SSEM
+
+using SSEM::*
+
+function example : -> Integer = { 0 }
+
+function cpu : -> SSEM // = {}
+
+rule setup =
+{|
+    // load example program
+    case example of
+    {
+        0 : progAdd( cpu )
+        1 : progCnt( cpu )
+        2 : progSum( cpu )
+    }
+
+    // execute the machine
+    cpu.run
+    assert( cpu.halt )
+
+    // check result
+    case example of
+    {
+        0 : assert( cpu.load( 18 as Address ) = 579 as Word )
+        1 : assert( cpu.load( 22 as Address ) = 0 as Word )
+        2 : assert( cpu.load( 31 as Address ) = 500500 as Word )
+    }
+
+    if exmaple = 2 then
+        program( self ) := undef
+    else
+        example := exmaple + 1
+|}
+
+rule data( cpu : SSEM, a : Address, v : Word ) -> Void =
+    cpu.store( a, v )
+
+rule code( cpu : SSEM, pc : Integer, i : Instruction, a : Address ) -> Void =
+    let inst = encoding( i ) as Word  in
+    let addr = a as Word in
+    let word = inst.shl( 16 ) or addr in
+        memory( pc as Address ) := word
+
+rule progAdd( cpu : SSEM ) =
+let x = 16 as Address in
+let y = 17 as Address in
+let z = 18 as Address in {|
+    // constants
+    data( cpu, 0x0010, 123 )
+    data( cpu, 0x0011, 456 )
+
+    // instructions
+    prog( cpu, LDN, x )
+    prog( cpu, SUB, y )
+    prog( cpu, STO, z )
+    prog( cpu, LDN, z )
+    prog( cpu, STO, z )
+    prog( cpu, STP, 0xffff )
+|}
+
+rule progCnt( cpu : SSEM ) =
+let zero = 20 as Address in
+let neg1 = 21 as Address in
+let val = 22 as Address in {|
+    // data constants
+    data( cpu, zero, 0 as Word )
+    data( cpu, neg1, -1 as Word )
+    data( cpu, val, 1000 as word )
+
+    // instructions
+    prog( cpu, 0, LDN, val )    
+    prog( cpu, 1, CMP, 0xffff )
+    prog( cpu, 2, STP, 0xffff )
+    prog( cpu, 3, SUB, neg1 )
+    prog( cpu, 4, STO, val )
+    prog( cpu, 5, LDN, val )
+    prog( cpu, 0, STO, val )
+    prog( cpu, 0, JMP, zero )
+|}
+
+rule progSum( cpu : SSEM ) =
+let zero = 28 as Address in
+let neg1 = 29 as Address in
+let i = 30 as Address in
+let sum = 31 as Address in
+{|
+    // data constants
+    data( cpu, zero, 0 as Word )
+    data( cpu, neg1, -1 as Word )
+    data( cpu, i, 1000 as Word )
+    data( cpu, sum, 0 as Word )
+
+    // instructions
+    prog( cpu, LDN, i )
+    prog( cpu, CMP, 0xffff )
+    prog( cpu, STP, 0xffff )
+    prog( cpu, LDN, sum )
+    prog( cpu, SUB, i )
+    prog( cpu, STO, sum )
+    prog( cpu, LDN, sum )
+    prog( cpu, STO, sum )
+    prog( cpu, LDN, i )
+    prog( cpu, SUB, neg1 )
+    prog( cpu, STO, i )
+    prog( cpu, LDN, i )
+    prog( cpu, STO, i )
+    prog( cpu, JMP, zero )
+|}

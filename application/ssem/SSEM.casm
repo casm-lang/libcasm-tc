@@ -1,0 +1,211 @@
+//
+//  Copyright (C) 2014-2020 CASM Organization <https://casm-lang.org>
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber
+//                Emmanuel Pescosta
+//                <https://github.com/casm-lang/libcasm-tc>
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+//  Additional permission under GNU GPL version 3 section 7
+//
+//  libcasm-tc is distributed under the terms of the GNU General Public License
+//  with the following clarification and special exception: Linking libcasm-tc
+//  statically or dynamically with other modules is making a combined work
+//  based on libcasm-tc. Thus, the terms and conditions of the GNU General
+//  Public License cover the whole combination. As a special exception,
+//  the copyright holders of libcasm-tc give you permission to link libcasm-tc
+//  with independent modules to produce an executable, regardless of the
+//  license terms of these independent modules, and to copy and distribute
+//  the resulting executable under terms of your choice, provided that you
+//  also meet, for each linked independent module, the terms and conditions
+//  of the license of that module. An independent module is a module which
+//  is not derived from or based on libcasm-tc. If you modify libcasm-tc, you
+//  may extend this exception to your version of the library, but you are
+//  not obliged to do so. If you do not wish to do so, delete this exception
+//  statement from your version.
+//
+
+/*
+SSEM https://en.wikipedia.org/wiki/Manchester_Small-Scale_Experimental_Machine
+
+|-----+-------------+-----------+------------------------------------------------------------------|
+| Bin | Instruction | Mnemonic  | Description                                                      |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 000 | S, Cl       |   (JMP S) | Jump to the instruction at the address obtained from the         |
+|     |             |           | specified memory address S[a] (absolute unconditional jump)      |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 100 | Add S, Cl   |   (JRP S) | Jump to the instruction at the program counter plus the          |
+|     |             |           | relative value obtained from the specified memory address        |
+|     |             |           | S[a] (relative unconditional jump)                               |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 010 | -S, C       |   (LDN S) | Take the number from the specified memory address S, negate it,  |
+|     |             |           | and load it into the accumulator                                 |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 110 | c, S        |   (STO S) | Store the number in the accumulator to the specified memory      |
+|     |             |           | address S                                                        |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 001 | SUB S       |   (SUB S) | Subtract the number at the specified memory address S from the   |
+|     | or 101[b]   |           | value in accumulator, and store the result in the accumulator    |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 011 | Test        |   (CMP)   | Skip next instruction if the accumulator contains a negative     |
+|     |             |           | value                                                            |
+|-----+-------------+-----------+------------------------------------------------------------------|
+| 111 | Stop        |   (STP)   | Stop                                                             |
+|-----+-------------+-----------+------------------------------------------------------------------|
+*/
+
+
+CASM init setup
+
+enumeration Instruction =
+{ JMP
+, JRP
+, LDN
+, STO
+, SUB
+, CMP
+, STP
+}
+
+[ static ]
+function decoding : Opcode -> Instruction =
+{ ( 0b000 ) -> Instruction::JMP
+, ( 0b100 ) -> Instruction::JRP
+, ( 0b010 ) -> Instruction::LDN
+, ( 0b110 ) -> Instruction::STO
+, ( 0b001 ) -> Instruction::SUB
+, ( 0b101 ) -> Instruction::SUB // alternative encoding
+, ( 0b011 ) -> Instruction::CMP
+, ( 0b111 ) -> Instruction::STP
+}
+
+[ static ]
+function encoding : Instruction -> Opcode =
+{ ( Instruction::JMP ) -> 0b000
+, ( Instruction::JRP ) -> 0b100
+, ( Instruction::LDN ) -> 0b010
+, ( Instruction::STO ) -> 0b110
+, ( Instruction::SUB ) -> 0b001
+, ( Instruction::CMP ) -> 0b011
+, ( Instruction::STP ) -> 0b111
+}
+
+using Address = Binary'16
+using Word = Binary'32
+using Opcode = Binary'3
+
+structure SSEM = {
+    function accumulator : -> Word
+    function memory : Address -> Word
+    function pc : -> Integer
+    function instruction : -> RuleRef< Address -> Void >
+    function next : -> Address
+
+    function address : -> Address
+    function opcode : -> Opcode
+    function csr : -> Boolean
+}
+
+implement SSEM = {
+    derived load( this, address : Address ) -> Word =
+        this.memory( address )
+
+    rule store( this, address : Address, value : Word ) =
+        this.memory( address ) := value
+
+    rule jmp( this ) =
+        this.next := this.load( this.address ).trunc( 16 )
+    
+    rule jrp( this ) =
+        this.next := (this.pc + this.memory( this.address ) as Integer) as Address
+    
+    rule ldn( this ) =
+        this.accumulator := (-(this.memory( this.address ) as Integer)) as Word
+    
+    rule sto( this ) =
+        this.store( this.address ) := this.accumulator
+
+    rule sub( this ) =
+        this.accumulator := (this.accumulator as Integer - this.memory( this.address ) as Integer) as Word
+    
+    rule cmp( this ) =
+    {
+        if (this.accumulator as Integer) < 0 then
+            this.next := (this.pc + 2) as Address
+    }
+    rule stp( this ) = {
+	this.csr := true
+    }
+
+    rule increment( this ) = {
+        if this.pc = undef then
+	    this.pc := 0
+        else if this.next = undef then
+	    this.pc := this.pc + 1
+	else
+	    this.pc := next as Integer
+    }
+
+    rule fetch( this ) =
+        let data = this.memory( this.pc as Address ) in
+        {
+            this.address := data.trunc( 16 )
+            this.opcode := data.shr( 16 ).trunc( 3 )
+        }
+
+    rule decode( this ) =
+        case decoding( this.opcode ) of
+        {
+            Instruction::JMP : instruction := @jmp
+            Instruction::JRP : instruction := @jrp
+            Instruction::LDN : instruction := @ldn
+            Instruction::STO : instruction := @sto
+            Instruction::SUB : instruction := @sub
+            Instruction::CMP : instruction := @cmp
+            Instruction::STP : instruction := @stp
+        }
+    
+    rule execute( this ) =
+        instruction()
+
+    rule run( this ) = {|
+        increment
+        fetch
+        decode
+        execute
+    |}
+
+    rule debug( this ) = {|
+        println( "program-cnt: " + this.pc.hex )
+        println( "accumulator: " + this.accumulator.hex )
+        println( "       next: " + this.next.hex )
+        println( "instruction: " + this.instruction as String )
+        println( "     memory:" )
+        forall x in [0 .. 3] do
+        {|
+    	    print( x.hex + ": " )
+            forall y in [0 .. 7] do
+    	        let word = this.memory( (x*8+y) as Address ) in
+    		    if word != undef then
+    		        print( word.hex + "  " )
+    		    else
+    		        print( ".....  " )
+             println("")
+         |}
+    |}
+}
