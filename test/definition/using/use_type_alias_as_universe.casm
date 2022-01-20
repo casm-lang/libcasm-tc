@@ -55,7 +55,7 @@ rule foo =
     forall s in MyState do
         visitedStates( s ) := true
 
-    assert( visitedStates( On ) and visitedStates( Off ) )
+    assert( visitedStates( MyState::On ) and visitedStates( MyState::Off ) )
 
     program( self ) := undef
 |}

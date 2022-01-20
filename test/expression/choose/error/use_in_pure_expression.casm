@@ -41,7 +41,7 @@
 
 // choose isn't pure and thus cannot be used in pure expressions
 
-CASM init foo
+CASM init foo //@ DISABLED()
 
 [pure]
 derived bar -> Integer =

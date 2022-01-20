@@ -43,7 +43,7 @@
 
 CASM init foo
 
-using MyType = UnknownType //@ ERROR( 0100 )
+using MyType = UnknownType //@ ERROR( 0500 )
 
 rule foo =
     skip

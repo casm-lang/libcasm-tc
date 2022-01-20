@@ -61,6 +61,6 @@ rule bar =
 rule foo =
     choose c in Color do
         case c of {
-            Red: bar
-            Blue: skip
+            Color::Red: bar
+            Color::Blue: skip
         }

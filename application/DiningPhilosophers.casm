@@ -7,26 +7,26 @@
 
 [asynchronous] CASM
 
-enumeration Chopstick = { c1, c2, c3, c4, c5 }
+enumeration Chopstick = { A, B, C, D, E }
 enumeration Person = { Juan, Sina, Herbert, Albert, Fredrich }
 
 using Agent = Person
 
 init {
-    (Juan) -> @Philosopher,
-    (Sina) -> @Philosopher,
-    (Herbert) -> @Philosopher,
-    (Albert) -> @Philosopher,
-    (Fredrich) -> @Philosopher
+    (Person::Juan) -> @Philosopher,
+    (Person::Sina) -> @Philosopher,
+    (Person::Herbert) -> @Philosopher,
+    (Person::Albert) -> @Philosopher,
+    (Person::Fredrich) -> @Philosopher
 }
 
-// TABLE:  c1  Herbert  c2  Fredrich  c3  Sina  c4  Juan  c5  Albert  c1
+// TABLE:  A  Herbert  B  Fredrich  C  Sina  D  Juan  E  Albert  A
 [static] function chops : Person -> (Chopstick, Chopstick) = {
-    (Juan) -> (c5, c4),
-    (Sina) -> (c4, c3),
-    (Herbert) -> (c2, c1),
-    (Albert) -> (c1, c5),
-    (Fredrich) -> (c3, c2)
+    (Person::Juan) -> (Chopstick::E, Chopstick::D),
+    (Person::Sina) -> (Chopstick::D, Chopstick::C),
+    (Person::Herbert) -> (Chopstick::B, Chopstick::A),
+    (Person::Albert) -> (Chopstick::A, Chopstick::E),
+    (Person::Fredrich) -> (Chopstick::C, Chopstick::B)
 }
 
 derived leftChop(person : Person) -> Chopstick =
@@ -39,11 +39,11 @@ function eating : Person -> Boolean defined { false }
 function chopOwner: Chopstick -> Person
 
 function hungry : Person -> Boolean = {
-    (Juan) -> flipCoin,
-    (Sina) -> flipCoin,
-    (Herbert) -> flipCoin,
-    (Albert) -> flipCoin,
-    (Fredrich) -> flipCoin
+    (Person::Juan) -> flipCoin,
+    (Person::Sina) -> flipCoin,
+    (Person::Herbert) -> flipCoin,
+    (Person::Albert) -> flipCoin,
+    (Person::Fredrich) -> flipCoin
 }
 
 derived canPickBothChopsticks -> Boolean =

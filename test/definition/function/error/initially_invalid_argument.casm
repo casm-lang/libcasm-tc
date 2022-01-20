@@ -41,10 +41,10 @@
 
 // tests if "=" handles ranged integers correctly => location out of range
 
-CASM init foo
+CASM init foo 
 
 function x : Integer'[0..10] -> Integer = {
-    (42) //@ ERROR( fe01 )
+    (42) //@ ERROR( 5a00 )
        -> 1
 }
 

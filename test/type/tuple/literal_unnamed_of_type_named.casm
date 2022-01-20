@@ -44,9 +44,9 @@ CASM init foo
 rule foo =
 {
     let
-    x : ( a : Integer, b : String, c : Decimal )
+    x : { a : Integer, b : String, c : Decimal }
     =
-    ( 1, "2", 3.4 ) // shall be OK, because the tuple type signature matches!
+    { 1, "2", 3.4 } // shall be OK, because the tuple type signature matches the record type signature!
     in
 	skip
 }

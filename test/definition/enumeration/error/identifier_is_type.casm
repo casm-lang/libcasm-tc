@@ -41,7 +41,7 @@
 
 CASM init foo
 
-enumeration Integer = { bar, baz, qux } //@ ERROR( 0505 )
+enumeration Integer = { bar, baz, qux } //@ ERROR( 0506 )
 
 rule foo =
     skip

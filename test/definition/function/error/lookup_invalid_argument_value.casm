@@ -46,5 +46,5 @@ CASM init foo
 function x : Integer'[0..10] -> Integer
 
 rule foo =
-    let y = x( 42 ) in //@ ERROR( fe00 )
+    let y = x( 42 ) in //@ ERROR( 5a00 )
         skip

@@ -43,9 +43,9 @@
 
 using Agent = Integer
 
-init {
-    (1) -> @main1,
-    (2) -> @main2
+init
+{ (1) -> @main1
+, (2) -> @main2
 }
 
 function agentVar : Agent -> Integer = { (1) -> 0, (2) -> 0 }

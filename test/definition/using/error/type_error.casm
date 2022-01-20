@@ -43,7 +43,7 @@
 
 CASM init test
 
-using MyType = UnknownType //@ ERROR( 0100 )
+using MyType = UnknownType //@ ERROR( 0500 )
 
 function f : -> MyType // should not crash here when using MyType
 

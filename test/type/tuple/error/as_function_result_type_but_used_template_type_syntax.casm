@@ -39,7 +39,7 @@
 //  statement from your version.
 //
 
-// tuple types canno be constructed with a template type syntax
+// tuple types cannot be constructed with a template type syntax
 
 CASM init foo
 

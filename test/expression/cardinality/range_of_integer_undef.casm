@@ -39,7 +39,7 @@
 //  statement from your version.
 //
 
-CASM init test
+CASM init test //@ DISABLED()
 
 rule test =
     let x : Range< Integer > = undef in

@@ -1,0 +1,93 @@
+//
+//  Copyright (C) 2014-2022 CASM Organization <https://casm-lang.org>
+//  All rights reserved.
+//
+//  Developed by: Philipp Paulweber et al.
+//                <https://github.com/casm-lang/libcasm-tc/graphs/contributors>
+//
+//  This file is part of libcasm-tc.
+//
+//  libcasm-tc is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  libcasm-tc is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with libcasm-tc. If not, see <http://www.gnu.org/licenses/>.
+//
+//  Additional permission under GNU GPL version 3 section 7
+//
+//  libcasm-tc is distributed under the terms of the GNU General Public License
+//  with the following clarification and special exception: Linking libcasm-tc
+//  statically or dynamically with other modules is making a combined work
+//  based on libcasm-tc. Thus, the terms and conditions of the GNU General
+//  Public License cover the whole combination. As a special exception,
+//  the copyright holders of libcasm-tc give you permission to link libcasm-tc
+//  with independent modules to produce an executable, regardless of the
+//  license terms of these independent modules, and to copy and distribute
+//  the resulting executable under terms of your choice, provided that you
+//  also meet, for each linked independent module, the terms and conditions
+//  of the license of that module. An independent module is a module which
+//  is not derived from or based on libcasm-tc. If you modify libcasm-tc, you
+//  may extend this exception to your version of the library, but you are
+//  not obliged to do so. If you do not wish to do so, delete this exception
+//  statement from your version.
+//
+
+// | DIV    | undef | y != 0 | y = 0 | sym   |
+// |--------+-------+--------+-------+-------|
+// | undef  | undef | undef  | undef | undef |
+// | x != 0 | undef | x / y  | undef | sym'  |
+// | x = 0  | undef | 0      | undef | 0     |
+// | sym    | undef | sym'   | undef | sym'  |
+
+CASM init testSuite
+
+using T = Integer
+
+[ symbolic ] function a : -> T
+[ symbolic ] function b : -> T
+[ symbolic ] function c : -> T
+
+rule testSuite = {
+    testCase( undef, undef, undef, false )
+    testCase(  -100, undef, undef, false )
+    testCase(     0, undef, undef, false )
+    testCase(   100, undef, undef, false )
+    testCase(     a, undef, undef, false )
+
+    testCase( undef,     2, undef, false )
+    testCase(  -100,     2,   -50, false )
+    testCase(     0,     2,     0, false )
+    testCase(   100,     2,    50, false )
+    testCase(     a,     2,     c,  true )
+
+    testCase( undef,     0, undef, false )
+    testCase(  -100,     0, undef, false )
+    testCase(     0,     0, undef, false )
+    testCase(   100,     0, undef, false )
+    testCase(     a,     0, undef, false )
+
+    testCase( undef,     b, undef, false )
+    testCase(  -100,     b,     c,  true )
+//    testCase(     0,     b,     0, false ) // TODO: FIXME: @ppauwleber: disabled because of missing symbolic constant implementation 
+    testCase(   100,     b,     c,  true )
+    testCase(     a,     b,     c,  true )
+}
+
+rule testCase( a : T, b : T, expected : T, symbolic : Boolean ) = {
+    testCaseCheck( a, b, a / b, expected, symbolic )
+}
+
+rule testCaseCheck( a : T, b : T, result : T, expected : T, symbolic : Boolean ) = {
+    assert( result = expected )
+    if result != undef then
+    {
+        assert( result.isSymbolic() = symbolic )
+    }
+}

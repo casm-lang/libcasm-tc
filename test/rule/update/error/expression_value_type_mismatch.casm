@@ -45,7 +45,7 @@
 CASM init foo
 
 function y : Integer ->
-    Integer //@ ERROR( 1205 )
+    Integer
 
 rule foo =
 {

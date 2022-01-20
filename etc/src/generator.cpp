@@ -96,7 +96,7 @@ int main( int argc, const char* argv[] )
 
     libstdhl::File::readLines(
         file_name,
-        [mode, file_name, dest_name, &no_cmd_found, &error, &disabled, &helper](
+        [ mode, file_name, dest_name, &no_cmd_found, &error, &disabled, &helper ](
             u32 cnt, const std::string& line ) {
             std::string c = "";
 

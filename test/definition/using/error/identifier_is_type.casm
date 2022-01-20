@@ -41,10 +41,8 @@
 
 // symbol registration should say that symbol 'Integer' is a already defined type
 
-CASM init foo
+CASM init test rule test = skip
 
-using Integer = Integer //@ ERROR( 0505 )
-using String = Integer  //@ ERROR( 0505 )
+using Integer = Integer //@ ERROR( 0506 )
 
-rule foo =
-    skip
+using String = Integer  //@ ERROR( 0506 )

@@ -41,7 +41,7 @@
 
 // Found by AFL: Type inference should not crash if lhs or rhs type is invalid
 
-CASM init foo
+CASM init foo //@ DISABLED()
 
 rule foo =
     forall x : Integer in [0.p..3] do //@ ERROR( 0507 )

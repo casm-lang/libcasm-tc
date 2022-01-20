@@ -44,23 +44,23 @@ CASM init foo
 rule foo =
 {
     let
-    x : ( a : Integer, b : String, c : Decimal )
+    x : { a : Integer, b : String, c : Decimal }
     =
-    ( a : 1, b : "2", c : 3.4 ) // in-order
+    { a : 1, b : "2", c : 3.4 } // in-order
     in
 	skip
 
     let
-    x : ( a : Integer, b : String, c : Decimal )
+    x : { a : Integer, b : String, c : Decimal }
     =
-    ( c : 3.4, a : 1, b : "2" ) // out-of-order
+    { c : 3.4, a : 1, b : "2" } // out-of-order
     in
 	skip
 
     let
-    x : ( a : Integer, b : String, c : Decimal )
+    x : { a : Integer, b : String, c : Decimal }
     =
-    ( b : "2" ) // partial
+    { b : "2" } // partial
     in
 	skip
 }

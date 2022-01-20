@@ -97,25 +97,25 @@ function opcode : -> Opcode
 
 [ static ]
 function toInstruction : Opcode -> Instruction =
-{ ( 0b000 ) -> JMP
-, ( 0b100 ) -> JRP
-, ( 0b010 ) -> LDN
-, ( 0b110 ) -> STO
-, ( 0b001 ) -> SUB
-, ( 0b101 ) -> SUB // alternative encoding
-, ( 0b011 ) -> CMP
-, ( 0b111 ) -> STP
+{ ( 0b000 ) -> Instruction::JMP
+, ( 0b100 ) -> Instruction::JRP
+, ( 0b010 ) -> Instruction::LDN
+, ( 0b110 ) -> Instruction::STO
+, ( 0b001 ) -> Instruction::SUB
+, ( 0b101 ) -> Instruction::SUB // alternative encoding
+, ( 0b011 ) -> Instruction::CMP
+, ( 0b111 ) -> Instruction::STP
 }
 
 [ static ]
 function toOpcode : Instruction -> Opcode =
-{ ( JMP ) -> 0b000
-, ( JRP ) -> 0b100
-, ( LDN ) -> 0b010
-, ( STO ) -> 0b110
-, ( SUB ) -> 0b001
-, ( CMP ) -> 0b011
-, ( STP ) -> 0b111
+{ ( Instruction::JMP ) -> 0b000
+, ( Instruction::JRP ) -> 0b100
+, ( Instruction::LDN ) -> 0b010
+, ( Instruction::STO ) -> 0b110
+, ( Instruction::SUB ) -> 0b001
+, ( Instruction::CMP ) -> 0b011
+, ( Instruction::STP ) -> 0b111
 }
 
 rule fetch =
@@ -128,13 +128,13 @@ rule fetch =
 rule decode =
     case toInstruction( opcode ) of
     {
-        JMP : instruction := @jmp
-        JRP : instruction := @jrp
-        LDN : instruction := @ldn
-        STO : instruction := @sto
-        SUB : instruction := @sub
-        CMP : instruction := @cmp
-        STP : instruction := @stp
+        Instruction::JMP : instruction := @jmp
+        Instruction::JRP : instruction := @jrp
+        Instruction::LDN : instruction := @ldn
+        Instruction::STO : instruction := @sto
+        Instruction::SUB : instruction := @sub
+        Instruction::CMP : instruction := @cmp
+        Instruction::STP : instruction := @stp
     }
 
 rule execute =
@@ -271,13 +271,12 @@ let z = 18 as Address in
 
     // instructions
     pc := 0
-    code( LDN, x )
-    code( SUB, y )
-    code( STO, z )
-    code( LDN, z )
-    code( STO, z )
-
-    code( STP, 0xffff )
+    code( Instruction::LDN, x )
+    code( Instruction::SUB, y )
+    code( Instruction::STO, z )
+    code( Instruction::LDN, z )
+    code( Instruction::STO, z )
+    code( Instruction::STP, 0xffff )
 |}
 
 rule progCnt =
@@ -292,14 +291,14 @@ let val = 22 as Address in
 
     // instructions
     pc := 0
-    code( LDN, val )    
-    code( CMP, 0xffff )
-    code( STP, 0xffff )
-    code( SUB, neg1 )
-    code( STO, val )
-    code( LDN, val )
-    code( STO, val )
-    code( JMP, zero )
+    code( Instruction::LDN, val )    
+    code( Instruction::CMP, 0xffff )
+    code( Instruction::STP, 0xffff )
+    code( Instruction::SUB, neg1 )
+    code( Instruction::STO, val )
+    code( Instruction::LDN, val )
+    code( Instruction::STO, val )
+    code( Instruction::JMP, zero )
 |}
 
 rule progSum =
@@ -316,18 +315,18 @@ let sum = 31 as Address in
 
     // instructions
     pc := 0
-    code( LDN, i )
-    code( CMP, 0xffff )
-    code( STP, 0xffff )
-    code( LDN, sum )
-    code( SUB, i )
-    code( STO, sum )
-    code( LDN, sum )
-    code( STO, sum )
-    code( LDN, i )
-    code( SUB, neg1 )
-    code( STO, i )
-    code( LDN, i )
-    code( STO, i )
-    code( JMP, zero )
+    code( Instruction::LDN, i )
+    code( Instruction::CMP, 0xffff )
+    code( Instruction::STP, 0xffff )
+    code( Instruction::LDN, sum )
+    code( Instruction::SUB, i )
+    code( Instruction::STO, sum )
+    code( Instruction::LDN, sum )
+    code( Instruction::STO, sum )
+    code( Instruction::LDN, i )
+    code( Instruction::SUB, neg1 )
+    code( Instruction::STO, i )
+    code( Instruction::LDN, i )
+    code( Instruction::STO, i )
+    code( Instruction::JMP, zero )
 |}

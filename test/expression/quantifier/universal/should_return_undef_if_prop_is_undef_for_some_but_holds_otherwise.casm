@@ -39,7 +39,7 @@
 //  statement from your version.
 //
 
-CASM init foo
+CASM init foo //@ DISABLED()
 
 derived predicate( x : Integer ) -> Boolean =
     if x = 1 then undef else true

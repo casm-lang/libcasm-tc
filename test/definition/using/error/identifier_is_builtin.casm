@@ -39,11 +39,8 @@
 //  statement from your version.
 //
 
-// symbol registration should say that symbol 'assert' is a built-in
+// symbol registration should say that symbol 'assert' is already defined
 
-CASM init foo
+CASM init test rule test = skip
 
-using assert = Integer //@ ERROR( 0504 )
-
-rule foo =
-    skip
+using assert = Integer //@ ERROR( 0506 )

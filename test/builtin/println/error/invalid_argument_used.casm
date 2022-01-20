@@ -43,7 +43,7 @@ CASM init foo
 
 rule foo =
 {
-    println( 1 )     //@ ERROR( 1301 )
-    println( 2.34 )  //@ ERROR( 1301 )
-    println( true )  //@ ERROR( 1301 )
+    println( 1 )     //@ ERROR( 1305 )
+    println( 2.34 )  //@ ERROR( 1305 )
+    println( true )  //@ ERROR( 1305 )
 }

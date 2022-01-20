@@ -41,7 +41,7 @@
 
 // type checker should say that the proposition should have a boolean result
 
-CASM init foo
+CASM init foo //@ DISABLED()
 
 derived wrongPredicate( x : Integer ) -> String = "a string"
 

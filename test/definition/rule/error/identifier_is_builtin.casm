@@ -41,7 +41,7 @@
 
 CASM init foo
 
-rule assert( arg : Integer ) = skip //@ ERROR( 0504 )
+rule assert( arg : Integer ) = skip //@ ERROR( 0506 )
 
 rule foo =
     skip
