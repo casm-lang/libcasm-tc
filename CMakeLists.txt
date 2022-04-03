@@ -44,7 +44,7 @@ set( PROJECT libcasm-tc )
 cmake_minimum_required( VERSION ${CMAKE_VERSION} )
 
 project( ${PROJECT} LANGUAGES CXX )
-set( CMAKE_CXX_STANDARD 14 )
+set( CMAKE_CXX_STANDARD 17 )
 set( CMAKE_CXX_EXTENSIONS OFF )
 set( CMAKE_VERSION 3.2 )
 set( CMAKE_MODULE_PATH ${${PROJECT}_SOURCE_DIR}/.cmake )
@@ -73,7 +73,7 @@ add_subdirectory( benchmark
 
 #
 #
-# library
+# static library
 #
 
 set( ${PROJECT}_VERSION ${GIT_REVTAG} )
@@ -89,7 +89,7 @@ set_property( TARGET ${PROJECT} PROPERTY PREFIX  "" )
 
 if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}
-    ${LIBSTDHL_ARCHIVE}
+    ${LIBSTDHL_LIBRARY}
     )
 endif()
 
@@ -104,8 +104,17 @@ add_executable( ${PROJECT}-generator
 
 if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}-generator
-    ${LIBSTDHL_ARCHIVE}
+    ${LIBSTDHL_LIBRARY}
     )
+endif()
+
+if( CMAKE_CXX_EMSCRIPTEN )
+  set( EMCC_TARGET "${PROJECT}-generator" )
+  configure_file(
+    ${LIBSTDHL_INCLUDE_DIR}/libstdhl/emcc.in.js
+    ${EMCC_TARGET}.js
+  )
+  set( EMCC_TARGET "" )
 endif()
 
 #
@@ -135,11 +144,20 @@ add_executable( ${PROJECT}-check
 
 if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}-check
-    ${LIBSTDHL_ARCHIVE}
+    ${LIBSTDHL_LIBRARY}
     ${LIBGTEST_LIBRARY}
     ${LIBGTEST_MAIN}
     Threads::Threads
     )
+endif()
+
+if( CMAKE_CXX_EMSCRIPTEN )
+  set( EMCC_TARGET "${PROJECT}-check" )
+  configure_file(
+    ${LIBSTDHL_INCLUDE_DIR}/libstdhl/emcc.in.js
+    ${EMCC_TARGET}.js
+  )
+  set( EMCC_TARGET "" )
 endif()
 
 #
@@ -169,11 +187,20 @@ add_executable( ${PROJECT}-run
 
 if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}-run
-    ${LIBSTDHL_ARCHIVE}
+    ${LIBSTDHL_LIBRARY}
     ${LIBHAYAI_LIBRARY}
     ${LIBGTEST_LIBRARY}
     Threads::Threads
     )
+endif()
+
+if( CMAKE_CXX_EMSCRIPTEN )
+  set( EMCC_TARGET "${PROJECT}-run" )
+  configure_file(
+    ${LIBSTDHL_INCLUDE_DIR}/libstdhl/emcc.in.js
+    ${EMCC_TARGET}.js
+  )
+  set( EMCC_TARGET "" )
 endif()
 
 #

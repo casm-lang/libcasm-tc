@@ -39,11 +39,13 @@
 #   statement from your version.
 #
 
+set( CXX_BENCHMARK_CASES ${CMAKE_CURRENT_BINARY_DIR}/cases.txt )
+file( WRITE ${CXX_BENCHMARK_CASES} "" )
+
+if( NOT CMAKE_CXX_EMSCRIPTEN )
 string( LENGTH "${CMAKE_CURRENT_SOURCE_DIR}/" CWD_LENGTH )
 file( GLOB_RECURSE CASM_BENCHMARK_FILES "*.casm" )
 set( CXX_BENCHMARK_FILES "" )
-set( CXX_BENCHMARK_CASES ${CMAKE_CURRENT_BINARY_DIR}/cases.txt )
-file( WRITE ${CXX_BENCHMARK_CASES} "" )
 foreach( CASM_BENCHMARK_FILE
     ${CASM_BENCHMARK_FILES}
     )
@@ -63,8 +65,12 @@ foreach( CASM_BENCHMARK_FILE
     COMMENT "Generating benchmark case ${BENCHMARK_FILE}"
     )
 endforeach()
+endif()
 
 set( CXX_BENCHMARK ${CMAKE_CURRENT_BINARY_DIR}/cases.cpp )
+file( WRITE ${CXX_BENCHMARK} "" )
+
+if( NOT CMAKE_CXX_EMSCRIPTEN )
 add_custom_command(
   OUTPUT  ${CXX_BENCHMARK}
   COMMAND make cases-benchmark
@@ -72,7 +78,7 @@ add_custom_command(
   DEPENDS ${CXX_BENCHMARK_FILES}
   COMMENT "Updating  benchmark cases ${CXX_BENCHMARK}"
   )
-
+endif()
 
 include_directories(
   ${PROJECT_BINARY_DIR}/etc/src

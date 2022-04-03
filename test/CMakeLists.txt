@@ -39,11 +39,13 @@
 #   statement from your version.
 #
 
+set( CXX_TEST_CASES ${CMAKE_CURRENT_BINARY_DIR}/cases.txt )
+file( WRITE ${CXX_TEST_CASES} "" )
+
+if( NOT CMAKE_CXX_EMSCRIPTEN )
 string( LENGTH "${CMAKE_CURRENT_SOURCE_DIR}/" CWD_LENGTH )
 file( GLOB_RECURSE CASM_TEST_FILES "*.casm" )
 set( CXX_TEST_FILES "" )
-set( CXX_TEST_CASES ${CMAKE_CURRENT_BINARY_DIR}/cases.txt )
-file( WRITE ${CXX_TEST_CASES} "" )
 foreach( CASM_TEST_FILE
     ${CASM_TEST_FILES}
     )
@@ -63,8 +65,12 @@ foreach( CASM_TEST_FILE
     COMMENT "Generating test case ${TEST_FILE}"
     )
 endforeach()
+endif()
 
 set( CXX_TEST ${CMAKE_CURRENT_BINARY_DIR}/cases.cpp )
+file( WRITE ${CXX_TEST} "" )
+
+if( NOT CMAKE_CXX_EMSCRIPTEN )
 add_custom_command(
   OUTPUT  ${CXX_TEST}
   COMMAND make cases-test
@@ -72,7 +78,7 @@ add_custom_command(
   DEPENDS ${CXX_TEST_FILES}
   COMMENT "Updating  test cases ${CXX_TEST}"
   )
-
+endif()
 
 include_directories(
   ${PROJECT_BINARY_DIR}/etc/src
