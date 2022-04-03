@@ -149,15 +149,15 @@ if( ${LIBSTDHL_FOUND} )
     ${LIBGTEST_MAIN}
     Threads::Threads
     )
-endif()
 
-if( CMAKE_CXX_EMSCRIPTEN )
-  set( EMCC_TARGET "${PROJECT}-check" )
-  configure_file(
-    ${LIBSTDHL_INCLUDE_DIR}/libstdhl/emcc.in.js
-    ${EMCC_TARGET}.js
-  )
-  set( EMCC_TARGET "" )
+  if( CMAKE_CXX_EMSCRIPTEN )
+    set( EMCC_TARGET "${PROJECT}-check" )
+    configure_file(
+      ${LIBSTDHL_INCLUDE_DIR}/libstdhl/emcc.in.js
+      ${EMCC_TARGET}.js
+    )
+    set( EMCC_TARGET "" )
+  endif()
 endif()
 
 #
@@ -192,15 +192,15 @@ if( ${LIBSTDHL_FOUND} )
     ${LIBGTEST_LIBRARY}
     Threads::Threads
     )
-endif()
 
-if( CMAKE_CXX_EMSCRIPTEN )
-  set( EMCC_TARGET "${PROJECT}-run" )
-  configure_file(
-    ${LIBSTDHL_INCLUDE_DIR}/libstdhl/emcc.in.js
-    ${EMCC_TARGET}.js
-  )
-  set( EMCC_TARGET "" )
+  if( CMAKE_CXX_EMSCRIPTEN )
+    set( EMCC_TARGET "${PROJECT}-run" )
+    configure_file(
+      ${LIBSTDHL_INCLUDE_DIR}/libstdhl/emcc.in.js
+      ${EMCC_TARGET}.js
+    )
+    set( EMCC_TARGET "" )
+  endif()
 endif()
 
 #
