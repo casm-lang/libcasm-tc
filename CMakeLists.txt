@@ -106,15 +106,15 @@ if( ${LIBSTDHL_FOUND} )
   target_link_libraries( ${PROJECT}-generator
     ${LIBSTDHL_LIBRARY}
     )
-endif()
 
-if( CMAKE_CXX_EMSCRIPTEN )
-  set( EMCC_TARGET "${PROJECT}-generator" )
-  configure_file(
-    ${LIBSTDHL_INCLUDE_DIR}/libstdhl/emcc.in.js
-    ${EMCC_TARGET}.js
-  )
-  set( EMCC_TARGET "" )
+  if( CMAKE_CXX_EMSCRIPTEN )
+    set( EMCC_TARGET "${PROJECT}-generator" )
+    configure_file(
+      ${LIBSTDHL_INCLUDE_DIR}/libstdhl/emcc.in.js
+      ${EMCC_TARGET}.js
+    )
+    set( EMCC_TARGET "" )
+  endif()
 endif()
 
 #
